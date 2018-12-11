@@ -22,15 +22,15 @@ public:
 	double t_act;
 	double t_p;
 	double cell_time;
-	//double constant_pCa;
+	double constant_pCa;
 	double pCa;
 	double pCa_dia;
 	double pCa_amp;
 	double beta;
 	double tau_1;
 	double tau_2;
-	double fCa = 0.5;
-	double fCa_2 = 0.5;
+	double fCa = 23.5;
+	double fCa_2 = 2.35;
 
 	double Cal;
 

@@ -29,7 +29,7 @@ dolfin::hs::hs()
 	// create instances of classes and FE structure
 	// read every time i_t_s or G_c_f_v called in FEniCS
 	p_FE = new FE;
-	p_bp = new base_parameters("/home/fenics/shared/test_9/instruction_file_FEniCS.txt", "/home/fenics/shared/test_9/");
+	p_bp = new base_parameters("/home/fenics/shared/test_3/instruction_file_FEniCS.txt", "/home/fenics/shared/test_3/");
 	p_Ca = new Ca(p_bp);
 	p_mf = new mf(this, p_Ca, p_bp);
 
@@ -46,7 +46,7 @@ dolfin::hs::hs()
 	FE_params.add("step_size", 0.0);
 	Ca_params.add("Ca_flag", 4);
 	Ca_params.add("t_act", 0.0);
-	Ca_params.add("constant_pCa", 0.0);
+	Ca_params.add("current_pCa", 0.0);
 	Ca_params.add("time_point", 0);
 	Ca_params.add("cell_time", 0.0);
 
@@ -110,7 +110,7 @@ std::vector<double> dolfin::hs::apply_time_step(const Array<double>& z, const Ar
 	
 	p_Ca->Ca_flag = Ca_params["Ca_flag"];
 	p_Ca->t_act = Ca_params["t_act"];
-	p_Ca->constant_pCa = Ca_params["constant_pCa"];
+	p_Ca->current_pCa = Ca_params["current_pCa"];
 	p_Ca->time_point = Ca_params["time_point"];
 	p_Ca->cell_time = Ca_params["cell_time"];
 
@@ -153,7 +153,7 @@ std::vector<double> dolfin::hs::apply_time_step(const Array<double>& z, const Ar
 				y_vec[m_counter * no_of_int_points * n_array_length + i * n_array_length] - temp;
 			//-----------------
 
-			//calculate_cb_force(m_counter, i, delta_hsl[i]);
+			calculate_cb_force(m_counter, i, delta_hsl[i]);
 		}
 	}
 	//std::cout << "total_force = " << p_mf->total_force;
@@ -226,7 +226,6 @@ void dolfin::hs::interpolate(int m_counter, int i, double delta_hsl)
 	// Short-cut if there is no movement 
 	if (delta_hsl == (double)0.0)
 	{
-		//std::cout << "delta_hsl = 0.0" << "\n";
 		return;
 	}
 
@@ -676,9 +675,4 @@ double dolfin::hs::dump_rate_constants(int i, int j, int k)
 		return gsl_vector_get(x, i);
 	else
 		return p_mf->generic_rate(j, gsl_vector_get(x, i), k);
-}
-
-void dolfin::hs::display_bps(void)
-{
-	p_bp->display_bps();
 }

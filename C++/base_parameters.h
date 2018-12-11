@@ -313,6 +313,7 @@ class base_parameters
 		gsl_rng * rand_r;
 		
 		// Functions
+		void display_bps(void);
 		void display_base_parameters(void);
 		void dump_base_parameters(void);
 		void set_base_parameters_from_instruction_file(char * instruction_file_string);

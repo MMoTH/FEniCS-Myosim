@@ -132,8 +132,6 @@ namespace dolfin
 		double return_n_bound(const double * y);
 
 		double return_f_overlap(double x);
-
-		void display_bps(void);
 	};
 };
 #endif

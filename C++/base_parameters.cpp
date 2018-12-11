@@ -423,6 +423,15 @@ base_parameters::~base_parameters()
 	gsl_rng_free(rand_r);
 }
 
+void base_parameters::display_bps(void)
+{
+	printf("n_vector_indices\n");
+	for (int i = 0; i<no_of_states; i++)
+	{
+		printf("State[%i]\t", i);
+		printf("%i\t%i\n", n_vector_indices[i][0], n_vector_indices[i][1]);
+	}
+}
 // Display status
 void base_parameters::display_base_parameters(void)
 {

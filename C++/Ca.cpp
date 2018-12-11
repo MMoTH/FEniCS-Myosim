@@ -41,7 +41,7 @@ double Ca::Calcium(void)
 	// constant calcium
 	if (Ca_flag == 1)
 	{
-		pCa = current_pCa; 
+		pCa = constant_pCa; 
 		Cal = pow(10.0, -pCa);
 	}
 	// XZ's modified calcium curve from May 2016. Ca in M
