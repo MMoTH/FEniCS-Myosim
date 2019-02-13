@@ -1,0 +1,6 @@
+set(vtkFiltersHyperTree_HEADERS_LOADED 1)
+set(vtkFiltersHyperTree_HEADERS "vtkHyperTreeGridAxisClip;vtkHyperTreeGridAxisCut;vtkHyperTreeGridAxisReflection;vtkHyperTreeGridCellCenters;vtkHyperTreeGridContour;vtkHyperTreeGridDepthLimiter;vtkHyperTreeGridGeometry;vtkHyperTreeGridPlaneCutter;vtkHyperTreeGridThreshold;vtkHyperTreeGridToUnstructuredGrid;vtkHyperTreeGridEvaluateCoarse")
+
+foreach(header ${vtkFiltersHyperTree_HEADERS})
+  set(vtkFiltersHyperTree_HEADER_${header}_EXISTS 1)
+endforeach()

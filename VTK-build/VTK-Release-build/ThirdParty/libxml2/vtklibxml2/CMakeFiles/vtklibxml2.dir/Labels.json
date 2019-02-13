@@ -1,0 +1,142 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/DOCBparser.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/HTMLparser.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/HTMLtree.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/SAX.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/SAX2.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/c14n.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/catalog.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/chvalid.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/debugXML.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/dict.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/encoding.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/entities.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/error.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/globals.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/hash.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/legacy.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/list.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/nanoftp.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/nanohttp.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/parser.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/parserInternals.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/pattern.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/relaxng.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/schematron.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/threads.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/tree.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/uri.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/valid.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xinclude.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xlink.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlIO.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlmemory.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlmodule.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlreader.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlregexp.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlsave.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlschemas.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlschemastypes.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlstring.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlunicode.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlwriter.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xpath.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xpointer.c"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtklibxml2"
+		],
+		"name" : "vtklibxml2"
+	}
+}

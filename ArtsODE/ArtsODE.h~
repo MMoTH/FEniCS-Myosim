@@ -1,0 +1,65 @@
+#ifndef __ArtsODE_H                           
+#define __ArtsODE_H
+
+
+#include <dolfin/parameter/Parameters.h>
+#include <vector>
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_linalg.h>
+#include <gsl/gsl_odeiv2.h>
+
+namespace dolfin                              
+{
+ template<typename T> class Array;            
+
+  class ODEsolver
+  {
+
+	std::vector<double> fiso_vec;
+        std::vector<double> y2;
+
+  	public: 
+
+	    struct gsl_parameters 
+		{
+	        double Ea;
+	    	double v0;
+	    	double saclen;
+	    	double saclen0;
+		double a6;
+		double a7;
+		double Tref;
+		double tr;
+		double td;
+		double b;
+		double ld;
+	    };
+
+	    Parameters params;           
+
+	    double t = 0;
+	    double dt = 1.0;
+
+	    gsl_odeiv2_system sys;
+
+	    ODEsolver();
+	    ~ODEsolver() ;
+
+	    std::vector<double> ODEsolverstep(const Array<double>& x, double dt, double t, const Array<double>& saclen); 
+	    std::vector<double> Get_fiso();
+
+	    static int func (double t, const double y[], double f[], void *params);     
+	    static int jac (double t, const double y[], double *dfdy, double dfdt[], void *params);
+
+	    double fiso(const double y[],  void *params);
+	    double ftwitch(double t, const double y[],  void *params);
+	   
+  };
+
+
+
+};
+#endif
+

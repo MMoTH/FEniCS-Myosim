@@ -1,0 +1,6 @@
+# Target labels
+ vtkIOVeraOut
+# Source files and their labels
+/home/fenics/shared/VTK/IO/VeraOut/vtkVeraOutReader.cxx
+/home/fenics/shared/VTK/IO/VeraOut/vtkVeraOutReader.h
+/home/fenics/shared/VTK-build/VTK-Release-build/IO/VeraOut/vtkIOVeraOutModule.h

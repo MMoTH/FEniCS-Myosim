@@ -1,0 +1,12 @@
+# Target labels
+ vtkTestingRendering
+# Source files and their labels
+/home/fenics/shared/VTK/Testing/Rendering/vtkMultiBaselineRegressionTest.h
+/home/fenics/shared/VTK/Testing/Rendering/vtkRegressionTestImage.h
+/home/fenics/shared/VTK/Testing/Rendering/vtkTesting.cxx
+/home/fenics/shared/VTK/Testing/Rendering/vtkTestingInteractor.cxx
+/home/fenics/shared/VTK/Testing/Rendering/vtkTestingObjectFactory.cxx
+/home/fenics/shared/VTK/Testing/Rendering/vtkTesting.h
+/home/fenics/shared/VTK/Testing/Rendering/vtkTestingInteractor.h
+/home/fenics/shared/VTK/Testing/Rendering/vtkTestingObjectFactory.h
+/home/fenics/shared/VTK-build/Testing/Rendering/vtkTestingRenderingModule.h

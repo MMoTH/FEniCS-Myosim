@@ -1,0 +1,181 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcapimin.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcapistd.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jccoefct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jccolor.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcdctmgr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jchuff.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcinit.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcmainct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcmarker.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcmaster.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcomapi.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcparam.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcphuff.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcprepct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcsample.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jctrans.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdapimin.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdapistd.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdatadst.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdatasrc.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdcoefct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdcolor.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jddctmgr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdhuff.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdinput.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdmainct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdmarker.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdmaster.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdmerge.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdphuff.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdpostct.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdsample.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdtrans.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jerror.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jfdctflt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jfdctfst.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jfdctint.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jidctflt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jidctfst.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jidctint.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jidctred.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jmemmgr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jmemnobs.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jquant1.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jquant2.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jutils.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jaricom.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jcarith.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jdarith.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jsimd_none.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jerror.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jmorecfg.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/jpeglib.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/jpeg/vtkjpeg/vtk_jpeg_mangle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/jpeg/vtkjpeg/jconfig.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/jpeg/vtkjpeg/jconfigint.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkjpeg"
+		],
+		"name" : "vtkjpeg"
+	}
+}

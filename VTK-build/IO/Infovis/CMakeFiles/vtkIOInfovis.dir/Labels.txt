@@ -1,0 +1,36 @@
+# Target labels
+ vtkIOInfovis
+# Source files and their labels
+/home/fenics/shared/VTK/IO/Infovis/vtkBiomTableReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkChacoGraphReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkDelimitedTextReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkDIMACSGraphReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkDIMACSGraphWriter.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkFixedWidthTextReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkISIReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkMultiNewickTreeReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkNewickTreeReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkNewickTreeWriter.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkPhyloXMLTreeReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkPhyloXMLTreeWriter.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkRISReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkTulipReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkXGMLReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkXMLTreeReader.cxx
+/home/fenics/shared/VTK/IO/Infovis/vtkBiomTableReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkChacoGraphReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkDelimitedTextReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkDIMACSGraphReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkDIMACSGraphWriter.h
+/home/fenics/shared/VTK/IO/Infovis/vtkFixedWidthTextReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkISIReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkMultiNewickTreeReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkNewickTreeReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkNewickTreeWriter.h
+/home/fenics/shared/VTK/IO/Infovis/vtkPhyloXMLTreeReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkPhyloXMLTreeWriter.h
+/home/fenics/shared/VTK/IO/Infovis/vtkRISReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkTulipReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkXGMLReader.h
+/home/fenics/shared/VTK/IO/Infovis/vtkXMLTreeReader.h
+/home/fenics/shared/VTK-build/IO/Infovis/vtkIOInfovisModule.h

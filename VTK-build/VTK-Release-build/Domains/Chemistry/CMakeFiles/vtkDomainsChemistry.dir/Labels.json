@@ -1,0 +1,121 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataInternal.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataParser.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkCMLMoleculeReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkGaussianCubeReader2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToAtomBallFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToBondStickFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToLinesFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToPolyDataFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkPeriodicTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkPointSetToMoleculeFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkProgrammableElectronicData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkProteinRibbonFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkSimpleBondPerceiver.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPAnimationReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPTessellationReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkXYZMolReader2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataParser.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkCMLMoleculeReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkGaussianCubeReader2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToAtomBallFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToBondStickFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToLinesFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToPolyDataFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkPeriodicTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkPointSetToMoleculeFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkProgrammableElectronicData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkProteinRibbonFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkSimpleBondPerceiver.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPAnimationReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPTessellationReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Domains/Chemistry/vtkXYZMolReader2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Domains/Chemistry/vtkDomainsChemistryModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkDomainsChemistry"
+		],
+		"name" : "vtkDomainsChemistry"
+	}
+}

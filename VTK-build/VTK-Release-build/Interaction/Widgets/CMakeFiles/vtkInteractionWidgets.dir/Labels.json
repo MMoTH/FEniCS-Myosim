@@ -1,0 +1,850 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtk3DWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAbstractPolygonalHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAbstractWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAxesTransformRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAxesTransformWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBalloonRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBalloonWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBezierContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBorderRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBorderWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoundedPlanePointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxWidget2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBrokenLineWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkButtonRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkButtonWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCameraRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCameraWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCaptionRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCaptionWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCellCentersPointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCenteredSliderRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCenteredSliderWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCheckerboardRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCheckerboardWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkClosedSurfacePointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkConstrainedPointHandleRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContinuousValueWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContinuousValueWidgetRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCurveRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDijkstraImageContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkEllipsoidTensorProbeRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkEvent.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFinitePlaneRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFinitePlaneWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFixedSizeHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFocalPlaneContourRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFocalPlanePointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHandleRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHandleWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHoverWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageActorPointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageCroppingRegionsWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageOrthoPlanes.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImagePlaneWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageTracerWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitCylinderRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitCylinderWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneWidget2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLinearContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineWidget2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLogoRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLogoWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkMeasurementCubeHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientationMarkerWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedGlyphContourRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedGlyphFocalPlaneContourRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedPolygonalHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkParallelopipedRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkParallelopipedWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaneWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaybackRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaybackWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointHandleRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataPointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataSourceWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyLineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyLineWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalHandleRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalSurfaceContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalSurfacePointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProgressBarRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProgressBarWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProp3DButtonRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkRectilinearWipeRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkRectilinearWipeWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkScalarBarRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkScalarBarWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSeedRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSeedWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereHandleRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereWidget2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineWidget2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTensorProbeRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTensorProbeWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTerrainContourLineInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTerrainDataPointPlacer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTextRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTexturedButtonRepresentation2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTexturedButtonRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTextWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetCallbackMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetEvent.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetEventTranslator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetSet.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkXYPlotWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorLineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorThickLineRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorPolyDataAlgorithm.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtk3DWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAbstractPolygonalHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAbstractWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAffineWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAngleWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAxesTransformRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkAxesTransformWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBalloonRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBalloonWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBezierContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBiDimensionalWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBorderRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBorderWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoundedPlanePointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxWidget2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBoxWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkBrokenLineWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkButtonRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkButtonWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCameraRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCameraWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCaptionRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCaptionWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCellCentersPointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCenteredSliderRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCenteredSliderWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCheckerboardRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCheckerboardWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkClosedSurfacePointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkConstrainedPointHandleRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContinuousValueWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContinuousValueWidgetRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkContourWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkCurveRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDijkstraImageContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkDistanceWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkEllipsoidTensorProbeRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkEvent.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFinitePlaneRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFinitePlaneWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFixedSizeHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFocalPlaneContourRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkFocalPlanePointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHandleRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHandleWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkHoverWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageActorPointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageCroppingRegionsWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageOrthoPlanes.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImagePlaneWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImageTracerWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitCylinderRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitCylinderWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneWidget2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkImplicitPlaneWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLinearContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineWidget2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLineWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLogoRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkLogoWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkMeasurementCubeHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientationMarkerWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedGlyphContourRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedGlyphFocalPlaneContourRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkOrientedPolygonalHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkParallelopipedRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkParallelopipedWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaneWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaybackRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPlaybackWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointHandleRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPointWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataPointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyDataSourceWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyLineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolyLineWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalHandleRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalSurfaceContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkPolygonalSurfacePointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProgressBarRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProgressBarWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkProp3DButtonRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkRectilinearWipeRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkRectilinearWipeWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkScalarBarRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkScalarBarWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSeedRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSeedWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSliderWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereHandleRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereWidget2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSphereWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineWidget2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkSplineWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTensorProbeRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTensorProbeWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTerrainContourLineInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTerrainDataPointPlacer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTextRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTexturedButtonRepresentation2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTexturedButtonRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkTextWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetCallbackMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetEvent.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetEventTranslator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkWidgetSet.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkXYPlotWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorLineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorThickLineRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Widgets/vtkResliceCursorPolyDataAlgorithm.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Interaction/Widgets/vtkInteractionWidgetsModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkInteractionWidgets"
+		],
+		"name" : "vtkInteractionWidgets"
+	}
+}

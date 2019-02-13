@@ -1,0 +1,12 @@
+# Target labels
+ vtkexpat
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/loadlibrary.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmlparse.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmlrole.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok_impl.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok_ns.c
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/expat.h
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/expat_external.h
+/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/vtk_expat_mangle.h

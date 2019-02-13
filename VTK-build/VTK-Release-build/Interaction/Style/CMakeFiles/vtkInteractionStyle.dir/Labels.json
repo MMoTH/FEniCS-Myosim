@@ -1,0 +1,130 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleDrawPolygon.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleFlight.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleImage.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleJoystickActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleJoystickCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleMultiTouchCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBand2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBand3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBandPick.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBandZoom.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTerrain.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackballActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackball.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleUnicam.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleUser.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleSwitch.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkParallelCoordinatesInteractorStyle.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Interaction/Style/vtkInteractionStyleObjectFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleDrawPolygon.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleFlight.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleImage.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleJoystickActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleJoystickCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleMultiTouchCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBand2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBand3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBandPick.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleRubberBandZoom.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTerrain.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackballActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackballCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleTrackball.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleUnicam.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleUser.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkInteractorStyleSwitch.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Interaction/Style/vtkParallelCoordinatesInteractorStyle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Interaction/Style/vtkInteractionStyleObjectFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Interaction/Style/vtkInteractionStyleModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkInteractionStyle"
+		],
+		"name" : "vtkInteractionStyle"
+	}
+}

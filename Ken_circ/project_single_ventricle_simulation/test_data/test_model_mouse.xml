@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<single_circulation_simulation>
+
+<simulation_parameters>
+	<no_of_time_points>8000</no_of_time_points>
+	<time_step>0.00025</time_step>
+	<activation_frequency>10</activation_frequency>
+	<duty_ratio>0.3</duty_ratio>
+</simulation_parameters>
+
+<output_parameters>
+	<data_file>../output/data/summary_data.xlsx</data_file>
+	<summary_figure>../output/figures/summary_figure.png</summary_figure>
+	<pv_figure>../output/figures/pressure_volume_figure.png</pv_figure>
+	<flows_figure>../output/figures/flows_figure.png</flows_figure>
+	<hs_fluxes_figure>../output/figures/hs_fluxes_figure.png</hs_fluxes_figure>
+</output_parameters>
+
+<perturbations>
+	<volume>
+		<start_index>4000</start_index>
+		<stop_index>6000</stop_index>
+		<increment>-2e-7</increment>
+	</volume>
+</perturbations>	
+
+<circulation>
+	<no_of_compartments>6</no_of_compartments>
+	<blood>
+		<volume units="liters">1.5e-3</volume>
+	</blood>
+	<aorta>
+		<resistance units="s">10e3</resistance>
+		<compliance units="liter_per_mmHg">1e-6</compliance>
+	</aorta>
+	<arteries>
+		<resistance units="g">30e3</resistance>
+		<compliance units="g2">2.5e-7</compliance>
+	</arteries>
+	<arterioles>
+		<resistance units="g">30e3</resistance>
+		<compliance units="g2">1.5e-7</compliance>
+	</arterioles>
+	<capillaries>
+		<resistance units="g">30e3</resistance>
+		<compliance units="g2">0.8e-6</compliance>
+	</capillaries>
+	<veins>
+		<resistance units="g">10e3</resistance>
+		<compliance units="liters_per_mmHg">1.2e-4</compliance>
+	</veins>
+	<ventricle>
+		<resistance units="g">1e3</resistance>
+		<wall_volume units="liters">8e-5</wall_volume>
+		<slack_volume units = "liters">8e-5</slack_volume>
+	</ventricle>
+</circulation>
+
+<half_sarcomere>
+	<max_rate>5000</max_rate>
+	<temperature>288</temperature>
+	
+	<cb_number_density>6.9e16</cb_number_density>
+	<initial_hs_length>900</initial_hs_length>
+
+	<myofilaments>
+		<kinetic_scheme>3state_with_SRX</kinetic_scheme>
+		<k_1>2</k_1>
+		<k_force>1e-3</k_force>
+		<k_2>200</k_2>
+		<k_3>500</k_3>
+		<k_4_0>2000</k_4_0>
+		<k_4_1>0.1</k_4_1>
+		<k_cb>0.001</k_cb>
+		<x_ps>5</x_ps>
+		<k_on>5e8</k_on>
+		<k_off>200</k_off>
+		<k_coop>5</k_coop>
+		<bin_min>-10</bin_min>
+		<bin_max>10</bin_max>
+		<bin_width>1</bin_width>
+		<filament_compliance_factor>0.5</filament_compliance_factor>
+		<thick_filament_length>815</thick_filament_length>
+		<thin_filament_length>1120</thin_filament_length>
+		<bare_zone_length>80</bare_zone_length>
+		<k_falloff>0.0024</k_falloff>
+		<passive_mode>exponential</passive_mode>
+		<passive_exp_sigma>500</passive_exp_sigma>
+		<passive_exp_L>80</passive_exp_L>
+		<passive_l_slack>900</passive_l_slack>
+	</myofilaments>
+	
+	<membranes>
+		<kinetic_scheme>simple_2_compartment</kinetic_scheme>
+		<Ca_content>1e-3</Ca_content>
+		<k_leak>2e-2</k_leak>
+		<k_act>3e-1</k_act>
+		<k_serca>200.0</k_serca>
+	</membranes>
+</half_sarcomere>
+
+</single_circulation_simulation>

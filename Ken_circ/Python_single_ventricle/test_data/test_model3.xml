@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<single_circulation_model>
+
+<sim_data>
+	<no_of_time_points>1000</no_of_time_points>
+	<time_step>0.001</time_step>
+	<activation_frequency>1</activation_frequency>
+</sim_data>
+
+<circulation>
+	<no_of_compartments>4</no_of_compartments>
+	<blood>
+		<volume units="liters">5</volume>
+	</blood>
+	<aorta>
+		<resistance units="s">20</resistance>
+		<compliance units="liter_per_mmHg">0.002</compliance>
+	</aorta>
+	<arteries>
+		<resistance units="g">100</resistance>
+		<compliance units="g2">0.005</compliance>
+	</arteries>
+	<veins>
+		<resistance units="g">1000</resistance>
+		<compliance units="liters_per_mmHg">0.35</compliance>
+	</veins>
+	<ventricle>
+		<resistance units="g">20</resistance>
+		<wall_volume units="liters">0.03</wall_volume>
+		<slack_volume units = "liters">0.08</slack_volume>
+	</ventricle>
+</circulation>
+
+<half_sarcomere>
+	<max_rate>5000</max_rate>
+	<temperature>288</temperature>
+	
+	<cb_number_density>6.9e16</cb_number_density>
+	<initial_hs_length>900</initial_hs_length>
+
+	<myofilaments>
+		<kinetic_scheme>3state_with_SRX</kinetic_scheme>
+		<k_1>2</k_1>
+		<k_force>1e-3</k_force>
+		<k_2>200</k_2>
+		<k_3>200</k_3>
+		<k_4_0>500</k_4_0>
+		<k_4_1>0.1</k_4_1>
+		<k_cb>0.001</k_cb>
+		<x_ps>5</x_ps>
+		<k_on>1e8</k_on>
+		<k_off>300</k_off>
+		<k_coop>5</k_coop>
+		<bin_min>-10</bin_min>
+		<bin_max>10</bin_max>
+		<bin_width>1</bin_width>
+		<filament_compliance_factor>0.5</filament_compliance_factor>
+		<thick_filament_length>815</thick_filament_length>
+		<thin_filament_length>1120</thin_filament_length>
+		<bare_zone_length>80</bare_zone_length>
+		<k_falloff>0.0024</k_falloff>
+		<passive_mode>exponential</passive_mode>
+		<passive_exp_sigma>500</passive_exp_sigma>
+		<passive_exp_L>80</passive_exp_L>
+		<passive_l_slack>900</passive_l_slack>
+	</myofilaments>
+	
+	<membranes>
+		<kinetic_scheme>Ten_Tusscher_2004</kinetic_scheme>
+	</membranes>
+</half_sarcomere>
+
+</single_circulation_model>

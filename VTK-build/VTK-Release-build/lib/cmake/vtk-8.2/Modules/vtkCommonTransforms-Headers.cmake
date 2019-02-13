@@ -1,0 +1,6 @@
+set(vtkCommonTransforms_HEADERS_LOADED 1)
+set(vtkCommonTransforms_HEADERS "vtkAbstractTransform;vtkCylindricalTransform;vtkGeneralTransform;vtkHomogeneousTransform;vtkIdentityTransform;vtkLinearTransform;vtkMatrixToHomogeneousTransform;vtkMatrixToLinearTransform;vtkPerspectiveTransform;vtkSphericalTransform;vtkThinPlateSplineTransform;vtkTransform2D;vtkTransformCollection;vtkTransform;vtkWarpTransform;vtkLandmarkTransform")
+
+foreach(header ${vtkCommonTransforms_HEADERS})
+  set(vtkCommonTransforms_HEADER_${header}_EXISTS 1)
+endforeach()

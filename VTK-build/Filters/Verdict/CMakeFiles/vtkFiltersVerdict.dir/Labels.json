@@ -1,0 +1,40 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkCellQuality.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkCellSizeFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkMatrixMathFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkMeshQuality.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkCellQuality.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkCellSizeFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkMatrixMathFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Verdict/vtkMeshQuality.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Filters/Verdict/vtkFiltersVerdictModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersVerdict"
+		],
+		"name" : "vtkFiltersVerdict"
+	}
+}

@@ -1,0 +1,39 @@
+# Target labels
+ vtkDomainsChemistry
+# Source files and their labels
+/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskData.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataInternal.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataParser.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkCMLMoleculeReader.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkGaussianCubeReader2.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeMapper.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToAtomBallFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToBondStickFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToLinesFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToPolyDataFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkPeriodicTable.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkPointSetToMoleculeFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkProgrammableElectronicData.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkProteinRibbonFilter.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkSimpleBondPerceiver.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPAnimationReader.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPTessellationReader.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkXYZMolReader2.cxx
+/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskData.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkBlueObeliskDataParser.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkCMLMoleculeReader.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkGaussianCubeReader2.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeMapper.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToAtomBallFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToBondStickFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToLinesFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkMoleculeToPolyDataFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkPeriodicTable.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkPointSetToMoleculeFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkProgrammableElectronicData.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkProteinRibbonFilter.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkSimpleBondPerceiver.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPAnimationReader.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkVASPTessellationReader.h
+/home/fenics/shared/VTK/Domains/Chemistry/vtkXYZMolReader2.h
+/home/fenics/shared/VTK-build/Domains/Chemistry/vtkDomainsChemistryModule.h

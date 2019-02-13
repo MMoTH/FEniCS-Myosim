@@ -1,0 +1,433 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_cpucores.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_physmem.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/check.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc32_fast.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc32_table.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc64_fast.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc64_table.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/sha256.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/alone_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/alone_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/auto_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_buffer_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_buffer_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_header_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_header_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_util.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/common.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_buffer_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_decoder_memusage.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_encoder_memusage.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_preset.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_buffer_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_buffer_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_common.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_flags_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_flags_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/hardware_cputhreads.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/hardware_physmem.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index_hash.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/outqueue.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_buffer_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_buffer_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_encoder_mt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_flags_common.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_flags_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_flags_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/vli_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/vli_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/vli_size.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_common.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/fastpos_table.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma2_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma2_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder_optimum_fast.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder_optimum_normal.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder_presets.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_encoder_mf.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/rangecoder/price_table.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/arm.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/armthumb.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/ia64.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/powerpc.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_coder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_decoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/sparc.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/x86.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/base.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/bcj.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/block.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/check.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/container.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/delta.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/filter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/hardware.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/index.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/index_hash.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/lzma12.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/stream_flags.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/version.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/lzma/vli.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/api/vtk_lzma_mangle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/mythread.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/sysdefs.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_config.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_cpucores.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_integer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/common/tuklib_physmem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/check.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc32_table_be.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc32_table_le.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc64_table_be.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc64_table_le.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/check/crc_macros.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/alone_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_buffer_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/block_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/easy_preset.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/filter_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/index_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/memcmplen.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/outqueue.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/common/stream_flags_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/delta/delta_private.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/fastpos.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma2_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma2_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lzma/lzma_encoder_private.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_encoder_hash.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/lz/lz_encoder_hash_table.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/rangecoder/price.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/rangecoder/range_common.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/rangecoder/range_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/rangecoder/range_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_coder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_decoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_encoder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lzma/vtklzma/src/liblzma/simple/simple_private.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtklzma"
+		],
+		"name" : "vtklzma"
+	}
+}

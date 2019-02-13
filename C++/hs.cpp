@@ -29,7 +29,7 @@ dolfin::hs::hs()
 	// create instances of classes and FE structure
 	// read every time i_t_s or G_c_f_v called in FEniCS
 	p_FE = new FE;
-	p_bp = new base_parameters("/home/fenics/shared/test_9/instruction_file_FEniCS.txt", "/home/fenics/shared/test_9/");
+	p_bp = new base_parameters("/home/fenics/shared/test_12/instruction_file_FEniCS.txt", "/home/fenics/shared/test_12/");
 	p_Ca = new Ca(p_bp);
 	p_mf = new mf(this, p_Ca, p_bp);
 
@@ -116,7 +116,7 @@ std::vector<double> dolfin::hs::apply_time_step(const Array<double>& z, const Ar
 
 	//p_mf = new mf(this, p_Ca, p_bp);
 
-	step_size = p_FE->step_size;
+	step_size = p_FE->step_size/1000.0;
 		
 	y_vec.clear();
 	cb_force_vec.clear();
@@ -153,7 +153,7 @@ std::vector<double> dolfin::hs::apply_time_step(const Array<double>& z, const Ar
 				y_vec[m_counter * no_of_int_points * n_array_length + i * n_array_length] - temp;
 			//-----------------
 
-			//calculate_cb_force(m_counter, i, delta_hsl[i]);
+			calculate_cb_force(m_counter, i, delta_hsl[i]);
 		}
 	}
 	//std::cout << "total_force = " << p_mf->total_force;

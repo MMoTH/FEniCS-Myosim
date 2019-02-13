@@ -1,0 +1,22 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/VeraOut/vtkVeraOutReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/VeraOut/vtkVeraOutReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/VeraOut/vtkIOVeraOutModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOVeraOut"
+		],
+		"name" : "vtkIOVeraOut"
+	}
+}

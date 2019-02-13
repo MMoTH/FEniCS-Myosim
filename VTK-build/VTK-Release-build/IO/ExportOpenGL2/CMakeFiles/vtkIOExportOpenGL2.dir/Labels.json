@@ -1,0 +1,28 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportOpenGL2/vtkOpenGLGL2PSExporter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/ExportOpenGL2/vtkIOExportOpenGL2ObjectFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportOpenGL2/vtkOpenGLGL2PSExporter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/ExportOpenGL2/vtkIOExportOpenGL2ObjectFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/ExportOpenGL2/vtkIOExportOpenGL2Module.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOExportOpenGL2"
+		],
+		"name" : "vtkIOExportOpenGL2"
+	}
+}

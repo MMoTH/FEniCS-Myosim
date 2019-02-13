@@ -1,0 +1,34 @@
+# Target labels
+ vtktheora
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/analyze.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/encapiwrapper.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/encfrag.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/encinfo.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/encode.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/enquant.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/fdct.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/huffenc.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/mathops.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/mcenc.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/rate.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/tokenize.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/bitpack.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/decapiwrapper.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/decinfo.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/decode.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/dequant.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/huffdec.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/info.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/apiwrapper.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/fragment.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/idct.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/internal.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/quant.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/lib/state.c
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/include/theora/codec.h
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/include/theora/theora.h
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/include/theora/theoradec.h
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/include/theora/theoraenc.h
+/home/fenics/shared/VTK/ThirdParty/theora/vtktheora/include/theora/vtk_theora_mangle.h
+/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/theora/vtktheora/include/vtktheora_export.h

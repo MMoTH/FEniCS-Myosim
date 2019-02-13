@@ -1,0 +1,20 @@
+# Target labels
+ vtkFiltersTexture
+# Source files and their labels
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToCylinder.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToPlane.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToSphere.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkImplicitTextureCoords.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkThresholdTextureCoords.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkTransformTextureCoords.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkTriangularTCoords.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkScalarsToTextureFilter.cxx
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToCylinder.h
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToPlane.h
+/home/fenics/shared/VTK/Filters/Texture/vtkTextureMapToSphere.h
+/home/fenics/shared/VTK/Filters/Texture/vtkImplicitTextureCoords.h
+/home/fenics/shared/VTK/Filters/Texture/vtkThresholdTextureCoords.h
+/home/fenics/shared/VTK/Filters/Texture/vtkTransformTextureCoords.h
+/home/fenics/shared/VTK/Filters/Texture/vtkTriangularTCoords.h
+/home/fenics/shared/VTK/Filters/Texture/vtkScalarsToTextureFilter.h
+/home/fenics/shared/VTK-build/VTK-Release-build/Filters/Texture/vtkFiltersTextureModule.h

@@ -1,0 +1,165 @@
+# CMake generated Testfile for 
+# Source directory: /home/fenics/shared/VTK/Rendering/OpenGL2/Testing/Cxx
+# Build directory: /home/fenics/shared/VTK-build/Rendering/OpenGL2/Testing/Cxx
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+add_test(vtkRenderingOpenGL2Cxx-TestBlurAndSobelPasses "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestBlurAndSobelPasses" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestBlurAndSobelPasses.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestBlurAndSobelPasses PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCoincident "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCoincident" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCoincident.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCoincident PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2NaNPartial "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCompositePolyDataMapper2NaNPartial" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCompositePolyDataMapper2NaNPartial.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2NaNPartial PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Pickability "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCompositePolyDataMapper2Pickability" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCompositePolyDataMapper2Pickability.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Pickability PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2SharedArray "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCompositePolyDataMapper2SharedArray" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCompositePolyDataMapper2SharedArray.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2SharedArray PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Spheres "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCompositePolyDataMapper2Spheres" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCompositePolyDataMapper2Spheres.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Spheres PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Vertices "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCompositePolyDataMapper2Vertices" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCompositePolyDataMapper2Vertices.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCompositePolyDataMapper2Vertices PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCubeMap "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCubeMap" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCubeMap.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCubeMap PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestDepthOfFieldPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestDepthOfFieldPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestDepthOfFieldPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestDepthOfFieldPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestDepthPeelingPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestDepthPeelingPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestDepthPeelingPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestDepthPeelingPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestDepthPeelingPassViewport "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestDepthPeelingPassViewport" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestDepthPeelingPassViewport.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestDepthPeelingPassViewport PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestEDLPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestEDLPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestEDLPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestEDLPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestFloor "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestFloor" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestFloor.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestFloor PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestFramebufferPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestFramebufferPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestFramebufferPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestFramebufferPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestFramebufferHDR "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestFramebufferHDR" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestFramebufferHDR.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestFramebufferHDR PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestFXAAFilter "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestFXAAFilter" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestFXAAFilter.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestFXAAFilter PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestGaussianBlurPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestGaussianBlurPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestGaussianBlurPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestGaussianBlurPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperEdges "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestGlyph3DMapperEdges" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestGlyph3DMapperEdges.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperEdges PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperCellPicking "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestGlyph3DMapperCellPicking" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestGlyph3DMapperCellPicking.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperCellPicking PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperCulling "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestGlyph3DMapperCulling" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestGlyph3DMapperCulling.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperCulling PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperPickability "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestGlyph3DMapperPickability" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestGlyph3DMapperPickability.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestGlyph3DMapperPickability PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestLightingMapLuminancePass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestLightingMapLuminancePass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestLightingMapLuminancePass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestLightingMapLuminancePass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestLightingMapNormalsPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestLightingMapNormalsPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestLightingMapNormalsPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestLightingMapNormalsPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestMultiTexturing "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestMultiTexturing" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestMultiTexturing.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestMultiTexturing PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestOffscreenRenderingResize "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestOffscreenRenderingResize" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestOffscreenRenderingResize.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestOffscreenRenderingResize PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestOrderIndependentTranslucentPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestOrderIndependentTranslucentPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestOrderIndependentTranslucentPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestOrderIndependentTranslucentPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPanoramicProjectionPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPanoramicProjectionPass" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPanoramicProjectionPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPanoramicProjectionPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPointFillPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPointFillPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPointFillPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPointFillPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPointGaussianSelection "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPointGaussianSelection" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPointGaussianSelection.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPointGaussianSelection PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPropPicker2Renderers "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPropPicker2Renderers" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPropPicker2Renderers.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPropPicker2Renderers PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPointGaussianMapper "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPointGaussianMapper" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPointGaussianMapper.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPointGaussianMapper PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestPointGaussianMapperOpacity "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestPointGaussianMapperOpacity" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestPointGaussianMapperOpacity.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestPointGaussianMapperOpacity PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestRemoveActorNonCurrentContext "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestRemoveActorNonCurrentContext" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestRemoveActorNonCurrentContext.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestRemoveActorNonCurrentContext PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestRenderToImage "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestRenderToImage" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestRenderToImage.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestRenderToImage PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSRGB "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSRGB" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSRGB.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSRGB PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSSAAPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSSAAPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSSAAPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSSAAPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSetZBuffer "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSetZBuffer" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSetZBuffer.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSetZBuffer PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestShadowMapBakerPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestShadowMapBakerPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestShadowMapBakerPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestShadowMapBakerPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestShadowMapPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestShadowMapPass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestShadowMapPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestShadowMapPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSharedRenderWindow "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSharedRenderWindow" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSharedRenderWindow.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSharedRenderWindow PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSimpleMotionBlur "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSimpleMotionBlur" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSimpleMotionBlur.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSimpleMotionBlur PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSobelGradientMagnitudePass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSobelGradientMagnitudePass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSobelGradientMagnitudePass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSobelGradientMagnitudePass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSphereMap "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSphereMap" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSphereMap.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSphereMap PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSpherePoints "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSpherePoints" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSpherePoints.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSpherePoints PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestSphereVertex "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestSphereVertex" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestSphereVertex.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestSphereVertex PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestToneMappingPass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestToneMappingPass" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestToneMappingPass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestToneMappingPass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestUserShader "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestUserShader" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestUserShader.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestUserShader PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestUserShader2 "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestUserShader2" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestUserShader2.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestUserShader2 PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestVBOPLYMapper "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestVBOPLYMapper" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestVBOPLYMapper.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestVBOPLYMapper PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestVBOPointsLines "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestVBOPointsLines" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestVBOPointsLines.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestVBOPointsLines PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestValuePass "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestValuePass" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestValuePass.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestValuePass PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestValuePass2 "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestValuePass2" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestValuePass2.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestValuePass2 PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")
+add_test(vtkRenderingOpenGL2Cxx-TestCubeMap2 "/home/fenics/shared/VTK-build/bin/vtkRenderingOpenGL2CxxTests" "TestCubeMap2" "/home/fenics/shared/VTK-build/ExternalData/Testing/Data/skybox" "-D" "/home/fenics/shared/VTK-build/ExternalData//Testing" "-T" "/home/fenics/shared/VTK-build/Testing/Temporary" "-V" "/home/fenics/shared/VTK-build/ExternalData/Rendering/OpenGL2/Testing/Data/Baseline/TestCubeMap2.png")
+set_tests_properties(vtkRenderingOpenGL2Cxx-TestCubeMap2 PROPERTIES  FAIL_REGULAR_EXPRESSION "(
+|^)ERROR: ;instance(s)? still around" LABELS "vtkRenderingOpenGL2" SKIP_RETURN_CODE "125")

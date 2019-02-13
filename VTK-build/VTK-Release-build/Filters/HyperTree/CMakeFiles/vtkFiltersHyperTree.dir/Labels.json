@@ -1,0 +1,82 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisClip.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisCut.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisReflection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridCellCenters.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridContour.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridDepthLimiter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridGeometry.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridPlaneCutter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridThreshold.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridToUnstructuredGrid.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridEvaluateCoarse.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisClip.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisCut.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridAxisReflection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridCellCenters.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridContour.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridDepthLimiter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridGeometry.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridPlaneCutter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridThreshold.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridToUnstructuredGrid.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/HyperTree/vtkHyperTreeGridEvaluateCoarse.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Filters/HyperTree/vtkFiltersHyperTreeModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersHyperTree"
+		],
+		"name" : "vtkFiltersHyperTree"
+	}
+}

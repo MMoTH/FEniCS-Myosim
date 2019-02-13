@@ -1,0 +1,34 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/ogg/vtkogg/src/bitwise.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/ogg/vtkogg/src/framing.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/ThirdParty/ogg/vtkogg/include/ogg/config_types.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/ogg/vtkogg/include/ogg/ogg.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/ogg/vtkogg/include/ogg/os_types.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/ogg/vtkogg/include/ogg/vtk_ogg_mangle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/ThirdParty/ogg/vtkogg/include/ogg/vtkogg_export.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkogg"
+		],
+		"name" : "vtkogg"
+	}
+}

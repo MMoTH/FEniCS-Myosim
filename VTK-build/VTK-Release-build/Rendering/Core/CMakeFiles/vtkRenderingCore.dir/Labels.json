@@ -1,0 +1,808 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractMapper3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractVolumeMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor2DCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActorCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssembly.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAvatar.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkBackgroundColorMonitor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkBillboardTextActor3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCameraActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCameraInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCellCenterDepthSort.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCIEDE2000.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkColorTransferFunction.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositeDataDisplayAttributes.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositeDataDisplayAttributesLegacy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositePolyDataMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCoordinate.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCullerCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCuller.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDataSetMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDiscretizableColorTransferFunction.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDistanceToCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFollower.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFrameBufferObjectBase.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFrustumCoverageCuller.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFXAAOptions.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGenericRenderWindowInteractor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGenericVertexAttributeMapping.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGlyph3DMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGPUInfo.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGPUInfoList.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphicsFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphToGlyphs.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkHardwareSelector.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkHierarchicalPolyDataMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageMapper3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageProperty.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageSlice.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageSliceMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorEventRecorder.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorObserver.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLabeledContourMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLight.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightKit.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLogLookupTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLookupTableWithEnabling.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapArrayValues.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapper2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapperCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkObserverMediator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPointGaussianMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPolyDataMapper2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPolyDataMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3DCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3DFollower.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropAssembly.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProperty2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProperty.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererDelegate.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderPass.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderState.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderTimerLog.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindow.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowInteractor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowInteractor3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkSelectVisiblePoints.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkShaderDeviceAdapter2.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkSkybox.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextActor3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTexture.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTexturedActor2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTransformCoordinateSystems.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTransformInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTupleInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkViewDependentErrorMetric.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkViewport.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVisibilitySort.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolumeCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolume.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolumeProperty.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWindowLevelLookupTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWindowToImageFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyNode.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyPath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyPaths.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAreaPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractPropPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPickingManager.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLODProp3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWorldPointPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCellPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPointPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderedAreaPicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkScenePicker.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyle.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyleSwitchBase.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyle3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyle.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyleCamera.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyleSettings.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkStringToImage.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextMapper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextProperty.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextPropertyCollection.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextRenderer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractInteractionDevice.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractRenderDevice.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWidget.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGPUInfoListArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkNoise200x200.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPythagoreanQuadruples.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRayCastStructures.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderingCoreEnums.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxMotionEventInfo.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractMapper3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractVolumeMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor2DCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActorCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssembly.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAvatar.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkBackgroundColorMonitor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkBillboardTextActor3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCameraActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCameraInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCellCenterDepthSort.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCIEDE2000.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkColorTransferFunction.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositeDataDisplayAttributes.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositeDataDisplayAttributesLegacy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCompositePolyDataMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCoordinate.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCullerCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCuller.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDataSetMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDiscretizableColorTransferFunction.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkDistanceToCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFollower.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFrameBufferObjectBase.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFrustumCoverageCuller.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkFXAAOptions.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGenericRenderWindowInteractor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGenericVertexAttributeMapping.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGlyph3DMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGPUInfo.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGPUInfoList.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphicsFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkGraphToGlyphs.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkHardwareSelector.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkHierarchicalPolyDataMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageMapper3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageProperty.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageSlice.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkImageSliceMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorEventRecorder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorObserver.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLabeledContourMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLight.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLightKit.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLogLookupTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLookupTableWithEnabling.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapArrayValues.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapper2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapperCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkObserverMediator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPointGaussianMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPolyDataMapper2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPolyDataMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3DCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp3DFollower.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropAssembly.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProp.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProperty2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkProperty.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererDelegate.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRendererSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderPass.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderState.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderTimerLog.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindow.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowInteractor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWindowInteractor3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkSelectVisiblePoints.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkShaderDeviceAdapter2.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkSkybox.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextActor3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTexture.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTexturedActor2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTransformCoordinateSystems.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTransformInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTupleInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkViewDependentErrorMetric.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkViewport.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVisibilitySort.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolumeCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolume.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkVolumeProperty.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWindowLevelLookupTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWindowToImageFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyNode.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyPath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAssemblyPaths.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAreaPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractPropPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPropPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPickingManager.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkLODProp3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkWorldPointPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkCellPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkPointPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderedAreaPicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkScenePicker.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyleSwitchBase.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkInteractorStyle3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyleCamera.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTDxInteractorStyleSettings.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkStringToImage.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextMapper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextProperty.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextPropertyCollection.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkTextRenderer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractInteractionDevice.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkAbstractRenderDevice.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/Core/vtkRenderWidget.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/Core/vtkRenderingCoreModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkRenderingCore"
+		],
+		"name" : "vtkRenderingCore"
+	}
+}

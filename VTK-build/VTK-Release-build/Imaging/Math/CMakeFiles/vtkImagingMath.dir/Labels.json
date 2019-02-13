@@ -1,0 +1,64 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageDivergence.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageDotProduct.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageLogarithmicScale.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageLogic.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMagnitude.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMaskBits.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMathematics.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageWeightedSum.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageDivergence.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageDotProduct.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageLogarithmicScale.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageLogic.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMagnitude.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMaskBits.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageMathematics.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Math/vtkImageWeightedSum.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Imaging/Math/vtkImagingMathModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkImagingMath"
+		],
+		"name" : "vtkImagingMath"
+	}
+}

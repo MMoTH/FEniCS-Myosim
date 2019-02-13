@@ -1,0 +1,30 @@
+# Target labels
+ vtkRenderingLabel
+# Source files and their labels
+/home/fenics/shared/VTK/Rendering/Label/vtkLabeledDataMapper.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabeledTreeMapDataMapper.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyAlgorithm.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyCompositeIterator.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchy.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyIterator.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelPlacementMapper.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelPlacer.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelRenderStrategy.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelSizeCalculator.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkFreeTypeLabelRenderStrategy.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkDynamic2DLabelMapper.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkPointSetToLabelHierarchy.cxx
+/home/fenics/shared/VTK/Rendering/Label/vtkLabeledDataMapper.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabeledTreeMapDataMapper.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyAlgorithm.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyCompositeIterator.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchy.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelHierarchyIterator.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelPlacementMapper.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelPlacer.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelRenderStrategy.h
+/home/fenics/shared/VTK/Rendering/Label/vtkLabelSizeCalculator.h
+/home/fenics/shared/VTK/Rendering/Label/vtkFreeTypeLabelRenderStrategy.h
+/home/fenics/shared/VTK/Rendering/Label/vtkDynamic2DLabelMapper.h
+/home/fenics/shared/VTK/Rendering/Label/vtkPointSetToLabelHierarchy.h
+/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/Label/vtkRenderingLabelModule.h

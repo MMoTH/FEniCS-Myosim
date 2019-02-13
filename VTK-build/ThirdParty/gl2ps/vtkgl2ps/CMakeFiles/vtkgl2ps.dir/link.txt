@@ -1,0 +1,1 @@
+/usr/lib/ccache/cc  -fPIC   -w -w -g  -Wl,-lc   -shared -Wl,-soname,libvtkgl2ps-8.2.so.1 -o ../../../lib/libvtkgl2ps-8.2.so.1 CMakeFiles/vtkgl2ps.dir/gl2ps.c.o ../../../lib/libvtkpng-8.2.so.1 ../../../lib/libvtkzlib-8.2.so.1 /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libGL.so -lm -Wl,-rpath,/home/fenics/shared/VTK-build/lib: 

@@ -1,0 +1,6 @@
+set(vtkParallelCore_HEADERS_LOADED 1)
+set(vtkParallelCore_HEADERS "vtkCommunicator;vtkDummyCommunicator;vtkDummyController;vtkMultiProcessController;vtkMultiProcessStream;vtkPDirectory;vtkProcess;vtkProcessGroup;vtkPSystemTools;vtkSocketCommunicator;vtkSocketController;vtkSubCommunicator;vtkSubGroup;vtkFieldDataSerializer")
+
+foreach(header ${vtkParallelCore_HEADERS})
+  set(vtkParallelCore_HEADER_${header}_EXISTS 1)
+endforeach()

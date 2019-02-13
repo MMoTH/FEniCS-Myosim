@@ -1,0 +1,52 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextActor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextBufferId.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextDevice2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextDevice3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLPropItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/ContextOpenGL2/vtkRenderingContextOpenGL2ObjectFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextActor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextBufferId.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextDevice2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLContextDevice3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Rendering/ContextOpenGL2/vtkOpenGLPropItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/ContextOpenGL2/vtkRenderingContextOpenGL2ObjectFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/ContextOpenGL2/vtkRenderingContextOpenGL2Module.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkRenderingContextOpenGL2"
+		],
+		"name" : "vtkRenderingContextOpenGL2"
+	}
+}

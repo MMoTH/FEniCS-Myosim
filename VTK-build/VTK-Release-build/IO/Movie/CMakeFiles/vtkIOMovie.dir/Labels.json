@@ -1,0 +1,31 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Movie/vtkGenericMovieWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Movie/vtkOggTheoraWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/Movie/vtkIOMovieConfigure.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Movie/vtkGenericMovieWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Movie/vtkOggTheoraWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/Movie/vtkIOMovieModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOMovie"
+		],
+		"name" : "vtkIOMovie"
+	}
+}

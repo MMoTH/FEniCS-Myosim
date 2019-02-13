@@ -1,0 +1,52 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkContourValues.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkErrorCode.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkFunctionParser.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkHeap.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkPolygonBuilder.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkResourceFileLocator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkContourValues.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkErrorCode.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkFunctionParser.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkHeap.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkPolygonBuilder.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Misc/vtkResourceFileLocator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Common/Misc/vtkCommonMiscModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkCommonMisc"
+		],
+		"name" : "vtkCommonMisc"
+	}
+}

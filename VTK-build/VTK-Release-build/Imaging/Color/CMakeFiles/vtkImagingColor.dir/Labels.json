@@ -1,0 +1,76 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageHSIToRGB.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageHSVToRGB.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageYIQToRGB.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageLuminance.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageMapToRGBA.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageMapToWindowLevelColors.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageQuantizeRGBToIndex.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToHSI.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToHSV.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToYIQ.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageHSIToRGB.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageHSVToRGB.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageYIQToRGB.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageLuminance.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageMapToRGBA.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageMapToWindowLevelColors.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageQuantizeRGBToIndex.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToHSI.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToHSV.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Imaging/Color/vtkImageRGBToYIQ.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Imaging/Color/vtkImagingColorModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkImagingColor"
+		],
+		"name" : "vtkImagingColor"
+	}
+}

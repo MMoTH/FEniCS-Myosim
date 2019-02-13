@@ -1,0 +1,58 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSight6BinaryReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSight6Reader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightGoldBinaryReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightGoldReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightMasterServerReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkGenericEnSightReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSight6BinaryReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSight6Reader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightGoldBinaryReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightGoldReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightMasterServerReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkEnSightReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/EnSight/vtkGenericEnSightReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/EnSight/vtkIOEnSightModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOEnSight"
+		],
+		"name" : "vtkIOEnSight"
+	}
+}

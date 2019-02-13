@@ -1,0 +1,6 @@
+set(vtkTestingGenericBridge_HEADERS_LOADED 1)
+set(vtkTestingGenericBridge_HEADERS "vtkBridgeAttribute;vtkBridgeCell;vtkBridgeCellIterator;vtkBridgeCellIteratorOnCellBoundaries;vtkBridgeCellIteratorOnCellList;vtkBridgeCellIteratorOnDataSet;vtkBridgeCellIteratorOne;vtkBridgeCellIteratorStrategy;vtkBridgeDataSet;vtkBridgeExport;vtkBridgePointIterator;vtkBridgePointIteratorOnCell;vtkBridgePointIteratorOnDataSet;vtkBridgePointIteratorOne")
+
+foreach(header ${vtkTestingGenericBridge_HEADERS})
+  set(vtkTestingGenericBridge_HEADER_${header}_EXISTS 1)
+endforeach()

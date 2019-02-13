@@ -1,0 +1,34 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableAttributeDataFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableGlyphFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableAttributeDataFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Programmable/vtkProgrammableGlyphFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Filters/Programmable/vtkFiltersProgrammableModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersProgrammable"
+		],
+		"name" : "vtkFiltersProgrammable"
+	}
+}

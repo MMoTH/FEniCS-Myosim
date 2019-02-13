@@ -1,0 +1,6 @@
+set(vtkRenderingContextOpenGL2_HEADERS_LOADED 1)
+set(vtkRenderingContextOpenGL2_HEADERS "vtkOpenGLContextActor;vtkOpenGLContextBufferId;vtkOpenGLContextDevice2D;vtkOpenGLContextDevice3D;vtkOpenGLPropItem;vtkRenderingContextOpenGL2ObjectFactory")
+
+foreach(header ${vtkRenderingContextOpenGL2_HEADERS})
+  set(vtkRenderingContextOpenGL2_HEADER_${header}_EXISTS 1)
+endforeach()

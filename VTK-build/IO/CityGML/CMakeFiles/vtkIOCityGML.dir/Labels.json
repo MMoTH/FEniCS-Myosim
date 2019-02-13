@@ -1,0 +1,22 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/CityGML/vtkCityGMLReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/CityGML/vtkCityGMLReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/IO/CityGML/vtkIOCityGMLModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOCityGML"
+		],
+		"name" : "vtkIOCityGML"
+	}
+}

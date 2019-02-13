@@ -1,0 +1,22 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Topology/vtkFiberSurface.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Topology/vtkFiberSurface.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Filters/Topology/vtkFiltersTopologyModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersTopology"
+		],
+		"name" : "vtkFiltersTopology"
+	}
+}

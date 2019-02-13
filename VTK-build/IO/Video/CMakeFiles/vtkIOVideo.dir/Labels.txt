@@ -1,0 +1,6 @@
+# Target labels
+ vtkIOVideo
+# Source files and their labels
+/home/fenics/shared/VTK/IO/Video/vtkVideoSource.cxx
+/home/fenics/shared/VTK/IO/Video/vtkVideoSource.h
+/home/fenics/shared/VTK-build/IO/Video/vtkIOVideoModule.h

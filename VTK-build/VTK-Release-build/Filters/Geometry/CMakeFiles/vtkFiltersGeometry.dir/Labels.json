@@ -1,0 +1,154 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkCompositeDataGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkHierarchicalDataSetGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkImageDataGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkImageDataToUniformGrid.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkLinearToQuadraticCellsFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkProjectSphereFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkRectilinearGridGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredPointsGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkUnstructuredGridGeometryFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetSurfaceFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetRegionSurfaceFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkAbstractGridConnectivity.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetGhostGenerator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkRectilinearGridPartitioner.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredAMRNeighbor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredAMRGridConnectivity.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridConnectivity.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridGhostDataGenerator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridPartitioner.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredNeighbor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkUniformGridGhostDataGenerator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkCompositeDataGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkHierarchicalDataSetGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkImageDataGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkImageDataToUniformGrid.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkLinearToQuadraticCellsFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkProjectSphereFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkRectilinearGridGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredPointsGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkUnstructuredGridGeometryFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetSurfaceFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetRegionSurfaceFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkAbstractGridConnectivity.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkDataSetGhostGenerator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkRectilinearGridPartitioner.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredAMRNeighbor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredAMRGridConnectivity.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridConnectivity.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridGhostDataGenerator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredGridPartitioner.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkStructuredNeighbor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Geometry/vtkUniformGridGhostDataGenerator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Filters/Geometry/vtkFiltersGeometryModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersGeometry"
+		],
+		"name" : "vtkFiltersGeometry"
+	}
+}

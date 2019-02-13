@@ -1,0 +1,34 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLY.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLYReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLYWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLY.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLYReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/PLY/vtkPLYWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/IO/PLY/vtkIOPLYModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOPLY"
+		],
+		"name" : "vtkIOPLY"
+	}
+}

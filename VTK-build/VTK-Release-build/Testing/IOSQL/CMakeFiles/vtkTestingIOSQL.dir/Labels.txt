@@ -1,0 +1,6 @@
+# Target labels
+ vtkTestingIOSQL
+# Source files and their labels
+/home/fenics/shared/VTK/Testing/IOSQL/DatabaseSchemaWith2Tables.cxx
+/home/fenics/shared/VTK/Testing/IOSQL/DatabaseSchemaWith2Tables.h
+/home/fenics/shared/VTK-build/VTK-Release-build/Testing/IOSQL/vtkTestingIOSQLModule.h

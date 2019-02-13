@@ -1,0 +1,40 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkMultiBaselineRegressionTest.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkRegressionTestImage.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTesting.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTestingInteractor.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTestingObjectFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTesting.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTestingInteractor.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Testing/Rendering/vtkTestingObjectFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Testing/Rendering/vtkTestingRenderingModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkTestingRendering"
+		],
+		"name" : "vtkTestingRendering"
+	}
+}

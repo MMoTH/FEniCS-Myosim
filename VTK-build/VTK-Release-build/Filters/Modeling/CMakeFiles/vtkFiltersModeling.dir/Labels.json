@@ -1,0 +1,190 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkAdaptiveSubdivisionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkBandedPolyDataContourFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkButterflySubdivisionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkContourLoopExtraction.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkCookieCutter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkDijkstraGraphGeodesicPath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkDijkstraImageGeodesicPath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkFitToHeightMapFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkFillHolesFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkGeodesicPath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkGraphGeodesicPath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLinearExtrusionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLinearSubdivisionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLoopSubdivisionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkOutlineFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkPolyDataPointSampler.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkProjectedTexture.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkQuadRotationalExtrusionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRibbonFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRotationalExtrusionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRuledSurfaceFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSectorSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSelectEnclosedPoints.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSelectPolyData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSpherePuzzleArrows.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSpherePuzzle.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSubdivideTetra.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkTrimmedExtrusionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkVolumeOfRevolutionFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkAdaptiveSubdivisionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkBandedPolyDataContourFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkButterflySubdivisionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkContourLoopExtraction.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkCookieCutter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkDijkstraGraphGeodesicPath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkDijkstraImageGeodesicPath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkFitToHeightMapFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkFillHolesFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkGeodesicPath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkGraphGeodesicPath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLinearExtrusionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLinearSubdivisionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkLoopSubdivisionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkOutlineFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkPolyDataPointSampler.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkProjectedTexture.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkQuadRotationalExtrusionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRibbonFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRotationalExtrusionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkRuledSurfaceFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSectorSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSelectEnclosedPoints.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSelectPolyData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSpherePuzzleArrows.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSpherePuzzle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkSubdivideTetra.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkTrimmedExtrusionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Modeling/vtkVolumeOfRevolutionFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Filters/Modeling/vtkFiltersModelingModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersModeling"
+		],
+		"name" : "vtkFiltersModeling"
+	}
+}

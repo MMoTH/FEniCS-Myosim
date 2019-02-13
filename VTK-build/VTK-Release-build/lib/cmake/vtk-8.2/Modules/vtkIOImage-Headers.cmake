@@ -1,0 +1,6 @@
+set(vtkIOImage_HEADERS_LOADED 1)
+set(vtkIOImage_HEADERS "vtkBMPReader;vtkBMPWriter;vtkDEMReader;vtkDICOMImageReader;vtkGESignaReader;vtkImageExport;vtkImageImport;vtkImageImportExecutive;vtkImageReader;vtkImageReader2;vtkImageReader2Collection;vtkImageReader2Factory;vtkImageWriter;vtkJPEGReader;vtkJPEGWriter;vtkJSONImageWriter;vtkMedicalImageProperties;vtkMedicalImageReader2;vtkMetaImageReader;vtkMetaImageWriter;vtkMRCReader;vtkNIFTIImageHeader;vtkNIFTIImageReader;vtkNIFTIImageWriter;vtkNrrdReader;vtkPNGReader;vtkPNGWriter;vtkPNMReader;vtkPNMWriter;vtkPostScriptWriter;vtkSEPReader;vtkSLCReader;vtkTIFFReader;vtkTIFFWriter;vtkVolume16Reader;vtkVolumeReader")
+
+foreach(header ${vtkIOImage_HEADERS})
+  set(vtkIOImage_HEADER_${header}_EXISTS 1)
+endforeach()

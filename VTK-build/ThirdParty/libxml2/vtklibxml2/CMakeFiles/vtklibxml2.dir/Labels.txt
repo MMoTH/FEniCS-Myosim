@@ -1,0 +1,46 @@
+# Target labels
+ vtklibxml2
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/DOCBparser.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/HTMLparser.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/HTMLtree.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/SAX.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/SAX2.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/c14n.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/catalog.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/chvalid.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/debugXML.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/dict.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/encoding.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/entities.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/error.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/globals.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/hash.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/legacy.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/list.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/nanoftp.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/nanohttp.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/parser.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/parserInternals.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/pattern.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/relaxng.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/schematron.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/threads.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/tree.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/uri.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/valid.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xinclude.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xlink.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlIO.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlmemory.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlmodule.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlreader.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlregexp.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlsave.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlschemas.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlschemastypes.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlstring.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlunicode.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xmlwriter.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xpath.c
+/home/fenics/shared/VTK/ThirdParty/libxml2/vtklibxml2/xpointer.c

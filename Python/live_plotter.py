@@ -8,7 +8,7 @@ get_ipython().run_line_magic('matplotlib', 'qt')
 
 myosim_results = 0
 
-test = 'test_9'
+test = 'test_10'
 
 if test == 'test_10':
     
@@ -92,7 +92,7 @@ if test == 'test_3':
     
 if test == 'test_2':
     
-    fenics_output_directory = 'test_2_new'
+    fenics_output_directory = 'test_2'
     int_point = 0
     no_of_time_steps = 701
     no_of_states = 3
@@ -114,7 +114,7 @@ def animate(i):
     fenics_pop_file = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\dumped_populations.npy')
     tarray = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\tarray.npy')
     stress_array = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\stress_array.npy')
-    pstress_array = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\pstress_array.npy')
+    #pstress_array = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\pstress_array.npy')
     calcium = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\calcium.npy')
     hsl = np.load('C:\\Users\\ani228\\Dropbox\\UK\\FEniCS\\' + fenics_output_directory + '\\HSL.npy')
     
@@ -195,9 +195,9 @@ def animate(i):
     #--------------------------------------------------------------------------
     plt.subplot(426)
     active, = plt.plot(tarray, stress_array,'r')
-    passive, = plt.plot(tarray, pstress_array,'b')
-    actpass, = plt.plot(tarray, stress_array+pstress_array,'k')
-    traction, = plt.plot(tarray, np.ones(np.shape(tarray))*0.0)
+    #passive, = plt.plot(tarray, pstress_array,'b')
+    #actpass, = plt.plot(tarray, stress_array+pstress_array,'k')
+    #traction, = plt.plot(tarray, np.ones(np.shape(tarray))*0.0)
     
     '''active, = plt.plot(tarray[0:50], stress_array[0:50],'r')
     passive, = plt.plot(tarray[0:50], pstress_array[0:50],'b')
@@ -208,7 +208,7 @@ def animate(i):
         plt.scatter(myosim_summary_data[::10,0], myosim_summary_data[::10,1],color='r')
     plt.xlabel('time (s)')
     plt.ylabel("Stress (Pa)")
-    plt.legend((active, passive, traction, actpass), ('Active', 'Passive', 'Traction', 'Active + Passive'))
+    #plt.legend((active, passive, traction, actpass), ('Active', 'Passive', 'Traction', 'Active + Passive'))
     #--------------------------------------------------------------------------
     plt.subplot(428)
     plt.plot(tarray, calcium)

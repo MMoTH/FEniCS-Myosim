@@ -1,0 +1,280 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkArcParallelEdgeStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAreaLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAreaLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAssignCoordinates.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAssignCoordinatesLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAttributeClustering2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkBoxLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackFrontChainLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackToPolyData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCircularLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkClustering2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCommunity2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkConeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkConstrained2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCosmicTreeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkEdgeLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkEdgeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkFast2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkForceDirectedLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGeoEdgeStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGeoMath.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGraphLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGraphLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkIncrementalForceLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPassThroughEdgeStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPassThroughLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPerturbCoincidentVertices.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkRandomLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSimple2DLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSimple3DCirclesStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSliceAndDiceLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSpanTreeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSplineGraphEdges.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSquarifyLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkStackedTreeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapToPolyData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeOrbitLayoutStrategy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeRingToPolyData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkKCoreLayout.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkArcParallelEdgeStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAreaLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAreaLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAssignCoordinates.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAssignCoordinatesLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkAttributeClustering2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkBoxLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackFrontChainLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCirclePackToPolyData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCircularLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkClustering2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCommunity2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkConeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkConstrained2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkCosmicTreeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkEdgeLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkEdgeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkFast2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkForceDirectedLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGeoEdgeStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGeoMath.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGraphLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkGraphLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkIncrementalForceLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPassThroughEdgeStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPassThroughLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkPerturbCoincidentVertices.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkRandomLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSimple2DLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSimple3DCirclesStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSliceAndDiceLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSpanTreeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSplineGraphEdges.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkSquarifyLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkStackedTreeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeMapToPolyData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeOrbitLayoutStrategy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkTreeRingToPolyData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Layout/vtkKCoreLayout.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Infovis/Layout/vtkInfovisLayoutModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkInfovisLayout"
+		],
+		"name" : "vtkInfovisLayout"
+	}
+}

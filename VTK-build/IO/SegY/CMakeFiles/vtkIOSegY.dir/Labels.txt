@@ -1,0 +1,12 @@
+# Target labels
+ vtkIOSegY
+# Source files and their labels
+/home/fenics/shared/VTK/IO/SegY/vtkSegYReader.cxx
+/home/fenics/shared/VTK/IO/SegY/vtkSegYIOUtils.cxx
+/home/fenics/shared/VTK/IO/SegY/vtkSegYReaderInternal.cxx
+/home/fenics/shared/VTK/IO/SegY/vtkSegYTraceReader.cxx
+/home/fenics/shared/VTK/IO/SegY/vtkSegYReader.h
+/home/fenics/shared/VTK/IO/SegY/vtkSegYIOUtils.h
+/home/fenics/shared/VTK/IO/SegY/vtkSegYReaderInternal.h
+/home/fenics/shared/VTK/IO/SegY/vtkSegYTraceReader.h
+/home/fenics/shared/VTK-build/IO/SegY/vtkIOSegYModule.h

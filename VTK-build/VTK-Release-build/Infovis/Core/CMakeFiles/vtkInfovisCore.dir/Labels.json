@@ -1,0 +1,280 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkAddMembershipArray.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkAdjacencyMatrixToEdgeTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkArrayNorm.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkArrayToTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkCollapseGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkCollapseVerticesByArray.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkContinuousScatterplot.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkDataObjectToTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkDotProductSimilarity.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExtractSelectedTree.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkEdgeCenters.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExpandSelectedGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExtractSelectedGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGenerateIndexArray.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGraphHierarchicalBundleEdges.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGroupLeafVertices.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeColumns.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeGraphs.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeTables.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMutableGraphHelper.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkNetworkHierarchy.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkPipelineGraphSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkPruneTreeFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRandomGraphSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkReduceTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRemoveIsolatedVertices.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkSparseArrayToTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStreamGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStringToCategory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStringToNumeric.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToArray.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToSparseArray.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToTreeFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkThresholdGraph.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkThresholdTable.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTransferAttributes.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTransposeMatrix.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeFieldAggregator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeDifferenceFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeLevelsFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkVertexDegree.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRemoveHiddenData.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkKCoreDecomposition.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkAddMembershipArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkAdjacencyMatrixToEdgeTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkArrayNorm.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkArrayToTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkCollapseGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkCollapseVerticesByArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkContinuousScatterplot.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkDataObjectToTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkDotProductSimilarity.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExtractSelectedTree.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkEdgeCenters.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExpandSelectedGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkExtractSelectedGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGenerateIndexArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGraphHierarchicalBundleEdges.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkGroupLeafVertices.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeColumns.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeGraphs.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMergeTables.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkMutableGraphHelper.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkNetworkHierarchy.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkPipelineGraphSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkPruneTreeFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRandomGraphSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkReduceTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRemoveIsolatedVertices.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkSparseArrayToTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStreamGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStringToCategory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkStringToNumeric.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToSparseArray.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTableToTreeFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkThresholdGraph.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkThresholdTable.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTransferAttributes.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTransposeMatrix.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeFieldAggregator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeDifferenceFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkTreeLevelsFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkVertexDegree.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkRemoveHiddenData.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Infovis/Core/vtkKCoreDecomposition.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Infovis/Core/vtkInfovisCoreModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkInfovisCore"
+		],
+		"name" : "vtkInfovisCore"
+	}
+}

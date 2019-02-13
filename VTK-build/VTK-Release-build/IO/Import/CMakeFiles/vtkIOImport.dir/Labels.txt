@@ -1,0 +1,15 @@
+# Target labels
+ vtkIOImport
+# Source files and their labels
+/home/fenics/shared/VTK/IO/Import/vtk3DSImporter.cxx
+/home/fenics/shared/VTK/IO/Import/vtkImporter.cxx
+/home/fenics/shared/VTK/IO/Import/vtkVRMLImporter.cxx
+/home/fenics/shared/VTK/IO/Import/vtkOBJImporter.cxx
+/home/fenics/shared/VTK/IO/Import/vtkOBJImporterInternals.cxx
+/home/fenics/shared/VTK/IO/Import/vtk3DS.h
+/home/fenics/shared/VTK/IO/Import/vtk3DSImporter.h
+/home/fenics/shared/VTK/IO/Import/vtkImporter.h
+/home/fenics/shared/VTK/IO/Import/vtkVRMLImporter.h
+/home/fenics/shared/VTK/IO/Import/vtkOBJImporter.h
+/home/fenics/shared/VTK/IO/Import/vtkOBJImporterInternals.h
+/home/fenics/shared/VTK-build/VTK-Release-build/IO/Import/vtkIOImportModule.h

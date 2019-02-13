@@ -1,0 +1,73 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/png.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngerror.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngget.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngmem.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngpread.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngread.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngrio.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngrtran.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngrutil.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngset.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngtrans.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngwio.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngwrite.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngwtran.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngwutil.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/png.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pngconf.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/pnglibconf.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/png/vtkpng/vtk_png_mangle.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/png/vtkpng/vtkpngConfig.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkpng"
+		],
+		"name" : "vtkpng"
+	}
+}

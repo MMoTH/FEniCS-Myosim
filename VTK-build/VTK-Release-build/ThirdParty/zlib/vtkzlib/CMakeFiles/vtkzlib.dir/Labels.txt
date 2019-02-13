@@ -1,0 +1,29 @@
+# Target labels
+ vtkzlib
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/adler32.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/compress.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/crc32.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/deflate.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/gzclose.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/gzlib.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/gzread.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/gzwrite.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inflate.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/infback.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inftrees.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inffast.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/trees.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/uncompr.c
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/zutil.c
+/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/zlib/vtkzlib/zconf.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/zlib.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/crc32.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/deflate.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/gzguts.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inffast.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inffixed.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inflate.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/inftrees.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/trees.h
+/home/fenics/shared/VTK/ThirdParty/zlib/vtkzlib/zutil.h

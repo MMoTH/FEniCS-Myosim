@@ -1,0 +1,52 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPComputeHistogram2DOutliers.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPExtractHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPPairwiseExtractHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkExtractPiece.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkMemoryLimitImageDataStreamer.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkTransmitImageDataPiece.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPComputeHistogram2DOutliers.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPExtractHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkPPairwiseExtractHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkExtractPiece.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkMemoryLimitImageDataStreamer.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/ParallelImaging/vtkTransmitImageDataPiece.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Filters/ParallelImaging/vtkFiltersParallelImagingModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersParallelImaging"
+		],
+		"name" : "vtkFiltersParallelImaging"
+	}
+}

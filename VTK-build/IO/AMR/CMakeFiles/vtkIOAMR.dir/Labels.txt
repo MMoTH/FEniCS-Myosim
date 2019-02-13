@@ -1,0 +1,24 @@
+# Target labels
+ vtkIOAMR
+# Source files and their labels
+/home/fenics/shared/VTK/IO/AMR/vtkAMRBaseParticlesReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRBaseReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRDataSetCache.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoParticlesReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoReaderInternal.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMReXParticlesReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashParticlesReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashReader.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashReaderInternal.cxx
+/home/fenics/shared/VTK/IO/AMR/vtkAMRBaseParticlesReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMRBaseReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMRDataSetCache.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoParticlesReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMREnzoReaderInternal.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMReXParticlesReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashParticlesReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashReader.h
+/home/fenics/shared/VTK/IO/AMR/vtkAMRFlashReaderInternal.h
+/home/fenics/shared/VTK-build/IO/AMR/vtkIOAMRModule.h

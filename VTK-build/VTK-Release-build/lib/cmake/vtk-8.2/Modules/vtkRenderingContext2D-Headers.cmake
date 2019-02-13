@@ -1,0 +1,6 @@
+set(vtkRenderingContext2D_HEADERS_LOADED 1)
+set(vtkRenderingContext2D_HEADERS "vtkAbstractContextBufferId;vtkAbstractContextItem;vtkBlockItem;vtkBrush;vtkContext2D;vtkContext3D;vtkContextActor;vtkContextClip;vtkContextDevice2D;vtkContextDevice3D;vtkContextItem;vtkContextKeyEvent;vtkContextMapper2D;vtkContextMouseEvent;vtkContextScene;vtkContextTransform;vtkImageItem;vtkMarkerUtilities;vtkLabeledContourPolyDataItem;vtkPen;vtkPolyDataItem;vtkPropItem;vtkTooltipItem")
+
+foreach(header ${vtkRenderingContext2D_HEADERS})
+  set(vtkRenderingContext2D_HEADER_${header}_EXISTS 1)
+endforeach()

@@ -1,0 +1,18 @@
+# Target labels
+ vtkImagingStencil
+# Source files and their labels
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageStencil.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageStencilToImage.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageToImageStencil.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImplicitFunctionToImageStencil.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkLassoStencilSource.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkPolyDataToImageStencil.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkROIStencilSource.cxx
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageStencil.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageStencilToImage.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImageToImageStencil.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkImplicitFunctionToImageStencil.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkLassoStencilSource.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkPolyDataToImageStencil.h
+/home/fenics/shared/VTK/Imaging/Stencil/vtkROIStencilSource.h
+/home/fenics/shared/VTK-build/Imaging/Stencil/vtkImagingStencilModule.h

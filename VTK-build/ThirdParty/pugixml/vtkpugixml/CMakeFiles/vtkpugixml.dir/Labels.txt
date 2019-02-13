@@ -1,0 +1,7 @@
+# Target labels
+ vtkpugixml
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/pugixml/vtkpugixml/src/pugixml.cpp
+/home/fenics/shared/VTK/ThirdParty/pugixml/vtkpugixml/src/pugixml.hpp
+/home/fenics/shared/VTK-build/ThirdParty/pugixml/vtkpugixml/pugiconfig.hpp
+/home/fenics/shared/VTK/ThirdParty/pugixml/vtkpugixml/src/vtk_pugixml_mangle.h

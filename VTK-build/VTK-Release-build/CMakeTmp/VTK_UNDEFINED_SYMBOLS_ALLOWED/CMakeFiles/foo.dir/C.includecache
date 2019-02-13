@@ -1,0 +1,10 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/fenics/shared/VTK-build/VTK-Release-build/CMakeTmp/VTK_UNDEFINED_SYMBOLS_ALLOWED/foo.c
+

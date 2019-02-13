@@ -1,0 +1,244 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkBoundedPointSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkConnectedPointsFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkDensifyPointCloudFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkEllipsoidalGaussianKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkEuclideanClusterExtraction.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractHierarchicalBins.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractEnclosedPoints.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractPointCloudPiece.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractPoints.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractSurface.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkFitImplicitFunction.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkGaussianKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkGeneralizedKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkHierarchicalBinningFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkInterpolationKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkLinearKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkMaskPointsFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPCACurvatureEstimation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPCANormalEstimation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointCloudFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointDensityFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointInterpolator2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointOccupancyFilter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkProbabilisticVoronoiKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkRadiusOutlierRemoval.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHInterpolator.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHCubicKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHQuarticKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHQuinticKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkShepardKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSignedDistance.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkStatisticalOutlierRemoval.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkUnsignedDistance.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkVoxelGrid.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkVoronoiKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkWendlandQuinticKernel.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkBoundedPointSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkConnectedPointsFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkDensifyPointCloudFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkEllipsoidalGaussianKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkEuclideanClusterExtraction.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractHierarchicalBins.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractEnclosedPoints.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractPointCloudPiece.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractPoints.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkExtractSurface.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkFitImplicitFunction.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkGaussianKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkGeneralizedKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkHierarchicalBinningFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkInterpolationKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkLinearKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkMaskPointsFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPCACurvatureEstimation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPCANormalEstimation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointCloudFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointDensityFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointInterpolator2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkPointOccupancyFilter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkProbabilisticVoronoiKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkRadiusOutlierRemoval.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHInterpolator.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHCubicKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHQuarticKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSPHQuinticKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkShepardKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkSignedDistance.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkStatisticalOutlierRemoval.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkUnsignedDistance.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkVoxelGrid.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkVoronoiKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Points/vtkWendlandQuinticKernel.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Filters/Points/vtkFiltersPointsModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersPoints"
+		],
+		"name" : "vtkFiltersPoints"
+	}
+}

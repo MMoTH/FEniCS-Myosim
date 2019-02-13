@@ -1,0 +1,12 @@
+# Target labels
+ vtkFiltersVerdict
+# Source files and their labels
+/home/fenics/shared/VTK/Filters/Verdict/vtkCellQuality.cxx
+/home/fenics/shared/VTK/Filters/Verdict/vtkCellSizeFilter.cxx
+/home/fenics/shared/VTK/Filters/Verdict/vtkMatrixMathFilter.cxx
+/home/fenics/shared/VTK/Filters/Verdict/vtkMeshQuality.cxx
+/home/fenics/shared/VTK/Filters/Verdict/vtkCellQuality.h
+/home/fenics/shared/VTK/Filters/Verdict/vtkCellSizeFilter.h
+/home/fenics/shared/VTK/Filters/Verdict/vtkMatrixMathFilter.h
+/home/fenics/shared/VTK/Filters/Verdict/vtkMeshQuality.h
+/home/fenics/shared/VTK-build/Filters/Verdict/vtkFiltersVerdictModule.h

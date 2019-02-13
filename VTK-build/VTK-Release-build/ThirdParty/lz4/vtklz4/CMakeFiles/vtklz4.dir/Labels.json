@@ -1,0 +1,37 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4hc.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4frame.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/xxhash.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4hc.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4frame.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/lz4/vtklz4/lib/lz4frame_static.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtklz4"
+		],
+		"name" : "vtklz4"
+	}
+}

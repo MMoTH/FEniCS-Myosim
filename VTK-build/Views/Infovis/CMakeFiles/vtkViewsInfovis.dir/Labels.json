@@ -1,0 +1,178 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkApplyColors.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkApplyIcons.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkDendrogramItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkGraphItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkGraphLayoutView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHeatmapItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHierarchicalGraphPipeline.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHierarchicalGraphView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkIcicleView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkInteractorStyleAreaSelectHover.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkInteractorStyleTreeMapHover.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesHistogramRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedGraphRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedHierarchyRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedSurfaceRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedTreeAreaRepresentation.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkSCurveSpline.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTanglegramItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeAreaView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeHeatmapItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeMapView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeRingView.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkViewUpdater.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkApplyColors.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkApplyIcons.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkDendrogramItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkGraphItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkGraphLayoutView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHeatmapItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHierarchicalGraphPipeline.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkHierarchicalGraphView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkIcicleView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkInteractorStyleAreaSelectHover.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkInteractorStyleTreeMapHover.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesHistogramRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkParallelCoordinatesView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedGraphRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedHierarchyRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedSurfaceRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderedTreeAreaRepresentation.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkRenderView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkSCurveSpline.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTanglegramItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeAreaView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeHeatmapItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeMapView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkTreeRingView.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Views/Infovis/vtkViewUpdater.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Views/Infovis/vtkViewsInfovisModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkViewsInfovis"
+		],
+		"name" : "vtkViewsInfovis"
+	}
+}

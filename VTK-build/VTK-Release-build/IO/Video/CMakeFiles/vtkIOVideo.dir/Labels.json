@@ -1,0 +1,22 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Video/vtkVideoSource.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Video/vtkVideoSource.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/Video/vtkIOVideoModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOVideo"
+		],
+		"name" : "vtkIOVideo"
+	}
+}

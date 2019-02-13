@@ -1,0 +1,18 @@
+# Target labels
+ vtkFiltersAMR
+# Source files and their labels
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRCutPlane.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRGaussianPulseSource.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRResampleFilter.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRSliceFilter.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRToMultiBlockFilter.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkImageToAMR.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkParallelAMRUtilities.cxx
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRCutPlane.h
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRGaussianPulseSource.h
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRResampleFilter.h
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRSliceFilter.h
+/home/fenics/shared/VTK/Filters/AMR/vtkAMRToMultiBlockFilter.h
+/home/fenics/shared/VTK/Filters/AMR/vtkImageToAMR.h
+/home/fenics/shared/VTK/Filters/AMR/vtkParallelAMRUtilities.h
+/home/fenics/shared/VTK-build/Filters/AMR/vtkFiltersAMRModule.h

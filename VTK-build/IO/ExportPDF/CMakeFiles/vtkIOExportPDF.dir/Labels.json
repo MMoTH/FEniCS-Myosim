@@ -1,0 +1,34 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportPDF/vtkPDFContextDevice2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportPDF/vtkPDFExporter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/IO/ExportPDF/vtkIOExportPDFObjectFactory.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportPDF/vtkPDFContextDevice2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/ExportPDF/vtkPDFExporter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/IO/ExportPDF/vtkIOExportPDFObjectFactory.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/IO/ExportPDF/vtkIOExportPDFModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOExportPDF"
+		],
+		"name" : "vtkIOExportPDF"
+	}
+}

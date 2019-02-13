@@ -1,0 +1,40 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/loadlibrary.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmlparse.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmlrole.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok_impl.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/xmltok_ns.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/expat.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/expat_external.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/expat/vtkexpat/lib/vtk_expat_mangle.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkexpat"
+		],
+		"name" : "vtkexpat"
+	}
+}

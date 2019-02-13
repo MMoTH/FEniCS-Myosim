@@ -19,7 +19,7 @@ public:
 
 	int condition_number = 0;
 
-	double t_act;
+	double t_act = 0.0;
 	double t_p;
 	double cell_time;
 	double constant_pCa;

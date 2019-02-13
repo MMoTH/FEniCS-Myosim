@@ -1,0 +1,7 @@
+# Target labels
+ vtksqlite
+# Source files and their labels
+/home/fenics/shared/VTK/ThirdParty/sqlite/vtksqlite/sqlite3.c
+/home/fenics/shared/VTK/ThirdParty/sqlite/vtksqlite/sqlite3.h
+/home/fenics/shared/VTK/ThirdParty/sqlite/vtksqlite/vtk_sqlite_mangle.h
+/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/sqlite/vtksqlite/vtksqlite_export.h

@@ -1,0 +1,34 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkPairwiseExtractHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkExtractHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkComputeHistogram2DOutliers.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkPairwiseExtractHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkExtractHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Filters/Imaging/vtkComputeHistogram2DOutliers.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Filters/Imaging/vtkFiltersImagingModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkFiltersImaging"
+		],
+		"name" : "vtkFiltersImaging"
+	}
+}

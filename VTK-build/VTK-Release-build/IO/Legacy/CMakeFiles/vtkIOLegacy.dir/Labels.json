@@ -1,0 +1,190 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkCompositeDataReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkCompositeDataWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataObjectReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataObjectWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataSetReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataSetWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGenericDataObjectReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGenericDataObjectWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGraphReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGraphWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPixelExtentIO.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPolyDataReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPolyDataWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkRectilinearGridReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkRectilinearGridWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkSimplePointsReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkSimplePointsWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredGridReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredGridWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredPointsReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredPointsWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTableReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTableWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTreeReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTreeWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkUnstructuredGridReader.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkUnstructuredGridWriter.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkCompositeDataReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkCompositeDataWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataObjectReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataObjectWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataSetReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataSetWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkDataWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGenericDataObjectReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGenericDataObjectWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGraphReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkGraphWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPixelExtentIO.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPolyDataReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkPolyDataWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkRectilinearGridReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkRectilinearGridWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkSimplePointsReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkSimplePointsWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredGridReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredGridWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredPointsReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkStructuredPointsWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTableReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTableWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTreeReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkTreeWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkUnstructuredGridReader.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/IO/Legacy/vtkUnstructuredGridWriter.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/IO/Legacy/vtkIOLegacyModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkIOLegacy"
+		],
+		"name" : "vtkIOLegacy"
+	}
+}

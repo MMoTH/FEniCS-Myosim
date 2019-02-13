@@ -1,0 +1,28 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Color/vtkColorSeries.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Color/vtkNamedColors.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Color/vtkColorSeries.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Common/Color/vtkNamedColors.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/Common/Color/vtkCommonColorModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkCommonColor"
+		],
+		"name" : "vtkCommonColor"
+	}
+}

@@ -1,0 +1,6 @@
+set(vtkRenderingLabel_HEADERS_LOADED 1)
+set(vtkRenderingLabel_HEADERS "vtkLabeledDataMapper;vtkLabeledTreeMapDataMapper;vtkLabelHierarchyAlgorithm;vtkLabelHierarchyCompositeIterator;vtkLabelHierarchy;vtkLabelHierarchyIterator;vtkLabelPlacementMapper;vtkLabelPlacer;vtkLabelRenderStrategy;vtkLabelSizeCalculator;vtkFreeTypeLabelRenderStrategy;vtkDynamic2DLabelMapper;vtkPointSetToLabelHierarchy")
+
+foreach(header ${vtkRenderingLabel_HEADERS})
+  set(vtkRenderingLabel_HEADER_${header}_EXISTS 1)
+endforeach()

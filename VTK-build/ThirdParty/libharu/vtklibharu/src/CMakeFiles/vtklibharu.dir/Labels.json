@@ -1,0 +1,187 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_annotation.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_array.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_binary.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_boolean.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_catalog.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_destination.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_dict.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_doc_png.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_doc.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder_cns.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder_cnt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder_jp.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder_kr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encrypt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encryptdict.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_error.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_ext_gstate.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_font_cid.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_font_tt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_font_type1.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_font.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_base14.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_cid.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_cns.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_cnt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_jp.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_kr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_tt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef_type1.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_fontdef.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_gstate.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_image_ccitt.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_image_png.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_image.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_info.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_list.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_mmgr.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_name.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_namedict.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_null.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_number.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_objects.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_outline.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_page_label.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_page_operator.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_pages.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_real.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_shading.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_streams.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_string.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_u3d.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_utils.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_xref.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_pdfa.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_3dmeasure.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_exdata.c"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/ThirdParty/libharu/vtklibharu/src/hpdf_encoder_utf.c"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtklibharu"
+		],
+		"name" : "vtklibharu"
+	}
+}

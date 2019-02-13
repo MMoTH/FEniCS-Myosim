@@ -1,0 +1,6 @@
+set(vtkIOParallelXML_HEADERS_LOADED 1)
+set(vtkIOParallelXML_HEADERS "vtkXMLPDataSetWriter;vtkXMLPDataObjectWriter;vtkXMLPDataWriter;vtkXMLPImageDataWriter;vtkXMLPPolyDataWriter;vtkXMLPRectilinearGridWriter;vtkXMLPStructuredDataWriter;vtkXMLPStructuredGridWriter;vtkXMLPTableWriter;vtkXMLPUnstructuredDataWriter;vtkXMLPUnstructuredGridWriter;vtkXMLPHierarchicalBoxDataWriter;vtkXMLPMultiBlockDataWriter;vtkXMLPUniformGridAMRWriter")
+
+foreach(header ${vtkIOParallelXML_HEADERS})
+  set(vtkIOParallelXML_HEADER_${header}_EXISTS 1)
+endforeach()

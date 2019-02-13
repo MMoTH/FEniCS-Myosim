@@ -1,0 +1,36 @@
+# Target labels
+ vtkMetaIO
+# Source files and their labels
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaTypes.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaUtils.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaArrow.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaBlob.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaCommand.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaCommand.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaContour.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaContour.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaDTITube.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaEllipse.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaGroup.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaGaussian.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaImage.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaImageUtils.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaLandmark.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaLine.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaMesh.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaMesh.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaObject.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaOutput.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaOutput.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaScene.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaSurface.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaTube.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaVesselTube.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaTransform.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaTubeGraph.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaForm.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaForm.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaArray.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaArray.cxx
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaFEMObject.h
+/home/fenics/shared/VTK/Utilities/MetaIO/vtkmetaio/metaFEMObject.cxx

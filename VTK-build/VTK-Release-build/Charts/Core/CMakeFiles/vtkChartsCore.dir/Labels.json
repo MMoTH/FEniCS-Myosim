@@ -1,0 +1,280 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkAxis.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkAxisExtended.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCategoryLegend.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChart.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartBox.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartLegend.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartMatrix.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartParallelCoordinates.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartPie.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartXY.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartXYZ.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorLegend.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorTransferControlPointsItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorTransferFunctionItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCompositeControlPointsItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCompositeTransferFunctionItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkContextArea.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkContextPolygon.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkControlPointsItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkInteractiveArea.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkLookupTableItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewiseControlPointsItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewiseFunctionItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewisePointHandleItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlot.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlot3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotArea.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBag.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBar.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBox.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotFunctionalBag.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotGrid.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotHistogram2D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotLine.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotLine3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotParallelCoordinates.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPie.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPoints.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPoints3D.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotStacked.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotSurface.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkScalarsToColorsItem.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkScatterPlotMatrix.cxx"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkAxis.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkAxisExtended.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCategoryLegend.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChart.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartBox.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartLegend.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartMatrix.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartParallelCoordinates.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartPie.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartXY.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkChartXYZ.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorLegend.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorTransferControlPointsItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkColorTransferFunctionItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCompositeControlPointsItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkCompositeTransferFunctionItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkContextArea.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkContextPolygon.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkControlPointsItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkInteractiveArea.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkLookupTableItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewiseControlPointsItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewiseFunctionItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPiecewisePointHandleItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlot.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlot3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotArea.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBag.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBar.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotBox.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotFunctionalBag.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotGrid.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotHistogram2D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotLine.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotLine3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotParallelCoordinates.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPie.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPoints.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotPoints3D.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotStacked.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkPlotSurface.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkScalarsToColorsItem.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK/Charts/Core/vtkScatterPlotMatrix.h"
+		},
+		{
+			"file" : "/home/fenics/shared/VTK-build/VTK-Release-build/Charts/Core/vtkChartsCoreModule.h"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"vtkChartsCore"
+		],
+		"name" : "vtkChartsCore"
+	}
+}
