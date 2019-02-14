@@ -1,1 +1,0 @@
-/usr/lib/ccache/cc  -fPIC   -w -w -g  -Wl,-lc   -shared -Wl,-soname,libvtksqlite-8.2.so.1 -o ../../../lib/libvtksqlite-8.2.so.1 CMakeFiles/vtksqlite.dir/sqlite3.c.o -lpthread 

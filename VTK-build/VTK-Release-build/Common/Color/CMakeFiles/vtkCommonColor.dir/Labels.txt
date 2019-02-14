@@ -1,8 +1,0 @@
-# Target labels
- vtkCommonColor
-# Source files and their labels
-/home/fenics/shared/VTK/Common/Color/vtkColorSeries.cxx
-/home/fenics/shared/VTK/Common/Color/vtkNamedColors.cxx
-/home/fenics/shared/VTK/Common/Color/vtkColorSeries.h
-/home/fenics/shared/VTK/Common/Color/vtkNamedColors.h
-/home/fenics/shared/VTK-build/VTK-Release-build/Common/Color/vtkCommonColorModule.h

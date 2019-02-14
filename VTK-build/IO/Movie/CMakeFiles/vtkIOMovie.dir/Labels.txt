@@ -1,9 +1,0 @@
-# Target labels
- vtkIOMovie
-# Source files and their labels
-/home/fenics/shared/VTK/IO/Movie/vtkGenericMovieWriter.cxx
-/home/fenics/shared/VTK/IO/Movie/vtkOggTheoraWriter.cxx
-/home/fenics/shared/VTK-build/IO/Movie/vtkIOMovieConfigure.h
-/home/fenics/shared/VTK/IO/Movie/vtkGenericMovieWriter.h
-/home/fenics/shared/VTK/IO/Movie/vtkOggTheoraWriter.h
-/home/fenics/shared/VTK-build/IO/Movie/vtkIOMovieModule.h

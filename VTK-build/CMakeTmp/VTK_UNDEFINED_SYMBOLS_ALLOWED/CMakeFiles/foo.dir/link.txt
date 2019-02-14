@@ -1,1 +1,0 @@
-/usr/lib/ccache/cc  -fPIC   -Wl,-lc   -shared -Wl,-soname,libfoo.so -o libfoo.so CMakeFiles/foo.dir/foo.c.o 

@@ -1,6 +1,0 @@
-# Target labels
- vtkDICOMParser
-# Source files and their labels
-/home/fenics/shared/VTK/Utilities/DICOMParser/DICOMFile.cxx
-/home/fenics/shared/VTK/Utilities/DICOMParser/DICOMParser.cxx
-/home/fenics/shared/VTK/Utilities/DICOMParser/DICOMAppHelper.cxx

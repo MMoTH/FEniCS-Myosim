@@ -1,8 +1,0 @@
-# Target labels
- vtkglew
-# Source files and their labels
-/home/fenics/shared/VTK/ThirdParty/glew/vtkglew/src/glew.c
-/home/fenics/shared/VTK/ThirdParty/glew/vtkglew/include/GL/glew.h
-/home/fenics/shared/VTK/ThirdParty/glew/vtkglew/include/GL/glxew.h
-/home/fenics/shared/VTK/ThirdParty/glew/vtkglew/include/GL/vtk_glew_mangle.h
-/home/fenics/shared/VTK/ThirdParty/glew/vtkglew/include/GL/wglew.h

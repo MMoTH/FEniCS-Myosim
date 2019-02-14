@@ -1,8 +1,0 @@
-# Target labels
- vtkRenderingLOD
-# Source files and their labels
-/home/fenics/shared/VTK/Rendering/LOD/vtkLODActor.cxx
-/home/fenics/shared/VTK/Rendering/LOD/vtkQuadricLODActor.cxx
-/home/fenics/shared/VTK/Rendering/LOD/vtkLODActor.h
-/home/fenics/shared/VTK/Rendering/LOD/vtkQuadricLODActor.h
-/home/fenics/shared/VTK-build/VTK-Release-build/Rendering/LOD/vtkRenderingLODModule.h

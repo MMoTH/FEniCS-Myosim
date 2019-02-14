@@ -1,7 +1,0 @@
-# Target labels
- vtkjsoncpp
-# Source files and their labels
-/home/fenics/shared/VTK/ThirdParty/jsoncpp/vtkjsoncpp/jsoncpp.cpp
-/home/fenics/shared/VTK/ThirdParty/jsoncpp/vtkjsoncpp/json/json-forwards.h
-/home/fenics/shared/VTK/ThirdParty/jsoncpp/vtkjsoncpp/json/json.h
-/home/fenics/shared/VTK-build/VTK-Release-build/ThirdParty/jsoncpp/vtkjsoncpp/json/vtkjsoncpp_config.h

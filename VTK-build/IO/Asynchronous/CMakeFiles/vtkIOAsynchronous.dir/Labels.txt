@@ -1,6 +1,0 @@
-# Target labels
- vtkIOAsynchronous
-# Source files and their labels
-/home/fenics/shared/VTK/IO/Asynchronous/vtkThreadedImageWriter.cxx
-/home/fenics/shared/VTK/IO/Asynchronous/vtkThreadedImageWriter.h
-/home/fenics/shared/VTK-build/IO/Asynchronous/vtkIOAsynchronousModule.h

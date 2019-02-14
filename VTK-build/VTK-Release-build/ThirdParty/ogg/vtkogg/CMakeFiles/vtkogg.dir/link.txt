@@ -1,1 +1,0 @@
-/usr/lib/ccache/cc  -fPIC   -w -w -O3 -DNDEBUG  -Wl,-lc   -shared -Wl,-soname,libvtkogg-8.2.so.1 -o ../../../lib/libvtkogg-8.2.so.1 CMakeFiles/vtkogg.dir/src/bitwise.c.o CMakeFiles/vtkogg.dir/src/framing.c.o 

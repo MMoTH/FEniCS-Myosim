@@ -1,8 +1,0 @@
-# Target labels
- vtkIOExportOpenGL2
-# Source files and their labels
-/home/fenics/shared/VTK/IO/ExportOpenGL2/vtkOpenGLGL2PSExporter.cxx
-/home/fenics/shared/VTK-build/IO/ExportOpenGL2/vtkIOExportOpenGL2ObjectFactory.cxx
-/home/fenics/shared/VTK/IO/ExportOpenGL2/vtkOpenGLGL2PSExporter.h
-/home/fenics/shared/VTK-build/IO/ExportOpenGL2/vtkIOExportOpenGL2ObjectFactory.h
-/home/fenics/shared/VTK-build/IO/ExportOpenGL2/vtkIOExportOpenGL2Module.h

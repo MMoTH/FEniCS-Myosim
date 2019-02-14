@@ -1,3 +1,0 @@
-/home/fenics/shared/VTK-build/CMakeTmp/VTK_UNDEFINED_SYMBOLS_ALLOWED/CMakeFiles/edit_cache.dir
-/home/fenics/shared/VTK-build/CMakeTmp/VTK_UNDEFINED_SYMBOLS_ALLOWED/CMakeFiles/rebuild_cache.dir
-/home/fenics/shared/VTK-build/CMakeTmp/VTK_UNDEFINED_SYMBOLS_ALLOWED/CMakeFiles/foo.dir

@@ -1,6 +1,0 @@
-# Target labels
- vtkIOCityGML
-# Source files and their labels
-/home/fenics/shared/VTK/IO/CityGML/vtkCityGMLReader.cxx
-/home/fenics/shared/VTK/IO/CityGML/vtkCityGMLReader.h
-/home/fenics/shared/VTK-build/VTK-Release-build/IO/CityGML/vtkIOCityGMLModule.h
