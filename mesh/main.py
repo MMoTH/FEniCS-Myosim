@@ -46,7 +46,7 @@ def pig_lv():
 	VQuadelem = VectorElement("Quadrature", mesh.ufl_cell(), degree=quad_deg, quad_scheme="default")
 	VQuadelem._quad_scheme = 'default'
 	fiberFS = FunctionSpace(mesh, VQuadelem)
-	isepiflip = True #True
+	isepiflip = False #True
 	isendoflip = True #True
 	endo_angle = 60; epi_angle = -60; casedir="./";  
 	

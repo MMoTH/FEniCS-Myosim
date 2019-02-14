@@ -40,7 +40,7 @@ BCL = 100 # ms
 cycles = 1
 
 hsl0 = 1000
-step_size = 1.0 # ms
+step_size = 0.5 # ms
 no_of_time_steps = int(cycles*BCL/step_size)
 Ca_flag = 4
 constant_pCa = 6.5
@@ -340,7 +340,7 @@ blood_volume = 1.5
 aorta_resistance = 10e3 * 0.0075
 aorta_compliance = 1e-6 / 7.5
 
-arteries_resistance = 30e3 * 0.0075
+arteries_resistance = 30e3  * 0.0075
 arteries_compliance = 2.5e-7 / 7.5
 
 arterioles_resistance = 30e3 * 0.0075

@@ -40,7 +40,7 @@ BCL = 100 # ms
 cycles = 1
 
 hsl0 = 1000
-step_size = 1.0 # ms
+step_size = 0.5 # ms
 no_of_time_steps = int(cycles*BCL/step_size)
 Ca_flag = 4
 constant_pCa = 6.5
@@ -301,7 +301,7 @@ print("ventricle_slack_volume = ", LVCavityvol.vol)
 
 # Loading phase
 
-for lmbda_value in range(0, 5):
+for lmbda_value in range(0, 4):
 
     print "Loading phase step = ", lmbda_value
     LVCavityvol.vol += 0.01
@@ -329,7 +329,7 @@ for lmbda_value in range(0, 5):
         print >>fdataPV, 0.0, 0.0, p_cav*0.0075
         displacementfile << w.sub(0)
     print("cavity-vol = ", LVCavityvol.vol)
-    print("cavity-press = ", uflforms.LVcavitypressure() * 0.0075)
+    print("cavity-pressure = ", LVcavitypressure()*0.0075)
 
 
 # Closed-loop phase
@@ -340,7 +340,7 @@ blood_volume = 1.5
 aorta_resistance = 10e3 * 0.0075
 aorta_compliance = 1e-6 / 7.5
 
-arteries_resistance = 30e3 * 0.0075
+arteries_resistance = 30e3  * 0.0075
 arteries_compliance = 2.5e-7 / 7.5
 
 arterioles_resistance = 30e3 * 0.0075
