@@ -1,3 +1,4 @@
+from __future__ import division
 import os as os
 from dolfin import * 
 import numpy as np
@@ -28,11 +29,13 @@ no_of_x_bins = np.shape(xx)[0]
 n_array_length = no_of_attached_states * no_of_x_bins + no_of_detached_states + 1
 n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1]]
 
-BCL = 701 # ms
-cycles = 2
+BCL = 100 # ms
+cycles = 10
 
 hsl0 = 1000
-step_size = 0.001
+step_size = 0.5
+no_of_time_steps = int(cycles*BCL/step_size)
+no_of_cell_time_steps = int(BCL/step_size)
 Ca_flag = 4
 constant_pCa = 6.5
 
@@ -76,6 +79,10 @@ epiid = 1
 
 comm = mesh.mpi_comm()
 
+File("fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "CG", 1))
+File("sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "CG", 1))
+File("sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "CG", 1))
+
 ##############################################################################
 
 
@@ -84,7 +91,7 @@ N = FacetNormal (mesh)
 Press = Expression(("P"), P=0.0, degree=0)
 Kspring = Constant(100)
 LVCavityvol = Expression(("vol"), vol=0.0, degree=2)
-Cparam = Constant(1.0e2)
+Cparam = Constant(5.0e2)
 
 
 V = VectorFunctionSpace(mesh, 'CG', 2)
@@ -226,23 +233,10 @@ LVCavityvol.vol = uflforms.LVcavityvol()
 
 print("cavity-vol = ", LVCavityvol.vol)
 
-displacementfile = File("./test_8/u_disp.pvd")
+#displacementfile = File("./test_8/u_disp.pvd")
 
 if(MPI.rank(comm) == 0):
     fdataPV = open("./test_8/PV_.txt", "w", 0)
-
-
-# Closed loop cycle
-# circ parameters
-Cao = 5.0e-5; #Cao = 0.005;
-Cven = 0.02;#Cven = 0.2*10;
-Vart0 = 350.0/2000;
-Vven0 = 2200.0/2000;
-Rao = 1.0e9; #Rao = 10*1000.0;
-Rven = 1.0e8; #Rven = 1000.0;
-Rper = 1000.0;
-V_ven = 5000.0/2000; 
-V_art = 450.0/2000;
 
 
 tstep = 0
@@ -256,9 +250,9 @@ header_file = open("./C++/hs.h","r")
 code = header_file.read()
 header_file.close()
 
-ext_module = compile_extension_module(code=code, source_directory="C++", sources=["hs.cpp", "mf.cpp", "Ca.cpp", "base_parameters.cpp"],
+ext_module = compile_extension_module(code=code, source_directory="/home/fenics/shared/C++", sources=["hs.cpp", "mf.cpp", "Ca.cpp", "base_parameters.cpp"],
      additional_system_headers=["petscvec.h"],
-     include_dirs=[".", os.path.abspath("C++"),"/usr/include", "./C++"],
+     include_dirs=[".", os.path.abspath("C++"),"/usr/include", "/home/fenics/shared/C++"],
      library_dirs = ['/usr/lib/x86_64-linux-gnu'],
      libraries = ['libgsl.a'])
 
@@ -274,10 +268,17 @@ _Ca_params = {"constant_pCa": constant_pCa}
 Myosim.Ca_params.update(_Ca_params)
 
 tarray = []
-hslarray = np.zeros((cycles*BCL,no_of_int_points))
-calarray = np.zeros((cycles*BCL,no_of_int_points))
-strarray = np.zeros((cycles*BCL,no_of_int_points))
-pstrarray = np.zeros((cycles*BCL,no_of_int_points))
+#hslarray = np.zeros((cycles*BCL,no_of_int_points))
+#calarray = np.zeros((cycles*BCL,no_of_int_points))
+#strarray = np.zeros((cycles*BCL,no_of_int_points))
+#pstrarray = np.zeros((cycles*BCL,no_of_int_points))
+
+hslarray = np.zeros((no_of_time_steps+1,no_of_int_points))
+calarray = np.zeros((no_of_time_steps+1,no_of_int_points))
+strarray = np.zeros((no_of_time_steps+1,no_of_int_points))
+pstrarray = np.zeros((no_of_time_steps+1,no_of_int_points))
+
+
 
 y_vec_array = y_vec.vector().get_local()[:]
 
@@ -301,7 +302,7 @@ cb_f_array = project(cb_force, Quad).vector().get_local()[:]
 
 # Loading phase
 print("cavity-vol = ", LVCavityvol.vol)
-for lmbda_value in range(0, 4):
+for lmbda_value in range(0, 2):
 
     print "Loading phase step = ", lmbda_value
     LVCavityvol.vol += 0.005
@@ -326,15 +327,29 @@ for lmbda_value in range(0, 4):
 
     if(MPI.rank(comm) == 0):
         
-        print >>fdataPV, 0.0, p_cav*0.0075 , V_cav
-        displacementfile << w.sub(0)
+        print >>fdataPV, 0.0, p_cav*0.0075 , V_cav, 0.0
+        #displacementfile << w.sub(0)
     print("cavity-vol = ", LVCavityvol.vol)
 
 
 # Closed-loop phase
-dumped_populations = np.zeros((cycles * BCL, no_of_int_points, n_array_length))
+#dumped_populations = np.zeros((cycles * BCL, no_of_int_points, n_array_length))
+dumped_populations = np.zeros((no_of_time_steps+1, no_of_int_points, n_array_length))
+
+
+Cao = 0.025/1000.0; #5.0e-5; #Cao = 0.005;
+Cven = 2.0/1000.0 #0.02;#Cven = 0.2*10;
+Vart0 = 0.0#100.0/1000.0#/2000;
+Vven0 = 0.0#1000.0/1000.0#0.001 * 2200.0/1000.0#/2000;
+Rao = 5*1000.0*1000.0#Rao = 10*1000.0;
+Rven = 10*1000.0#Rven = 1000.0;
+Rper = 200000 * 10#1000.0;
+V_ven = 1200.0/1000.0#/2000; 
+V_art = 250.0/1000.0#/2000;
+
 
 counter = 0
+cell_counter = 0
 cycle = 0
 while(cycle < cycles):
 
@@ -342,14 +357,14 @@ while(cycle < cycles):
     V_cav = uflforms.LVcavityvol()
 
     tstep = tstep + step_size
-    cycle = math.floor(tstep/BCL/1000)
-    cell_time = tstep - cycle*BCL/1000
+    cycle = math.floor(tstep/BCL)
+    cell_time = tstep - cycle*BCL
 
 
     if(MPI.rank(comm) == 0):
         
         print "Cycle number = ", cycle, " cell time = ", cell_time, " tstep = ", tstep, " step_size = ", step_size
-        print >>fdataPV, tstep, p_cav*0.0075 , V_cav
+        print >>fdataPV, tstep, p_cav*0.0075 , V_cav, Myosim.Get_Ca()
 
     Part = 1.0/Cao*(V_art - Vart0);
     Pven = 1.0/Cven*(V_ven - Vven0);
@@ -392,9 +407,9 @@ while(cycle < cycles):
     V_ven_prev = V_ven
     p_cav_prev = p_cav
 
-    V_cav = V_cav + step_size*1000*(Qmv - Qao);
-    V_art = V_art + step_size*1000*(Qao - Qper);
-    V_ven = V_ven + step_size*1000*(Qper - Qmv);
+    V_cav = V_cav + step_size*(Qmv - Qao);
+    V_art = V_art + step_size*(Qao - Qper);
+    V_ven = V_ven + step_size*(Qper - Qmv);
 
     LVCavityvol.vol = V_cav
 
@@ -408,7 +423,12 @@ while(cycle < cycles):
     LVcav_array.append(V_cav)
     Pcav_array.append(p_cav*0.0075)
     
-    cell_counter = int(counter - math.floor(counter/BCL) * BCL)
+    if (counter > 0 and (int(counter/no_of_cell_time_steps) == (counter/no_of_cell_time_steps))):
+        cell_counter = 0
+
+    cell_counter += 1
+        
+    print "cell_counter = ", cell_counter
     
     for  i in range(no_of_int_points):
         
@@ -442,11 +462,13 @@ while(cycle < cycles):
     temp_DG = project(Pff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"}) 
     p_f = interpolate(temp_DG, Quad)
     p_f_array = p_f.vector().get_local()[:]
+
+    print np.max(p_f_array)
     
     calarray[counter,:] = Myosim.Get_Ca() * np.ones(no_of_int_points)
     
     counter += 1
-    displacementfile << w.sub(0)
+    #displacementfile << w.sub(0)
     
     tarray.append(tstep)
     
@@ -466,18 +488,18 @@ for l in range(no_of_x_bins):
 
         rate_constants[l,m] = Myosim.dump_rate_constants(l, m, 0)
 
-np.save("/home/fenics/shared/test_8/rates",rate_constants)
-
-np.save("/home/fenics/shared/test_8/dumped_populations",dumped_populations)
-
-np.save("/home/fenics/shared/test_8/tarray",tarray)
-
-np.save("/home/fenics/shared/test_8/stress_array",strarray)
-
-np.save("/home/fenics/shared/test_8/pstress_array",pstrarray)
-
-np.save("/home/fenics/shared/test_8/calcium",calarray)
-
-np.save("/home/fenics/shared/test_8/HSL",hslarray)
+#np.save("/home/fenics/shared/test_8/rates",rate_constants)
+#
+#np.save("/home/fenics/shared/test_8/dumped_populations",dumped_populations)
+#
+#np.save("/home/fenics/shared/test_8/tarray",tarray)
+#
+#np.save("/home/fenics/shared/test_8/stress_array",strarray)
+#
+#np.save("/home/fenics/shared/test_8/pstress_array",pstrarray)
+#
+#np.save("/home/fenics/shared/test_8/calcium",calarray)
+#
+#np.save("/home/fenics/shared/test_8/HSL",hslarray)
 
 ######################################################################################################
