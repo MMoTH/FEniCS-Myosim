@@ -3,8 +3,8 @@ remote_theme: pmarsceill/just-the-docs
 # Auxiliary links for the upper right navigation.
 aux_links:
 
-  "MMotH-Vent Repository":
-  - "https://github.com/mmoth-kurtis/MMotH-Vent"
+  "FEniCS-MyoSim Repository":
+  - "https://github.com/MMoTH/FEniCS-Myosim"
 
 
   # Not a big fan of dark mode. I think the light looks better.
@@ -17,4 +17,4 @@ aux_links:
 footer_content: "Written by the Computational Biomechanics Lab at University of Kentucky"
 
 # This is the title of the website
-title: "MMotH-Vent"
+title: "FEniCS-MyoSim"
