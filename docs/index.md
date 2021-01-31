@@ -3,9 +3,9 @@ title: FEniCS-MyoSim
 permalink: /
 nav_exclude: true
 ---
-
+<!--
 <h1><span style="color: #7358ee">M</span><span style="font-weight:normal">ultiscale </span><span style="color: #7358ee">M</span><span style="font-weight:normal">odel </span><span style="color: #7358ee">o</span><span style="font-weight:normal">f </span><span style="color: #7358ee">t</span><span style="font-weight:normal">he </span><span style="color: #7358ee">H</span><span style="font-weight:normal">eart: </span><span style="color: #7358ee">Vent</span><span style="font-weight:normal">ricle Simulations </span></h1>
-
+-->
 
 FEniCS-MyoSim is a multi-scale finite-element solver that simulates left ventricular mechanics. Specifically, FEniCS-MyoSim simulates cardiac cycles by coupling a cross-bridge kinetics model to a myocardial tissue constitutive law and circulatory model. More information about each model formulation can be found [here](./pages/model_formulations/).  
 
