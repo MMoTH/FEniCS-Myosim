@@ -1,0 +1,124 @@
+{
+  "simulation_parameters": {
+    "sim_geometry": ["ventricle_physloop"],
+    "sim_type": ["beat", 2, "/home/fenics/shared/meshes/ellipsoidal_refined_transmural_2.hdf5"],
+    "sim_duration": [170, "ms"],
+    "sim_timestep": [0.1, "ms"],
+    "loading_number": [37],
+    "save_output": [0]
+  },
+
+  "file_inputs": {
+    "input_directory_path": ["/home/fenics/shared/Research/FEniCS-Myosim/MMotH-Fenics-UK/working_directory_untracked/ellipsoid_testcalcium/ellipsoid_input/"],
+    "casename": ["ellipsoidal", 2]
+  },
+
+  "output_parameters": {
+    "output_path": ["./output_11_17_2020/"],
+    "visualize_flag": [0]
+  },
+
+  "optimization_parameters": {
+    "num_particles": [10],
+    "max_iterations": [10],
+    "num_variables": [0, "number to optimize, if > 0 triggers optimization"],
+    "singlecell_target_force": [150694.0, "hard coding for now to test pso"],
+    "w": [0.3],
+    "c1": [0.5],
+    "c2": [0.5],
+    "point_generation": ["uniform"],
+
+    "variables_and_bounds": {
+      "k_3": [[2000, 6000], 0.0, 0.0],
+      "k_4_0": [[501, 4000], 0.0, 0.0],
+      "k_force": [[1e-5, 1e-3], 0.0, 0.0]
+    }
+  },
+
+  "forms_parameters": {
+
+    "passive_law_parameters": {
+      "passive_law": ["semi_structural"],
+      "c": [580], 
+      "c2": [150],
+      "c3": [8.0],
+      "bf": [10.480],
+      "bt": [3.58],
+      "bfs": [1.627],
+      "phi_m": [1.0],
+      "phi_g": [1.0]
+    }
+  },
+
+  "myosim_parameters": {
+    "max_rate": [5000,"s^-1"],
+    "temperature": [310, "Kelvin"],
+    "cb_number_density": [6.96e16, "number of cb's/m^2"],
+    "initial_hs_length": [915, "nm"],
+
+    "myofilament_parameters": {
+      "kinetic_scheme": ["3state_with_SRX"],
+      "num_states": [3],
+      "num_attached_states": [1],
+      "num_transitions": [4],
+      "cb_extensions": [[0.0, 0.0, 4.75642], "power-stroke distance in nm"],
+      "state_attached": [[0, 0, 1]],
+      "k_cb_multiplier": [[1.0, 1.0, 1.0]],
+      "k_cb_pos": [0.001, "N*m^-1"],
+      "k_cb_neg": [0.001, "N*m^-1"],
+      "alpha":[1.0],
+      "k_1": [8.0, "s^-1"],
+      "k_force": [8e-5, "(N^-1)(m^2)"],
+      "k_2": [96.0, "s^-1"],
+      "k_3": [1000.0, "(nm^-1)(s^-1)"],
+      "k_4_0": [490.864648098121948, "s^-1"],
+      "k_4_1": [8.65911849, "nm^-4"],
+      "k_cb": [0.001, "N*m^-1"],
+      "x_ps": [5.0, "nm"],
+      "k_on": [5.8e7, "(M^-1)(s^-1)"],
+      "k_off": [95, "s^-1"],
+      "k_coop": [4.0],
+      "bin_min": [-10, "nm"],
+      "bin_max": [10, "nm"],
+      "bin_width": [1.0, "nm"],
+      "filament_compliance_factor": [0.5],
+      "thick_filament_length": [815, "nm"],
+      "thin_filament_length": [1120, "nm"],
+      "bare_zone_length": [80, "nm"],
+      "k_falloff": [0.0024],
+      "passive_mode": ["exponential"],
+      "passive_exp_sigma": [500],
+      "passive_exp_L": [80],
+      "passive_l_slack": [950, "nm"],
+      "hsl_max_threshold": [1150, "nm"],
+      "xfiber_fraction": [0, "unitless"]
+  }
+},
+
+"electrophys_parameters": {
+
+  "cell_ion_parameters": {
+    "model": ["three_state_calcium"],
+    "model_inputs": {
+      "initial_calcium": [1e-7, "Molar"],
+      "path_to_calcium": ["/home/fenics/shared/working_directory_untracked/amir_test14_printedfiles/test_14/calcium.npy"]
+    }
+  },
+
+  "monodomain_parameters": {
+    "dummy_param2": [0.0]
+  }
+},
+  "windkessel_parameters": {
+    "Cao": [4.25e-5, "ml/Pa"],
+    "Cven": [0.28e-3, "ml/Pa"],
+    "Vart0": [0.16625, "volume for 0 pressure in art in mL"],
+    "Vven0": [1.25, "volume for 0 pressure in vc in mL"],
+    "Rao": [400e3, "Aortic resistance, Pa*s/mL"],
+    "Rven": [1050e3, "Venous resistance, Pa*s/mL"],
+    "Rper": [5000e3, "Peripheral resistance, Pa*s/mL"],
+    "V_ven": [2.0, "ED venous volume in mL"],
+    "V_art": [0.74, "ED arterial volume in mL"]
+  }
+
+}

@@ -1,0 +1,25 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+.greedy-nav a {
+   color: #0292ca;
+  }
+
+.button2 {
+  background-color: #0292ca; /* blue to match theme */
+  border: none;
+  color: white;
+  padding : 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 8px;
+  text-align: right;
+}

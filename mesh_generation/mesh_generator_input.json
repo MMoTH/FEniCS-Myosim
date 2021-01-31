@@ -1,0 +1,15 @@
+{
+  "input_files": {
+    "input_directory": "/home/fenics/shared/",
+    "endo_surface": "r082315_endo.stl",
+    "epi_surface": "epi.stl",
+  },
+  "volume_clip_info": {
+    "Laxis": [-0.0760398272351652, -0.0945530105122101, 0.992611541781136],
+    "z_offset": 1.6
+  },
+  "output_info": {
+    "output_dir": "/home/fenics/shared/",
+    "mesh_name": "rat_082315"
+  }
+}

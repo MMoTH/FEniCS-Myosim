@@ -1,1 +1,0 @@
-# MyoSim_spindle

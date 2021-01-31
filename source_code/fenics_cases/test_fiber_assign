@@ -1,0 +1,16 @@
+from __future__ import division
+import sys
+sys.path.append("/home/fenics/shared/source_code/dependencies/")
+import os as os
+from dolfin import *
+import numpy as np
+from matplotlib import pylab as plt
+#from petsc4py import PETSc
+from forms import Forms
+from nsolver import NSolver as NSolver
+import math
+import Python_MyoSim.half_sarcomere.half_sarcomere as half_sarcomere
+import Python_MyoSim.half_sarcomere.implement as implement
+from cell_ion_module import cell_ion_driver
+import vtk
+import vtk_py

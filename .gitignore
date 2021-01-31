@@ -1,0 +1,12 @@
+*.pyc
+*.npy
+*.csv
+*.pvd
+*.vtu
+*.auto
+working_directory_untracked/
+LV_closed2.py
+*.hdf5
+_site/
+Gemfile.lock
+Doxygen_documentation/

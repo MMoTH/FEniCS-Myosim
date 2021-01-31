@@ -1,0 +1,62 @@
+main:
+  #- title: "Posts"
+  #  url: /posts/
+  #- title: "Categories"
+  #  url: /categories/
+  #- title: "Tags"
+  #  url: /tags/
+  #- title: "Projects"
+  #  url: /projects/
+  #- title: "Getting Started"
+  #  url: /getting_started/
+  #- title: "Model Overview"
+  #  url: /overview/
+
+docs:
+  - title: Getting Started
+    children:
+      - title: "Installation"
+        url: /getting_started/installation/
+      - title: "Running a Simulation"
+        url: /getting_started/running_demo/
+      - title: "Creating Input Files"
+        url: /getting_started/fenics_input_readme/
+      - title: "Building a Mesh"
+        url: /getting_started/mesh_generation_readme/
+
+  - title: Model Formulation
+    url: /model_formulation/model_formulations/
+    children:
+      - title: "Cell Mechanics"
+        url: /model_formulation/cell_mechanics/
+      - title: "Tissue Mechanics"
+        url: /model_formulation/tissue_mechanics/
+      - title: "Circulatory System"
+        url: /model_formulation/hemodynamics/
+      - title: "Coupling the Systems"
+        url: /model_formulation/overview/
+
+  - title: "Model Optimization"
+    children:
+      - title: "Particle Swarm Optimization"
+        url: /model_optimization/pso_overview/
+      - title: "Running an Optimization"
+        url: /model_optimization/running_pso/
+
+  - title: "Model Development"
+    children:
+      - title: "Notes"
+        url: /model_development/notes/
+      - title: "Task List"
+        url: /model_development/to_be_implemented/
+
+  #- title: "Projects"
+  #  children:
+  #    - title: "Sensitivity Study"
+  #      url: /projects/sensitivity_study/
+  #    - title: "Fiber Re-orientation"
+  #      url: /projects/fiber_splay/
+  #    - title: "PyMyoVent Growth"
+  #      url: /projects/pymyovent_growth
+  #    - title: "Relevant Literature"
+  #      url: /projects/literature

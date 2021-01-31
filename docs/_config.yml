@@ -1,0 +1,20 @@
+remote_theme: pmarsceill/just-the-docs
+
+# Auxiliary links for the upper right navigation.
+aux_links:
+
+  "MMotH-Vent Repository":
+  - "https://github.com/mmoth-kurtis/MMotH-Vent"
+
+
+  # Not a big fan of dark mode. I think the light looks better.
+#color_scheme: "dark"
+
+# You can display an image instead of the site's title like this.
+# logo: "/assets/images/example-image.png"
+
+# Footer
+footer_content: "Written by the Computational Biomechanics Lab at University of Kentucky"
+
+# This is the title of the website
+title: "MMotH-Vent"

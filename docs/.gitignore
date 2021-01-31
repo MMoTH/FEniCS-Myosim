@@ -1,0 +1,5 @@
+# The pages that are generated for the built site.
+_site/
+
+# No need to save Gemfile.lock. This can lead to using outdated gems.
+Gemfile.lock

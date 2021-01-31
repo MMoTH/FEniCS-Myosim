@@ -1,0 +1,2632 @@
+// MDL v1 utf8
+mevislabVersion = 3.1.1
+network  {
+  watchlist = ""
+}
+module DicomBrowser {
+  internal  {
+    frame = "217 917 128 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "62 284 1097 731"
+        sizeHint = "566 317"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "408 242 838 556"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = DicomBrowser10
+    rootPath = "C:/Users/hsh245/Documents/Cardiac Mechanics Files/Hypotrophy Study/MRI Images/WENK_20190619_2/dcm format"
+    useInclude = FALSE
+    include = datasets,results
+    useExclude = FALSE
+    exclude = slices,html
+    suffix = dcm,mlimage
+    recursive = TRUE
+    autoApply = FALSE
+    sortBy = Patient
+    sortTreeNames = PatientOriented,ModalityOriented,InstitutionOriented,DateOriented,FlatDatasets,DeviceOriented
+    autoReload = Off
+    reloadDurationLimit = 0
+    reloadDuration = 0.13855129
+    singleClickSelect = FALSE
+    disableDbClickSelect = FALSE
+  }
+}
+module View2D {
+  internal  {
+    frame = "-611 -147 120 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "401 46 1018 769"
+        sizeHint = "400 400"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = View2D5
+    inventorInputOn = TRUE
+    inventorOutputOn = TRUE
+    view2DExtensionsOn = TRUE
+    startSlice = 0
+    numSlices = 1
+    numXSlices = 1
+    sliceStep = 1
+    slab = 1
+    blendMode = BLEND_REPLACE
+    timePoint = 5
+    maxTimePoint = 13
+    filterMode = FILTER_LINEAR
+    standardKeys = TRUE
+    cineMode = CINE_Z
+    cineDirection = CINE_PINGPONG
+    cineRepeat = CINE_ONCE
+    cineSpeed = 0.1
+    cineAlwaysReset = TRUE
+    snapToCenter = FALSE
+    zoomMode = VIEW2D_AUTO_ZOOM
+    unzoomOnImageChange = FALSE
+    sliceZoom = 1
+    sliceZoomSynced = 1
+    baseColor = "1 1 1"
+    margin = "2 2"
+    sliceOrigin = "-13.8315353393555 -0.355110168457031"
+    useShaders = TRUE
+    useManagedInteraction = FALSE
+    lutCenter = 0.537221431732178
+    lutWidth = 1
+    annotationOn = TRUE
+    annotationMode = ANNO_MODE_AUTO
+    annotationSizeMode = ANNO_SHOW_DETAILED
+    annotationCol = "0.899999976158142 0.899999976158142 0.899999976158142"
+    annotationFontSize = ANNO_SIZE_AUTO
+    annoCoords = Voxel
+    annoCTValue = AsIs
+    borderOn = FALSE
+    borderColor = "0.899999976158142 0.899999976158142 0.899999976158142"
+    valueHighPrecision = TRUE
+    showColorChannelValues = FALSE
+    colorChannelSeparator = " / "
+    maxPrecision = 4
+    enableSlicing = TRUE
+    useRelativeLUTIfNoInputImage = FALSE
+  }
+}
+module CSOFreehandProcessor {
+  internal  {
+    frame = "-103 21 176 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "644 264 362 426"
+        sizeHint = "312 426"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CSOFreehandProcessor1
+    updateMode = Off
+    autoApply = FALSE
+    emptyGroupBeforeGeneration = FALSE
+    addCSOToGroupMode = AddToGroupByLabel
+    addCSOToGroupWithLabel = CINELVEpi_ED
+    addCSOToGroupWithId = -1
+    id = 0
+    pathPointStyle = LineStyleSolid
+    pathPointWidth = 1
+    pathPointColor = "1 1 0"
+    pathPointAlpha = 1
+    seedPointStyle = MarkerModeRect
+    seedPointSize = 2
+    seedPointColor = "0 1 0"
+    seedPointAlpha = 1
+    voxelWriteMode = VoxelWriteModeModule
+    voxelWriteValue = 1024
+    creationMode = CreationModeClosedSpline
+    interpolationMode = InterpolationModeSplineInterpolation
+    seedPlacementPolicy = PlaceSeedPointOnClick
+    finishingMode = FinishOnRelease
+    minNumSeedPoints = 4
+    minSeedPointDistance = 0
+    shouldCloseOnFinish = TRUE
+    useFinishingDistance = TRUE
+    finishingDistance = 24
+    numInterpolationSteps = 1
+    showInteractivePreview = TRUE
+  }
+}
+module CSOManager {
+  internal  {
+    frame = "81 925 112 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "533 226 1143 724"
+        sizeHint = "706 604"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CSOManager1
+    workDirectlyOnInputCSOList = FALSE
+    updateCsoDisplayTree = TRUE
+    updateGroupDisplayTree = TRUE
+    selectLastCreatedGroup = TRUE
+    selectionColoringMode = SelectionColorModeFixed
+    selectionLineWidthMode = SelectionLineWidthWiden
+    selectionBrightenColor = 0.2
+    selectionFixedColor = "1 1 0.600000023841858"
+    selectionWidenLineWidth = 1
+    selectionFixedLineWidth = 2
+    selectedSeedPointColoringMode = SelectedSeedPointColorModeFixed
+    selectedSeedPointSizeMode = SelectedSeedPointSizeModeEnlarge
+    selectedSeedPointBrightenColor = 0.5
+    selectedSeedPointFixedColor = "0 1 0"
+    selectedSeedPointEnlargeSize = 1
+    selectedSeedPointSize = 1
+    csoDefaultLabel = ""
+    csoDefaultLabelAddUniqueId = FALSE
+    csoDefaultLabelUniqueIdFormat = " (%i)"
+    csoDefaultLabelAddUniqueIdAlways = FALSE
+    csoDefaultDescription = ""
+    csoDefaultShowState = TRUE
+    csoDefaultVoxelizeState = TRUE
+    csoDefaultEditableState = TRUE
+    groupSingleDeleteGroupCSOHandling = RemoveIfInNoGroup
+    groupDefaultLabel = ""
+    groupDefaultLabelAddUniqueId = FALSE
+    groupDefaultLabelUniqueIdFormat = " (%i)"
+    groupDefaultLabelAddUniqueIdAlways = FALSE
+    groupDefaultDescription = ""
+    groupDefaultUseTimePointIndex = FALSE
+    groupDefaultTimePointIndex = 0
+    groupDefaultUseShowState = FALSE
+    groupDefaultShowState = TRUE
+    groupDefaultUseVoxelizeState = FALSE
+    groupDefaultVoxelizeState = TRUE
+    groupDefaultUseEditableState = FALSE
+    groupDefaultEditableState = TRUE
+    groupDefaultUsePathPointStyle = FALSE
+    groupDefaultPathPointStyle = LineStyleSolid
+    groupDefaultUsePathPointWidth = FALSE
+    groupDefaultPathPointWidth = 1
+    groupDefaultUsePathPointColor = FALSE
+    groupDefaultPathPointColor = "1 1 1"
+    groupDefaultUsePathPointAlpha = FALSE
+    groupDefaultPathPointAlpha = 1
+    groupDefaultUseSeedPointStyle = FALSE
+    groupDefaultSeedPointStyle = MarkerModeRect
+    groupDefaultUseSeedPointSize = FALSE
+    groupDefaultSeedPointSize = 3
+    groupDefaultUseSeedPointColor = FALSE
+    groupDefaultSeedPointColor = "0 1 0"
+    groupDefaultUseSeedPointAlpha = FALSE
+    groupDefaultSeedPointAlpha = 1
+    groupDefaultUseVoxelWriteMode = FALSE
+    groupDefaultVoxelWriteMode = VoxelWriteModeModule
+    groupDefaultUseVoxelWriteValue = FALSE
+    groupDefaultVoxelWriteValue = 1024
+    groupDefaultNumMaximumCSOs = 0
+    groupDefaultOverflowHandling = RemoveFirst
+    groupDefaultRemoveFromGroupHandling = RemoveIfInNoGroup
+    groupDefaultDeleteGroupCSOHandling = RemoveIfInNoGroup
+    listSingleRemoveEmptyGroupHandling = RemoveAlways
+    listDefaultRemoveEmptyGroupHandling = RemoveAlways
+    enableUndoRedo = TRUE
+    numUndos = 10
+    numRedos = 0
+    undoStackLimit = 16
+    useSelectionCSONotification = FALSE
+    useSelectionGroupNotification = FALSE
+    useFinishedCSONotification = FALSE
+    useFinishedGroupNotification = FALSE
+    useCSOMovedNotification = FALSE
+    useRepaintNotification = FALSE
+    useInteractionInitNotification = FALSE
+    useStartNewCSONotification = FALSE
+    enableSelectionNotification = TRUE
+    enableFinishedNotification = TRUE
+    enableCSOMovedNotification = TRUE
+    enableRepaintNotification = TRUE
+    outputApplicationEventsDebug = FALSE
+    csoTreeView = ""
+    groupTreeView = ""
+    numSelectedCSOs = 0
+    numSelectedGroups = 1
+    selectedCSOsGroupIds = ""
+    csoTabSelected = FALSE
+    groupTabSelected = TRUE
+    selectionTabSelected = FALSE
+    notificationTabSelected = FALSE
+    defaultTabSelected = FALSE
+    csoCommonTabSelected = TRUE
+    csoVisualsTabSelected = FALSE
+    groupCommonTabSelected = TRUE
+    groupVisualsTabSelected = FALSE
+    groupMiscTabSelected = FALSE
+    notificationControlTabSelected = FALSE
+    notificationOutputCSOTabSelected = FALSE
+    notificationOutputGroupTabSelected = FALSE
+    defaultCSOCommonTabSelected = FALSE
+    defaultGroupCommonTabSelected = FALSE
+    defaultGroupVisualsTabSelected = FALSE
+    defaultGroupMiscTabSelected = FALSE
+  }
+}
+module CSOConvertTo3DMask {
+  internal  {
+    frame = "629 45 168 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "213 336 469 609"
+        sizeHint = "469 607"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CSOConvertTo3DMask1
+    updateMode = Off
+    autoApply = FALSE
+    foregroundValue = 4095
+    backgroundValue = 0
+    useImageValues = FALSE
+    fillSurface = TRUE
+    copyInputImage = FALSE
+    listenInteractionNotifications = FALSE
+    listenInteractionFinished = TRUE
+    useAlwaysForegroundValueOfModule = FALSE
+    useAntiAliasing = TRUE
+    quality = 0.89999998
+    useOnlyFirstCSOForStartScanning = FALSE
+    useOnlySeedPoints = FALSE
+    resolveEmbeddedCSOs = TRUE
+    useSplineApproximationSmoothing = FALSE
+    additionalPointLocation = Auto
+    resolveIntersections = TRUE
+    regularizationStrength = 0
+    regularizationStrength2 = 0
+    innerPointScale = 0.25
+    maxNumPoints = 10000
+    supportOpenCSOs = FALSE
+    numThreads = 4
+    codePath = SSE3
+    logging = FALSE
+  }
+}
+module SoView2DCSOEditor {
+  internal  {
+    frame = "-443 -43 152 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "125 170 670 644"
+        sizeHint = "670 644"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoView2DCSOEditor1
+    interactionProviderID = ""
+    drawingOn = TRUE
+    editingOn = TRUE
+    fixZOn = TRUE
+    color = "1 1 1"
+    selectionTolerance = 24
+    needsValidVoxel = TRUE
+    button1 = PRESSED
+    button2 = IGNORED
+    button3 = IGNORED
+    shift = IGNORED
+    control = IGNORED
+    alt = IGNORED
+    wantsAllEvents = TRUE
+    wantsKeyEvents = TRUE
+    wantsMouseWheelEvents = FALSE
+    setEventHandled = FALSE
+    ignoreHandledEvents = FALSE
+    createNewMode = FALSE
+    renderOnSlab = FALSE
+    clipToSlice = FALSE
+    cursorShape = UNDEFINED_CURSOR
+    shouldListenToRepaintEvents = TRUE
+    shouldListenToSelectionChangedEvents = TRUE
+    shouldListenToFinishedEvents = TRUE
+    generalInteractionMode = INTERACTION_MODE_EDIT
+    generalInteractionModeToggleKey = TOGGLE_MODE_ALT
+    movingOn = TRUE
+    shouldLimitCSOMovement = FALSE
+    moveRatio = 0.5
+    useAntiAliasing = TRUE
+    useInterpolationTargetColor = TRUE
+    interpolationTargetColor = "1 0 0"
+    showCSOsOnAllTimePoints = FALSE
+    overwriteCurrentTimePoint = FALSE
+    newCurrentTimePoint = 0
+    showBoundingBox = FALSE
+    boundingBoxAlpha = 0.5
+    boundingBoxColor = "1 1 1"
+    showOnlyParallelCSOs = FALSE
+    showParallelThickness = 0.1
+    shouldLevelCSO = FALSE
+    useStylePalette = FALSE
+    stylePaletteUseIndexAs = USE_INDEX_FOR_CSO
+    labelShowMode = LABEL_SHOW_CSO_ID
+    combineLabelsForGroupsOnSlice = FALSE
+    labelAlignmentMode = LABEL_ALIGN_CENTER
+    labelUnitScale = LABEL_UNIT_SCALE_MM
+    showLabelUnits = TRUE
+    labelFontSize = 12
+    labelUseTextShadow = TRUE
+    labelMarginX = 2
+    labelMarginY = 2
+    ghostMode = GHOST_NONE
+    ghostUnitMode = GHOST_UNIT_SLICE
+    ghostStyleAlpha = TRUE
+    ghostStyleStipple = TRUE
+    ghostStyleLineWidth = FALSE
+    ghostStyleBrighten = FALSE
+    ghostDepth = 5
+    ghostFadeOutAlpha = 0
+    generalLabelColor = "1 1 1"
+    generalLabelAlpha = 1
+    labelColorMode = COLOR_GENERAL
+    useTessellation = FALSE
+    useHoleCorrection = FALSE
+    useHoleCorrectionForGroupsOnly = FALSE
+    tessellationColorMode = COLOR_GENERAL
+    tessellationColor = "0.899999976158142 0.5 0.899999976158142"
+    tessellationAlpha = 0.273
+    useFillingFromSide = FALSE
+    fillingFromSideLineWidthMode = SIDE_FILLING_WIDTH_AUTOMATIC
+    fillingFromSideManualLineWidthX = 1
+    fillingFromSideManualLineWidthY = 1
+    usePathPointColorForSeedPoints = FALSE
+    showSeedPoints = TRUE
+    globalAlphaFactor = 1
+    overwriteSelectionVisualizationSettings = FALSE
+    selectionColoringMode = SELECTION_COLOR_MODE_FIXED
+    selectionBrightenColor = 0.2
+    selectionFixedColor = "1 1 0.600000023841858"
+    selectionLineWidthMode = SELECTION_LINE_WIDEN
+    selectionWidenLineWidth = 1
+    selectionFixedLineWidth = 1
+    selectedSeedPointColoringMode = SELECTED_SEED_POINT_COLOR_MODE_FIXED
+    selectedSeedPointBrightenColor = 0.2
+    selectedSeedPointFixedColor = "1 1 0.600000023841858"
+    selectedSeedPointAlpha = 1
+    selectedSeedPointSizeMode = SELECTED_SEED_POINT_ENLARGE
+    selectedSeedPointEnlargeSize = 1
+    selectedSeedPointSize = 1
+    tessellationWindingRule = WR_ODD
+    selectGroupsParsProToto = TRUE
+    highlightSelectedGroups = FALSE
+    setPastedCSOsSelected = TRUE
+    combinePastedCSOsToGroupsOfOriginalCSOs = FALSE
+    enableMouseOverHighlighting = TRUE
+    mouseOverColorMode = HIGHLIGHT_COLOR_MODE_FIXED
+    mouseOverColorBrightenValue = 0.80000001
+    mouseOverColorColor = "1 1 1"
+    mouseOverLineWidthMode = HIGHLIGHT_LINE_WIDEN
+    mouseOverLineWidthWidenValue = 0
+    mouseOverLineWidthLineWidth = 1
+    currentlyUnderMouseCursorCSOId = 0
+    useIconFile = FALSE
+    iconFile = $(MLAB_MeVisLab_Standard)/Modules/Resources/Images/markerIcons.tif
+    cutCopyKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    copyKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    pasteKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    undoKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    redoKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    deleteSeedPointKeyModifier = EDIT_OP_KEY_MOD_NONE
+    deleteCSOKeyModifier = EDIT_OP_KEY_MOD_SHIFT
+    multiSelectionKeyModifier = EDIT_OP_KEY_MOD_CONTROL
+    enableMultiSelection = TRUE
+    cutCopyKey = EDIT_OP_KEY_X
+    copyKey = EDIT_OP_KEY_C
+    pasteKey = EDIT_OP_KEY_V
+    undoKey = EDIT_OP_KEY_Z
+    redoKey = EDIT_OP_KEY_Y
+    deleteSeedPointKey = EDIT_OP_KEY_DELETE
+    deleteCSOKey = EDIT_OP_KEY_DELETE
+    nextInteractionStatus = INTERACTIVE_MODE_START_CSO
+    shouldUpdateInteractionStateAndCSOId = TRUE
+    shouldTouchItselfInEvalEvent = TRUE
+    forceStartNewCSOKeyModifier = EDIT_OP_KEY_MOD_NONE
+    forceStartNewCSOKey = EDIT_OP_KEY_F
+    shouldOnlyInteractWithSelectedCSO = FALSE
+    showParallelDotProductLimitRadian = 0
+  }
+}
+module CSOFilter {
+  internal  {
+    frame = "449 181 96 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "335 116 543 511"
+        sizeHint = "543 511"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CSOFilter1
+    updateMode = AutoUpdate
+    autoApply = TRUE
+    inputGroupString = EPI
+    inputCSOString = 1
+    whichInputStringToUse = UseInputStringCSOGroup
+    groupFilterMode = FilterModeInclude
+    csoFilterMode = FilterModeInclude
+    separatorString = " "
+    groupInputEvaluationMode = EvaluationModeLabel
+    csoInputEvaluationMode = EvaluationModeIds
+    shouldCompareCaseInsensitive = FALSE
+    autoAddAllSelectedCSO = FALSE
+    autoAddAllSelectedGroup = FALSE
+    autoAddAllShownCSO = FALSE
+    autoAddAllShownGroup = FALSE
+    autoAddAllVoxelizeCSO = FALSE
+    autoAddAllVoxelizeGroup = FALSE
+    autoAddAllEditableCSO = FALSE
+    autoAddAllEditableGroup = FALSE
+    actionSetPathPointColor = FALSE
+    actionSetPathPointAlpha = FALSE
+    actionSetPathPointBrighten = FALSE
+    actionSetPathPointStyle = FALSE
+    actionSetPathPointWidth = FALSE
+    actionSetVoxelWriteMode = FALSE
+    actionSetVoxelWriteValue = FALSE
+    actionSetShowState = FALSE
+    actionSetVoxelizeState = FALSE
+    actionSetEditableState = FALSE
+    actionSetTimePointIndex = FALSE
+    actionSetSelectedCSO = FALSE
+    actionSetSelectedGroup = FALSE
+    actionSetGroupSeedPointColor = FALSE
+    actionSetGroupSeedPointStyle = FALSE
+    actionSetGroupSeedPointSize = FALSE
+    actionSetGroupSeedPointAlpha = FALSE
+    targetPathPointColor = "1 1 1"
+    targetPathPointAlpha = 1
+    targetPathPointBrightenValue = 1
+    targetPathPointStyle = LineStyleSolid
+    targetPathPointWidth = 1
+    targetVoxelWriteMode = VoxelWriteModeModule
+    targetVoxelWriteValue = 1024
+    targetShowState = TRUE
+    targetVoxelizeState = TRUE
+    targetEditableState = TRUE
+    targetTimePointIndex = 0
+    targetSelectedCSO = TRUE
+    targetSelectedGroup = TRUE
+    targetGroupSeedPointColor = "1 1 1"
+    targetGroupSeedPointStyle = MarkerModeRect
+    targetGroupSeedPointSize = 2
+    targetGroupSeedPointAlpha = 1
+    listenToFinishingCSONotifications = TRUE
+    listenToFinishingGroupNotifications = TRUE
+    listenToSelectionCSOChangedNotifications = TRUE
+    listenToSelectionGroupChangedNotifications = TRUE
+    listenToMovedCSONotifications = FALSE
+    csoTabSelected = FALSE
+    groupTabSelected = TRUE
+  }
+}
+module WEMIsoSurface {
+  internal  {
+    frame = "641 -147 128 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "2180 302 431 374"
+        sizeHint = "426 374"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMIsoSurface1
+    id = 0
+    autoApply = TRUE
+    updateMode = AutoUpdate
+    overwriteLabelDescription = TRUE
+    label = ""
+    description = ""
+    shouldComputeNormals = TRUE
+    isoMinValue = 1200
+    isoMaxValue = 2000
+    useMinValue = FALSE
+    useMaxValue = TRUE
+    cellExtend = "1 1 1"
+    useWorldCoords = FALSE
+    useInterpolation = TRUE
+    useQuadrification = FALSE
+    useFaceValueList = FALSE
+    useLUTValueList = TRUE
+    useValenceThreeRemoval = TRUE
+    useZeroLengthEdgeRemoval = FALSE
+    useEdgeRemoval = FALSE
+    timePointIndex = 0
+    taskVerboseLogging = FALSE
+    useVoxelSampling = FALSE
+    voxelSampling = 3
+  }
+}
+module WEMReducePolygons {
+  internal  {
+    frame = "1161 -523 160 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "636 282 328 391"
+        sizeHint = "328 391"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMReducePolygons1
+    id = 0
+    autoApply = TRUE
+    updateMode = AutoUpdate
+    overwriteLabelDescription = TRUE
+    label = ""
+    description = ""
+    shouldComputeNormals = TRUE
+    workDirectlyOnInputWEMs = FALSE
+    listenToFinishNotifications = TRUE
+    listenToRepaintNotifications = TRUE
+    listenToSelectionChangedNotifications = TRUE
+    triangulationMode = Strip
+    reductionMode = Percentage
+    targetReduction = 80
+    targetError = 2
+    smooth = TRUE
+    reduction = 80
+    useExpertMode = FALSE
+    vertexPlacementMode = Middle
+    areaWeightedQuadrics = TRUE
+    valenceWeightedQuadrics = TRUE
+    edgeWeightedQuadrics = TRUE
+    shouldInterpolatePVLValues = TRUE
+    shouldLeaveEdgesWithDifferentPVLValues = FALSE
+    shouldSwapEdges = FALSE
+    swapAngleLimit = 12
+  }
+}
+module WEMInfo {
+  internal  {
+    frame = "1085 -411 88 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "511 282 579 391"
+        sizeHint = "579 391"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMInfo1
+    autoApply = TRUE
+    autoUpdate = TRUE
+    autoClear = TRUE
+    listenToFinishingNotifications = TRUE
+    listenToRepaintNotifications = FALSE
+    listenToSelectionChangedNotifications = TRUE
+    boundingBoxMode = "Axis Aligned"
+    selectedPrimitiveValueList = LUT
+    curveScaleFactor = 1
+    selectedTab = 0
+  }
+}
+module WEMModify {
+  internal  {
+    frame = "1125 -267 104 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "3 418 575 662"
+        sizeHint = "525 662"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMModify2
+    id = 0
+    autoApply = TRUE
+    updateMode = AutoUpdate
+    overwriteLabelDescription = TRUE
+    label = ""
+    description = ""
+    shouldComputeNormals = TRUE
+    workDirectlyOnInputWEMs = FALSE
+    listenToFinishNotifications = TRUE
+    listenToRepaintNotifications = TRUE
+    listenToSelectionChangedNotifications = TRUE
+    triangulationMode = Strip
+    WEMs = ""
+    selectedWEMs = ""
+    modifyFieldsValid = FALSE
+    modifyAllPatches = TRUE
+    scale = "1 1 1"
+    translate = "0 0 0"
+    center = FALSE
+    rotation = "0 0 0 0"
+    transformMatrix = "0.20000000298023 0 0 0
+0 0.20000000298023 0 0
+0 0 1 0
+0 0 0 1"
+    useTransformMatrix = TRUE
+    mirrorFaces = FALSE
+    sortFaces = FALSE
+    triangulateFaces = FALSE
+    closeBoundaries = FALSE
+    setNodeColor = FALSE
+    nodeColor = "1 1 1"
+    setNodeAlpha = FALSE
+    nodeAlpha = 1
+    nodeValueMode = None
+    nodeValue = 0
+    clampNodeMinValue = FALSE
+    minClampValue = 0
+    clampNodeMaxValue = FALSE
+    maxClampValue = 4095
+  }
+}
+module ComposeMatrix {
+  internal  {
+    frame = "1201 101 128 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "50 293 419 582"
+        sizeHint = "419 582"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ComposeMatrix1
+    transpose = FALSE
+    matrix = "0.20000000298023 0 0 0
+0 0.20000000298023 0 0
+0 0 1 0
+0 0 0 1"
+    a00 = 0.20000000298023
+    a01 = 0
+    a02 = 0
+    a03 = 0
+    a10 = 0
+    a11 = 0.20000000298023
+    a12 = 0
+    a13 = 0
+    a20 = 0
+    a21 = 0
+    a22 = 1
+    a23 = 0
+    a30 = 0
+    a31 = 0
+    a32 = 0
+    a33 = 1
+    v0 = "0.20000000298023 0 0"
+    v1 = "0 0.20000000298023 0"
+    v2 = "0 0 1"
+    v3 = "0 0 0"
+  }
+}
+module Info {
+  internal  {
+    frame = "1145 221 64 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "631 238 616 383"
+        sizeHint = "616 383"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info7
+  }
+}
+module SoCSO3DRenderer {
+  internal  {
+    frame = "-223 -95 144 64"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "2742 361 274 416"
+        sizeHint = "274 416"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoCSO3DVis1
+    interactionProviderID = ""
+    autoApply = TRUE
+    pathPointWidthOffset = 0
+    seedPointSizeScaling = 0.1
+    highlightSelectedGroups = TRUE
+    useRenderTimeDelay = FALSE
+    timerDelayMilliSeconds = 100
+    useStylePalette = FALSE
+    useLUT = FALSE
+    stylePaletteUseIndexAs = USE_INDEX_FOR_CSO
+    enableSelection = FALSE
+    performPreHitTest = FALSE
+    cursorShape = POINTING_HAND_CURSOR
+    listenToRepaintNotifications = FALSE
+    listenToFinishingNotifications = TRUE
+    listenToSelectionChangedNotifications = TRUE
+    provideVertexProperties = FALSE
+    timepointToRender = -1
+  }
+}
+module SoExaminerViewer {
+  internal  {
+    frame = "-75 -459 152 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _viewer {
+        geometry = "-40 32 1297 834"
+        sizeHint = "400 400"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoExaminerViewer1
+    renderCaching = AUTO
+    boundingBoxCaching = AUTO
+    renderCulling = AUTO
+    pickCulling = AUTO
+    border = FALSE
+    background = "0 0 0"
+    transparency = BLEND
+    antialiasing = FALSE
+    antialiasingNumPasses = 1
+    useSampleBuffers = FALSE
+    numSamples = 8
+    grabKeyFocus = TRUE
+    enableKeyCommands = TRUE
+    snapshotFormat = SNAPSHOT_RGB
+    outputAviFile = ""
+    autoRedrawWhenRecording = TRUE
+    frameRate = 7
+    frameRateAvi = 15
+    outputSnapshotFile = none
+    outputSnapshotFileWritten = none
+    autoIncreaseFile = TRUE
+    showSnapshotWithShell = FALSE
+    snapCount = 0
+    inputDevicesList = ""
+    headlight = TRUE
+    decoration = TRUE
+    popupMenuEnabled = FALSE
+    viewing = TRUE
+    autoClipping = TRUE
+    drawStyle = VIEW_AS_IS
+    interactiveDrawStyle = VIEW_LOW_COMPLEXITY
+    viewAllFlag = FALSE
+    initialCameraOrientation = CAMERA_KEEP_AS_IS
+    applyCameraOrientation = CAMERA_KEEP_AS_IS
+    cameraType = CAMERA_PERSPECTIVE
+    autoApplyUserSettingOrientation = FALSE
+    userSettingOrientation = "0 0 1 0"
+    automaticViewAll = FALSE
+    storeCurrentState = TRUE
+    saveCamera = TRUE
+    cursor = TRUE
+    isCameraStored = TRUE
+    perspective = TRUE
+    stereoViewing = FALSE
+    stereoOffset = 3
+    height = 0.78539819
+    position = "2.06720018386841 21.7790851593018 -4.66010475158691"
+    orientation = "0.995272994041443 -0.0249491073191166 -0.0938569754362106 4.55543613433838"
+    nearDistance = 0.02605813
+    farDistance = 26.110298
+    focalDistance = 21.834476
+    forceRedrawOnInteraction = FALSE
+    button1events = TO_VIEWER
+    button2events = TO_VIEWER
+    button3events = TO_VIEWER
+    keyEvents = TO_VIEWER
+    animationEnabled = FALSE
+    feedback = FALSE
+    feedbackSize = 32
+    mouseInteraction = ""
+    rotationAxis = "0 1 0"
+    rotationAngle = 360
+    rotationSteps = 80
+    recordRotation = TRUE
+    wheelZoomEnabled = FALSE
+    wheelRotationEnabled = FALSE
+  }
+}
+module SoView2DHint {
+  internal  {
+    frame = "-779 -155 120 56"
+    moduleGroupName = Segment_LV_CineDense
+  }
+  fields  {
+    instanceName = SoView2DHint1
+    renderSlices3D = TRUE
+    renderExtensions3D = TRUE
+  }
+}
+module SoWEMRenderer {
+  internal  {
+    frame = "245 -363 136 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "485 242 391 454"
+        sizeHint = "332 454"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoWEMRenderer3
+    interactionProviderID = ""
+    autoApply = TRUE
+    autoUpdate = TRUE
+    autoClear = TRUE
+    enableCreaseAngle = FALSE
+    creaseAngle = 75
+    useHighlightSelected = FALSE
+    highlightColor = "1 0 0"
+    highlightIntensity = 0.5
+    faceRenderingMode = WEM_FACE_RENDERING_MODE_SINGLE_SIDE
+    allowHits = TRUE
+    performPreHitTest = FALSE
+    cursorShape = CROSS_CURSOR
+    colorMode = WEM_COLOR_GENERAL
+    drawFaces = TRUE
+    faceDiffuseColor = "0.792156875133514 0.792156875133514 0.792156875133514"
+    useFaceAmbientColor = TRUE
+    faceAmbientColor = "0.266667008399963 0.266667008399963 0.266667008399963"
+    useFaceSpecularColor = TRUE
+    faceSpecularColor = "0.0666669979691505 0.0666669979691505 0.0666669979691505"
+    faceAlphaValue = 0.89999998
+    faceShininessValue = 0
+    primitiveValueLists = LUT
+    selectedPrimitiveValueList = LUT
+    selectedPrimitiveValueAlphaList = LUT
+    primitiveValueListValid = TRUE
+    primitiveValueListAlphaValid = TRUE
+    overwriteAlphaWithPVL = FALSE
+    wemPatchToRender = -1
+    maxWEMPatchIndex = 0
+    cachePatches = FALSE
+    sendAdjacency = FALSE
+    selectedTab = 0
+  }
+}
+module CloneImageAsEmptyImage {
+  internal  {
+    frame = "357 613 216 56"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "2741 421 277 296"
+        sizeHint = "277 296"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CloneImageAsEmptyImage
+    imageSizeX = 128
+    imageSizeY = 128
+    imageSizeZ = 4
+    imageSizeC = 1
+    imageSizeT = 14
+    imageSizeU = 1
+    pageSizeX = 128
+    pageSizeY = 128
+    pageSizeZ = 1
+    pageSizeC = 1
+    pageSizeT = 1
+    pageSizeU = 1
+    dataType = "unsigned int16"
+    minValue = 0
+    maxValue = 127
+    worldMatrix = "0.155966508689964 7.34580016946089e-09 0.625988196614372 -7.81885735632507
+0.0670858629281546 0.168863948346678 -0.417865257226978 -8.17348227702393
+-0.105706841568274 0.10716794362524 0.658427979738193 -4.90167454089758
+0 0 0 1"
+  }
+}
+module View2D {
+  internal  {
+    frame = "853 -75 120 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "1353 68 400 400"
+        sizeHint = "400 400"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = View2D
+    inventorInputOn = TRUE
+    inventorOutputOn = TRUE
+    view2DExtensionsOn = TRUE
+    startSlice = 8
+    numSlices = 1
+    numXSlices = 1
+    sliceStep = 1
+    slab = 1
+    blendMode = BLEND_REPLACE
+    timePoint = 5
+    maxTimePoint = 13
+    filterMode = FILTER_LINEAR
+    standardKeys = TRUE
+    cineMode = CINE_ZT
+    cineDirection = CINE_FORWARD
+    cineRepeat = CINE_ONCE
+    cineSpeed = 0.1
+    cineAlwaysReset = TRUE
+    snapToCenter = TRUE
+    zoomMode = VIEW2D_AUTO_ZOOM
+    unzoomOnImageChange = FALSE
+    sliceZoom = 1
+    sliceZoomSynced = 1
+    baseColor = "1 1 1"
+    margin = "2 2"
+    sliceOrigin = "0 0"
+    useShaders = TRUE
+    useManagedInteraction = FALSE
+    lutCenter = 40.0049896240234
+    lutWidth = 127
+    annotationOn = TRUE
+    annotationMode = ANNO_MODE_AUTO
+    annotationSizeMode = ANNO_SHOW_DETAILED
+    annotationCol = "0.899999976158142 0.899999976158142 0.899999976158142"
+    annotationFontSize = ANNO_SIZE_AUTO
+    annoCoords = Voxel
+    annoCTValue = AsIs
+    borderOn = FALSE
+    borderColor = "0.899999976158142 0.899999976158142 0.899999976158142"
+    valueHighPrecision = FALSE
+    showColorChannelValues = FALSE
+    colorChannelSeparator = " / "
+    maxPrecision = 4
+    enableSlicing = TRUE
+    useRelativeLUTIfNoInputImage = TRUE
+  }
+}
+module Info {
+  internal  {
+    frame = "633 225 112 80"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "3034 326 572 422"
+        sizeHint = "572 422"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info1
+  }
+}
+module Reshape {
+  internal  {
+    frame = "557 501 120 56"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "2642 540 289 157"
+        sizeHint = "289 157"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Reshape1
+    x = 64
+    y = 64
+    z = 16
+    c = 1
+    t = 14
+    u = 1
+    autoUpdate = FALSE
+  }
+}
+module TransformWorldMatrix {
+  internal  {
+    frame = "813 421 152 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "1479 512 264 255"
+        sizeHint = "264 255"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = TransformWorldMatrix
+    transformation = "1 0 0 6
+0 1 0 10
+0 0 1 -4.3
+0 0 0 1"
+    invert = FALSE
+  }
+}
+module SoView2DCSOExtensibleEditor {
+  internal  {
+    frame = "1045 413 200 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "2683 369 393 401"
+        sizeHint = "393 401"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoView2DCSOExtensibleEditor
+    interactionProviderID = ""
+    drawingOn = TRUE
+    editingOn = TRUE
+    fixZOn = TRUE
+    color = "1 1 1"
+    selectionTolerance = 16
+    needsValidVoxel = TRUE
+    button1 = PRESSED
+    button2 = IGNORED
+    button3 = IGNORED
+    shift = IGNORED
+    control = IGNORED
+    alt = IGNORED
+    wantsAllEvents = FALSE
+    wantsKeyEvents = FALSE
+    wantsMouseWheelEvents = FALSE
+    setEventHandled = FALSE
+    ignoreHandledEvents = FALSE
+    createNewMode = FALSE
+    renderOnSlab = FALSE
+    clipToSlice = FALSE
+    cursorShape = UNDEFINED_CURSOR
+    creatorExtensionId = __default
+    alwaysCreateNewCSOs = FALSE
+    alwaysModifyExistingCSOs = FALSE
+    keyCommandsEnabled = TRUE
+    enableRemoveAll = FALSE
+    interactOnlyWithSelectedCSO = FALSE
+    renderLeftOverCSOsWithDefaultRenderer = TRUE
+    allowSelectionWithDefaultRenderer = TRUE
+    renderCSOsOnImagesDependingOnCreationMode = ON_ALL_IMAGES
+    updateCSOIdUnderMouseCursor = FALSE
+    updateImageStatisticsOnFinishInteraction = FALSE
+  }
+}
+module SoCSOSplineEditor {
+  internal  {
+    frame = "385 461 144 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "2705 356 349 426"
+        sizeHint = "349 426"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoCSOSplineEditor
+    extensionId = spline
+    allowCreation = TRUE
+    allowModification = TRUE
+    allowSeedPointInteraction = TRUE
+    shouldRender = TRUE
+    selectionCursor = POINTING_HAND_CURSOR
+    interactionForbiddenCursor = FORBIDDEN_CURSOR
+    moduleCreatorId = 0
+    moduleCreatorString = SoCSOSplineEditor
+    labelPrefixString = CSO
+    requirePointerPositionMovementToCreateCSO = FALSE
+    pointerPositionEpsilonForCreatingCSO = 1
+    createCursor = CROSS_FREEFORM_CURSOR
+    moveAllCursor = MOVE_ALL_CURSOR
+    moveSeedCursor = CROSS_CURSOR
+    shouldEmptyGroupBeforeGenerating = TRUE
+    addCSOToGroupMode = GROUP_NONE
+    addCSOToGroupLabel = ""
+    addCSOToGroupId = -1
+    defaultPathPointStyle = PATH_POINTS_STYLE_SOLID
+    defaultPathPointWidth = 1
+    defaultPathPointColor = "1 1 1"
+    defaultPathPointAlpha = 1
+    defaultSeedPointStyle = SEED_POINT_STYLE_RECTANGLE
+    defaultSeedPointSize = 3
+    defaultSeedPointColor = "1 1 1"
+    defaultSeedPointAlpha = 1
+    defaultVoxelWriteMode = VOXEL_WRITE_MODULE
+    defaultVoxelWriteValue = 1024
+    generateSeedPointsWhileDragging = FALSE
+    insertSeedPointByClickingOnPathPointList = TRUE
+    insertSeedPointCursor = CROSS_PLUS_CURSOR
+    canCloseCursor = CROSS_LINK_CURSOR
+    useFreehandMode = FALSE
+    shouldCloseFreehandOnRelease = TRUE
+    doubleClickMode = CSO_SPLINE_EDITOR_DOUBLE_CLICK_FINISH
+    pointDensityMode = DENSITY_SCREEN_PIXEL
+    densityFactor = 0.1
+  }
+}
+module WEMSmooth {
+  internal  {
+    frame = "509 -267 136 72"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "821 361 293 419"
+        sizeHint = "293 419"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMSmooth
+    id = 0
+    autoApply = TRUE
+    updateMode = AutoUpdate
+    overwriteLabelDescription = FALSE
+    label = ""
+    description = ""
+    shouldComputeNormals = TRUE
+    workDirectlyOnInputWEMs = FALSE
+    listenToFinishNotifications = TRUE
+    listenToRepaintNotifications = TRUE
+    listenToSelectionChangedNotifications = TRUE
+    triangulationMode = Strip
+    useLaplacianSmooth = TRUE
+    smoothingFactor = 0.2
+    smoothingPassesLaplace = 10
+    useDisplacementAdjustment = TRUE
+    useBorderPreservation = TRUE
+    useNormalSmooth = FALSE
+    smoothingPassesNormals = 2
+  }
+}
+module WEMSave {
+  internal  {
+    frame = "1205 -643 120 56"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "2625 483 508 173"
+        sizeHint = "508 173"
+        wasOpen = yes
+      }
+    }
+  }
+  fields  {
+    instanceName = WEMSave
+    autoApply = FALSE
+    autoUpdate = FALSE
+    autoClear = TRUE
+    listenToFinishingNotifications = FALSE
+    listenToRepaintNotifications = FALSE
+    listenToSelectionChangedNotifications = FALSE
+    filename = "C:/Users/hsh245/Documents/Cardiac Mechanics Files/Hypotrophy Study/MRI Images/WENK_20190619_2/Surfaces/ES/EPI2"
+    fileType = "ASCII Standard Tessellation Language (.stl)"
+    inWEMValid = TRUE
+    status = "WEM saved to file."
+    shouldSaveNodeNormals = FALSE
+    shouldSaveNodeColors = FALSE
+    shouldSaveEdges = FALSE
+    shouldSaveFaceNormals = FALSE
+    shouldSavePVLs = TRUE
+  }
+}
+module CSOSave {
+  internal  {
+    frame = "-43 829 88 56"
+    moduleGroupName = Segment_LV_CineDense
+    windows  {
+      window _default {
+        geometry = "2628 491 503 156"
+        sizeHint = "503 156"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = CSOSave
+    taskVerboseLogging = FALSE
+    fileName = "C:/Users/hsh245/Documents/Cardiac Mechanics Files/Hypotrophy Study/MRI Images/WENK_20190619_2/Surfaces/ES/EPI.cso"
+    autoApply = FALSE
+    saveSuccess = TRUE
+    binary = TRUE
+    listenToFinishedNotifications = FALSE
+  }
+}
+module SoSwitch {
+  internal  {
+    frame = "-75 -243 136 72"
+    moduleGroupName = Segment_LV_CineDense
+    showNetworkPanel = true
+    windows  {
+      window _default {
+        geometry = "1071 329 368 157"
+        sizeHint = "173 87"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SoSwitch
+    whichChild = 1
+  }
+}
+module GaussSmoothing {
+  internal  {
+    frame = "3217 531 136 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "856 424 209 286"
+        sizeHint = "209 286"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = GaussSmoothing2
+    sigma = 1
+    unit = voxel
+    xDim = TRUE
+    yDim = TRUE
+    zDim = TRUE
+    cDim = FALSE
+    tDim = FALSE
+    uDim = FALSE
+    useApprox = TRUE
+    autoUpdate = TRUE
+  }
+}
+module ImageResample {
+  internal  {
+    frame = "3005 531 128 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "512 255 270 282"
+        sizeHint = "256 282"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ImageResample1
+    resamplingOperation = Upsampling
+    xResample = 1
+    yResample = 1
+    zResample = 1
+    cResample = 1
+    tResample = 1
+    uResample = 1
+    antiAliasingFilter = "Lanczos 3"
+    borderHandling = Fill
+    borderFillValue = 0
+    autoUpdate = FALSE
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2165 507 96 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "754 466 420 541"
+        sizeHint = "420 541"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage7
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 384
+    modifyX = FALSE
+    y = 0
+    sy = 384
+    modifyY = FALSE
+    z = 8
+    sz = 4
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 30
+    modifyT = FALSE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module AffineTransformation2D {
+  internal  {
+    frame = "2025 379 168 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "1413 340 246 227"
+        sizeHint = "206 221"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = AffineTransformation2D1
+    optParameters = "0 -0.02 0 0 1 1 "
+    translationX = 0
+    translationY = -0.02
+    rotation = 0
+    shearing = 0
+    scalingX = 1
+    scalingY = 1
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2045 539 96 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "754 466 420 541"
+        sizeHint = "420 541"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage6
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 384
+    modifyX = FALSE
+    y = 0
+    sy = 384
+    modifyY = FALSE
+    z = 7
+    sz = 1
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 30
+    modifyT = FALSE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module SaveImage {
+  internal  {
+    frame = "2173 3 96 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "407 160 830 552"
+        sizeHint = "553 289"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SaveImage
+    sourceName = ""
+    format = DICOMTIFF
+    comment = MeVisLab
+    pathBase = /home/lclee/Research/MartinFEDIC/LKK/MeVisLabImages/LKK_xxxxx_0011
+    filename = /home/lclee/Research/MartinFEDIC/LKK/MeVisLabImages/LKK_xxxxx_0011.mlab000.dcm
+    result = Success
+    dicomMetaHeader = TRUE
+    dicomDerived = TRUE
+    dicomWindowCenter = 0
+    dicomWindowWidth = 0
+    tiffCompression = None
+    tiffTileX = 128
+    tiffTileY = 128
+    tiffTileXAuto = TRUE
+    tiffTileYAuto = TRUE
+    hideCancel = FALSE
+  }
+}
+module ConcatenateImages {
+  internal  {
+    frame = "3177 683 152 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "850 533 223 125"
+        sizeHint = "220 125"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ConcatenateImages3
+    numberOfInputs = 2
+    dimension = t
+    offset = "0 0 0 0 0 0"
+    adjustCDimInfos = FALSE
+    allowInvalidInputs = FALSE
+    fillValue = 0
+  }
+}
+module Calculator {
+  internal  {
+    frame = "3153 787 88 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "1160 271 700 680"
+        sizeHint = "700 680"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Calculator
+    exp1 = i1
+    exp2 = i2-i1
+    exp3 = ""
+    exp4 = ""
+    exp5 = ""
+    exp6 = ""
+    exp7 = ""
+    exp8 = ""
+    i1 = 11
+    i2 = 0
+    i3 = 0
+    i4 = 0
+    i5 = 0
+    i6 = 0
+    d1 = 0
+    d2 = 0
+    d3 = 0
+    d4 = 0
+    d5 = 0
+    d6 = 0
+    d7 = 0
+    d8 = 0
+    d9 = 0
+    d10 = 0
+    d11 = 0
+    d12 = 0
+    v1 = "0 0 0"
+    v2 = "0 0 0"
+    v3 = "0 0 0"
+    v4 = "0 0 0"
+    v5 = "0 0 0"
+    v6 = "0 0 0"
+    domainErrorHandling = Nothing
+    applyMode = AutoApply
+    exp1Comment = ""
+    exp2Comment = ""
+    exp3Comment = ""
+    exp4Comment = ""
+    exp5Comment = ""
+    exp6Comment = ""
+    exp7Comment = ""
+    exp8Comment = ""
+    scalarVariablesComment = ""
+    vectorVariablesComment = ""
+    resultVector1_x = 0
+    resultVector1_y = 0
+    resultVector1_z = 0
+    resultVector2_x = 0
+    resultVector2_y = 0
+    resultVector2_z = 0
+    resultVector3_x = 0
+    resultVector3_y = 0
+    resultVector3_z = 0
+    resultVector4_x = 0
+    resultVector4_y = 0
+    resultVector4_z = 0
+    resultVector5_x = 0
+    resultVector5_y = 0
+    resultVector5_z = 0
+    resultVector6_x = 0
+    resultVector6_y = 0
+    resultVector6_z = 0
+    resultVector7_x = 0
+    resultVector7_y = 0
+    resultVector7_z = 0
+    resultVector8_x = 0
+    resultVector8_y = 0
+    resultVector8_z = 0
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2673 631 88 64"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "447 102 396 573"
+        sizeHint = "396 573"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Reorder
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 0
+    modifyX = TRUE
+    y = 0
+    sy = 0
+    modifyY = TRUE
+    z = 0
+    sz = 0
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 11
+    modifyT = TRUE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module SubImage {
+  internal  {
+    frame = "3281 831 88 64"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "445 513 445 556"
+        sizeHint = "445 556"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Reorder2
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 0
+    modifyX = TRUE
+    y = 0
+    sy = 0
+    modifyY = TRUE
+    z = 0
+    sz = 0
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 11
+    st = -11
+    modifyT = TRUE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module Info {
+  internal  {
+    frame = "3349 395 64 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _automatic {
+        geometry = "324 55 574 412"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+      window _default {
+        geometry = "2431 163 617 562"
+        sizeHint = "631 390"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info9
+  }
+}
+module DicomBrowser {
+  internal  {
+    frame = "2177 1011 120 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "291 462 896 521"
+        sizeHint = "587 320"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "408 242 838 556"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = DicomBrowser8
+    rootPath = /home/lclee/Downloads/Joy/WENK_20190531_2
+    useInclude = FALSE
+    include = datasets,results
+    useExclude = FALSE
+    exclude = slices,html
+    suffix = dcm,mlimage
+    recursive = TRUE
+    autoApply = FALSE
+    sortBy = Patient
+    sortTreeNames = PatientOriented,ModalityOriented,InstitutionOriented,DateOriented,FlatDatasets,DeviceOriented
+    autoReload = Off
+    reloadDurationLimit = 0
+    reloadDuration = 0.066761002
+    singleClickSelect = FALSE
+    disableDbClickSelect = FALSE
+  }
+}
+module ConcatenateImages {
+  internal  {
+    frame = "2257 923 152 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "850 505 201 121"
+        sizeHint = "197 121"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ConcatenateImages1
+    numberOfInputs = 1
+    dimension = z
+    offset = "0 0 0 0 0 0"
+    adjustCDimInfos = FALSE
+    allowInvalidInputs = FALSE
+    fillValue = 0
+  }
+}
+module DicomBrowser {
+  internal  {
+    frame = "2353 1011 120 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "2216 136 1171 801"
+        sizeHint = "615 320"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "408 242 838 556"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = DicomBrowser7
+    rootPath = /home/lclee/Downloads/Joy/WENK_20190531_2
+    useInclude = FALSE
+    include = datasets,results
+    useExclude = FALSE
+    exclude = slices,html
+    suffix = dcm,mlimage
+    recursive = TRUE
+    autoApply = FALSE
+    sortBy = Patient
+    sortTreeNames = PatientOriented,ModalityOriented,InstitutionOriented,DateOriented,FlatDatasets,DeviceOriented
+    autoReload = Off
+    reloadDurationLimit = 0
+    reloadDuration = 0.103895
+    singleClickSelect = FALSE
+    disableDbClickSelect = FALSE
+  }
+}
+module SubImage {
+  internal  {
+    frame = "1889 523 88 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "754 466 420 541"
+        sizeHint = "420 541"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 384
+    modifyX = FALSE
+    y = 0
+    sy = 384
+    modifyY = FALSE
+    z = 0
+    sz = 7
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 30
+    modifyT = FALSE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module ConcatenateImages {
+  internal  {
+    frame = "2149 91 144 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "903 343 223 125"
+        sizeHint = "220 125"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "710 267 500 600"
+        sizeHint = "260 236"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ConcatenateImages
+    numberOfInputs = 5
+    dimension = z
+    offset = "0 0 0 0 0 0"
+    adjustCDimInfos = FALSE
+    allowInvalidInputs = FALSE
+    fillValue = 0
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2301 491 96 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "1278 484 420 541"
+        sizeHint = "420 541"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage1
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 384
+    modifyX = FALSE
+    y = 0
+    sy = 384
+    modifyY = FALSE
+    z = 12
+    sz = 1
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 30
+    modifyT = FALSE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2421 491 96 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "751 352 420 541"
+        sizeHint = "420 541"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage2
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 384
+    modifyX = FALSE
+    y = 0
+    sy = 384
+    modifyY = FALSE
+    z = 13
+    sz = 15
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 0
+    st = 30
+    modifyT = FALSE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module AffineTransformation2D {
+  internal  {
+    frame = "2253 379 160 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "914 418 241 220"
+        sizeHint = "201 214"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = AffineTransformation2D
+    optParameters = "0 0.04 0 0 1 1 "
+    translationX = 0
+    translationY = 0.04
+    rotation = 0
+    shearing = 0
+    scalingX = 1
+    scalingY = 1
+  }
+}
+module Scale {
+  internal  {
+    frame = "2929 307 72 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "815 423 413 355"
+        sizeHint = "256 354"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Scale1
+    inputMin = 0
+    inputMax = 0
+    updateMode = AutoUpdateMinMaxOn
+    useTrueRange = FALSE
+    typeSelect = UInt8
+    outputMin = 0
+    outputMax = 255
+  }
+}
+module Arithmetic {
+  internal  {
+    frame = "2713 267 88 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "371 552 631 527"
+        sizeHint = "631 527"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Arithmetic
+    expression = "2*a+150"
+    i1 = 0
+    i2 = 0
+    i3 = 0
+    i4 = 0
+    i5 = 0
+    i6 = 0
+    d1 = 0
+    d2 = 0
+    d3 = 0
+    d4 = 0
+    d5 = 0
+    d6 = 0
+    d7 = 0
+    d8 = 0
+    d9 = 0
+    d10 = 0
+    d11 = 0
+    d12 = 0
+    minValue = 0
+    maxValue = 1
+    setMinMaxValues = FALSE
+    dataType = int8
+    setDataType = FALSE
+    updateMode = AutoUpdate
+    applyMode = AutoApply
+    domainErrorHandling = ErrorMessage
+    numberOfInputs = 2
+    expressionComment = ""
+    scalarVariablesComment = ""
+  }
+}
+module Info {
+  internal  {
+    frame = "3253 147 64 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "110 474 631 390"
+        sizeHint = "631 390"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info2
+  }
+}
+module DicomBrowser {
+  internal  {
+    frame = "1985 791 136 64"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "2169 52 1171 801"
+        sizeHint = "615 320"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "408 242 838 556"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = DicomBrowser_SA
+    rootPath = /home/lclee/Research/MartinFEDIC/LKK/MeVisLabImages
+    useInclude = FALSE
+    include = datasets,results
+    useExclude = FALSE
+    exclude = slices,html
+    suffix = dcm,mlimage
+    recursive = TRUE
+    autoApply = FALSE
+    sortBy = Patient
+    sortTreeNames = PatientOriented,ModalityOriented,InstitutionOriented,DateOriented,FlatDatasets,DeviceOriented
+    autoReload = Off
+    reloadDurationLimit = 0
+    reloadDuration = 0.102586
+    singleClickSelect = FALSE
+    disableDbClickSelect = FALSE
+  }
+}
+module SetWorldMatrix {
+  internal  {
+    frame = "3057 939 120 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "91 407 561 352"
+        sizeHint = "497 352"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "661 519 637 415"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SetWorldMatrix3
+    center = "0 0 0"
+    scaleOrientation = "0 0 1 0"
+    scale = "0 0 0"
+    rotation = "0 0 1 0"
+    translation = "0 0 0"
+    sourceUsage = Ignore
+    referenceUsage = Ignore
+    elementaryUsage = Forward
+    invertResult = FALSE
+    setCInfo = FALSE
+    setTInfo = FALSE
+    setUInfo = FALSE
+  }
+}
+module ComposeVector4 {
+  internal  {
+    frame = "2777 899 136 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _automatic {
+        geometry = "322 519 500 325"
+        sizeHint = "256 192"
+        wasOpen = no
+      }
+      window _default {
+        geometry = "613 441 376 62"
+        sizeHint = "376 62"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ComposeVector43
+    x = 0
+    y = 0
+    z = 0
+    d = 0
+  }
+}
+module Info {
+  internal  {
+    frame = "2301 819 64 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _automatic {
+        geometry = "324 55 574 412"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+      window _default {
+        geometry = "39 281 617 562"
+        sizeHint = "631 390"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info3
+  }
+}
+module Info {
+  internal  {
+    frame = "2597 195 64 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "214 575 629 390"
+        sizeHint = "631 390"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Info4
+  }
+}
+module Scale {
+  internal  {
+    frame = "2813 195 64 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "815 423 413 355"
+        sizeHint = "256 354"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = Scale
+    inputMin = 0
+    inputMax = 0
+    updateMode = AutoUpdateMinMaxOn
+    useTrueRange = TRUE
+    typeSelect = UInt8
+    outputMin = 0
+    outputMax = 255
+  }
+}
+module vtkImageWriter {
+  internal  {
+    frame = "3053 51 112 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "765 281 596 464"
+        sizeHint = "448 464"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "726 300 500 600"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = vtkImageWriter
+    fileDimensionality = 2
+    fileName = ""
+    filePrefix = ""
+    filePattern = %s.%d
+    status = "Connection 0 is open or invalid"
+  }
+}
+module RunPythonScript {
+  internal  {
+    frame = "2501 131 128 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "650 255 1143 734"
+        sizeHint = "648 734"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "667 311 657 733"
+        sizeHint = "256 192"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = RunPythonScript
+    in0 = /home/lclee/Downloads/Joy/WENK_Surface
+    in1 = cine_image
+    in2 = 0
+    in3 = ""
+    in4 = ""
+    in5 = ""
+    in6 = ""
+    in7 = ""
+    in8 = ""
+    in9 = ""
+    inComment0 = in0
+    inComment1 = in1
+    inComment2 = in2
+    inComment3 = in3
+    inComment4 = in4
+    inComment5 = in5
+    inComment6 = in6
+    inComment7 = in7
+    inComment8 = in8
+    inComment9 = in9
+    autoApply0 = FALSE
+    autoApply1 = FALSE
+    autoApply2 = FALSE
+    autoApply3 = FALSE
+    autoApply4 = FALSE
+    autoApply5 = FALSE
+    autoApply6 = FALSE
+    autoApply7 = FALSE
+    autoApply8 = FALSE
+    autoApply9 = FALSE
+    out0 = 13
+    out1 = /home/lclee/Downloads/Joy/WENK_Surface/cine_image_13
+    out2 = /home/lclee/Downloads/Joy/WENK_Surface/cine_image_13.vti
+    out3 = ""
+    out4 = ""
+    out5 = ""
+    out6 = ""
+    out7 = ""
+    out8 = ""
+    out9 = ""
+    outComment0 = out0
+    outComment1 = out1
+    outComment2 = out2
+    outComment3 = out3
+    outComment4 = out4
+    outComment5 = out5
+    outComment6 = out6
+    outComment7 = out7
+    outComment8 = out8
+    outComment9 = out9
+    initCode = "# Initialize global variables and functions
+global CTX
+# Use this to access the network context
+CTX=RunPythonScript_ctx.owner().owner()"
+    wakeUpCode = ""
+    code = "*########################################################################
+
+import os
+import sys
+import math
+
+########################################################################
+# Initialize global variables and functions
+global CTX
+# Use this to access the network context
+CTX=RunPythonScript_ctx.owner().owner()
+
+
+dir = RunPythonScript_ctx.field("in0").value
+#print dir
+if not os.path.exists(dir): 
+	os.mkdir(dir)
+else:
+	str = 'rm ' + dir + '/*.vti'
+	os.system(str)
+	str = 'rm ' + dir + '/*.raw'
+	os.system(str)
+
+
+basename = RunPythonScript_ctx.field("in1").value
+
+nb_times = int(RunPythonScript_ctx.field("in2").value)
+nb_fill = int(math.log10(nb_times))+1
+
+for k_time in range(nb_times):
+   #print repr(k_time)
+   RunPythonScript_ctx.field("out0").value = repr(k_time)
+   RunPythonScript_ctx.field("out1").value = os.path.join(dir, basename+'_'+repr(k_time).zfill(nb_fill))
+   CTX.field("ImageSave1.save").touch()
+   RunPythonScript_ctx.field("out2").value = os.path.join(dir, basename+'_'+repr(k_time).zfill(nb_fill)+'.vti')
+   CTX.field("vtkXMLImageDataWriter2.write").touch()*"
+    finalizeCode = ""
+    showFields = TRUE
+    showInitCode = FALSE
+    showWakeUpCode = FALSE
+    showCode = TRUE
+    showFinalizeCode = FALSE
+    showConsole = FALSE
+  }
+}
+module vtkXMLImageDataWriter {
+  internal  {
+    frame = "2837 35 176 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "190 176 567 903"
+        sizeHint = "414 903"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "906 172 500 600"
+        sizeHint = "365 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = vtkXMLImageDataWriter2
+    numberOfPieces = 1
+    writePiece = -1
+    ghostLevel = 0
+    writeExtent = "0 -1 0 -1 0 -1 "
+    byteOrder = 1
+    writeToOutputString = 0
+    dataMode = 2
+    encodeAppendedData = 1
+    numberOfTimeSteps = 1
+    fileName = /home/lclee/Downloads/Joy/WENK_Surface/cine_image_13.vti
+    headerType = 32
+    idType = 32
+    compressorType = 0
+    status = "Connection 0 is open or invalid"
+  }
+}
+module MLToVTKImage {
+  internal  {
+    frame = "2957 187 128 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "341 436 546 300"
+        sizeHint = "472 300"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = MLToVTKImage2
+    numScalarComps = 1
+    updateMode = AutoUpdate
+    applyMode = AutoApply
+    status = ""
+  }
+}
+module ImageSave {
+  internal  {
+    frame = "2697 35 104 56"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "420 527 712 512"
+        sizeHint = "427 512"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = ImageSave1
+    taskVerboseLogging = FALSE
+    filename = /home/lclee/Downloads/Joy/WENK_Surface/cine_image_13
+    format = RAW
+    comment = MeVisLab
+    allowOverwrite = TRUE
+    autoFilename = FALSE
+    sourceName = ""
+    postfix = .result1
+    dicomNameUsed = TRUE
+    dicomMetaHeader = TRUE
+    dicomDerived = TRUE
+    dicomDerivedImageType = "OTHER\\MEVISLAB"
+    dicomDiscardTags = FrameSpecific
+    dicomStoreTimeInfo = None
+    dicomSetWindow = FALSE
+    dicomWindowCenter = 0
+    dicomWindowWidth = 0
+    dicomIgnoreHalfVoxelShift = FALSE
+    tiffCompression = None
+    tiffTileX = 128
+    tiffTileY = 128
+    tiffTileXAuto = TRUE
+    tiffTileYAuto = TRUE
+    tiffLinearRGB = FALSE
+    saveDicomHeaderOnly = FALSE
+    pngCompression = Default
+    pngInterlaced = FALSE
+    jpegQuality = 75
+    jpegProgressive = FALSE
+  }
+}
+module SubImage {
+  internal  {
+    frame = "2873 423 104 64"
+    moduleGroupName = OutputVTI
+    windows  {
+      window _default {
+        geometry = "770 303 395 533"
+        sizeHint = "395 533"
+        wasOpen = no
+      }
+      window _automatic {
+        geometry = "944 212 530 600"
+        sizeHint = "260 223"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = SubImage_T
+    boxInput = "0 0 0 0 0 0 -1 -1 -1 -1 -1 -1"
+    autoApplyBox = FALSE
+    correctForNegativeSubImageExtents = FALSE
+    enableBoxClamping = FALSE
+    x = 0
+    sx = 0
+    modifyX = TRUE
+    y = 0
+    sy = 0
+    modifyY = TRUE
+    z = 0
+    sz = 0
+    modifyZ = TRUE
+    c = 0
+    sc = 1
+    modifyC = FALSE
+    t = 13
+    st = 1
+    modifyT = TRUE
+    u = 0
+    su = 1
+    modifyU = FALSE
+    fillValue = 0
+    mode = VoxelStartSize
+    autoApply = TRUE
+  }
+}
+module DicomImport {
+  internal  {
+    frame = "229 1053 104 56"
+    moduleGroupName = ""
+    windows  {
+      window _default {
+        geometry = "709 464 516 213"
+        sizeHint = "516 213"
+        wasOpen = no
+      }
+    }
+  }
+  fields  {
+    instanceName = DicomImport
+    source = "C:/Users/hsh245/Documents/Cardiac Mechanics Files/Hypotrophy Study/MRI Images/WENK_20190619_2"
+    target = "C:/Users/hsh245/Documents/Cardiac Mechanics Files/Hypotrophy Study/MRI Images/WENK_20190619_2/dcm format"
+    options = "-r -v1"
+  }
+}
+connections  {
+  View2D5.inImage = DicomBrowser10.outImage
+  View2D5.inInvPreLUT = SoView2DCSOEditor1.self
+  CSOConvertTo3DMask1.input0 = TransformWorldMatrix.output0
+  CSOConvertTo3DMask1.inCSOList = CSOFilter1.outputCSOList
+  SoView2DCSOEditor1.inCSOList = CSOManager1.outCSOList
+  SoView2DCSOEditor1.inProcessor = CSOFreehandProcessor1.outProcessorData
+  CSOFilter1.inputCSOList = CSOManager1.outCSOList
+  WEMIsoSurface1.input0 = CSOConvertTo3DMask1.output0
+  WEMReducePolygons1.inWEM = WEMModify2.outWEM
+  WEMInfo1.inWEM = WEMModify2.outWEM
+  WEMModify2.inWEM = WEMSmooth.outWEM
+  WEMModify2.transformMatrix = ComposeMatrix1.matrix
+  ComposeMatrix1.a00 = Info7.voxelSizeX
+  ComposeMatrix1.a11 = Info7.voxelSizeY
+  ComposeMatrix1.a22 = Info7.voxelSizeZ
+  Info7.input0 = TransformWorldMatrix.output0
+  SoCSO3DVis1.inCSOList = CSOFilter1.outputCSOList
+  SoExaminerViewer1.children = "SoView2DHint1.self SoCSO3DVis1.self SoSwitch.self SoWEMRenderer3.self"
+  SoWEMRenderer3.inWEM = WEMSmooth.outWEM
+  CloneImageAsEmptyImage.input0 = DicomBrowser10.outImage
+  View2D.inImage = TransformWorldMatrix.output0
+  View2D.inInvPreLUT = SoView2DCSOExtensibleEditor.self
+  Info1.input0 = TransformWorldMatrix.output0
+  Reshape1.input0 = CloneImageAsEmptyImage.output0
+  TransformWorldMatrix.input0 = Reshape1.output0
+  SoView2DCSOExtensibleEditor.inCSOList = CSOManager1.outCSOList
+  SoView2DCSOExtensibleEditor.inExtensions = SoCSOSplineEditor.self
+  WEMSmooth.inWEM = WEMIsoSurface1.outWEM
+  WEMSave.inWEM = WEMReducePolygons1.outWEM
+  CSOSave.inCSOList = CSOManager1.outCSOList
+  SoSwitch.children = "View2D5.self View2D.self"
+  GaussSmoothing2.input0 = ImageResample1.output0
+  ImageResample1.input0 = SetWorldMatrix3.output0
+  SubImage7.input0 = DicomBrowser_SA.outImage
+  AffineTransformation2D1.input0 = SubImage6.output0
+  SubImage6.input0 = DicomBrowser_SA.outImage
+  SaveImage.inImage = ConcatenateImages.output0
+  ConcatenateImages3.input0 = Reorder2.output0
+  ConcatenateImages3.input1 = Reorder.output0
+  Calculator.i1 = Reorder.st
+  Calculator.i2 = Info3.sizeT
+  Reorder.input0 = SetWorldMatrix3.output0
+  Reorder.sx = Info3.sizeX
+  Reorder.sy = Info3.sizeY
+  Reorder.sz = Info3.sizeZ
+  Reorder2.input0 = SetWorldMatrix3.output0
+  Reorder2.sx = Info3.sizeX
+  Reorder2.sy = Info3.sizeY
+  Reorder2.sz = Info3.sizeZ
+  Reorder2.t = Calculator.resultScalar1
+  Reorder2.st = Calculator.resultScalar2
+  Info9.input0 = GaussSmoothing2.output0
+  DicomBrowser8.rootPath = DicomBrowser7.rootPath
+  ConcatenateImages1.input0 = DicomBrowser8.outImage
+  ConcatenateImages1.input1 = DicomBrowser7.outImage
+  DicomBrowser7.rootPath = DicomBrowser8.rootPath
+  SubImage.input0 = DicomBrowser_SA.outImage
+  ConcatenateImages.input0 = SubImage.output0
+  ConcatenateImages.input1 = AffineTransformation2D1.output0
+  ConcatenateImages.input2 = SubImage7.output0
+  ConcatenateImages.input3 = AffineTransformation2D.output0
+  ConcatenateImages.input4 = SubImage2.output0
+  SubImage1.input0 = DicomBrowser_SA.outImage
+  SubImage2.input0 = DicomBrowser_SA.outImage
+  AffineTransformation2D.input0 = SubImage1.output0
+  Scale1.input0 = SubImage_T.output0
+  Scale1.inputMin = Info2.minValue
+  Scale1.inputMax = Info2.maxValue
+  Arithmetic.input0 = Scale1.output0
+  Info2.input0 = GaussSmoothing2.output0
+  SetWorldMatrix3.input0 = ConcatenateImages1.output0
+  SetWorldMatrix3.scale = ComposeVector43.v
+  ComposeVector43.x = Info3.voxelSizeX
+  ComposeVector43.y = Info3.voxelSizeY
+  ComposeVector43.z = Info3.voxelSizeZ
+  Info3.input0 = ConcatenateImages1.output0
+  Info4.input0 = Arithmetic.output0
+  Scale.input0 = Arithmetic.output0
+  Scale.inputMin = Info4.minValue
+  Scale.inputMax = Info4.maxValue
+  vtkImageWriter.inputInputData_vtkDataObject = MLToVTKImage2.outputImage
+  vtkImageWriter.fileName = RunPythonScript.out3
+  RunPythonScript.in2 = Info2.sizeT
+  vtkXMLImageDataWriter2.inputInputData_vtkDataObject = MLToVTKImage2.outputImage
+  vtkXMLImageDataWriter2.fileName = RunPythonScript.out2
+  MLToVTKImage2.input0 = Scale1.output0
+  ImageSave1.input0 = Scale.output0
+  ImageSave1.filename = RunPythonScript.out1
+  SubImage_T.input0 = ImageResample1.output0
+  SubImage_T.sx = Info2.sizeX
+  SubImage_T.sy = Info2.sizeY
+  SubImage_T.sz = Info2.sizeZ
+  SubImage_T.t = RunPythonScript.out0
+}
+networkModel  {
+  parentItems  {
+    0  {
+      MLABNetworkModelItem MLABNetworkModelItemGroup {
+        uniqueId = 212
+        objectName = OutputVTI
+        parentUniqueId = 0
+        color  {
+          r = 45
+          g = 226
+          b = 226
+          a = 40
+        }
+      }
+      MLABNetworkModelItem MLABNetworkModelItemGroup {
+        uniqueId = 395
+        objectName = Segment_LV_CineDense
+        parentUniqueId = 0
+        color  {
+          r = 45
+          g = 226
+          b = 226
+          a = 40
+        }
+      }
+    }
+  }
+}
