@@ -1,2 +1,2 @@
 # FEniCS
-This repository is for the working version of fenics with the python version of MyoSim embedded. This does not contain the stable cpp version.
+This is the the master repository for the fenics code with myosim embedded.
