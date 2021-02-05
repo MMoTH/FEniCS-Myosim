@@ -29,6 +29,9 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 
 where <i>E<sub>ab</sub></i> represent the components of the Green-Lagrange strain tensor in the local coordinate system, <i>C<sub>i</sub></i> and <i>b<sub>ab</sub></i> represent material parameters, <i>&alpha;</i> is myofiber stretch, <i>p</i> is the lagrange multipler to enforce incompressibility (also the hydrostatic pressure), and <i>J</i> is the Jacobian of the deformation gradient.  
 
+
+<p id="section1">1 Guccione, Julius M, Costa, Kevin D, and McCulloch, Andrew D. "Finite Element Stress Analysis of Left Ventricular Mechanics in the Beating Dog Heart." Journal of Biomechanics 28.10 (1995): 1167-177. Web.</p>
+
 [^1]:Guccione, Julius M, Costa, Kevin D, and McCulloch, Andrew D. "Finite Element Stress Analysis of Left Ventricular Mechanics in the Beating Dog Heart." Journal of Biomechanics 28.10 (1995): 1167-177. Web.  
 
 [^2]:Xi C, Kassab GS, Lee LC. Microstructure-based finite element model of left ventricle passive inflation. Acta Biomater. 2019 May;90:241-253. doi: 10.1016/j.actbio.2019.04.016. Epub 2019 Apr 11. PMID: 30980939; PMCID: PMC6677579.
