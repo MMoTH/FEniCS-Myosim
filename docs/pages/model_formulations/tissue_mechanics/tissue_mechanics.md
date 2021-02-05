@@ -24,5 +24,10 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 
 <center> <b>S</b> = <sup>&part;(&Psi;<sub>1</sub>+&Psi;<sub>2</sub>)</sup>&frasl;<sub>&part;<b>E</b></sub></center>  
 
+Trying a table to align equal signs:  
+
+| | |  
+|:---|:----|  
+|test1 | test2 |
 
 Cite the humphrey book, Guccione paper, Xi paper?
