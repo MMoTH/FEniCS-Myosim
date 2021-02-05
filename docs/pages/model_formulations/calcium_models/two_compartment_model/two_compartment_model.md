@@ -13,7 +13,7 @@ Let y be a vector of length 2 such that y[0] represents calcium in the cytoplasm
 <sup>dy[1]</sup>&frasl;<sub>dt</sub> = -dy[0]
 
 
-k<sub>leak</sub>: The rate of constant flow of calcium from the sarcoplasmic reticulum to the cytoplasm.
-activation: Either 1 or 0 representing status of muscle activation.
-k<sub>act</sub>: The rate at which calcium enters the cytoplasm due to activation.
-k<sub>serca</sub>: The rate at which the serca pump removes calcium from the cytoplasm.
+k<sub>leak</sub>: The rate of constant flow of calcium from the sarcoplasmic reticulum to the cytoplasm.  
+activation: Either 1 or 0 representing status of muscle activation.  
+k<sub>act</sub>: The rate at which calcium enters the cytoplasm due to activation.  
+k<sub>serca</sub>: The rate at which the serca pump removes calcium from the cytoplasm.  
