@@ -15,7 +15,7 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 <center><i>Q = bff(Eff<sup>2</sup>) + bfx(Ess<sup>2</sup> + Enn<sup>2</sup> + Ens<sup>2</sup> + Esn<sup>2</sup>) + bxx(Efs<sup>2</sup> + Esf<sup>2</sup> + Efn<sup>2</sup> + Enf<sup>2</sup>)</i></center>  
 
 
-<i>&Psi; = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q</sup>-1) - p(J-1)</i>  
+<center><i>&Psi; = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q</sup>-1) - p(J-1)</i></center>  
 
 
 
