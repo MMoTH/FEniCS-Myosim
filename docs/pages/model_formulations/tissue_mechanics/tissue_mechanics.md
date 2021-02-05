@@ -27,6 +27,6 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 Trying a table to align equal signs:  
 
 |:---|:----|  
-|test1 | test2 |
+|<i>Q<sub>1>/sub></i> | test2 |
 
 Cite the humphrey book, Guccione paper, Xi paper?
