@@ -17,7 +17,7 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 
 <center><i>&Psi; = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q</sup>-1) - p(J-1)</i></center>  
 
-<center> **S** = <sup>&part;&Psi;</sup>&frasl;<sub>&part;<bold>E</bold></sub>
+<center> **S** = <sup>&part;&Psi;</sup>&frasl;<sub>&part;<bold>E</bold></sub>  
 
 
 
