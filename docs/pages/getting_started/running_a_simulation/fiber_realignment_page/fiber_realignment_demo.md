@@ -1,8 +1,7 @@
 ---
 title: Sarcomere Realignment
 parent: Demos
-grand_parent: Getting Started
-nav_order: 8
+
 ---
 
 Summary
