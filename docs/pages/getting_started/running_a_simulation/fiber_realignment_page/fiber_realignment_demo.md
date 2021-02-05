@@ -1,7 +1,5 @@
 ---
 title: Sarcomere Realignment
-parent: Demos
-
 ---
 
 Summary
