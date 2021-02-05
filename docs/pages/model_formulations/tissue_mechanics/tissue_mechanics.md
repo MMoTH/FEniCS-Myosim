@@ -24,9 +24,6 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 
 <center> <b>S</b> = <sup>&part;(&Psi;<sub>1</sub>+&Psi;<sub>2</sub>)</sup>&frasl;<sub>&part;<b>E</b></sub></center>  
 
-Trying a table to align equal signs:  
-
-|:---|:----|  
-|<i>Q<sub>1>/sub></i> | test2 |
+where <i>E<sub>ab</sub></i> represent the components of the Green-Lagrange strain tensor in the local coordinate system, <i>C<sub>i</sub></i> and <i>b<sub>ab</sub></i> represent material parameters, <i>&alpha;</i> is myofiber stretch, <i>p</i> is the lagrange multipler to enforce incompressibility (also the hydrostatic pressure), and <i>J</i> is the Jacobian of the deformation gradient.
 
 Cite the humphrey book, Guccione paper, Xi paper?
