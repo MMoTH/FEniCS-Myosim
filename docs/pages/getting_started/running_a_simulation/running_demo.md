@@ -23,7 +23,8 @@ python /home/fenics/shared/revised_structure_attempt/mmoth_vent.py <name of inst
 ```
 
 Note, some of the demos are still under construction.  
-Demos
+
+Demos  
 -----
 - [Cell Isometric Twitch](/cell_isometric_demo_page/single_cell_isometric_demo_page.md)
 - [Cell Isotonic Twitch](/cell_isotonic_twitch_page/cell_isotonic_twitch_demo.md)
