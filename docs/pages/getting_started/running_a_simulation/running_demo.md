@@ -22,17 +22,18 @@ Assuming the file structure is the default from the repository, an instruction f
 python /home/fenics/shared/source_code/fenics_driver.py <name of instruction file>
 ```
 
+Note, some of the demos are still under construction.  
 Demos
 -----
 - [Cell Isometric Twitch](/cell_isometric_demo_page/single_cell_isometric_demo_page.md)
 - [Cell Isotonic Twitch](/cell_isotonic_twitch_page/cell_isotonic_twitch_demo.md)
 - [Fiber Isometric Twitch With Compliance](/fiber_isometric_twitch_with_compliance_page/fiber_isometric_twitch_with_compliance_demo.md)
-- [Fiber Isotonic Twitch With Compliance](/fiber_isotonic_twitch_page/fiber_isotonic_twitch_demo.md)
-- [Fiber Isometric Tetanus](/fiber_isometric_tetanus_page/fiber_isometric_tetanus_demo.md)
+- ~~Fiber Loaded Shortening Twitch~~
+- ~~Fiber Isometric Tetanus~~
 - [Ellipsoidal Ventricle](/ventricle_ellipsoid_page/ventricle_ellipsoid_demo.md)
-- [Rat Ventricle](/ventricle_rat_page/ventricle_rat_demo.md)
-- [Sarcomere Realignment](/fiber_realignment_page/fiber_realignment_demo.md)
-- [Particle Swarm Optimization](/particle_swarm_page/particle_swarm_demo.md)
+- ~~Rat Ventricle~~
+- ~~Fiber Realignment~~
+- ~~Particle Swarm Optimization~~
 
 <a href="../installation/installation.html" class="btn btn--primary"><< Installation</a>
 <a href="../creating_input_files/fenics_input_readme.html" class="btn btn--primary">Building a Mesh >></a>
