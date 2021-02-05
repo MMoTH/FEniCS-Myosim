@@ -18,9 +18,9 @@ This tissue is modeled as an incompressible, hyperelastic, transversely isotropi
 
 <center><i> = 0 </i>otherwise</center>  
 
-<center><i>&Psi;<sub>1</sub> = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q</sup>-1) - p(J-1)</i></center>[^1]  
+<center><i>&Psi;<sub>1</sub> = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q</sup>-1) - p(J-1)[^1]</i></center> 
 
-<center><i>&Psi;<sub>2</sub> = C<sub>2</sub>(e<sup>Q<sub>2</sub></sup>-1)</i></center>[^2]  
+<center><i>&Psi;<sub>2</sub> = C<sub>2</sub>(e<sup>Q<sub>2</sub></sup>-1)[^2]</i></center>  
 
 <center> <b>S</b> = <sup>&part;(&Psi;<sub>1</sub>+&Psi;<sub>2</sub>)</sup>&frasl;<sub>&part;<b>E</b></sub></center>  
 
