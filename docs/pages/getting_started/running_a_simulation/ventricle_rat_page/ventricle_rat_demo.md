@@ -1,8 +1,6 @@
 ---
 title: Rat Ventricle
-parent: Demos
-grand_parent: Getting Started
-nav_order: 7
+
 ---
 
 Summary
