@@ -11,3 +11,9 @@ Let y be a vector of length 2 such that y[0] represents intracellular calcium th
 <sup>dy[0]</sup>&frasl;<sub>dt</sub> = (k<sub>leak</sub> + activation*k<sub>act</sub>) * y[1] - k<sub>serca</sub> * y[0]  
 
 <sup>dy[1]</sup>&frasl;<sub>dt</sub> = -dy[0]
+
+
+k<sub>leak</sub>: The rate of constant flow of calcium from the sarcoplasmic reticulum to the cytoplasm.
+activation: Either 1 or 0 representing status of muscle activation.
+k<sub>act</sub>: The rate at which calcium enters the cytoplasm due to activation.
+k<sub>serca</sub>: The rate at which the serca pump removes calcium from the cytoplasm.
