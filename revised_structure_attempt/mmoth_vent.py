@@ -66,7 +66,7 @@ def fenics(sim_params):
             ordering_law = growth_params["fiber_reorientation"]["law"][0]
             kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
             print "loaded growth params"
-            stop
+            
 
 
 

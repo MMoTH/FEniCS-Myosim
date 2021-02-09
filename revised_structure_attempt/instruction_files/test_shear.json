@@ -88,9 +88,15 @@
 },
 
 "growth_and_remodeling": {
-    "kroon_time_constant": [0.0],
-    "ecc_growth_rate": [0.0],
-    "k_myo_damp": [0.0],
-    "passive_set_point": [0.0]
+    "eccentric_growth":{
+      "time_constant": [0.0],
+      "k_myo_damp": [0.0],
+      "passive_set_point": [0.0]
+    },
+    "fiber_reorientation":{
+      "law":["stress_kroon"],
+      "time_constant":[0.0]
+    }
+
 }
 }

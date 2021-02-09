@@ -3,7 +3,6 @@ import numpy as np
 import mshr
 import vtk_py
 import os
-import meshio
 
 ## Import the appropriate mesh to mmoth-vent
 #

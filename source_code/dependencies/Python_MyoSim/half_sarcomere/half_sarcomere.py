@@ -85,6 +85,38 @@ class half_sarcomere():
             self.hs_data['Jon'] = pd.Series(np.zeros(self.data_buffer_size))
             self.hs_data['Joff'] = pd.Series(np.zeros(self.data_buffer_size))
 
+        ## Add in specific fields for each scheme
+        if (self.myof.kinetic_scheme == '4state_with_SRX'):
+            # Initialise
+            self.hs_data['M_OFF'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['M_ON'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['M_weakly_bound'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['M_FG'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['n_off'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['n_on'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['n_bound'] = pd.Series(np.zeros(self.data_buffer_size))
+
+            ## Set first values
+            self.hs_data.at[self.data_buffer_index, 'M_OFF'] = 1.0
+            self.hs_data.at[self.data_buffer_index, 'M_ON'] = 0.0
+            self.hs_data.at[self.data_buffer_index, 'M_weakly_bound'] = 0.0
+            self.hs_data.at[self.data_buffer_index, 'M_FG'] = 0.0
+            self.hs_data.at[self.data_buffer_index, 'n_off'] = 1.0
+            self.hs_data.at[self.data_buffer_index, 'n_on'] = 0.0
+            self.hs_data.at[self.data_buffer_index, 'n_bound'] = 0.0
+
+            # Fluxes
+            self.hs_data['J1'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J2'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J3'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J4'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J5'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J6'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J7'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['J8'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['Jon'] = pd.Series(np.zeros(self.data_buffer_size))
+            self.hs_data['Joff'] = pd.Series(np.zeros(self.data_buffer_size))
+
         #if (self.membr.kinetic_scheme == "Ten_Tusscher_2004"):
         #    self.hs_data['membrane_voltage'] = pd.Series(np.zeros(self.data_buffer_size))
 
@@ -104,7 +136,26 @@ class half_sarcomere():
             self.myof.k_force = hs_params["myofilament_parameters"]["k_force"][0]
             self.myof.k_2 = hs_params["myofilament_parameters"]["k_2"][0]
             self.myof.k_3 = hs_params["myofilament_parameters"]["k_3"][0]
-            #print self.myof.k_3
+            self.myof.k_4_0 = hs_params["myofilament_parameters"]["k_4_0"][0]
+            self.myof.k_4_1 = hs_params["myofilament_parameters"]["k_4_1"][0]
+            self.myof.k_cb = hs_params["myofilament_parameters"]["k_cb"][0]
+            self.myof.x_ps = hs_params["myofilament_parameters"]["x_ps"][0]
+            self.myof.k_on = float(hs_params["myofilament_parameters"]["k_on"][0])
+            self.myof.k_off = hs_params["myofilament_parameters"]["k_off"][0]
+            self.myof.k_coop = hs_params["myofilament_parameters"]["k_coop"][0]
+            self.myof.bin_min = hs_params["myofilament_parameters"]["bin_min"][0]
+            self.myof.bin_max = hs_params["myofilament_parameters"]["bin_max"][0]
+            self.myof.bin_width = hs_params["myofilament_parameters"]["bin_width"][0]
+            self.myof.thick_filament_length = hs_params["myofilament_parameters"]["thick_filament_length"][0]
+            self.myof.thin_filament_length = hs_params["myofilament_parameters"]["thin_filament_length"][0]
+            self.myof.bare_zone_length = hs_params["myofilament_parameters"]["bare_zone_length"][0]
+            self.myof.k_falloff = hs_params["myofilament_parameters"]["k_falloff"][0]
+
+        if self.myof.kinetic_scheme[0] == "4state_with_SRX":
+            self.myof.k_1 = hs_params["myofilament_parameters"]["k_1"][0]
+            self.myof.k_force = hs_params["myofilament_parameters"]["k_force"][0]
+            self.myof.k_2 = hs_params["myofilament_parameters"]["k_2"][0]
+            self.myof.k_3 = hs_params["myofilament_parameters"]["k_3"][0]
             self.myof.k_4_0 = hs_params["myofilament_parameters"]["k_4_0"][0]
             self.myof.k_4_1 = hs_params["myofilament_parameters"]["k_4_1"][0]
             self.myof.k_cb = hs_params["myofilament_parameters"]["k_cb"][0]

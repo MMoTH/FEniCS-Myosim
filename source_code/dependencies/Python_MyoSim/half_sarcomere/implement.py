@@ -79,6 +79,7 @@ def return_rates_fenics(self):
     return fluxes, rates
 
 def update_data_holder(self, dt, activation):
+
     # Update data struct for half-sarcomere
     self.data_buffer_index = self.data_buffer_index + 1
     self.hs_time = self.hs_time + dt
@@ -112,6 +113,31 @@ def update_data_holder(self, dt, activation):
         self.hs_data.at[self.data_buffer_index, 'J4'] = np.sum(fluxes['J4'])
         self.hs_data.at[self.data_buffer_index, 'Jon'] = fluxes['Jon']
         self.hs_data.at[self.data_buffer_index, 'Joff'] = fluxes['Joff']
+
+    if (self.myof.kinetic_scheme == '4state_with_SRX'):
+        self.hs_data.at[self.data_buffer_index, 'M_OFF'] = \
+            self.myof.y[0]
+        self.hs_data.at[self.data_buffer_index, 'M_ON'] = \
+            self.myof.y[1]
+        self.hs_data.at[self.data_buffer_index, 'M_bound'] = \
+            np.sum(self.myof.y[2 + np.arange(self.myof.no_of_x_bins)])
+        self.hs_data.at[self.data_buffer_index, 'n_off'] = \
+            np.sum(self.myof.y[-2])
+        self.hs_data.at[self.data_buffer_index, 'n_on'] = \
+            np.sum(self.myof.y[-1])
+
+        # Update fluxes
+        fluxes = self.myof.return_fluxes(self.myof.y, self.Ca_conc)
+        self.hs_data.at[self.data_buffer_index, 'J1'] = fluxes['J1']
+        self.hs_data.at[self.data_buffer_index, 'J2'] = fluxes['J2']
+        self.hs_data.at[self.data_buffer_index, 'J3'] = np.sum(fluxes['J3'])
+        self.hs_data.at[self.data_buffer_index, 'J4'] = np.sum(fluxes['J4'])
+        self.hs_data.at[self.data_buffer_index, 'J5'] = np.sum(fluxes['J5'])
+        self.hs_data.at[self.data_buffer_index, 'J6'] = np.sum(fluxes['J6'])
+        self.hs_data.at[self.data_buffer_index, 'J7'] = np.sum(fluxes['J7'])
+        self.hs_data.at[self.data_buffer_index, 'J8'] = np.sum(fluxes['J8'])
+        self.hs_data.at[self.data_buffer_index, 'Jon'] = fluxes['Jon']
+        self.hs_data.at[self.data_buffer_index, 'Joff'] = fluxes['Joff']        
 
     if (self.membr.kinetic_scheme == "Ten_Tusscher_2004"):
         # Ten Tusscher membrane voltage is in mV
