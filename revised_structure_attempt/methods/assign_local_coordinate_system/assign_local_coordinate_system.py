@@ -22,8 +22,8 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     # mean values for gaussian for fiber orientation
     #m_x = 0.342020143325669
     #m_y = 0.939692620785908
-    m_x = 1.0/sqrt(2.)
-    m_y = 1./sqrt(2.)
+    m_x = 1.0
+    m_y = 0.
     m_z = 0.0
     width = sim_params["fiber_randomness"][0]
 

@@ -106,7 +106,7 @@ def return_fluxes(self, y, Ca_conc):
         return fluxes, rates
 
     # Returns fluxes
-    if (self.kinetic_scheme == '4state_with_SRX'):
+    if (self.kinetic_scheme[0] == '4state_with_SRX'):
 
         # Pre-calculate rates
 
@@ -253,7 +253,7 @@ def update_3state_with_SRX(self, time_step, Ca_conc, cell_time):
     # These appear in M_off
     self.y[0] = self.y[0] + (1.0-sum_of_heads)
 
-def update_4state_with_SRX(self, time_step, Ca_conc):
+def update_4state_with_SRX(self, time_step, Ca_conc, cell_time):
     """ updates kinetics for thick and thin filaments with 4 state system """
 
     # Pull out the myofilaments vector
@@ -265,7 +265,7 @@ def update_4state_with_SRX(self, time_step, Ca_conc):
     def derivs(t, y):
         dy = np.zeros(np.size(y))
 
-        fluxes = return_fluxes(self, y, Ca_conc)
+        fluxes, rates = return_fluxes(self, y, Ca_conc)
 
         # Calculate the derivs
         dy[0] = -fluxes['J1'] + fluxes['J2']
