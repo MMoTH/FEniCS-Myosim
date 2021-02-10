@@ -85,7 +85,7 @@ def import_mesh(sim_geometry, options):
     if sim_geometry == "unit_cube":
 
         # Use built in function
-        mesh = UnitCubeMesh(10,10,10)
+        mesh = UnitCubeMesh(1,1,1)
 
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
 

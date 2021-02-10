@@ -66,7 +66,7 @@ def fenics(sim_params):
             ordering_law = growth_params["fiber_reorientation"]["law"][0]
             kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
             print "loaded growth params"
-            
+
 
 
 
@@ -138,7 +138,11 @@ def fenics(sim_params):
     no_of_x_bins = np.shape(xx)[0]
     # Define the length of the populations vector
     n_array_length = no_of_attached_states * no_of_x_bins + no_of_detached_states + 2
-    n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1]]
+    # need to generalize this
+    if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "3state_with_SRX":
+        n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1]]
+    if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+        n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1], [(2+no_of_x_bins), (2+no_of_x_bins)+no_of_x_bins-1]]
     #hsl0 = hs_params["initial_hs_length"][0]
 
 #------------------------------------------------------------------------------
@@ -565,7 +569,8 @@ def fenics(sim_params):
 
     #initialize y_vec_array to put all hads in SRX and all binding sites to off
     for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
-        # Initializing myosin heads in the off state
+        print "initializing heads to off state"
+        # Initializing myosin heads in the SRX state
         y_vec_array[init_counter] = 1
         # Initialize all binding sites to off state
         y_vec_array[init_counter-2] = 1
@@ -728,7 +733,7 @@ def fenics(sim_params):
 
                 if save_visual_output:
                     displacement_file << w.sub(0)
-                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0))
+                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
                     pk1temp.rename("pk1temp","active_stress")
                     active_stress_file << pk1temp
                     hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
@@ -785,11 +790,11 @@ def fenics(sim_params):
 
         # At each gauss point, solve for cross-bridge distributions using myosim
         print "calling myosim"
-        """for mm in np.arange(no_of_int_points):
+        for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
-            j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])"""
+            j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
@@ -877,9 +882,9 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            #pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'CG',1))
-            #pk1temp.rename("pk1temp","active_stress")
-            #active_stress_file << pk1temp
+            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp.rename("pk1temp","active_stress")
+            active_stress_file << pk1temp
             hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
