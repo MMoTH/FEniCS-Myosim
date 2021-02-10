@@ -4,6 +4,11 @@ import numpy as np
 
 def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
+    # Set random seed
+    if "rseed" in sim_params.keys():
+        rseed = sim_params["rseed"][0]
+        r.seed(rseed)
+
     # initialization
     marker_space = coord_params["marker_space"]
     fiberFS      = coord_params["fiberFS"]
