@@ -751,7 +751,7 @@ def fenics(sim_params):
     hs = half_sarcomere.half_sarcomere(hs_params,1)
 
     # Initialize cell ion module
-    cell_ion = cell_ion_driver.cell_ion_driver(cell_ion_params)
+    cell_ion = cell_ion_driver.cell_ion_driver(cell_ion_params,sim_timestep,sim_duration)
 
     # Initialize calcium concentration from cell_ion module
     calcium[0] = cell_ion.calculate_concentrations(0,0)

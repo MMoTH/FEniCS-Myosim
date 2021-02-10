@@ -86,6 +86,8 @@
   "cell_ion_parameters": {
     "model": ["two_compartment"],
     "model_inputs": {
+      "act_start": [15.5, "ms"],
+      "act_end": [20, "ms"],
       "Ca_content": [1e-3,"Molar"],
       "k_leak": [0.008000800080008],
       "k_act": [1.4472186384349266],

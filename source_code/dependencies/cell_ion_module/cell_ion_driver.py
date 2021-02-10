@@ -11,11 +11,12 @@ from scipy.integrate import solve_ivp
 #calculate calcium concentration (and other concentrations depending on the model) and ion voltage
 class cell_ion_driver():
 
-    def __init__(self,params):
+    def __init__(self,params,timestep_size,duration):
 
         # Specify model to be ran
         self.model_name = params["model"][0]
         self.model_params = params["model_inputs"]
+        self.timestep = timestep_size
 
         #base_dir = "cell_ion_module"
         #model_name = base_dir + temp
@@ -34,33 +35,17 @@ class cell_ion_driver():
             self.k_leak = float(self.model_params["k_leak"][0])
             self.k_act = float(self.model_params["k_act"][0])
             self.k_serca = float(self.model_params["k_serca"][0])
-            self.activation = np.zeros(710)
-            self.activation[31:40]=1.0
-            #for jj in np.arange(30):
-            #    self.activation[400+(12*jj+6):400+(12*jj+11)] = 1.0
-
+            self.activation = np.zeros(int(duration/timestep_size))
+            #self.activation[31:40]=1.0
+            # user specifies activation start and stop
+            act_start = self.model_params["act_start"][0]
+            act_end = self.model_params["act_end"][0]
+            self.activation[int(act_start/self.timestep):int(act_end/self.timestep)] = 1.0
             self.y = np.zeros(2)
             self.y[1] = self.Ca_content
             self.y[0] = 1e-7
             #self.y[0] = 0.0
             self.myofilament_Ca_conc = self.y[0]
-
-        if self.model_name == "two_compartment_demo":
-            self.Ca_content = float(self.model_params["Ca_content"][0])
-            self.k_leak = float(self.model_params["k_leak"][0])
-            self.k_act = float(self.model_params["k_act"][0])
-            self.k_serca = float(self.model_params["k_serca"][0])
-            self.activation = np.zeros(710)
-            self.activation[21:30]=1.0
-            #for jj in np.arange(30):
-            #    self.activation[400+(12*jj+6):400+(12*jj+11)] = 1.0
-
-            self.y = np.zeros(2)
-            self.y[1] = self.Ca_content
-            self.y[0] = 1e-7
-            #self.y[0] = 0.0
-            self.myofilament_Ca_conc = self.y[0]
-            self.model_name = "two_compartment"
 
         if self.model_name == "constant_calcium":
             self.basal_ca = self.model_params["basal_ca"][0]
