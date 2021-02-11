@@ -10,7 +10,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     sim_geometry = coord_params["sim_geometry"]
     geo_options  = coord_params["geo_options"]
     no_of_int_points = coord_params["no_of_int_points"]
-    geo_options = coord_params["geo_options"]
+    #geo_options = coord_params["geo_options"]
 
     mesh = coord_params["mesh"]
     Quad = coord_params["Quad"]
@@ -128,3 +128,27 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         n0 = n0/sqrt(inner(n0,n0))
 
     return f0,s0,n0,geo_options
+
+def update_local_coordinate_system(fiber_direction):
+
+    for jj in np.arange(no_of_int_points):
+
+        f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
+        f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
+        f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
+
+    f0 = f0/sqrt(inner(f0,f0))
+
+    for nn in np.arange(no_of_int_points):
+        z_axis.vector()[nn*3] = 0.0
+        z_axis.vector()[nn*3+1] = 0.0
+        z_axis.vector()[nn*3+2] = 1.0
+
+    s0 = cross(z_axis,f0)
+    s0 = s0/sqrt(inner(s0,s0))
+
+    n0 = cross(f0,s0)
+    #n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
+    n0 = n0/sqrt(inner(n0,n0))
+
+    return s0, n0
