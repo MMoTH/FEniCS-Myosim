@@ -57,18 +57,12 @@ def fenics(sim_params):
     gaussian_width = sim_params["fiber_randomness"][0]
 
     # growth parameters
-    if growth_params:
-        if "eccentric_growth" in growth_params.keys():
-            ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
-            set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
-            k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
-        if "fiber_reorientation" in growth_params.keys():
-            ordering_law = growth_params["fiber_reorientation"]["law"][0]
-            kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
-            print "loaded growth params"
-            
-
-
+    #kroon_time_constant = growth_params["kroon_time_constant"][0]
+    kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
+    kroon_law_type = growth_params["fiber_reorientation"]["law"][0]
+    ecc_growth_rate = growth_params["ecc_growth_rate"][0]
+    set_point = growth_params["passive_set_point"][0]
+    k_myo_damp = Constant(growth_params["k_myo_damp"][0])
 
 #------------------------------------------------------------------------------
 #           Mesh Information
@@ -493,7 +487,7 @@ def fenics(sim_params):
     Emat = uflforms.Emat()
 
     # Polar decomposition stretch tensor, used for Kroon (for now)
-    Umat = uflforms.Umat()
+    #Umat = uflforms.Umat()     #Umat no longer needed for kroon law as of 2/10/21 (Cmat used instead)
 
     # jacobian of deformation gradient
     J = uflforms.J()
@@ -818,10 +812,28 @@ def fenics(sim_params):
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
-
+        f_proj =project(Fmat,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        print "saving def gradient"
+        file = File(output_path+'f_proj.pvd')
+        file << f_proj
+        #Pg_fs_shear = inner(s0,Pg*f0)
+        #shear_file = File(output_path+'P_fs_shear.pvd')
+        #shear_file << project(Pg_fs_shear,FunctionSpace(mesh,"DG",1), form_compiler_parameters={"representation":"uflacs"})
+        #F_matrix = PETScMatrix()
+        #f_assembled = assemble(Fmat,tensor=F_matrix)
+        #print f_proj.vector().get_local()
         print "guccione passive stress"
-        print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()[0:18]
+        PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        print PK2.vector().get_local()
+        #print str(project(p,FunctionSpace(mesh,"CG",1)).vector().get_local())
+        #print project(temp,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
+        #print "J"
+        #print project(jforms,FunctionSpace(mesh,"DG",0)).vector().get_local()
 
+        #print "f assembly"
+        #print f_assembled
+        #print "Shape of u"
+        #print np.shape(u)
 
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
@@ -861,6 +873,18 @@ def fenics(sim_params):
             if p_f_array[ii] < 0.0:
                 p_f_array[ii] = 0.0
 
+        # Kroon update fiber orientation?
+        if kroon_time_constant != 0.0:
+            if kroon_law_type == "stress_kroon":
+                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF,step_size,kroon_time_constant)
+            else:
+                fdiff = uflforms.kroon_law(fiberFS,step_size,kroon_time_constant)
+            f0.vector()[:] += fdiff.vector()[:]
+            s0,n0 = lcs.update_local_coordinate_system(f0)
+            # update fiber orientations
+            print "updating fiber orientation"
+
+
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
         bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs)
@@ -869,9 +893,6 @@ def fenics(sim_params):
         rxn_force[l] = bc_update_dict["rxn_force"]
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
-
-        # ------------- Fiber Re-Orientation ----------------------------------
-
 
 
         # Save visualization info
