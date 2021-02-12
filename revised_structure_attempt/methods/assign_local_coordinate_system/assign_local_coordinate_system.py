@@ -22,10 +22,17 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     # mean values for gaussian for fiber orientation
     #m_x = 0.342020143325669
     #m_y = 0.939692620785908
-    m_x = 1.0/sqrt(2.)
+    """m_x = 1.0/sqrt(2.)
     m_y = 1./sqrt(2.)
-    m_z = 0.0
+    m_z = 0.0"""
+    theta = radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
+    phi   = radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
     width = sim_params["fiber_randomness"][0]
+
+    # Convert fiber angles into Cartesian coordinates with radius 1
+    m_x = sin(phi)*cos(theta)
+    m_y = sin(phi)*sin(theta)
+    m_z = cos(phi)
 
     # Functions that are useful in unit cube and cylinder for calculating
     # fibrous area, or the long (x) axis to assign local coordinate systems
@@ -131,12 +138,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
 def update_local_coordinate_system(fiber_direction):
 
-    for jj in np.arange(no_of_int_points):
-
-        f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
-        f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
-        f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
-
+    f0 = coord_params["f0"]
     f0 = f0/sqrt(inner(f0,f0))
 
     for nn in np.arange(no_of_int_points):
