@@ -412,14 +412,185 @@ class Forms(object):
     def kroon_law(self,FunctionSpace,step_size,kappa):
 
         mesh = self.parameters["mesh"]
-        U = self.Umat()
+        C = self.Cmat()
         f0 = self.parameters["fiber"]
-        f = U*f0/sqrt(inner(U*f0,U*f0))
+        f = C*f0/sqrt(inner(C*f0,C*f0))
         f_adjusted = 1./kappa * (f - f0) * step_size
-        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
         f_adjusted = interpolate(f_adjusted,FunctionSpace)
 
         return f_adjusted
+
+    def eigen(self,T,dgs,dgv):
+
+        mesh = self.parameters["mesh"]
+
+        dofmap = dgs.dofmap()
+        dofs = dofmap.dofs()
+
+        eigval1 = Function(dgs)
+        eigval2 = Function(dgs)
+        eigval3 = Function(dgs)
+
+        eigvec1 = Function(dgv)
+        eigvec2 = Function(dgv)
+        eigvec3 = Function(dgv)
+
+
+        E1 = eigval1.vector().array()
+        E2 = eigval2.vector().array()
+        E3 = eigval3.vector().array()
+
+        V1 = eigvec1.vector().array().reshape([len(dofs),3])
+        V2 = eigvec2.vector().array().reshape([len(dofs),3])
+        V3 = eigvec3.vector().array().reshape([len(dofs),3])
+
+
+        Emax = E1
+        Emin = E3
+        E3rd = E2
+
+        Vmax = V1
+        Vmin = V2
+        V3rd = V3
+
+        #print "calculating eigenvalue"
+
+        F = T.vector().array()
+        if all(np.equal(F,np.zeros(len(F)))) == True:
+
+            return 'zero array'
+
+        else:
+
+            mesh1 = T.function_space().mesh()
+
+            #print len(F)
+            #print np.shape(F), len(dofs)
+            #print mesh1
+
+            gdim = mesh.geometry().dim()
+            #print gdim
+
+            # Get coordinates as len(dofs) x gdim array
+            dofs_x = dgs.tabulate_dof_coordinates().reshape((-1, gdim))
+
+            RC = F.reshape([len(dofs),3,3])
+
+            RC = np.where(RC< 1e-10,0.,RC)
+
+            for idx, (dof,x, v) in enumerate(zip(dofs, dofs_x, RC)):
+                #print idx, dof, x, v
+                [eigL,eigR] = np.linalg.eig(v)
+
+
+                ls1 = eigL[0]
+                ls2 = eigL[1]
+                ls3 = eigL[2]
+
+
+                lv1 = eigR[:,0]
+                lv2 = eigR[:,1]
+                lv3 = eigR[:,2]
+
+                lv1 = lv1/np.dot(lv1, lv1)
+                lv2 = lv2/np.dot(lv2, lv2)
+                lv3 = lv3/np.dot(lv3, lv3)
+
+
+                lsmax = max(ls1, ls2, ls3)
+
+                lsmin = min(ls1, ls2, ls3)
+                if lsmax == ls1:
+                    Vmax[idx] = lv1
+                    if lsmin==ls2:
+                        ls3rd = ls3
+                        Vmin[idx] = lv2
+                        V3rd[idx] = lv3
+                    elif lsmin == ls3:
+                        ls3rd = ls2
+                        Vmin[idx] = lv3
+                        V3rd[idx] = lv2
+
+                elif lsmax == ls2:
+                    Vmax[idx] = lv2
+                    if lsmin == ls1:
+                        ls3rd = ls3
+                        Vmin[idx] = lv1
+                        V3rd[idx] = lv3
+                    elif lsmin == ls3:
+                        ls3rd = ls1
+                        Vmin[idx] = lv3
+                        V3rd[idx] = lv1
+
+                elif lsmax == ls3:
+                    Vmax[idx] = lv3
+                    if lsmin == ls1:
+                        ls3rd = ls2
+                        Vmin[idx] = lv1
+                        V3[idx] = lv2
+                    elif lsmin == ls2:
+                        ls3rd = ls1
+                        Vmin[idx] = lv2
+                        V3rd[idx] = lv1
+
+                if Vmax[idx,0] < 0:
+                    Vmax [idx,:] *= -1
+                else:
+                    pass
+
+                Emax[idx] = lsmax
+                Emin[idx] = lsmin
+                E3rd[idx] = ls3rd
+
+            maxvec = Function(dgv)
+            maxvec.vector().set_local(Vmax.flatten())
+            maxvec.vector().apply("insert")
+
+            minvec = Function(dgv)
+            minvec.vector().set_local(Vmin.flatten())
+            minvec.vector().apply("insert")
+
+            vec3rd = Function(dgv)
+            vec3rd.vector().set_local(V3rd.flatten())
+            vec3rd.vector().apply("insert")
+
+            emax = Function(dgs)
+            emin = Function(dgs)
+            e3rd = Function(dgs)
+
+            emax.vector().set_local(Emax.flatten())
+            emax.vector().apply("insert")
+
+            emin.vector().set_local(Emin.flatten())
+            emin.vector().apply("insert")
+
+            e3rd.vector().set_local(E3rd.flatten())
+            e3rd.vector().apply("insert")
+
+
+            return maxvec
+
+
+    def stress_kroon(self,stress_tensor,FS,VFS,TFS,step_size,kappa):
+
+        mesh = self.parameters["mesh"]
+        f0 = self.parameters["fiber"]
+        inv_F = inv(self.Fmat())
+        eigen = self.eigen(stress_tensor,FS,VFS)
+
+        if eigen == 'zero array':
+            f = f0
+        else:
+            f = eigen
+            f /= sqrt(inner(f,f))
+
+        f_adjusted = 1./kappa * (f - f0) * step_size
+        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
+        f_adjusted = interpolate(f_adjusted,VFS)
+
+        return f_adjusted
+
 
     def rand_walk(self,width):
 
