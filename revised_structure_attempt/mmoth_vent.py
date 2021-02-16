@@ -842,7 +842,7 @@ def fenics(sim_params):
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
 
         print "guccione passive stress"
-        print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()[0:18]
+        print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local().reshape(24,3,3)
         print "checking displacement at midpoints"
         u_temp,p_temp = w.split(True)
         print u_temp.vector().get_local().reshape(27,3)
