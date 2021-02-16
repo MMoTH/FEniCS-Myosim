@@ -1,6 +1,7 @@
 from dolfin import *
 from numpy import random as r
 import numpy as np
+import math
 
 def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
@@ -15,7 +16,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     sim_geometry = coord_params["sim_geometry"]
     geo_options  = coord_params["geo_options"]
     no_of_int_points = coord_params["no_of_int_points"]
-    geo_options = coord_params["geo_options"]
+    #geo_options = coord_params["geo_options"]
 
     mesh = coord_params["mesh"]
     Quad = coord_params["Quad"]
@@ -27,11 +28,19 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     # mean values for gaussian for fiber orientation
     #m_x = 0.342020143325669
     #m_y = 0.939692620785908
-    m_x = 1.0
-    m_y = 0.
+    m_x = 1.0/sqrt(2.)
+    m_y = 1./sqrt(2.)
     m_z = 0.0
-    width = sim_params["fiber_randomness"][0]
+    """
+    theta = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
+    phi   = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
+    width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
+    # Convert fiber angles into Cartesian coordinates with radius 1
+    m_x = sin(phi)*cos(theta)
+    m_y = sin(phi)*sin(theta)
+    m_z = cos(phi)
+    """
     # Functions that are useful in unit cube and cylinder for calculating
     # fibrous area, or the long (x) axis to assign local coordinate systems
     test_marker_fcn = Function(marker_space)
@@ -112,7 +121,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
     elif (sim_geometry == "unit_cube"):
 
-        for jj in np.arange(no_of_int_points):
+        """for jj in np.arange(no_of_int_points):
 
             f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
             f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
@@ -130,6 +139,80 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
         n0 = cross(f0,s0)
         #n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
-        n0 = n0/sqrt(inner(n0,n0))
+        n0 = n0/sqrt(inner(n0,n0))"""
+        for jj in np.arange(no_of_int_points):
+
+            f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
+            f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
+            f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
+
+            f0_holder = f0.vector().array()[jj*3:jj*3+3]
+            f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
+            for kk in range(3):
+                f0.vector()[jj*3+kk] = f0_holder[kk]
+
+            z_axis.vector()[jj*3] = 0.0
+            z_axis.vector()[jj*3+1] = 0.0
+            z_axis.vector()[jj*3+2] = 1.0
+
+            s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
+
+            s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
+            for kk in range(3):
+                s0.vector()[jj*3+kk] = s0_holder[kk]
+
+            n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
+
+            n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
+            for kk in range(3):
+                n0.vector()[jj*3+kk] = n0_holder[kk]
 
     return f0,s0,n0,geo_options
+
+def update_local_coordinate_system(fiber_direction,coord_params):
+
+    f0 = coord_params["f0"]
+    s0 = coord_params["s0"]
+    n0 = coord_params["n0"]
+    no_of_int_points = coord_params["no_of_int_points"]
+    fiberFS = coord_params["fiberFS"]
+    z_axis = Function(fiberFS)
+    """f0 = f0/sqrt(inner(f0,f0))
+
+    for nn in np.arange(no_of_int_points):
+        z_axis.vector()[nn*3] = 0.0
+        z_axis.vector()[nn*3+1] = 0.0
+        z_axis.vector()[nn*3+2] = 1.0
+
+    s0 = cross(z_axis,f0)
+    s0 = s0/sqrt(inner(s0,s0))
+
+    n0 = cross(f0,s0)
+    #n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
+    n0 = n0/sqrt(inner(n0,n0))"""
+
+    for jj in np.arange(no_of_int_points):
+
+        f0_holder = f0.vector().array()[jj*3:jj*3+3]
+        f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
+        for kk in range(3):
+            f0.vector()[jj*3+kk] = f0_holder[kk]
+
+        z_axis.vector()[jj*3] = 0.0
+        z_axis.vector()[jj*3+1] = 0.0
+        z_axis.vector()[jj*3+2] = 1.0
+
+        s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
+
+        s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
+        for kk in range(3):
+            s0.vector()[jj*3+kk] = s0_holder[kk]
+
+        n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
+
+        n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
+        for kk in range(3):
+            n0.vector()[jj*3+kk] = n0_holder[kk]
+
+
+    return s0, n0
