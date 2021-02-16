@@ -454,7 +454,7 @@ class Forms(object):
         Vmin = V2
         V3rd = V3
 
-        #print "calculating eigenvalue"
+        print "calculating eigenvalue"
 
         F = T.vector().array()
         if all(np.equal(F,np.zeros(len(F)))) == True:
@@ -576,7 +576,7 @@ class Forms(object):
 
         mesh = self.parameters["mesh"]
         f0 = self.parameters["fiber"]
-        inv_F = inv(self.Fmat())
+        #inv_F = inv(self.Fmat())
         eigen = self.eigen(stress_tensor,FS,VFS)
 
         if eigen == 'zero array':
