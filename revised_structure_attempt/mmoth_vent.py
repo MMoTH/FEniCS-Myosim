@@ -840,7 +840,6 @@ def fenics(sim_params):
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
-<<<<<<< HEAD
 
         print "guccione passive stress"
         print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local().reshape(24,3,3)
@@ -852,7 +851,6 @@ def fenics(sim_params):
         print u_temp(0.5,0,0.5)
         print "u top middle"
         print u_temp(0.5,1.,0.5)
-=======
         f_proj =project(Fmat,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         print "saving def gradient"
         file = File(output_path+'f_proj.pvd')
@@ -875,7 +873,6 @@ def fenics(sim_params):
         #print "Shape of u"
         #print np.shape(u)
 
->>>>>>> 4675e54e9764298da508fb65c6c844b32b3252fd
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         #print "hsl_old after solve"
