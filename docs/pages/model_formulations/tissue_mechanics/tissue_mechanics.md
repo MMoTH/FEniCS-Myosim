@@ -8,10 +8,9 @@ nav_order: 2
   <h4>Message</h4>
   <p>This page is under  construction.</p>
 </div>
-
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/tissue_mechanics/fe_cube.png?raw=true" alt="titlepage" width="300" align="right"/>  
 Consider a representative element of contractile tissue (Insert basic cell with local coordinate system image).
 This tissue is modeled as an incompressible, hyperelastic, transversely isotropic material in which the fiber direction f0 is assumed to be stiffer than the s0 and n0 directions. As a hyperelastic material, the PK2 stress   **S** of this material can be obtained by differentiating the sum of two strain energy functions &Psi;<sub>1</sub>[^1] and &Psi;<sub>2</sub>[^2] with respect to the Green-Lagrange strain tensor:  
-<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/tissue_mechanics/fe_cube.png?raw=true" alt="titlepage" width="300" align="right"/>  
 
 <center><i>Q<sub>1</sub> = b<sub>ff</sub>(E<sub>ff</sub><sup>2</sup>) + b<sub>fx</sub>(E<sub>ss</sub><sup>2</sup> + E<sub>nn</sub><sup>2</sup> + E<sub>ns</sub><sup>2</sup> + E<sub>sn</sub><sup>2</sup>) + b<sub>xx</sub>(E<sub>fs</sub><sup>2</sup> + E<sub>sf</sub><sup>2</sup> + E<sub>fn</sub><sup>2</sup> + E<sub>nf</sub><sup>2</sup>)</i><br/><br/><i>Q<sub>2</sub> = C<sub>3</sub>(&alpha;-1)<sup>2</sup></i> for &alpha; > 1<i><br/> = 0 </i>otherwise &nbsp; &nbsp;<br/><br/><i>&Psi;<sub>1</sub> = (<sup>C</sup>&frasl;<sub>2</sub>)(e<sup>Q<sub>1</sub></sup>-1) - p(J-1)</i><br/><br/><i>&Psi;<sub>2</sub> = C<sub>2</sub>(e<sup>Q<sub>2</sub></sup>-1)</i><br/><br/> <b>S</b> = <sup>&part;(&Psi;<sub>1</sub>+&Psi;<sub>2</sub>)</sup>&frasl;<sub>&part;<b>E</b></sub><br/></center>where <i>E<sub>ab</sub></i> represent the components of the Green-Lagrange strain tensor in the local coordinate system, <i>C<sub>i</sub></i> and <i>b<sub>ab</sub></i> represent material parameters, <i>&alpha;</i> is myofiber stretch, <i>p</i> is the lagrange multipler to enforce incompressibility (also the hydrostatic pressure), and <i>J</i> is the Jacobian of the deformation gradient. Note, myofibers are assumed to not bear a compressive load.  
 
