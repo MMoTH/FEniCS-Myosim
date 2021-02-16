@@ -54,15 +54,15 @@ def fenics(sim_params):
     output_path = sim_params["output_path"][0]
 
     # assign amount of random variation in f0 (cube and cylinder simulations, 0 means normal alignment)
-    gaussian_width = sim_params["fiber_randomness"][0]
+    gaussian_width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
     # growth parameters
     #kroon_time_constant = growth_params["kroon_time_constant"][0]
     kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
     kroon_law_type = growth_params["fiber_reorientation"]["law"][0]
-    ecc_growth_rate = growth_params["ecc_growth_rate"][0]
-    set_point = growth_params["passive_set_point"][0]
-    k_myo_damp = Constant(growth_params["k_myo_damp"][0])
+    ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
+    set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
+    k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
 
 #------------------------------------------------------------------------------
 #           Mesh Information
@@ -283,6 +283,7 @@ def fenics(sim_params):
     # Tensor function space
     TF = TensorFunctionSpace(mesh, 'CG', 2)
     TFQuad = FunctionSpace(mesh, Telem2)
+    TF_kroon = TensorFunctionSpace(mesh,'DG',1)
 
 
     if sim_geometry == "cylinder" or sim_geometry == "unit_cube" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
@@ -305,6 +306,7 @@ def fenics(sim_params):
     f0 = Function(fiberFS)
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
+
 
     # put these in a dictionary to pass to function for assignment
     coord_params = {
@@ -474,10 +476,8 @@ def fenics(sim_params):
     Fmat2 = Function(TF)
     #d = u.ufl_domain().geometric_dimension()
     #Fmat2= Identity(d) + grad(u)
-    print "shape of Fmat:"
-    print np.shape(Fmat)
-    print "Shape of u"
-    print np.shape(u)
+    print "shape of Fmat:", np.shape(Fmat)
+    print "Shape of u: ", np.shape(u)
 
     # Get right cauchy stretch tensor
     #Cmat = (Fmat.T*Fmat)
@@ -511,7 +511,7 @@ def fenics(sim_params):
     # Calculate a pseudo stretch, not based on deformation gradient
     hsl_old.vector()[:] = hsl0.vector()[:]
     hsl_diff_from_reference = (hsl_old - hsl0)/hsl0
-    print "hsl diff from ref:"
+    #print "hsl diff from ref:"
     #print hsl_diff_from_reference.vector().get_local()[:]
     pseudo_alpha = pseudo_old*(1.-(k_myo_damp*(hsl_diff_from_reference)))
     #
@@ -822,9 +822,8 @@ def fenics(sim_params):
         #F_matrix = PETScMatrix()
         #f_assembled = assemble(Fmat,tensor=F_matrix)
         #print f_proj.vector().get_local()
-        print "guccione passive stress"
+        #print 'guccione passive stress'
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        print PK2.vector().get_local()
         #print str(project(p,FunctionSpace(mesh,"CG",1)).vector().get_local())
         #print project(temp,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
         #print "J"
@@ -874,13 +873,14 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0:
+        if kroon_time_constant != 0.0 and l > sim_protocol["ramp_t_end"][0]/sim_timestep:
             if kroon_law_type == "stress_kroon":
-                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF,step_size,kroon_time_constant)
+                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,sim_timestep,kroon_time_constant)
             else:
-                fdiff = uflforms.kroon_law(fiberFS,step_size,kroon_time_constant)
+                fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
+            print "f0 = ", f0
             f0.vector()[:] += fdiff.vector()[:]
-            s0,n0 = lcs.update_local_coordinate_system(f0)
+            s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
             print "updating fiber orientation"
 
