@@ -1,5 +1,6 @@
 ---
 title: Calcium Models
-parent: Cell Mechanics
+parent: Model Formulations
+nav_order: 2
 has_children: true
 ---
