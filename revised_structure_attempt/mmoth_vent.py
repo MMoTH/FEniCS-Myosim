@@ -54,7 +54,7 @@ def fenics(sim_params):
     output_path = sim_params["output_path"][0]
 
     # assign amount of random variation in f0 (cube and cylinder simulations, 0 means normal alignment)
-    gaussian_width = sim_params["fiber_randomness"][0]
+    gaussian_width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
     # growth parameters
     if growth_params:
@@ -306,6 +306,7 @@ def fenics(sim_params):
     # Tensor function space
     TF = TensorFunctionSpace(mesh, 'CG', 2)
     TFQuad = FunctionSpace(mesh, Telem2)
+    TF_kroon = TensorFunctionSpace(mesh,'DG',1)
 
 
     if sim_geometry == "cylinder" or sim_geometry == "unit_cube" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
@@ -332,6 +333,7 @@ def fenics(sim_params):
     f0 = Function(fiberFS)
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
+
 
     # put these in a dictionary to pass to function for assignment
     coord_params = {
@@ -501,10 +503,8 @@ def fenics(sim_params):
     Fmat2 = Function(TF)
     #d = u.ufl_domain().geometric_dimension()
     #Fmat2= Identity(d) + grad(u)
-    print "shape of Fmat:"
-    print np.shape(Fmat)
-    print "Shape of u"
-    print np.shape(u)
+    print "shape of Fmat:", np.shape(Fmat)
+    print "Shape of u: ", np.shape(u)
 
     # Get right cauchy stretch tensor
     #Cmat = (Fmat.T*Fmat)
@@ -514,7 +514,7 @@ def fenics(sim_params):
     Emat = uflforms.Emat()
 
     # Polar decomposition stretch tensor, used for Kroon (for now)
-    Umat = uflforms.Umat()
+    #Umat = uflforms.Umat()     #Umat no longer needed for kroon law as of 2/10/21 (Cmat used instead)
 
     # jacobian of deformation gradient
     J = uflforms.J()
@@ -538,7 +538,7 @@ def fenics(sim_params):
     # Calculate a pseudo stretch, not based on deformation gradient
     hsl_old.vector()[:] = hsl0.vector()[:]
     hsl_diff_from_reference = (hsl_old - hsl0)/hsl0
-    print "hsl diff from ref:"
+    #print "hsl diff from ref:"
     #print hsl_diff_from_reference.vector().get_local()[:]
     pseudo_alpha = pseudo_old*(1.-(k_myo_damp*(hsl_diff_from_reference)))
     #
@@ -840,6 +840,7 @@ def fenics(sim_params):
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+<<<<<<< HEAD
 
         print "guccione passive stress"
         print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local().reshape(24,3,3)
@@ -851,6 +852,30 @@ def fenics(sim_params):
         print u_temp(0.5,0,0.5)
         print "u top middle"
         print u_temp(0.5,1.,0.5)
+=======
+        f_proj =project(Fmat,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        print "saving def gradient"
+        file = File(output_path+'f_proj.pvd')
+        file << f_proj
+        #Pg_fs_shear = inner(s0,Pg*f0)
+        #shear_file = File(output_path+'P_fs_shear.pvd')
+        #shear_file << project(Pg_fs_shear,FunctionSpace(mesh,"DG",1), form_compiler_parameters={"representation":"uflacs"})
+        #F_matrix = PETScMatrix()
+        #f_assembled = assemble(Fmat,tensor=F_matrix)
+        #print f_proj.vector().get_local()
+        #print 'guccione passive stress'
+        PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        #print str(project(p,FunctionSpace(mesh,"CG",1)).vector().get_local())
+        #print project(temp,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
+        #print "J"
+        #print project(jforms,FunctionSpace(mesh,"DG",0)).vector().get_local()
+
+        #print "f assembly"
+        #print f_assembled
+        #print "Shape of u"
+        #print np.shape(u)
+
+>>>>>>> 4675e54e9764298da508fb65c6c844b32b3252fd
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         #print "hsl_old after solve"
@@ -889,6 +914,19 @@ def fenics(sim_params):
             if p_f_array[ii] < 0.0:
                 p_f_array[ii] = 0.0
 
+        # Kroon update fiber orientation?
+        if kroon_time_constant != 0.0 and l > sim_protocol["ramp_t_end"][0]/sim_timestep:
+            if ordering_law == "stress_kroon":
+                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,sim_timestep,kroon_time_constant)
+            else:
+                fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
+            print "f0 = ", f0
+            f0.vector()[:] += fdiff.vector()[:]
+            s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
+            # update fiber orientations
+            print "updating fiber orientation"
+
+
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
         bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs)
@@ -897,9 +935,6 @@ def fenics(sim_params):
         rxn_force[l] = bc_update_dict["rxn_force"]
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
-
-        # ------------- Fiber Re-Orientation ----------------------------------
-
 
 
         # Save visualization info

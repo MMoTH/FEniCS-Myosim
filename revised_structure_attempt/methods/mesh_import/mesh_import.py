@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 import mshr
-import vtk_py
+#import vtk_py
 import os
 
 ## Import the appropriate mesh to mmoth-vent
