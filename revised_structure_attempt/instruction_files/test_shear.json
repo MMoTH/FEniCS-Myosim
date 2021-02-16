@@ -12,7 +12,13 @@
     "save_cell_output": [1],
     "save_visual_output": [1],
     "output_path": ["./output_test_simple_shear_stress_kroon/"],
-    "fiber_randomness": [0.0]
+    "fiber_orientation" : {
+           "fiber_direction": {
+              "theta":[0.0,"degrees (from + x-axis in xy-plane)"],
+              "phi":[90.0,"degrees (from + z-axis in xz-plane)"]
+            },
+           "fiber_randomness": [0.0]
+    }
   },
 
   "forms_parameters": {
@@ -94,7 +100,7 @@
       "passive_set_point": [0.0]
     },
     "fiber_reorientation":{
-      "ordering_law":["stress_kroon"],
+      "law":["stress_kroon"],
       "time_constant":[2.0]
     }
 
