@@ -11,7 +11,7 @@
       },
     "save_cell_output": [1],
     "save_visual_output": [1],
-    "output_path": ["./output_left_right_back_pointwise/"],
+    "output_path": ["./output_test_simple_shear_bc/"],
     "fiber_randomness": [0.0]
   },
 

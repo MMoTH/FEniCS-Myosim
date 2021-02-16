@@ -110,6 +110,19 @@ def fenics(sim_params):
     dx = dolfin.dx(mesh,metadata = {"integration_order":2})
     isincomp = True
 
+    # periodic boundary condition
+    class PeriodicBoundary(SubDomain):
+        def inside(self, x, on_boundary):
+            tol = 1E-14
+            return on_boundary and abs(x[1]) < tol
+        def map(self, x, y):
+            # map coordinate from x on top to y on bottom
+            y[0] = x[0]
+            y[1] = x[1]-1.0
+            y[2] = x[2]
+
+    pbc = PeriodicBoundary()
+
 
 #------------------------------------------------------------------------------
 #           Initialize myosim info for active stress calculation
@@ -296,7 +309,11 @@ def fenics(sim_params):
 
 
     if sim_geometry == "cylinder" or sim_geometry == "unit_cube" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
-        W = FunctionSpace(mesh, MixedElement([Velem,Qelem]))
+        if sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear":
+            print "implementing periodic boundary condition"
+            W = FunctionSpace(mesh, MixedElement([Velem,Qelem]),constrained_domain=PeriodicBoundary())
+        else:
+            W = FunctionSpace(mesh, MixedElement([Velem,Qelem]))
         x_dofs = W.sub(0).sub(0).dofmap().dofs() # will use this for x rxn forces later
         print "assigned W"
     else:
@@ -826,8 +843,14 @@ def fenics(sim_params):
 
         print "guccione passive stress"
         print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()[0:18]
-
-
+        print "checking displacement at midpoints"
+        u_temp,p_temp = w.split(True)
+        print u_temp.vector().get_local().reshape(27,3)
+        print "u bottom middle"
+        p1 = Point(0.5,0.0,0.5)
+        print u_temp(0.5,0,0.5)
+        print "u top middle"
+        print u_temp(0.5,1.,0.5)
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         #print "hsl_old after solve"

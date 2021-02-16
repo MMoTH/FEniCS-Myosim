@@ -88,6 +88,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
 
     elif sim_geometry == "unit_cube":
         sim_type = protocol["simulation_type"][0]
+        print "sim type = " + sim_type
 
         class Left(SubDomain):
             def inside(self, x, on_boundary):
@@ -103,6 +104,10 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             def inside(self, x, on_boundary):
                 tol = 1E-14
                 return on_boundary and abs(x[2]) < tol
+        class Top(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return on_boundary and abs(x[2]-1.0) < tol
         #  where x[1] = 0
         class Front(SubDomain):
             def inside(self, x, on_boundary):
@@ -131,12 +136,14 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
         fix3 = Fix3()
         lower = Lower()
         front = Front()
+        top = Top()
         #
         left.mark(facetboundaries, 1)
         right.mark(facetboundaries, 2)
         fix.mark(facetboundaries, 3)
         lower.mark(facetboundaries, 4)
         front.mark(facetboundaries, 5)
+        top.mark(facetboundaries, 6)
 
         if sim_type == "ramp_and_hold":
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
@@ -145,7 +152,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
-            bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            fix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
             bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
             bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
@@ -160,6 +167,16 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             #bcs = [bcleft, bclower, bcfront,bcfix, bcright] #order matters!
             bcs = [bcleft, bcright,bcright2,bcright3]"""
+
+        if sim_type == "ramp_and_hold_simple_shear":
+            print "in simple shear bcs"
+            bcleft= DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), facetboundaries, 1)         # u1 = 0 on left face
+            bcright= DirichletBC(W.sub(0).sub(1), u_D, facetboundaries, 2)
+            bcright_x = DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 2)
+            bcright_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 2)
+            bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+            bctop = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 6)
+            bcs = [bcleft, bcright, bcright_x,bclower,bctop]
 
         if sim_type == "traction_hold":
             print "traction simulation"

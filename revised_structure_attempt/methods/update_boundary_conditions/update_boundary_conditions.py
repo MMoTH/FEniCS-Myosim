@@ -62,7 +62,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             output_dict["expr"]=expr
             output_dict["traction_switch_flag"] = traction_switch_flag
 
-    elif sim_protocol["simulation_type"][0] == "ramp_and_hold":
+    elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
