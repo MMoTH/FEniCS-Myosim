@@ -840,10 +840,10 @@ def fenics(sim_params):
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
-<<<<<<< HEAD
 
         print "guccione passive stress"
-        print project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local().reshape(24,3,3)
+        PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        print PK2.vector().get_local().reshape(24,3,3)
         print "checking displacement at midpoints"
         u_temp,p_temp = w.split(True)
         print u_temp.vector().get_local().reshape(27,3)
@@ -852,30 +852,7 @@ def fenics(sim_params):
         print u_temp(0.5,0,0.5)
         print "u top middle"
         print u_temp(0.5,1.,0.5)
-=======
-        f_proj =project(Fmat,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        print "saving def gradient"
-        file = File(output_path+'f_proj.pvd')
-        file << f_proj
-        #Pg_fs_shear = inner(s0,Pg*f0)
-        #shear_file = File(output_path+'P_fs_shear.pvd')
-        #shear_file << project(Pg_fs_shear,FunctionSpace(mesh,"DG",1), form_compiler_parameters={"representation":"uflacs"})
-        #F_matrix = PETScMatrix()
-        #f_assembled = assemble(Fmat,tensor=F_matrix)
-        #print f_proj.vector().get_local()
-        #print 'guccione passive stress'
-        PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        #print str(project(p,FunctionSpace(mesh,"CG",1)).vector().get_local())
-        #print project(temp,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
-        #print "J"
-        #print project(jforms,FunctionSpace(mesh,"DG",0)).vector().get_local()
 
-        #print "f assembly"
-        #print f_assembled
-        #print "Shape of u"
-        #print np.shape(u)
-
->>>>>>> 4675e54e9764298da508fb65c6c844b32b3252fd
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         #print "hsl_old after solve"
