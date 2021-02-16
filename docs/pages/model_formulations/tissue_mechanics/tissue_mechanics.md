@@ -4,10 +4,6 @@ parent: Model Formulations
 nav_order: 2
 ---
 
-<div class="notice--info">
-  <h4>Message</h4>
-  <p>This page is under  construction.</p>
-</div>
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/tissue_mechanics/fe_cube.png?raw=true" alt="titlepage" width="300" align="right"/>  
 Consider a representative element of contractile tissue (Insert basic cell with local coordinate system image).
 This tissue is modeled as an incompressible, hyperelastic, transversely isotropic material in which the fiber direction f0 is assumed to be stiffer than the s0 and n0 directions. As a hyperelastic material, the PK2 stress   **S** of this material can be obtained by differentiating the sum of two strain energy functions &Psi;<sub>1</sub>[^1] and &Psi;<sub>2</sub>[^2] with respect to the Green-Lagrange strain tensor:  
