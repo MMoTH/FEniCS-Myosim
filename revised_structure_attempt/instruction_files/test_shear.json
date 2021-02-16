@@ -2,7 +2,7 @@
   "simulation_parameters": {
     "simulation_geometry": ["unit_cube"],
     "protocol": {
-      "simulation_type": ["ramp_and_hold"],
+      "simulation_type": ["ramp_and_hold_simple_shear"],
       "simulation_duration": [200, "ms"],
       "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
