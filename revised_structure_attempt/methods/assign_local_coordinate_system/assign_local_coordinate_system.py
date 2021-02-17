@@ -172,6 +172,9 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 def update_local_coordinate_system(fiber_direction,coord_params):
 
     f0 = coord_params["f0"]
+    print "update local cs"
+    print f0
+    print fiber_direction
     s0 = coord_params["s0"]
     n0 = coord_params["n0"]
     no_of_int_points = coord_params["no_of_int_points"]
