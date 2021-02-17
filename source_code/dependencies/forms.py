@@ -582,8 +582,12 @@ class Forms(object):
         if eigen == 'zero array':
             f = f0
         else:
+            print "eigen"
+            print eigen.vector().get_local().reshape(24,3)
             f = eigen
             f /= sqrt(inner(f,f))
+
+
 
         f_adjusted = 1./kappa * (f - f0) * step_size
         f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})

@@ -176,7 +176,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             bcright_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 2)
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bctop = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 6)
-            bcs = [bcleft, bcright, bcright_x,bclower,bctop]
+            bcs = [bcleft, bcright, bcright_x,bclower]
 
         if sim_type == "traction_hold":
             print "traction simulation"

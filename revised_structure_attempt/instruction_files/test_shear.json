@@ -4,14 +4,14 @@
     "protocol": {
       "simulation_type": ["ramp_and_hold_simple_shear"],
       "simulation_duration": [200, "ms"],
-      "simulation_timestep": [0.5, "ms"],
+      "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
       "ramp_t_end":[10.0],
       "ramp_magnitude":[0.20, "percentage length change"]
       },
     "save_cell_output": [1],
     "save_visual_output": [1],
-    "output_path": ["./output_test_simple_shear_stress_kroon_smalltimestep/"],
+    "output_path": ["./output_test_simple_shear_strain_kroon/"],
     "fiber_orientation" : {
            "fiber_direction": {
               "theta":[0.0,"degrees (from + x-axis in xy-plane)"],
@@ -100,7 +100,7 @@
       "passive_set_point": [0.0]
     },
     "fiber_reorientation":{
-      "law":["stress_kroon"],
+      "law":["strain_kroon"],
       "time_constant":[2.0]
     }
 

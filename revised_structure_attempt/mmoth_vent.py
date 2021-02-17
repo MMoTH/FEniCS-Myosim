@@ -896,9 +896,9 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > sim_protocol["ramp_t_end"][0]/sim_timestep:
+        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
             if ordering_law == "stress_kroon":
-                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,sim_timestep,kroon_time_constant)
+                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             else:
                 fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
             print "f0 = ", f0
