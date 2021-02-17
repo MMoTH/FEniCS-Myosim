@@ -1,5 +1,7 @@
 from __future__ import division
 import sys
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
 sys.path.append("/home/fenics/shared/source_code/dependencies/")
 sys.path.append("/home/fenics/shared/revised_structure_attempt")
 import os as os
@@ -172,6 +174,8 @@ def fenics(sim_params):
         hsl_file = File(output_path + "hsl_mesh.pvd")
         # Want to visualize fiber directions through simulation
         fiber_file = File(output_path + "f0_vectors.pvd")
+        sheet_file = File(output_path + "s0_vectors.pvd")
+        sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
 
@@ -892,9 +896,9 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > sim_protocol["ramp_t_end"][0]/sim_timestep:
+        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
             if ordering_law == "stress_kroon":
-                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,sim_timestep,kroon_time_constant)
+                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             else:
                 fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
             print "f0 = ", f0
@@ -927,6 +931,12 @@ def fenics(sim_params):
             f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
+            s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
+            s0_temp.rename('s0','s0')
+            sheet_file << s0_temp
+            n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
+            n0_temp.rename('n0','n0')
+            sheet_normal_file << n0_temp
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
 

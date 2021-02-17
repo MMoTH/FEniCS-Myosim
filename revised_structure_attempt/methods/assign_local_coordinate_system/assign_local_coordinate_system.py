@@ -40,7 +40,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     m_x = sin(phi)*cos(theta)
     m_y = sin(phi)*sin(theta)
     m_z = cos(phi)
-    
+
     # Functions that are useful in unit cube and cylinder for calculating
     # fibrous area, or the long (x) axis to assign local coordinate systems
     test_marker_fcn = Function(marker_space)
@@ -113,10 +113,10 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
             z_axis.vector()[nn*3+1] = 0.0
             z_axis.vector()[nn*3+2] = 1.0
 
-        s0 = cross(f0,z_axis)
+        s0 = cross(z_axis,f0)
         s0 = s0/sqrt(inner(s0,s0))
 
-        n0 = project(cross(s0,f0),VectorFunctionSpace(mesh, "DG", 0))
+        n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
         n0 = n0/sqrt(inner(n0,n0))
 
     elif (sim_geometry == "unit_cube"):
@@ -172,6 +172,9 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 def update_local_coordinate_system(fiber_direction,coord_params):
 
     f0 = coord_params["f0"]
+    print "update local cs"
+    print f0
+    print fiber_direction
     s0 = coord_params["s0"]
     n0 = coord_params["n0"]
     no_of_int_points = coord_params["no_of_int_points"]
