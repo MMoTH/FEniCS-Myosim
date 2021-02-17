@@ -4,6 +4,7 @@
 *.pvd
 *.vtu
 *.auto
+*.json
 working_directory_untracked/
 LV_closed2.py
 *.hdf5
