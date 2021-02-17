@@ -1,4 +1,5 @@
 *.pyc
+*.json
 *.npy
 *.csv
 *.pvd
