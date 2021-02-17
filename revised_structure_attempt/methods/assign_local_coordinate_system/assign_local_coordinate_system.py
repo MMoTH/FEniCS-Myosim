@@ -113,10 +113,10 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
             z_axis.vector()[nn*3+1] = 0.0
             z_axis.vector()[nn*3+2] = 1.0
 
-        s0 = cross(f0,z_axis)
+        s0 = cross(z_axis,f0)
         s0 = s0/sqrt(inner(s0,s0))
 
-        n0 = project(cross(s0,f0),VectorFunctionSpace(mesh, "DG", 0))
+        n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
         n0 = n0/sqrt(inner(n0,n0))
 
     elif (sim_geometry == "unit_cube"):
