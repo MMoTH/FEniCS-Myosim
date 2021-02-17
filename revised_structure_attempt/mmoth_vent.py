@@ -172,6 +172,8 @@ def fenics(sim_params):
         hsl_file = File(output_path + "hsl_mesh.pvd")
         # Want to visualize fiber directions through simulation
         fiber_file = File(output_path + "f0_vectors.pvd")
+        sheet_file = File(output_path + "s0_vectors.pvd")
+        sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
 
@@ -927,6 +929,12 @@ def fenics(sim_params):
             f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
+            s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
+            s0_temp.rename('s0','s0')
+            sheet_file << s0_temp
+            n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
+            n0_temp.rename('n0','n0')
+            sheet_normal_file << n0_temp
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
 

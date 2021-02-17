@@ -40,7 +40,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     m_x = sin(phi)*cos(theta)
     m_y = sin(phi)*sin(theta)
     m_z = cos(phi)
-    
+
     # Functions that are useful in unit cube and cylinder for calculating
     # fibrous area, or the long (x) axis to assign local coordinate systems
     test_marker_fcn = Function(marker_space)
