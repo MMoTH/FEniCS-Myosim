@@ -48,24 +48,24 @@ class Forms(object):
         u = self.parameters["displacement_variable"]
         d = u.ufl_domain().geometric_dimension()
         I = Identity(d)
-        #F = self.Fmat()
-    	F = self.Fe()
-        #return 0.5*(F.T*F-I)
-    	return 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
+        F = self.Fmat()
+    	#F = self.Fe()
+        return 0.5*(F.T*F-I)
+    	#return 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
 
 
     def Cmat(self):
 
         u = self.parameters["displacement_variable"]
         d = u.ufl_domain().geometric_dimension()
-        #F = self.Fmat()
-        F = self.Fe()
-        #return F.T*F
-        return as_tensor(F[k,i]*F[k,j],(i,j))
+        F = self.Fmat()
+        #F = self.Fe()
+        return F.T*F
+        #return as_tensor(F[k,i]*F[k,j],(i,j))
 
     def J(self):
-        #F = self.Fmat()
-        F = self.Fe()
+        F = self.Fmat()
+        #F = self.Fe()
         return det(F)
 
 
@@ -310,7 +310,8 @@ class Forms(object):
 
         #F=Fe
         J = self.J()
-        Ea = 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
+        #Ea = 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
+        Ea = self.Emat()
         Ea = dolfin.variable(Ea)
         Ctensor = self.Cmat()
 

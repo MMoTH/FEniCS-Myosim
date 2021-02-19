@@ -17,7 +17,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
         bcs = [bctop]
 
     elif (sim_geometry == "cylinder") or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
-        sim_type = protocol["simulation_type"]
+        sim_type = protocol["simulation_type"][0]
 
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
@@ -40,7 +40,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
                 return on_boundary and abs(x[0]-10.0) < tol
         class Fix_y(SubDomain):
             def inside(self, x, on_boundary):
-                tol = 1E-1
+                tol = 1E-14
                 return near(x[0],0.0,tol) and near(x[1],center,tol)
         class Fix_y_right(SubDomain):
             def inside(self, x, on_boundary):
@@ -83,7 +83,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             marker_space = FunctionSpace(mesh,'CG',1)
             bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
             test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
-            #bc_right_test.apply(test_marker_fcn.vector())
+            bc_right_test.apply(test_marker_fcn.vector())
             output["test_marker_fcn"] = test_marker_fcn
 
     elif sim_geometry == "unit_cube":
@@ -197,7 +197,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             marker_space = FunctionSpace(mesh,'CG',1)
             bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
             test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
-            #bc_right_test.apply(test_marker_fcn.vector())
+            bc_right_test.apply(test_marker_fcn.vector())
             output["test_marker_fcn"] = test_marker_fcn
 
     output["bcs"] = bcs
