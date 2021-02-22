@@ -236,6 +236,7 @@ def fenics(sim_params):
     y_vec_array_new = np.zeros(((no_of_int_points)*n_array_length))
     j3_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     j4_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
+    j7_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     y_interp = np.zeros((no_of_int_points)*n_array_length)
     calcium = np.zeros(no_of_time_steps)
     rxn_force = np.zeros(no_of_time_steps)
@@ -338,11 +339,22 @@ def fenics(sim_params):
     f0 = Function(fiberFS)
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
-    x_dir = Function(fiberFS)
-    for jj in np.arange(no_of_int_points):
+    x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
+    x_shape = np.shape(x_dir.vector())
+    print x_shape
+    print "x shape"
+    x2_shape = np.shape(x_dir.vector().get_local())
+    print x2_shape
+    #x_dir.vector()[:] = Constant((1.,0.,0.))
+    for jj in np.arange(int(x2_shape[0]/3)):
         x_dir.vector()[jj*3] = 1.
         x_dir.vector()[jj*3+1] = 0.
         x_dir.vector()[jj*3+2] = 0.
+    print x_dir.vector().get_local()
+    #for jj in np.arange(no_of_int_points):
+        #x_dir.vector()[jj*3] = 1.
+        #x_dir.vector()[jj*3+1] = 0.
+        #x_dir.vector()[jj*3+2] = 0.
 
 
     # put these in a dictionary to pass to function for assignment
@@ -601,7 +613,7 @@ def fenics(sim_params):
 
     #initialize y_vec_array to put all hads in SRX and all binding sites to off
     for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
-        print "initializing heads to off state"
+        #print "initializing heads to off state"
         # Initializing myosin heads in the SRX state
         y_vec_array[init_counter] = 1
         # Initialize all binding sites to off state
@@ -831,6 +843,7 @@ def fenics(sim_params):
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
+            j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
@@ -959,6 +972,7 @@ def fenics(sim_params):
             pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
             pk2_passive_save.rename("pk2_passive","pk2_passive")
             pk2_passive_file << pk2_passive_save
+            np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
 

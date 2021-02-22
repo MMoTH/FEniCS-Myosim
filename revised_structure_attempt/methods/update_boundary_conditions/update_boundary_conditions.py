@@ -63,6 +63,12 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 u_x = inner(w.sub(0),x_dir)
                 u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
                 File('u_x.pvd') << u_x_projection
+                u_temp,p_temp = w.split(True)
+                print "u temp evaluated at right face?"
+                ux = inner(u_temp,x_dir)
+                ux_proj = project(ux,FunctionSpace(mesh,"CG",1))
+                print ux_proj.vector()[test_marker_fcn.vector()==1]
+                #print u_temp.vector()[test_marker_fcn.vector()==1]
                 print "test_marker shape"
                 print np.shape(test_marker_fcn.vector())
                 print "test marker vals"
@@ -90,7 +96,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             print "disp_value"
             print disp_value
-	    if max(disp_value) >= 0.90 and time > 172.0: # value of 1 is hard coded for now
+	    if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
                 expr["u_D"].u_D = disp_value[0]
 		traction_switch_flag = 2
 		expr["Press"].P = 0.0
