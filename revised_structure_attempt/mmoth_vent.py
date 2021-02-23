@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-#sys.path.append("/home/fenics/shared/source_code/dependencies/")
-#sys.path.append("/home/fenics/shared/revised_structure_attempt")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+sys.path.append("/home/fenics/shared/source_code/dependencies/")
+sys.path.append("/home/fenics/shared/revised_structure_attempt")
 import os as os
 from dolfin import *
 import numpy as np
@@ -843,7 +843,8 @@ def fenics(sim_params):
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
-            j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
+            if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
