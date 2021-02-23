@@ -960,18 +960,18 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            f0_temp.rename('f0','f0')
-            fiber_file << f0_temp
-            s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
-            s0_temp.rename('s0','s0')
-            sheet_file << s0_temp
-            n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
-            n0_temp.rename('n0','n0')
-            sheet_normal_file << n0_temp
-            pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-            pk2_passive_save.rename("pk2_passive","pk2_passive")
-            pk2_passive_file << pk2_passive_save
+            #f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
+            #f0_temp.rename('f0','f0')
+            #fiber_file << f0_temp
+            #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
+            #s0_temp.rename('s0','s0')
+            #sheet_file << s0_temp
+            #n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
+            #n0_temp.rename('n0','n0')
+            #sheet_normal_file << n0_temp
+            #pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+            #pk2_passive_save.rename("pk2_passive","pk2_passive")
+            #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
