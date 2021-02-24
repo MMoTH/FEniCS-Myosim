@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 
-def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs):
+def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir):
 
     output_dict = {}
     print "updating bcs"
@@ -36,60 +36,86 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
     if sim_protocol["simulation_type"][0] == "work_loop":
         print "in work loop updating bc"
 
-        if rxn_force >= sim_protocol["traction_magnitude"][0]:
-            print "switching to traction boundary condition"
-            if traction_switch_flag < 1:
-                expr["Press"].P = rxn_force/area
-                if sim_geometry == "cylinder" or sim_geometry == "box_mesh":
-                    bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right]
-                if sim_geometry == "unit_cube":
+        if traction_switch_flag < 1: # haven't switched bcs yet
+            temp_stress = rxn_force/area
+
+            if temp_stress[0] >= sim_protocol["traction_magnitude"][0]:
+                print "switching to traction boundary condition"
+                expr["Press"].P = sim_protocol["traction_magnitude"][0]
+                if sim_geometry == "cylinder" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
+                   # bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right]
+		   bcs.pop() # remove bcright from boundary conditions
+                if sim_geometry == "unit_cube": #bcleft and such are not passed in. Can probably use .pop() here too
                     bcs = [bcleft, bclower, bcfront,bcfix]
                 traction_switch_flag = 1
                 output_dict["traction_switch_flag"] = traction_switch_flag
                 output_dict["bcs"] = bcs
-                output_dict["expressions"]=expr
+                output_dict["expr"]=expr
+
             else:
-                # already switched, keep everything the same
-                expr["Press"].P = expr["Press"].P
-                bcs = bcs
-                output_dict["traction_switch_flag"] = traction_switch_flag
+                # still in the ramp and hold stage
+                expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
                 output_dict["bcs"] = bcs
                 output_dict["expr"]=expr
-        else:
-            # still in the ramp and hold stage
-            expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
+                output_dict["traction_switch_flag"] = traction_switch_flag
+                #u_check = project(w.sub(0),VectorFunctionSpace(mesh,"CG",2))
+                #File('u_check.pvd') << project(u_check, VectorFunctionSpace(mesh,"CG",2))
+                u_x = inner(w.sub(0),x_dir)
+                u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
+                File('u_x.pvd') << u_x_projection
+                u_temp,p_temp = w.split(True)
+                print "u temp evaluated at right face?"
+                ux = inner(u_temp,x_dir)
+                ux_proj = project(ux,FunctionSpace(mesh,"CG",1))
+                print ux_proj.vector()[test_marker_fcn.vector()==1]
+                #print u_temp.vector()[test_marker_fcn.vector()==1]
+                print "test_marker shape"
+                print np.shape(test_marker_fcn.vector())
+                print "test marker vals"
+                print test_marker_fcn.vector()[test_marker_fcn.vector()==1]
+                print "u x proj shape"
+                print np.shape(u_x_projection.vector())
+                disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
+                print "disp_value"
+                print disp_value
+                print "max of disp"
+                print max(disp_value)
+
+                
+        elif traction_switch_flag == 1:
+            # already switched to traction. Keep everything the same unless displacement is back to original value
+            u_x = inner(w.sub(0),x_dir)
+            u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
+            File('u_x.pvd') << u_x_projection
+            print "test_marker shape"
+            print np.shape(test_marker_fcn.vector())
+            print "test marker vals"
+            print test_marker_fcn.vector()[test_marker_fcn.vector()==1]
+            print "u x proj shape"
+            print np.shape(u_x_projection.vector())
+            disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
+            print "disp_value"
+            print disp_value
+	    if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
+                expr["u_D"].u_D = disp_value[0]
+		traction_switch_flag = 2
+		expr["Press"].P = 0.0
+                bcs.append(bcright)
+            expr["Press"].P = expr["Press"].P
+            bcs = bcs
+            output_dict["traction_switch_flag"] = traction_switch_flag
             output_dict["bcs"] = bcs
             output_dict["expr"]=expr
-            output_dict["traction_switch_flag"] = traction_switch_flag
-
-    elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear":
+	elif traction_switch_flag == 2:
+	    # switched back to displacement bdry, don't do anything
+		expr["Press"].P = 0.0
+		expr["u_D"].u_D = expr["u_D"].u_D
+		output_dict["traction_switch_flag"] = traction_switch_flag
+		output_dict["bcs"] = bcs
+		output_dict["expr"] = expr
+        
+    elif sim_protocol["simulation_type"][0] == "ramp_and_hold":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
-        output_dict["expr"] = expr
-        output_dict["traction_switch_flag"] = traction_switch_flag
-        print "assigning bcs"
-        output_dict["bcs"] = bcs
-        output_dict["rxn_force"] = rxn_force
-
-    elif sim_protocol["simulation_type"][0] == "traction_hold":
-        expr["Press"].P = traction_hold(time,sim_protocol,geo_options)
-        output_dict["expr"] = expr
-        output_dict["traction_switch_flag"] = traction_switch_flag
-        output_dict["bcs"] = bcs
-        output_dict["rxn_force"] = rxn_force
-
-    elif sim_protocol["simulation_type"][0] == "custom_displacement":
-
-        if time <=5.0:
-            expr["u_D"].u_D = expr["u_D"].u_D
-        if time > 5.0 and time <=10.0:
-            expr["u_D"].u_D += 0.02
-        if time > 10.0 and time <= 70.0:
-            expr["u_D"].u_D = expr["u_D"].u_D
-        if time > 70.0 and time <= 75.0:
-            expr["u_D"].u_D -= 0.01
-        if time > 75.0 and time <= 110:
-            expr["u_D"].u_D = expr["u_D"].u_D
-
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
         print "assigning bcs"
@@ -110,37 +136,14 @@ def ramp_and_hold(time,sim_protocol,geo_options):
 
     if time < sim_protocol["ramp_t_start"][0]:
         disp = 0.0
-        print "Before ramp, displacement is " + str(disp)
+        print "displacement is " + str(disp)
 
-    elif time >= sim_protocol["ramp_t_end"][0]:
+    if time >= sim_protocol["ramp_t_end"][0]:
         disp = length_scale*sim_protocol["ramp_magnitude"][0]
-        print "After ramp, displacement is " + str(disp)
+        print "displacement is " + str(disp)
     else:
         slope = sim_protocol["ramp_magnitude"][0]/(sim_protocol["ramp_t_end"][0]-sim_protocol["ramp_t_start"][0])
-        disp = length_scale*slope*(time-sim_protocol["ramp_t_start"][0])
-        print "Changing length, displacement is " + str(disp)
+        disp = length_scale*slope*time
+        print "displacement is " + str(disp)
 
     return disp
-
-def traction_hold(time,sim_protocol,geo_options):
-    geo_check = not geo_options
-    if geo_check:
-        # unit cube
-        length_scale = 1.0
-    else:
-        length_scale = geo_options["end_x"][0]
-        print "length scale = " + str(length_scale)
-
-    if time < sim_protocol["tract_t_start"][0]:
-        press = 0.0
-        print "Before ramp, traction is " + str(press)
-
-    elif time >= sim_protocol["tract_t_end"][0]:
-        press = sim_protocol["tract_magnitude"][0]
-        print "After ramp up, traction is " + str(press)
-    else:
-        slope = sim_protocol["tract_magnitude"][0]/(sim_protocol["tract_t_end"][0]-sim_protocol["tract_t_start"][0])
-        press = slope*(time-sim_protocol["tract_t_start"][0])
-        print "Increasing traction to " + str(press)
-
-    return press

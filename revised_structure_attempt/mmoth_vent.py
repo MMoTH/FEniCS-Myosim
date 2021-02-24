@@ -177,6 +177,7 @@ def fenics(sim_params):
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
+        pk2_passive_file = File(output_path + "pk2_passive.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
 
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -235,6 +236,7 @@ def fenics(sim_params):
     y_vec_array_new = np.zeros(((no_of_int_points)*n_array_length))
     j3_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     j4_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
+    j7_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     y_interp = np.zeros((no_of_int_points)*n_array_length)
     calcium = np.zeros(no_of_time_steps)
     rxn_force = np.zeros(no_of_time_steps)
@@ -337,6 +339,22 @@ def fenics(sim_params):
     f0 = Function(fiberFS)
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
+    x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
+    x_shape = np.shape(x_dir.vector())
+    print x_shape
+    print "x shape"
+    x2_shape = np.shape(x_dir.vector().get_local())
+    print x2_shape
+    #x_dir.vector()[:] = Constant((1.,0.,0.))
+    for jj in np.arange(int(x2_shape[0]/3)):
+        x_dir.vector()[jj*3] = 1.
+        x_dir.vector()[jj*3+1] = 0.
+        x_dir.vector()[jj*3+2] = 0.
+    print x_dir.vector().get_local()
+    #for jj in np.arange(no_of_int_points):
+        #x_dir.vector()[jj*3] = 1.
+        #x_dir.vector()[jj*3+1] = 0.
+        #x_dir.vector()[jj*3+2] = 0.
 
 
     # put these in a dictionary to pass to function for assignment
@@ -400,8 +418,6 @@ def fenics(sim_params):
         (u,p) = split(w)
         (v,q) = TestFunctions(W)
 
-    d = u.ufl_domain().geometric_dimension()
-    I = Identity(d)
     # Initial and previous timestep half-sarcomere length functions
     hsl0    = Function(Quad)
     hsl_old = Function(Quad)
@@ -532,6 +548,8 @@ def fenics(sim_params):
     # returns a dictionary of bcs and potentially a test_marker_fcn for work loops
     bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,mesh,W,facetboundaries,u_D)
     bcs = bc_output["bcs"]
+    bcright = bcs[-1]
+    test_marker_fcn = bc_output["test_marker_fcn"]
 
 #-------------------------------------------------------------------------------
 #           Active stress calculation
@@ -563,7 +581,7 @@ def fenics(sim_params):
 
     for jj in range(no_of_states):
         f_holder = Constant(0.0)
-        temp_holder = Constant(0.0)
+        temp_holder = 0.0
 
         if state_attached[jj] == 1:
             cb_ext = cb_extensions[jj]
@@ -572,6 +590,11 @@ def fenics(sim_params):
                 dxx = xx[kk] + delta_hsl * filament_compliance_factor
                 n_pop = y_vec_split[n_vector_indices[jj][0] + kk]
                 temp_holder = n_pop * k_cb_multiplier[jj] * (dxx + cb_ext) * conditional(gt(dxx + cb_ext,0.0), k_cb_pos, k_cb_neg)
+                #temp_holder_proj = project(temp_holder,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+                #temp_holder_interp = interpolate(temp_holder_proj,Quad)
+                #temp_holder_vec = temp_holder_interp.vector().get_local()
+                #temp_holder_vec[temp_holder_vec<0.0] = 0.0
+                #temp_holder.vector().set_local()[:] = temp_holder_vec
                 f_holder = f_holder + temp_holder
 
             f_holder = f_holder * cb_number_density * 1e-9
@@ -590,7 +613,7 @@ def fenics(sim_params):
 
     #initialize y_vec_array to put all hads in SRX and all binding sites to off
     for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
-        print "initializing heads to off state"
+        #print "initializing heads to off state"
         # Initializing myosin heads in the SRX state
         y_vec_array[init_counter] = 1
         # Initialize all binding sites to off state
@@ -760,6 +783,10 @@ def fenics(sim_params):
                     hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
                     hsl_temp.rename("hsl_temp","half-sarcomere length")
                     hsl_file << hsl_temp
+                    pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
+                    pk2_save.rename("pk2_passive","pk2_passive")
+                    pk2_passive_file << pk2_save
+                    
 
             print("cavity-vol = ", LVCavityvol.vol)
             print("p_cav = ", uflforms.LVcavitypressure())
@@ -816,6 +843,8 @@ def fenics(sim_params):
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
+            if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
@@ -847,15 +876,15 @@ def fenics(sim_params):
 
         print "guccione passive stress"
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        print PK2.vector().get_local().reshape(24,3,3)
+        #print PK2.vector().get_local().reshape(24,3,3)
         print "checking displacement at midpoints"
-        u_temp,p_temp = w.split(True)
-        print u_temp.vector().get_local().reshape(27,3)
+        #u_temp,p_temp = w.split(True)
+        #print u_temp.vector().get_local().reshape(27,3)
         print "u bottom middle"
-        p1 = Point(0.5,0.0,0.5)
-        print u_temp(0.5,0,0.5)
-        print "u top middle"
-        print u_temp(0.5,1.,0.5)
+        #p1 = Point(0.5,0.0,0.5)
+        #print u_temp(0.5,0,0.5)
+        #print "u top middle"
+        #print u_temp(0.5,1.,0.5)
 
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
@@ -910,12 +939,16 @@ def fenics(sim_params):
 
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
-        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs)
+        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir)
         bcs = bc_update_dict["bcs"]
+        print "current bcs"
+        print bcs
         traction_switch_flag = bc_update_dict["traction_switch_flag"]
         rxn_force[l] = bc_update_dict["rxn_force"]
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
+        print "current traction"
+        print Press.P
 
 
         # Save visualization info
@@ -928,15 +961,19 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            f0_temp.rename('f0','f0')
-            fiber_file << f0_temp
-            s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
-            s0_temp.rename('s0','s0')
-            sheet_file << s0_temp
-            n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
-            n0_temp.rename('n0','n0')
-            sheet_normal_file << n0_temp
+            #f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
+            #f0_temp.rename('f0','f0')
+            #fiber_file << f0_temp
+            #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
+            #s0_temp.rename('s0','s0')
+            #sheet_file << s0_temp
+            #n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
+            #n0_temp.rename('n0','n0')
+            #sheet_normal_file << n0_temp
+            #pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+            #pk2_passive_save.rename("pk2_passive","pk2_passive")
+            #pk2_passive_file << pk2_passive_save
+            np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
 
