@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-#sys.path.append("/home/fenics/shared/source_code/dependencies/")
-#sys.path.append("/home/fenics/shared/revised_structure_attempt")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+sys.path.append("/home/fenics/shared/source_code/dependencies/")
+sys.path.append("/home/fenics/shared/revised_structure_attempt")
 import os as os
 from dolfin import *
 import numpy as np
@@ -442,6 +442,11 @@ def fenics(sim_params):
     hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
     f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
 
+    # heterogenous dictionary (hard-cored for testing)
+    heter_dict = {
+        "c_param" : [params["c"],c_param,"gaussian"]
+    }
+
     # Assign the heterogeneous parameters
     heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
     File(output_path + "c param.pvd") << project(c_param,FunctionSpace(mesh,"DG",0))
@@ -786,7 +791,7 @@ def fenics(sim_params):
                     pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
                     pk2_save.rename("pk2_passive","pk2_passive")
                     pk2_passive_file << pk2_save
-                    
+
 
             print("cavity-vol = ", LVCavityvol.vol)
             print("p_cav = ", uflforms.LVcavitypressure())
@@ -843,7 +848,8 @@ def fenics(sim_params):
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
-            j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
+            if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
