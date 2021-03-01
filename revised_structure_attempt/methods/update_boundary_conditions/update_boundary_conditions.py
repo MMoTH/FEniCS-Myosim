@@ -81,7 +81,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 print "max of disp"
                 print max(disp_value)
 
-                
+
         elif traction_switch_flag == 1:
             # already switched to traction. Keep everything the same unless displacement is back to original value
             u_x = inner(w.sub(0),x_dir)
@@ -113,9 +113,13 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 		output_dict["traction_switch_flag"] = traction_switch_flag
 		output_dict["bcs"] = bcs
 		output_dict["expr"] = expr
-        
-    elif sim_protocol["simulation_type"][0] == "ramp_and_hold":
+
+    elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
+        print "u_D",expr["u_D"].u_D
+        expr["u_front"].u_front = (1./((1.+expr["u_D"].u_D)*(1.+expr["u_D"].u_D))-1.)
+
+        print "u_front",expr["u_front"].u_front
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
         print "assigning bcs"

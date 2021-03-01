@@ -250,7 +250,9 @@ def fenics(sim_params):
     LVCavityvol = Expression(("vol"), vol=0.0, degree=2)
 
     # displacement boundary expression for end of cell or fiber sims
-    u_D = Expression(("u_D"), u_D = 0.0, degree = 2)
+    u_D = Expression(("u_D"), u_D = 0.0, degree = 0)
+    # Forcing volume preserving for biaxial case
+    u_front = Expression(("u_front"), u_front = 0.0, degree = 0)
 
     # traction boundary condition for end of cell/fiber, could use this to apply
     # a traction to epicardium or something
@@ -261,6 +263,7 @@ def fenics(sim_params):
 
     expressions = {
         "u_D":u_D,
+        "u_front":u_front,
         "Press":Press
     }
 
@@ -297,6 +300,7 @@ def fenics(sim_params):
     # x, y, z rotation
     VRelem = MixedElement([Relem, Relem, Relem, Relem, Relem])
 
+
     # ------- Define function spaces on mesh using above elements --------------
 
     # Quadrature space for information needed at gauss points, such as
@@ -320,6 +324,7 @@ def fenics(sim_params):
             print "implementing periodic boundary condition"
             W = FunctionSpace(mesh, MixedElement([Velem,Qelem]),constrained_domain=PeriodicBoundary())
         else:
+            #W = FunctionSpace(mesh, MixedElement([Velem,Qelem,Relem]))
             W = FunctionSpace(mesh, MixedElement([Velem,Qelem]))
         x_dofs = W.sub(0).sub(0).dofmap().dofs() # will use this for x rxn forces later
         print "assigned W"
@@ -415,7 +420,9 @@ def fenics(sim_params):
 
     else:
         du,dp = TrialFunctions(W)
+        #(u,p,c11) = split(w)
         (u,p) = split(w)
+        #(v,q,v11) = TestFunctions(W)
         (v,q) = TestFunctions(W)
 
     # Initial and previous timestep half-sarcomere length functions
@@ -546,7 +553,7 @@ def fenics(sim_params):
 #           Initialize boundary conditions
 #-------------------------------------------------------------------------------
     # returns a dictionary of bcs and potentially a test_marker_fcn for work loops
-    bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,mesh,W,facetboundaries,u_D)
+    bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,mesh,W,facetboundaries,expressions)
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
     test_marker_fcn = bc_output["test_marker_fcn"]
@@ -687,15 +694,24 @@ def fenics(sim_params):
         Jac = Jac1 + Jac2 + Jac3 + Jac4
 
     else:
-        print "not using F4"
+        #print "not using F4"
         F3 = inner(Press*N, v)*ds(2, domain=mesh)
 
-        Ftotal = F1 + F2 - F3
+        # constrain rigid body motion
+        #L4 = inner(as_vector([0.0, 0.0, c11]), u)*dx
+    	 #inner(as_vector([0.0, 0.0, c11[2]]), cross(X, u))*dx + \
+    	 #inner(as_vector([c11[3], 0.0, 0.0]), cross(X, u))*dx + \
+    	 #inner(as_vector([0.0, c11[4], 0.0]), cross(X, u))*dx
+
+        #F4 = derivative(L4, w, wtest)
+
+        Ftotal = F1 + F2 - F3 #+ F4
 
         Jac1 = derivative(F1, w, dw)
         Jac2 = derivative(F2, w, dw)
         Jac3 = derivative(F3, w, dw)
-        Jac = Jac1 + Jac2 - Jac3
+        #Jac4 = derivative(F4, w, dw)
+        Jac = Jac1 + Jac2 - Jac3 #+ Jac4
 
     # Can use Dr. Lee's Nsolver if solver needs debugging
     solverparams = {"Jacobian": Jac,
@@ -786,7 +802,7 @@ def fenics(sim_params):
                     pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
                     pk2_save.rename("pk2_passive","pk2_passive")
                     pk2_passive_file << pk2_save
-                    
+
 
             print("cavity-vol = ", LVCavityvol.vol)
             print("p_cav = ", uflforms.LVcavitypressure())
@@ -878,7 +894,8 @@ def fenics(sim_params):
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print PK2.vector().get_local().reshape(24,3,3)
         print "checking displacement at midpoints"
-        #u_temp,p_temp = w.split(True)
+        #u_temp,p_temp,c_temp = w.split(True)
+        u_temp,p_temp = w.split(True)
         #print u_temp.vector().get_local().reshape(27,3)
         print "u bottom middle"
         #p1 = Point(0.5,0.0,0.5)

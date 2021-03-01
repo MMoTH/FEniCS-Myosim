@@ -2,7 +2,7 @@ from dolfin import *
 
 ## set boundary conditions
 
-def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
+def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,expr):
 
     output = {}
 
@@ -71,7 +71,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
         bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
-        bcright= DirichletBC(W.sub(0).sub(0), u_D, facetboundaries, 2)
+        bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
         bcfix_y = DirichletBC(W.sub(0).sub(1), Constant((0.0)), fix_y, method="pointwise")
         bcfix_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z, method="pointwise")
         bcfix_y_right = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_right, method="pointwise")
@@ -114,6 +114,10 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
             def inside(self, x, on_boundary):
                 tol = 1E-14
                 return on_boundary and abs(x[1]) < tol
+        class Back(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return on_boundary and abs(x[1]-1.) < tol
         #  where x[0], x[1] and x[2] = 0
         class Fix(SubDomain):
             def inside(self, x, on_boundary):
@@ -138,6 +142,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
         lower = Lower()
         front = Front()
         top = Top()
+        back = Back()
         #
         left.mark(facetboundaries, 1)
         right.mark(facetboundaries, 2)
@@ -145,11 +150,12 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
         lower.mark(facetboundaries, 4)
         front.mark(facetboundaries, 5)
         top.mark(facetboundaries, 6)
+        back.mark(facetboundaries, 7)
 
         if sim_type == "ramp_and_hold":
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
-            bcright= DirichletBC(W.sub(0).sub(0), u_D, facetboundaries, 2)
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
@@ -172,18 +178,30 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,u_D):
         if sim_type == "ramp_and_hold_simple_shear":
             print "in simple shear bcs"
             bcleft= DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), facetboundaries, 1)         # u1 = 0 on left face
-            bcright= DirichletBC(W.sub(0).sub(1), u_D, facetboundaries, 2)
+            bcright= DirichletBC(W.sub(0).sub(1), expr["u_D"], facetboundaries, 2)
             bcright_x = DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 2)
             bcright_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 2)
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bctop = DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 6)
             bcs = [bcleft, bcright, bcright_x,bclower]
 
+        if sim_type == "ramp_and_hold_biaxial":
+            bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+            bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+            bctop = DirichletBC(W.sub(0).sub(2), expr["u_front"], facetboundaries, 6)
+            bcback = DirichletBC(W.sub(0).sub(1), expr["u_D"], facetboundaries, 7)
+            bcfront = DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries,5)
+            bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+
+
+            bcs = [bcleft, bcfront,bcback,bctop,bcright]
+
         if sim_type == "traction_hold":
             print "traction simulation"
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
-            bcright= DirichletBC(W.sub(0).sub(0), u_D, facetboundaries, 2)
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
