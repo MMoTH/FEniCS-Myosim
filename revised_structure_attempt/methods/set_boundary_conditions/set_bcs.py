@@ -79,12 +79,12 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,expr):
 
         bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right,bcright] # order matters!
 
-        if sim_type == "work_loop":
-            marker_space = FunctionSpace(mesh,'CG',1)
-            bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
-            test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
-            bc_right_test.apply(test_marker_fcn.vector())
-            output["test_marker_fcn"] = test_marker_fcn
+        #if sim_type == "work_loop":
+        marker_space = FunctionSpace(mesh,'CG',1)
+        bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
+        test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
+        bc_right_test.apply(test_marker_fcn.vector())
+        output["test_marker_fcn"] = test_marker_fcn
 
     elif sim_geometry == "unit_cube":
         sim_type = protocol["simulation_type"][0]
