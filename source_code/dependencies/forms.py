@@ -160,22 +160,22 @@ class Forms(object):
         f0 = self.parameters["fiber"]
         s0 = self.parameters["sheet"]
         n0 = self.parameters["sheet-normal"]
-        C2 = self.parameters["c2"]
-        C3 = self.parameters["c3"]
-        bff = self.parameters["bf"][0]
-        bfx = self.parameters["bt"][0]
-        bxx = self.parameters["bfs"][0]
+        C2 = self.parameters["c2"][-1]
+        C3 = self.parameters["c3"][-1]
+        bff = self.parameters["bf"][-1]
+        bfx = self.parameters["bt"][-1]
+        bxx = self.parameters["bfs"][-1]
         Kappa = self.parameters["Kappa"]
         isincomp = self.parameters["incompressible"]
         Cmat = self.Cmat()
-        phi_m = self.parameters["phi_m"][0]
-        phi_g = self.parameters["phi_g"][0]
+        phi_m = self.parameters["phi_m"][-1]
+        phi_g = self.parameters["phi_g"][-1]
         hsl0 = self.parameters["hsl0"]
 
         if(isincomp):
             p = self.parameters["pressure_variable"]
 
-        C = self.parameters["c"]
+        C = self.parameters["c"][-1]
 
         Eff = inner(f0, Ea*f0)
         Ess = inner(s0, Ea*s0)
@@ -281,19 +281,19 @@ class Forms(object):
         e2 = Constant((0.0, 1.0, 0.0))
         e3 = Constant((0.0, 0.0, 1.0))
 
-        C = self.parameters["c"]
-        bff = self.parameters["bf"][0]
-        bfx = self.parameters["bt"][0]
-        bxx = self.parameters["bfs"][0]
+        C = self.parameters["c"][-1]
+        bff = self.parameters["bf"][-1]
+        bfx = self.parameters["bt"][-1]
+        bxx = self.parameters["bfs"][-1]
 
         f0 = self.parameters["fiber"]
         s0 = self.parameters["sheet"]
         n0 = self.parameters["sheet-normal"]
 
-        C2 = self.parameters["c2"]
-        C3 = self.parameters["c3"]
-        phi_m = self.parameters["phi_m"][0]
-        phi_g = self.parameters["phi_g"][0]
+        C2 = self.parameters["c2"][-1]
+        C3 = self.parameters["c3"][-1]
+        phi_m = self.parameters["phi_m"][-1]
+        phi_g = self.parameters["phi_g"][-1]
         isincomp = self.parameters["incompressible"]
         hsl0 = self.parameters["hsl0"]
         Kappa = self.parameters["Kappa"]

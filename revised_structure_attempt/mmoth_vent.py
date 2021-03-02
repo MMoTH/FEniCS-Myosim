@@ -21,6 +21,7 @@ from methods.mesh_import import mesh_import as mesh_import
 from methods.assign_initial_hsl import assign_initial_hsl as assign_hsl
 from methods.assign_local_coordinate_system import assign_local_coordinate_system as lcs
 from methods.assign_heterogeneous_params import assign_heterogeneous_params as assign_params
+from methods.assign_heterogeneous_params import initialize_dolfin_functions as initialize_dolfin_functions
 from methods.set_boundary_conditions import set_bcs as set_bcs
 from methods.circulatory_module import circulatory_module as cm
 from methods.update_boundary_conditions import update_boundary_conditions
@@ -379,27 +380,48 @@ def fenics(sim_params):
     }
 
     # create lists of dictionaries that hold parameters for each gauss point
+    # These will remain scalars. I anticipate this will be the case for
+    # any parameters that will be passed into existing modules (myosim parameters,
+    # possible calcium models, etc)
     hs_params_list = [{}]*no_of_int_points
-    passive_params_list = [{}]*no_of_int_points
+    #passive_params_list = [{}]*no_of_int_points
 
     # Must make a deep copy so each item in the list is independent, and not linked
     # to the original paramter dictionary
     for jj in np.arange(np.shape(hs_params_list)[0]):
-        hs_params_list[jj] = copy.deepcopy(hs_params)
-        passive_params_list[jj] = copy.deepcopy(passive_params)
+        hs_params_list[jj] = copy.deepcopy(hs_params) # because this is a copy, everything is initialized
+        #passive_params_list[jj] = copy.deepcopy(passive_params)
+
+    # create dictionary of parameters that will be initialized as dolfin functions
+    # (anything used by dolfin in calculations will become a function, ex. passive SEF
+    # or active stress calculation).
+    # dolfin_functions is a nested dictionary
+    dolfin_functions = {}
+    dolfin_functions["passive_params"] = passive_params
+    dolfin_functions["cb_number_density"] = hs_params["cb_number_density"]
+    print "dolfin dict init"
+    print dolfin_functions
+    # If anything else needs to eventually be initialized as a function for heterogeneity,
+    # add it here. For example if introducing heterogeneity with cell_ion_params:
+    # dolfin_functions["cell_ion_params"]=cell_ion_params
+    # then it will be searched through for hetereogeneity in the appropriate function
+
+    # Initialize all dolfin functions to take on their base value
+    dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
 
     # parameters that are heterogeneous declared here as functions
     # Do these need to come from the input file? As part of declaration, "heterogenous = true"?
     # for key in input dictionary:
     #    if dict[key] has value "heterogeneous =  true":
     #        add this param to the list, but how to declare as a function? Hard code for now...
-    c_param = Function(Quad)
-    c2_param = Function(Quad)
-    c3_param = Function(Quad)
+
+    #c_param = Function(Quad)
+    #c2_param = Function(Quad)
+    #c3_param = Function(Quad)
 
     # create heterogeneous function list to be passed in to method "assign_heterogeneous_params"
     # Then
-    heterogeneous_fcn_list = [c_param, c2_param, c3_param]
+    #heterogeneous_fcn_list = [c_param, c2_param, c3_param]
 
     # functions for the weak form
     w     = Function(W)
@@ -449,14 +471,19 @@ def fenics(sim_params):
     hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
     f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
 
-    # heterogenous dictionary (hard-cored for testing)
-    heter_dict = {
-        "c_param" : [params["c"],c_param,"gaussian"]
-    }
 
     # Assign the heterogeneous parameters
-    heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
-    File(output_path + "c param.pvd") << project(c_param,FunctionSpace(mesh,"DG",0))
+    #heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
+    hs_params_list,dolfin_functions = assign_params.assign_heterogeneous_params(sim_params,hs_params,hs_params_list,dolfin_functions,geo_options,no_of_int_points)
+    print "cb density"
+    print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
+    print "k3"
+
+    temp_fcn_visualization = Function(Quad)
+    for mm in np.arange(no_of_int_points):
+        print hs_params_list[mm]["myofilament_parameters"]["k_3"][0]
+    File(output_path + "c param.pvd") << project(dolfin_functions["passive_params"]["c"][-1],FunctionSpace(mesh,"DG",0))
+
 #-------------------------------------------------------------------------------
 #           Save initial values
 #-------------------------------------------------------------------------------
@@ -516,13 +543,19 @@ def fenics(sim_params):
              "growth_tensor": Fg}
 
     # update passive params because now they are heterogeneous functions
-    # need to generalize this?
-    params.update(passive_params)
+    # need to generalize this? Need to initialize passive functions (and cb density)
+    # and pass these to assign_heterogeneous_params. Then map back from heterogeneous_fcn_list
+    # to passive list, and use that passive list here
+
+    #######
+    # this needs to probably actually be passive_params_list/dictionary
+    # and this list will include a dictionary of functions that can be
+    params.update(dolfin_functions["passive_params"])
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
         params.update(ventricle_params)
-    params["c"] = c_param
-    params["c2"] = c2_param
-    params["c3"] = c3_param
+    #params["c"] = c_param
+    #params["c2"] = c2_param
+    #params["c3"] = c3_param
 
     # Initialize the forms module
     uflforms = Forms(params)
@@ -609,7 +642,7 @@ def fenics(sim_params):
                 #temp_holder.vector().set_local()[:] = temp_holder_vec
                 f_holder = f_holder + temp_holder
 
-            f_holder = f_holder * cb_number_density * 1e-9
+            f_holder = f_holder * dolfin_functions["cb_number_density"][-1] * 1e-9
             f_holder = f_holder * alpha_value
 
         cb_force = cb_force + f_holder
@@ -1167,8 +1200,12 @@ sim_params = input_parameters["simulation_parameters"]
 passive_params = input_parameters["forms_parameters"]["passive_law_parameters"]
 hs_params = input_parameters["myosim_parameters"]
 cell_ion_params = input_parameters["electrophys_parameters"]["cell_ion_parameters"]
+all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 #monodomain_params = input_parameters["electrophys_parameters"]["monodomain_parameters"]
 #windkessel_params = input_parameters["windkessel_parameters"]
-growth_params = input_parameters["growth_and_remodeling"]
+if input_parameters["growth_and_remodeling"]:
+    growth_params = input_parameters["growth_and_remodeling"]
+    all_params.append(growth_params)
 #optimization_params = input_parameters["optimization_parameters"]
+
 fenics(sim_params)
