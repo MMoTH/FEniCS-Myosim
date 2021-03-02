@@ -496,7 +496,7 @@ def fenics(sim_params):
     File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
-    stop
+    
 #-------------------------------------------------------------------------------
 #           Initialize the solver and forms parameters, continuum tensors
 #-------------------------------------------------------------------------------
