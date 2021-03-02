@@ -482,8 +482,8 @@ def fenics(sim_params):
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
         print hs_params_list[mm]["myofilament_parameters"]["k_3"][0]
-    File(output_path + "c param.pvd") << project(dolfin_functions["passive_params"]["c"][-1],FunctionSpace(mesh,"DG",0))
-
+    File(output_path + "c_param.pvd") << project(dolfin_functions["passive_params"]["c"][-1],FunctionSpace(mesh,"DG",0))
+    File(output_path + "cb_density.pvd") << project(dolfin_functions["cb_number_density"][-1],FunctionSpace(mesh,"DG",0))
 #-------------------------------------------------------------------------------
 #           Save initial values
 #-------------------------------------------------------------------------------
@@ -496,7 +496,7 @@ def fenics(sim_params):
     File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
-
+    stop
 #-------------------------------------------------------------------------------
 #           Initialize the solver and forms parameters, continuum tensors
 #-------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ def assign_heterogeneous_params(sim_params,hs_params_template,hs_params_list,dol
     het_hs_dict = iterate_hs_keys(hs_params_template,het_hs_dict)
 
     # assign heterogeneous parameters based on the desired law
-    hs_params_list = assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points)
+    hs_params_list = assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points,geo_options) #geo_options will contain information for specific spatial variations
 
     # create empty dictionary to hold keys for heterogeneous dolfin functions
     het_dolfin_dict = {}
@@ -29,7 +29,7 @@ def assign_heterogeneous_params(sim_params,hs_params_template,hs_params_list,dol
     het_dolfin_dict = iterate_dolfin_keys(dolfin_functions,het_dolfin_dict)
 
     # assign heterogeneous parametrs based on the desired law
-    dolfin_functions = assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points)
+    dolfin_functions = assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,geo_options)
 
     # Kurtis needs to update this
     #--------------------------------------------------------
@@ -110,10 +110,16 @@ def iterate_hs_keys(hs_template,het_hs_dict):
                                 else:
                                     percent = 0.33
                                 het_hs_dict[k].append(percent)
+                            if temp_law == "fiber_w_compliance":
+                                if "fiber_value" in j:
+                                    fiber_value = j["fiber_value"]
+                                else:
+                                    fiber_value = base_value
+                                het_hs_dict[k].append(fiber_value)
 
     return het_hs_dict
 
-def assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points):
+def assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points,geo_options):
 
     for k in het_hs_dict.keys():
         base_value = het_hs_dict[k][0]
@@ -165,12 +171,18 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             else:
                                 percent = 0.33
                             het_dolfin_dict[k].append(percent)
+                        if temp_law == "fiber_w_compliance":
+                            if "fiber_value" in j:
+                                fiber_value = j["fiber_value"]
+                            else:
+                                fiber_value = base_value
+                            het_dolfin_dict[k].append(fiber_value)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
     return het_dolfin_dict
 
-def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points):
+def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,geo_options):
 
     for k in het_dolfin_dict.keys():
         #print "het_dolfin_dict"
@@ -186,6 +198,9 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points):
 
         if hetero_law == "percent_fibrosis":
             dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points)
+
+        if hetero_law == "fiber_w_compliance":
+            dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
     return dolfin_functions
 
@@ -237,6 +252,34 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,no_of_int_points):
 
         if jj in sample_indices:
 
-            dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*20
+            if k == "cb_number_density":
+                dolfin_functions[k][-1].vector()[jj] = base_value*20 #make 20 specified by user
+            else:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*20
+
+    return dolfin_functions
+
+def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_int_points,geo_options):
+
+    end_marker_array = geo_options["end_marker_array"]
+
+    for jj in np.arange(no_of_int_points):
+
+        if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
+            hs_params_list[jj]["myofilament_parameters"][k][0] = fiber_value
+
+    return hs_params_list
+
+def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_int_points,geo_options):
+
+    end_marker_array = geo_options["end_marker_array"]
+
+    for jj in np.arange(no_of_int_points):
+
+        if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
+            if k == "cb_number_density":
+                dolfin_functions[k][-1].vector()[jj] = fiber_value
+            else:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
 
     return dolfin_functions
