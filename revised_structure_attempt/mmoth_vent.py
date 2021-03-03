@@ -400,7 +400,7 @@ def fenics(sim_params):
     dolfin_functions["passive_params"] = passive_params
     dolfin_functions["cb_number_density"] = hs_params["cb_number_density"]
     print "dolfin dict init"
-    print dolfin_functions
+    #print dolfin_functions
     # If anything else needs to eventually be initialized as a function for heterogeneity,
     # add it here. For example if introducing heterogeneity with cell_ion_params:
     # dolfin_functions["cell_ion_params"]=cell_ion_params
@@ -475,9 +475,9 @@ def fenics(sim_params):
     # Assign the heterogeneous parameters
     #heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
     hs_params_list,dolfin_functions = assign_params.assign_heterogeneous_params(sim_params,hs_params,hs_params_list,dolfin_functions,geo_options,no_of_int_points)
-    print "cb density"
-    print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
-    print "k3"
+    #print "cb density"
+    #print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
+    #print "k3"
 
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
@@ -523,7 +523,7 @@ def fenics(sim_params):
     #print "fg"
     #print str(Fg.vector().get_local())
     #Fg = as_tensor([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.]])
-    print "Fg"
+    #print "Fg"
     #print Fg[0][0]
 
 
@@ -569,8 +569,8 @@ def fenics(sim_params):
     Fmat2 = Function(TF)
     #d = u.ufl_domain().geometric_dimension()
     #Fmat2= Identity(d) + grad(u)
-    print "shape of Fmat:", np.shape(Fmat)
-    print "Shape of u: ", np.shape(u)
+    #print "shape of Fmat:", np.shape(Fmat)
+    #print "Shape of u: ", np.shape(u)
 
     # Get right cauchy stretch tensor
     #Cmat = (Fmat.T*Fmat)
@@ -929,14 +929,14 @@ def fenics(sim_params):
         # solve for displacement to satisfy balance of linear momentum
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
 
-        print "guccione passive stress"
+        #print "guccione passive stress"
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print PK2.vector().get_local().reshape(24,3,3)
-        print "checking displacement at midpoints"
+        #print "checking displacement at midpoints"
         #u_temp,p_temp,c_temp = w.split(True)
         u_temp,p_temp = w.split(True)
         #print u_temp.vector().get_local().reshape(27,3)
-        print "u bottom middle"
+        #print "u bottom middle"
         #p1 = Point(0.5,0.0,0.5)
         #print u_temp(0.5,0,0.5)
         #print "u top middle"
@@ -986,7 +986,7 @@ def fenics(sim_params):
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             else:
                 fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
-            print "f0 = ", f0
+            #print "f0 = ", f0
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
@@ -998,13 +998,12 @@ def fenics(sim_params):
         bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir)
         bcs = bc_update_dict["bcs"]
         print "current bcs"
-        print bcs
+        #print bcs
         traction_switch_flag = bc_update_dict["traction_switch_flag"]
         rxn_force[l] = bc_update_dict["rxn_force"]
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
-        print "current traction"
-        print Press.P
+        print "current traction: ", Press.P
 
 
         # Save visualization info

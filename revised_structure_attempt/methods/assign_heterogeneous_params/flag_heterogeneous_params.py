@@ -52,7 +52,7 @@ def search_flag(het_dict,temp_dictionary,fcn_space):
 
 #--------------------------------------------------------------------------------
 # testing with sample json file
-input_file = sys.argv[1]
+"""input_file = sys.argv[1]
 # Load in JSON dictionary
 with open(input_file, 'r') as json_input:
   input_parameters = json.load(json_input)
@@ -66,3 +66,4 @@ Quadelem._quad_scheme = 'default'
 Quad = FunctionSpace(mesh,Quadelem)
 
 flag_heterogeneous_params(all_params,Quad)
+"""
