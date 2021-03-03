@@ -129,6 +129,8 @@ def assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points,geo_options):
 
         if hetero_law == "percent_fibrosis":
             hs_params_list = scalar_fibrosis_law(hs_params_list,base_value,k,het_hs_dict[k][-1],no_of_int_points)
+        if hetero_law == "fiber_w_compliance":
+            hs_params_list = scalar_fiber_w_compliance_law(hs_params_list,base_value,k,het_hs_dict[k][-1],no_of_int_points,geo_options)
 
         else:
             print "instruction file law is",hetero_law
@@ -262,7 +264,8 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,no_of_int_points):
 def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_int_points,geo_options):
 
     end_marker_array = geo_options["end_marker_array"]
-
+    print "calling scalar fiber law"
+    print k
     for jj in np.arange(no_of_int_points):
 
         if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
