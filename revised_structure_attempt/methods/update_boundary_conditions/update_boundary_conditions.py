@@ -116,10 +116,10 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
-        print "u_D",expr["u_D"].u_D
+        print "u_D: ",expr["u_D"].u_D
         expr["u_front"].u_front = (1./((1.+expr["u_D"].u_D)*(1.+expr["u_D"].u_D))-1.)
 
-        print "u_front",expr["u_front"].u_front
+        #print "u_front",expr["u_front"].u_front
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
         print "assigning bcs"

@@ -592,7 +592,7 @@ def fenics(sim_params):
 #           Initialize boundary conditions
 #-------------------------------------------------------------------------------
     # returns a dictionary of bcs and potentially a test_marker_fcn for work loops
-    bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,mesh,W,facetboundaries,expressions)
+    bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,geo_options,mesh,W,facetboundaries,expressions)
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
     test_marker_fcn = bc_output["test_marker_fcn"]
@@ -986,11 +986,22 @@ def fenics(sim_params):
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             else:
                 fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
-            #print "f0 = ", f0
+            print "f0 = ", f0
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
             print "updating fiber orientation"
+
+            if l == (no_of_time_steps - 1):
+                if ordering_law == "stress_kroon":
+                    stress_eigen = uflforms.eigen(PK2,Quad,fiberFS)
+                    print "stress eigen: "
+                    print np.reshape(stress_eigen.vector().get_local(),(no_of_int_points,3))
+                else:
+                    C_array = project(Cmat,TF_kroon,form_compiler_parameters={"representation":"uflacs"})
+                    strain_eigen = uflforms.eigen(C_array,Quad,fiberFS)
+                    print "strain eigen: "
+                    print np.reshape(strain_eigen.vector().get_local(),(no_of_int_points,3))
 
 
         print "updating boundary conditions"
@@ -1016,9 +1027,9 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            #f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            #f0_temp.rename('f0','f0')
-            #fiber_file << f0_temp
+            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
+            f0_temp.rename('f0','f0')
+            fiber_file << f0_temp
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
             #s0_temp.rename('s0','s0')
             #sheet_file << s0_temp

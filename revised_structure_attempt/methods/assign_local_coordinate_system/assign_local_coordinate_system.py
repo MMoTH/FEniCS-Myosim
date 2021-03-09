@@ -57,7 +57,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         f.read(n0, casename + "/" + "eN")
         f.close()
 
-    elif (sim_geometry == "cylinder") or (sim_geometry == "box_mesh")or sim_geometry == "gmesh_cylinder":
+    if (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
 
         if sim_geometry == "cylinder":
             radius = geo_options["base_radius"][0]
@@ -85,6 +85,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         # Updating geometry options to save end_marker_array to assign heterogeneous parameters later
         geo_options["end_marker_array"] = end_marker_array
 
+
         for jj in np.arange(no_of_int_points):
 
             #if (temp_tester_array[jj] < dig_array[jj]) or (temp_tester_array[jj] > -dig_array[jj] + 10.0):
@@ -106,40 +107,86 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
                 f0.vector()[jj*3+1] = r.normal(m_y,temp_width,1)[0]
                 f0.vector()[jj*3+2] = r.normal(m_z,temp_width,1)[0]
 
-        f0 = f0/sqrt(inner(f0,f0))
+            f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
+            f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
+            f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
 
-        for nn in np.arange(no_of_int_points):
-            z_axis.vector()[nn*3] = 0.0
-            z_axis.vector()[nn*3+1] = 0.0
-            z_axis.vector()[nn*3+2] = 1.0
+            f0_holder = f0.vector().array()[jj*3:jj*3+3]
+            f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
+            for kk in range(3):
+                f0.vector()[jj*3+kk] = f0_holder[kk]
 
-        s0 = cross(z_axis,f0)
-        s0 = s0/sqrt(inner(s0,s0))
+            z_axis.vector()[jj*3] = 0.0
+            z_axis.vector()[jj*3+1] = 0.0
+            z_axis.vector()[jj*3+2] = 1.0
 
-        n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
-        n0 = n0/sqrt(inner(n0,n0))
+            s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
 
-    elif (sim_geometry == "unit_cube"):
+            s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
+            for kk in range(3):
+                s0.vector()[jj*3+kk] = s0_holder[kk]
 
-        """for jj in np.arange(no_of_int_points):
+            n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
+
+            n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
+            for kk in range(3):
+                n0.vector()[jj*3+kk] = n0_holder[kk]
+
+    if sim_geometry == "box_mesh":
+
+        x_marker = Expression("x[0]",degree=1)
+        y_marker = Expression("x[1]",degree=1)
+        z_marker = Expression("x[2]",degree=1)
+
+        # Project the expression onto the mesh
+        x_marker_values = project(x_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        y_marker_values = project(y_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        z_marker_values = project(z_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+
+        # Interpolate onto the FunctionSpace for quadrature points
+        x_marker_on_mesh = interpolate(x_marker_values,Quad)
+        y_marker_on_mesh = interpolate(y_marker_values,Quad)
+        z_marker_on_mesh = interpolate(z_marker_values,Quad)
+
+        # Create array of the expression values
+        x_marker_array = x_marker_on_mesh.vector().get_local()
+        y_marker_array = y_marker_on_mesh.vector().get_local()
+        z_marker_array = z_marker_on_mesh.vector().get_local()
+
+        # Updating geometry options to save end_marker_array to assign heterogeneous parameters later
+        geo_options["x_marker_array"] = x_marker_array
+        geo_options["y_marker_array"] = y_marker_array
+        geo_options["z_marker_array"] = z_marker_array
+
+        for jj in np.arange(no_of_int_points):
 
             f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
             f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
             f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
 
-        f0 = f0/sqrt(inner(f0,f0))
+            f0_holder = f0.vector().array()[jj*3:jj*3+3]
+            f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
+            for kk in range(3):
+                f0.vector()[jj*3+kk] = f0_holder[kk]
 
-        for nn in np.arange(no_of_int_points):
-            z_axis.vector()[nn*3] = 0.0
-            z_axis.vector()[nn*3+1] = 0.0
-            z_axis.vector()[nn*3+2] = 1.0
+            z_axis.vector()[jj*3] = 0.0
+            z_axis.vector()[jj*3+1] = 0.0
+            z_axis.vector()[jj*3+2] = 1.0
 
-        s0 = cross(z_axis,f0)
-        s0 = s0/sqrt(inner(s0,s0))
+            s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
 
-        n0 = cross(f0,s0)
-        #n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
-        n0 = n0/sqrt(inner(n0,n0))"""
+            s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
+            for kk in range(3):
+                s0.vector()[jj*3+kk] = s0_holder[kk]
+
+            n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
+
+            n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
+            for kk in range(3):
+                n0.vector()[jj*3+kk] = n0_holder[kk]
+
+    if (sim_geometry == "unit_cube"):
+
         for jj in np.arange(no_of_int_points):
 
             f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
@@ -173,26 +220,11 @@ def update_local_coordinate_system(fiber_direction,coord_params):
 
     f0 = coord_params["f0"]
     print "update local cs"
-    print f0
-    print fiber_direction
     s0 = coord_params["s0"]
     n0 = coord_params["n0"]
     no_of_int_points = coord_params["no_of_int_points"]
     fiberFS = coord_params["fiberFS"]
     z_axis = Function(fiberFS)
-    """f0 = f0/sqrt(inner(f0,f0))
-
-    for nn in np.arange(no_of_int_points):
-        z_axis.vector()[nn*3] = 0.0
-        z_axis.vector()[nn*3+1] = 0.0
-        z_axis.vector()[nn*3+2] = 1.0
-
-    s0 = cross(z_axis,f0)
-    s0 = s0/sqrt(inner(s0,s0))
-
-    n0 = cross(f0,s0)
-    #n0 = project(cross(f0,s0),VectorFunctionSpace(mesh, "DG", 0))
-    n0 = n0/sqrt(inner(n0,n0))"""
 
     for jj in np.arange(no_of_int_points):
 
