@@ -583,16 +583,20 @@ class Forms(object):
         if eigen == 'zero array':
             f = f0
         else:
-            print "eigen"
-            print eigen.vector().get_local().reshape(24,3)
+            #print "eigen"
+            #print eigen.vector().get_local().reshape(24,3)[0:4]
             f = eigen
             f /= sqrt(inner(f,f))
 
 
 
         f_adjusted = 1./kappa * (f - f0) * step_size
-        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
+        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        #print 'f_adj before interpolate: '
+        #print f_adjusted.vector().get_local()[0:4]
         f_adjusted = interpolate(f_adjusted,VFS)
+        #print 'f_adj after interpolate: '
+        #print f_adjusted.vector().get_local()[0:4]
 
         return f_adjusted
 
