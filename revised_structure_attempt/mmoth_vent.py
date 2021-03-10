@@ -181,6 +181,13 @@ def fenics(sim_params):
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
 
+        stress_eigen_ds = pd.DataFrame(np.zeros(no_of_int_points),index=None)
+        stress_eigen_ds = stress_eigen_ds.transpose()
+
+        f_adjusted_ds = pd.DataFrame(np.zeros(no_of_int_points),index=None)
+        f_adjusted_ds = f_adjusted_ds.tanspose()
+
+
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
             # initialize a file for pressures and volumes in windkessel
             if (MPI.rank(comm) == 0):
@@ -1041,6 +1048,12 @@ def fenics(sim_params):
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
+
+            stress_eigen_ds.iloc[0,:] = stress_eigen.vector().get_local()[:]
+            stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
+
+            f_adjusted_ds.iloc[0,:] = fdiff.vector().get_local()[:]
+            f_adjusted_ds.to_csv(output_path + 'f_adjusted.csv',mode='a',header=False)
 
 
         # Save cell info
