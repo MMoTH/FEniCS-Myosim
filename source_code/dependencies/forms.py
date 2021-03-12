@@ -417,7 +417,7 @@ class Forms(object):
         f0 = self.parameters["fiber"]
         f = C*f0/sqrt(inner(C*f0,C*f0))
         f_adjusted = 1./kappa * (f - f0) * step_size
-        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
+        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         f_adjusted = interpolate(f_adjusted,FunctionSpace)
 
         return f_adjusted
@@ -597,6 +597,18 @@ class Forms(object):
         f_adjusted = interpolate(f_adjusted,VFS)
         #print 'f_adj after interpolate: '
         #print f_adjusted.vector().get_local()[0:4]
+
+        return f_adjusted
+
+    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa):
+
+        mesh = self.parameters["mesh"]
+        PK2 = stress_tensor
+        f0 = self.parameters["fiber"]
+        f = PK2*f0/sqrt(inner(PK2*f0,PK2*f0))
+        f_adjusted = 1./kappa * (f - f0) * step_size
+        f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        f_adjusted = interpolate(f_adjusted,FunctionSpace)
 
         return f_adjusted
 

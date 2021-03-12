@@ -195,6 +195,17 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             else:
                                 scaling_factor = 20
                             het_dolfin_dict[k].append(scaling_factor)
+                        if temp_law == "biphasic":
+                            if "normal" in j:
+                                normal = j["normal"]
+                            else:
+                                normal = "x"
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            het_dolfin_dict[k].append(normal)
+                            het_dolfin_dict[k].append(scaling_factor)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -222,6 +233,9 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,ge
 
         if hetero_law == "inclusion":
             dolfin_functions = df_inclusion_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+
+        if hetero_law == "biphasic":
+            dolfin_functions = df_biphasic_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
     return dolfin_functions
 
@@ -315,5 +329,28 @@ def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,no_of_int_poin
 
         if x_marker_array[jj] > 1.0 and x_marker_array[jj] <= 2.0 and y_marker_array[jj] > 1.0 and y_marker_array[jj] <= 2.0 and z_marker_array[jj] > 1.0 and z_marker_array[jj] <= 2.0:
             dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+
+    return dolfin_functions
+
+def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,no_of_int_points,geo_options):
+    x_marker_array = geo_options["x_marker_array"]
+    y_marker_array = geo_options["y_marker_array"]
+    z_marker_array = geo_options["z_marker_array"]
+
+    x_length = geo_options["end_x"][0] - geo_options["base_corner_x"][0]
+    y_length = geo_options["end_y"][0] - geo_options["base_corner_y"][0]
+    z_length = geo_options["end_z"][0] - geo_options["base_corner_z"][0]
+
+    for jj in np.arange(no_of_int_points):
+
+        if normal == "x":
+            if x_marker_array[jj] <= x_length/2:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+        elif normal == "y":
+            if y_marker_array[jj] <= y_length/2:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+        elif normal == "z":
+            if z_marker_array[jj] <= z_length/2:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 
     return dolfin_functions

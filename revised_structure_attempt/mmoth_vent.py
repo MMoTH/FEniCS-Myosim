@@ -989,12 +989,14 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
+        if kroon_time_constant != 0.0 and l > float(sim_protocol["tract_t_end"][0])/float(sim_timestep)+1:
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
-            else:
+            elif ordering_law == "strain_kroon":
                 fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
-            print "f0 = ", f0
+            elif ordering_law == "new_stress_kroon":
+                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,sim_timestep,kroon_time_constant)
+
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
@@ -1049,9 +1051,9 @@ def fenics(sim_params):
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
+            """eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
             eigen_temp.rename('eigen_temp','stress_eigen')
-            eigen_file << eigen_temp
+            eigen_file << eigen_temp"""
 
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
