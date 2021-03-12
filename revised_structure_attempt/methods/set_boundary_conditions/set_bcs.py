@@ -6,6 +6,8 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
     output = {}
 
+    sim_type = protocol["simulation_type"][0]
+
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
         # if ventricle or ellipsoid simulation, constrain base in longitudinal direction,
@@ -17,7 +19,6 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         bcs = [bctop]
 
     elif (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
-        sim_type = protocol["simulation_type"][0]
 
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
@@ -151,22 +152,38 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_z.mark(facetboundaries,5)
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
-        bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
-        bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+        if sim_type == "ramp_and_hold":
 
-        bcfix_y = DirichletBC(W.sub(0).sub(1), Constant((0.0)), fix_y, method="pointwise")
-        bcfix_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z, method="pointwise")
-        bcfix_y_right = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_right, method="pointwise")
-        bcfix_z_right = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix_z_right, method="pointwise")
+            bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
+            bcright= DirichletBC(W.sub(0).sub(0), expr["Press"], facetboundaries, 2)
 
-        bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise")
-        bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
-        bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
-        bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
-        bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
+            bcfix_y = DirichletBC(W.sub(0).sub(1), Constant((0.0)), fix_y, method="pointwise")
+            bcfix_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z, method="pointwise")
+            bcfix_y_right = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_right, method="pointwise")
+            bcfix_z_right = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix_z_right, method="pointwise")
 
-        #bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right,bcright] # order matters!
-        bcs = [bcleft,bcfix,bcfix2,bcfix22,bcfix3,bcfix33,bcright]
+            bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise")
+            bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
+            bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
+            bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
+
+            #bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right,bcright] # order matters!
+            bcs = [bcleft,bcfix,bcfix2,bcfix22,bcfix3,bcfix33,bcright]
+
+        if sim_type == "traction_hold":
+            print "traction simulation"
+            # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
+            bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+            bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+            bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+            bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
+            bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
+            bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
+            bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
+            bcs = [bcleft,bcfix,bcfix2,bcfix22,bcfix3,bcfix33,bcright] #order matters!
 
         #if sim_type == "work_loop":
         marker_space = FunctionSpace(mesh,'CG',1)
