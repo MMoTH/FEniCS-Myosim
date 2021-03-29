@@ -55,6 +55,7 @@ def fenics(sim_params):
     save_cell_output = sim_params["save_cell_output"][0] # myosim output
     save_visual_output = sim_params["save_visual_output"][0] # paraview files for visualization
     output_path = sim_params["output_path"][0]
+    print "output path: ", output_path
 
     # assign amount of random variation in f0 (cube and cylinder simulations, 0 means normal alignment)
     gaussian_width = sim_params["fiber_orientation"]["fiber_randomness"][0]
@@ -178,9 +179,11 @@ def fenics(sim_params):
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
+        #stress visualization
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
         eigen_file = File(output_path + "stress_eigen.pvd")
+        PK2_shear_file = File(output_path + "PK2_shear.pvd")
 
         stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
         f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
@@ -898,13 +901,13 @@ def fenics(sim_params):
 
         # At each gauss point, solve for cross-bridge distributions using myosim
         print "calling myosim"
-        for mm in np.arange(no_of_int_points):
+        """for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
             if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
-              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])"""
 
         if save_cell_output:
             for  i in range(no_of_int_points):
@@ -989,13 +992,13 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > float(sim_protocol["tract_t_end"][0])/float(sim_timestep)+1:
+        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "strain_kroon":
-                fdiff = uflforms.kroon_law(fiberFS,sim_timestep,kroon_time_constant)
+                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,sim_timestep,kroon_time_constant)
+                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
@@ -1051,9 +1054,13 @@ def fenics(sim_params):
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            """eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
-            eigen_temp.rename('eigen_temp','stress_eigen')
-            eigen_file << eigen_temp"""
+            eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
+            eigen_temp.rename('eigen_temp','stress eigen')
+            eigen_file << eigen_temp
+
+            pk2shear_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk2shear_temp.rename("pk2shear_temp","PK2 shear")
+            PK2_shear_file << pk2shear_temp
 
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)

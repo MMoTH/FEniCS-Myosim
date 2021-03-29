@@ -155,7 +155,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         if sim_type == "ramp_and_hold":
 
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
-            bcright= DirichletBC(W.sub(0).sub(0), expr["Press"], facetboundaries, 2)
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
 
             bcfix_y = DirichletBC(W.sub(0).sub(1), Constant((0.0)), fix_y, method="pointwise")
             bcfix_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z, method="pointwise")
@@ -176,14 +176,13 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
-            bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
-            bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
             bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
             bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
             bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
-            bcs = [bcleft,bcfix,bcfix2,bcfix22,bcfix3,bcfix33,bcright] #order matters!
+            bcs = [bcleft,bcfix,bcfix22,bcfix33] #order matters!
 
         #if sim_type == "work_loop":
         marker_space = FunctionSpace(mesh,'CG',1)
