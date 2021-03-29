@@ -109,7 +109,12 @@ def iterate_hs_keys(hs_template,het_hs_dict):
                                     percent = j["percent"]
                                 else:
                                     percent = 0.33
+                                if "scaling_factor" in j:
+                                    scaling_factor = j["scaling_factor"]
+                                else:
+                                    scaling_factor = 20
                                 het_hs_dict[k].append(percent)
+                                het_hs_dict[k].append(scaling_factor)
                             if temp_law == "fiber_w_compliance":
                                 if "fiber_value" in j:
                                     fiber_value = j["fiber_value"]
@@ -128,7 +133,7 @@ def assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points,geo_options):
             hs_params_list = scalar_gaussian_law(hs_params_list,base_value,k,het_hs_dict[k][-1],no_of_int_points)
 
         if hetero_law == "percent_fibrosis":
-            hs_params_list = scalar_fibrosis_law(hs_params_list,base_value,k,het_hs_dict[k][-1],no_of_int_points)
+            hs_params_list = scalar_fibrosis_law(hs_params_list,base_value,k,het_hs_dict[k][-2],het_hs_dict[k][-1],no_of_int_points)
         if hetero_law == "fiber_w_compliance":
             hs_params_list = scalar_fiber_w_compliance_law(hs_params_list,base_value,k,het_hs_dict[k][-1],no_of_int_points,geo_options)
 
@@ -172,13 +177,50 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                                 percent = j["percent"]
                             else:
                                 percent = 0.33
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            if "material_properties" in j:
+                                mat_prop = j["material_properties"]
+                            else:
+                                property = "transversely_isotropic"
                             het_dolfin_dict[k].append(percent)
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(mat_prop)
                         if temp_law == "fiber_w_compliance":
                             if "fiber_value" in j:
                                 fiber_value = j["fiber_value"]
                             else:
                                 fiber_value = base_value
                             het_dolfin_dict[k].append(fiber_value)
+                        if temp_law == "inclusion":
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            if "material_properties" in j:
+                                mat_prop = j["material_properties"]
+                            else:
+                                property = "transversely_isotropic"
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(mat_prop)
+                        if temp_law == "biphasic":
+                            if "normal" in j:
+                                normal = j["normal"]
+                            else:
+                                normal = "x"
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            if "material_properties" in j:
+                                mat_prop = j["material_properties"]
+                            else:
+                                property = "transversely_isotropic"
+                            het_dolfin_dict[k].append(normal)
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(mat_prop)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -199,10 +241,16 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,ge
             dolfin_functions = df_gaussian_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points)
 
         if hetero_law == "percent_fibrosis":
-            dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points)
+            dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points)
 
         if hetero_law == "fiber_w_compliance":
             dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+
+        if hetero_law == "inclusion":
+            dolfin_functions = df_inclusion_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+
+        if hetero_law == "biphasic":
+            dolfin_functions = df_biphasic_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
     return dolfin_functions
 
@@ -232,7 +280,7 @@ def df_gaussian_law(dolfin_functions,base_value,k,width,no_of_int_points):
 
     return dolfin_functions
 
-def scalar_fibrosis_law(hs_params_list,base_value,k,percent,no_of_int_points):
+def scalar_fibrosis_law(hs_params_list,base_value,k,percent,scaling_factor,no_of_int_points):
 
     sample_indices = r.choice(no_of_int_points,int(percent*no_of_int_points), replace=False)
 
@@ -240,11 +288,11 @@ def scalar_fibrosis_law(hs_params_list,base_value,k,percent,no_of_int_points):
 
         if jj in sample_indices:
 
-            hs_params_list[jj]["myofilament_parameters"][k][0] == base_value*20
+            hs_params_list[jj]["myofilament_parameters"][k][0] == base_value*scaling_factor
 
     return hs_params_list
 
-def df_fibrosis_law(dolfin_functions,base_value,k,percent,no_of_int_points):
+def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_prop,no_of_int_points):
 
     sample_indices = r.choice(no_of_int_points,int(percent*no_of_int_points), replace=False)
     #print "sample indices"
@@ -252,12 +300,26 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,no_of_int_points):
 
     for jj in np.arange(no_of_int_points):
 
-        if jj in sample_indices:
+        if mat_prop == "isotropic":
 
-            if k == "cb_number_density":
-                dolfin_functions[k][-1].vector()[jj] = base_value*20 #make 20 specified by user
-            else:
-                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*20
+            if jj in sample_indices:
+
+                if k == "cb_number_density":
+                    dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+                else:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+
+        else:
+
+            if jj in sample_indices:
+
+                if k == "cb_number_density":
+                    dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+                else:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 
     return dolfin_functions
 
@@ -284,5 +346,72 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_in
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
             else:
                 dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+
+    return dolfin_functions
+
+def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of_int_points,geo_options):
+    x_marker_array = geo_options["x_marker_array"]
+    y_marker_array = geo_options["y_marker_array"]
+    z_marker_array = geo_options["z_marker_array"]
+
+    for jj in np.arange(no_of_int_points):
+
+        if mat_prop == "isotropic":
+
+            if x_marker_array[jj] > 1.0 and x_marker_array[jj] <= 2.0 and y_marker_array[jj] > 1.0 and y_marker_array[jj] <= 2.0 and z_marker_array[jj] > 1.0 and z_marker_array[jj] <= 2.0:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+        else:
+
+            if x_marker_array[jj] > 1.0 and x_marker_array[jj] <= 2.0 and y_marker_array[jj] > 1.0 and y_marker_array[jj] <= 2.0 and z_marker_array[jj] > 1.0 and z_marker_array[jj] <= 2.0:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+
+    return dolfin_functions
+
+def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop,no_of_int_points,geo_options):
+    x_marker_array = geo_options["x_marker_array"]
+    y_marker_array = geo_options["y_marker_array"]
+    z_marker_array = geo_options["z_marker_array"]
+
+    x_length = geo_options["end_x"][0] - geo_options["base_corner_x"][0]
+    y_length = geo_options["end_y"][0] - geo_options["base_corner_y"][0]
+    z_length = geo_options["end_z"][0] - geo_options["base_corner_z"][0]
+
+    for jj in np.arange(no_of_int_points):
+
+        if mat_prop == "isotropic":
+
+            if normal == "x":
+                if x_marker_array[jj] <= x_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+            elif normal == "y":
+                if y_marker_array[jj] <= y_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+            elif normal == "z":
+                if z_marker_array[jj] <= z_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                    dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+
+        else:
+
+            if normal == "x":
+                if x_marker_array[jj] <= x_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+            elif normal == "y":
+                if y_marker_array[jj] <= y_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+            elif normal == "z":
+                if z_marker_array[jj] <= z_length/2:
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 
     return dolfin_functions

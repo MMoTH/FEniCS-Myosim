@@ -116,10 +116,18 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
-        print "u_D",expr["u_D"].u_D
+        print "u_D: ",expr["u_D"].u_D
         expr["u_front"].u_front = (1./((1.+expr["u_D"].u_D)*(1.+expr["u_D"].u_D))-1.)
 
-        print "u_front",expr["u_front"].u_front
+        #print "u_front",expr["u_front"].u_front
+        output_dict["expr"] = expr
+        output_dict["traction_switch_flag"] = traction_switch_flag
+        print "assigning bcs"
+        output_dict["bcs"] = bcs
+        output_dict["rxn_force"] = rxn_force
+
+    elif sim_protocol["simulation_type"][0] == "traction_hold":
+        expr["Press"].P = traction_hold(time,sim_protocol,geo_options)
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
         print "assigning bcs"
@@ -127,6 +135,32 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         output_dict["rxn_force"] = rxn_force
 
     return output_dict
+
+def traction_hold(time,sim_protocol,geo_options):
+
+    """geo_check = not geo_options
+    if geo_check:
+        # unit cube
+        length_scale = 1.0
+    else:
+        length_scale = geo_options["end_x"][0]
+        print "length scale = " + str(length_scale)"""
+
+    length_scale = 1.0
+
+    if time < sim_protocol["tract_t_start"][0]:
+        disp = 0.0
+        print "Traction magnitude is " + str(disp)
+
+    if time >= sim_protocol["tract_t_end"][0]:
+        disp = length_scale*sim_protocol["tract_magnitude"][0]
+        print "Traction magnitude is " + str(disp)
+    else:
+        slope = sim_protocol["tract_magnitude"][0]/(sim_protocol["tract_t_end"][0]-sim_protocol["tract_t_start"][0])
+        disp = length_scale*slope*time
+        print "Traction magnitude is " + str(disp)
+
+    return disp
 
 def ramp_and_hold(time,sim_protocol,geo_options):
 
