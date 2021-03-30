@@ -487,6 +487,17 @@ def fenics(sim_params):
     #print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
     #print "k3"
 
+    # Select fibers for visualization (exclude stiff regions)
+    binary_mask = np.ones((no_of_int_points),dtype=int)
+    for jj in np.arange(no_of_int_points):
+        hetero_c_param = dolfin_functions["passive_params"]["c"][-1].vector().get_local()[jj]
+        original_c_param = float(passive_params["c"][0])
+        if hetero_c_param != original_c_param:
+            binary_mask[jj] = 0
+    print "first 10 entries for hetero_c_param: ", dolfin_functions["passive_params"]["c"][-1].vector().get_local()[0:10]
+    print 'first 10 entries of binary mask: ', binary_mask[0:10]
+    exit()
+
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
         temp_fcn_visualization.vector()[mm] = hs_params_list[mm]["myofilament_parameters"]["k_force"][0]
