@@ -511,7 +511,7 @@ def fenics(sim_params):
     hsl_file << hsl_temp
 
     # Test select visualization for fibers
-    temp_f0 = f0
+    temp_f0 = f0.copy(deepcopy=True)
     for index in np.arange(len(binary_mask)):
         if binary_mask[index] == 1:
             temp_f0.vector()[index*3] = 0.0
@@ -519,7 +519,6 @@ def fenics(sim_params):
             temp_f0.vector()[index*3+2] = 0.0
 
     File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
-    exit()
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
 
@@ -1010,17 +1009,19 @@ def fenics(sim_params):
 
         # Kroon update fiber orientation?
         if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
+            
+            print "updating fiber orientation"
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "strain_kroon":
-                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
-            print "updating fiber orientation"
+
 
             """if l == (no_of_time_steps - 1):
                 if ordering_law == "stress_kroon":

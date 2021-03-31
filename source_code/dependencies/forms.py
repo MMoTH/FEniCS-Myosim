@@ -600,12 +600,20 @@ class Forms(object):
 
         return f_adjusted
 
-    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa):
+    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa,binary_mask):
 
         mesh = self.parameters["mesh"]
         PK2 = stress_tensor
         f0 = self.parameters["fiber"]
-        f = PK2*f0/sqrt(inner(PK2*f0,PK2*f0))
+        f = PK2*f0
+        #sqrt(inner(PK2*f0,PK2*f0))
+
+        for index in np.arange(len(binary_mask)):
+            if binary_mask[index] == 1:
+                f.vector()[index*3] = f0.vector().get_local()[index*3]
+                f.vector()[index*3+1] = f0.vector().get_local()[index*3+1]
+                f.vector()[index*3+2] = f0.vector().get_local()[index*3+2]
+
         f_adjusted = 1./kappa * (f - f0) * step_size
         f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         f_adjusted = interpolate(f_adjusted,FunctionSpace)
