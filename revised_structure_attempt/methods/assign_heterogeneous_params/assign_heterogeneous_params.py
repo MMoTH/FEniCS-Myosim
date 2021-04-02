@@ -179,6 +179,12 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             else:
                                 fiber_value = base_value
                             het_dolfin_dict[k].append(fiber_value)
+                        if temp_law == "fiber_w_compliance_boxmesh":
+                            if "fiber_value" in j:
+                                fiber_value = j["fiber_value"]
+                            else:
+                                fiber_value = base_value
+                            het_dolfin_dict[k].append(fiber_value)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -203,6 +209,8 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,ge
 
         if hetero_law == "fiber_w_compliance":
             dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+        if hetero_law == "fiber_w_compliance_boxmesh":
+            dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
     return dolfin_functions
 
@@ -280,6 +288,20 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_in
     for jj in np.arange(no_of_int_points):
 
         if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
+            if k == "cb_number_density":
+                dolfin_functions[k][-1].vector()[jj] = fiber_value
+            else:
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+
+    return dolfin_functions
+
+def df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,fiber_value,no_of_int_points,geo_options):
+
+    end_marker_array = geo_options["end_marker_array"]
+
+    for jj in np.arange(no_of_int_points):
+
+        if end_marker_array[jj] > 2./3.:
             if k == "cb_number_density":
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
             else:

@@ -22,9 +22,12 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,expr):
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
             radius = 1.0
+            length = 10.0
         else:
             center = 0.5
             radius = 0.5
+            # hard coding in length for simple case
+            length = 1.0
 
 
 
@@ -37,7 +40,7 @@ def set_bcs(sim_geometry,protocol,mesh,W,facetboundaries,expr):
         class Right(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-14
-                return on_boundary and abs(x[0]-10.0) < tol
+                return on_boundary and abs(x[0]-length) < tol
         class Fix_y(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-14
