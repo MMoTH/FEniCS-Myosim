@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 
-def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir):
+def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l):
 
     output_dict = {}
     print "updating bcs"
@@ -48,6 +48,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 if sim_geometry == "unit_cube": #bcleft and such are not passed in. Can probably use .pop() here too
                     bcs = [bcleft, bclower, bcfront,bcfix]
                 traction_switch_flag = 1
+                sim_protocol["traction_switch_index"] = l
                 output_dict["traction_switch_flag"] = traction_switch_flag
                 output_dict["bcs"] = bcs
                 output_dict["expr"]=expr
@@ -96,11 +97,14 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             print "disp_value"
             print disp_value
-	    if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
-                expr["u_D"].u_D = disp_value[0]
+            sim_protocol["end_disp_array"][l] = max(disp_value)
+	    #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
+            if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (l > sim_protocol["traction_switch_index"] + 2):
+                expr["u_D"].u_D = (sim_protocol["end_disp_array"][l]+min(disp_value))/2.
 		traction_switch_flag = 2
 		expr["Press"].P = 0.0
                 bcs.append(bcright)
+                #bcs.append(sim_protocol["bcright_after"])
             expr["Press"].P = expr["Press"].P
             bcs = bcs
             output_dict["traction_switch_flag"] = traction_switch_flag
