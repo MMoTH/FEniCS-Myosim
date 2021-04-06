@@ -487,6 +487,14 @@ def fenics(sim_params):
     #print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
     #print "k3"
 
+    # Select fibers for visualization (exclude stiff regions)
+    binary_mask = np.zeros((no_of_int_points),dtype=int)
+    for jj in np.arange(no_of_int_points):
+        hetero_c_param = dolfin_functions["passive_params"]["c"][-1].vector().get_local()[jj]
+        original_c_param = float(passive_params["c"][0])
+        if hetero_c_param != original_c_param:
+            binary_mask[jj] = 1
+
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
         temp_fcn_visualization.vector()[mm] = hs_params_list[mm]["myofilament_parameters"]["k_force"][0]
@@ -502,7 +510,15 @@ def fenics(sim_params):
     hsl_temp.rename("hsl_temp","half-sarcomere length")
     hsl_file << hsl_temp
 
-    File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
+    # Test select visualization for fibers
+    temp_f0 = f0.copy(deepcopy=True)
+    for index in np.arange(len(binary_mask)):
+        if binary_mask[index] == 1:
+            temp_f0.vector()[index*3] = 0.0
+            temp_f0.vector()[index*3+1] = 0.0
+            temp_f0.vector()[index*3+2] = 0.0
+
+    File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
 
@@ -900,8 +916,8 @@ def fenics(sim_params):
             overlap_counter = l
 
         # At each gauss point, solve for cross-bridge distributions using myosim
-        print "calling myosim"
-        """for mm in np.arange(no_of_int_points):
+        """print "calling myosim"
+        for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
@@ -993,17 +1009,19 @@ def fenics(sim_params):
 
         # Kroon update fiber orientation?
         if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
+
+            print "updating fiber orientation"
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "strain_kroon":
-                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
             # update fiber orientations
-            print "updating fiber orientation"
+
 
             """if l == (no_of_time_steps - 1):
                 if ordering_law == "stress_kroon":
@@ -1040,7 +1058,13 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
+            temp_f0 = f0.copy(deepcopy=True)
+            for index in np.arange(len(binary_mask)):
+                if binary_mask[index] == 1:
+                    temp_f0.vector()[index*3] = 0.0
+                    temp_f0.vector()[index*3+1] = 0.0
+                    temp_f0.vector()[index*3+2] = 0.0
+            f0_temp = project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
