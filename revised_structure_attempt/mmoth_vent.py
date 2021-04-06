@@ -916,8 +916,8 @@ def fenics(sim_params):
             overlap_counter = l
 
         # At each gauss point, solve for cross-bridge distributions using myosim
-        print "calling myosim"
-        """for mm in np.arange(no_of_int_points):
+        """print "calling myosim"
+        for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
@@ -1009,7 +1009,7 @@ def fenics(sim_params):
 
         # Kroon update fiber orientation?
         if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
-            
+
             print "updating fiber orientation"
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
@@ -1058,7 +1058,13 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
+            temp_f0 = f0.copy(deepcopy=True)
+            for index in np.arange(len(binary_mask)):
+                if binary_mask[index] == 1:
+                    temp_f0.vector()[index*3] = 0.0
+                    temp_f0.vector()[index*3+1] = 0.0
+                    temp_f0.vector()[index*3+2] = 0.0
+            f0_temp = project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
