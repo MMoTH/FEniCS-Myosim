@@ -997,7 +997,7 @@ def fenics(sim_params):
 
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
-        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l)
+        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries)
         bcs = bc_update_dict["bcs"]
         print "current bcs"
         print bcs
