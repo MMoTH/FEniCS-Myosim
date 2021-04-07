@@ -68,18 +68,22 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         # Create a simple expression to test if x_coord is > 9.0 or < 1.0
         # making last 10% of cylinder spring elements
         end_marker = Expression("x[0]",degree=1)
+        y_marker = Expression("x[1]", degree=1)
         point_radius = Expression("sqrt(pow(x[1],2)+pow(x[2],2))",degree=1)
 
         # Project the expression onto the mesh
         end_marker_values = project(end_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        y_values = project(y_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         point_rad_values = project(point_radius,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
 
         # Interpolate onto the FunctionSpace for quadrature points
         end_marker_on_mesh = interpolate(end_marker_values,Quad)
+        y_marker_on_mesh = interpolate(y_values,Quad)
         point_rad = interpolate(point_rad_values,Quad)
 
         # Create array of the expression values
         end_marker_array = end_marker_on_mesh.vector().get_local()
+        y_marker_array = y_marker_on_mesh.vector().get_local()
         point_rad_array = point_rad.vector().get_local()
 
         # Updating geometry options to save end_marker_array to assign heterogeneous parameters later
@@ -88,24 +92,42 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
         for jj in np.arange(no_of_int_points):
 
+            if sim_geometry == "box_mesh":
+                start_end_compliance = 2./3.
+                end_beginning_compliance = 0.
+            else:
+                start_end_compliance = 9.0
+                end_beginning_compliance = 1.0
+
             #if (temp_tester_array[jj] < dig_array[jj]) or (temp_tester_array[jj] > -dig_array[jj] + 10.0):
-            if (end_marker_array[jj] > 9.0) or (end_marker_array[jj] < 1.0):
+            if (end_marker_array[jj] > start_end_compliance) or (end_marker_array[jj] < end_beginning_compliance):
                 # inside left end
                 f0.vector()[jj*3] = 1.0
                 f0.vector()[jj*3+1] = 0.0
                 f0.vector()[jj*3+2] = 0.0
 
             else:
-                # In middle region, assign fiber vector
-                # find radius of point
-                temp_radius = point_rad_array[jj]
-                if np.abs(temp_radius - radius) < 0.01:
-                    temp_width = 0.0
+                if sim_geometry == "gmesh_cylinder" or sim_geometry == "cylinder":
+                    # In middle region, assign fiber vector
+                    # find radius of point
+                    temp_radius = point_rad_array[jj]
+                    if np.abs(temp_radius - radius) < 0.01:
+                        temp_width = 0.0
+                    else:
+                        temp_width = np.abs(width*(1.0-(temp_radius*temp_radius/(radius*radius))))
+                    f0.vector()[jj*3] = r.normal(m_x,temp_width,1)[0]
+                    f0.vector()[jj*3+1] = r.normal(m_y,temp_width,1)[0]
+                    f0.vector()[jj*3+2] = r.normal(m_z,temp_width,1)[0]
                 else:
-                    temp_width = np.abs(width*(1.0-(temp_radius*temp_radius/(radius*radius))))
-                f0.vector()[jj*3] = r.normal(m_x,temp_width,1)[0]
-                f0.vector()[jj*3+1] = r.normal(m_y,temp_width,1)[0]
-                f0.vector()[jj*3+2] = r.normal(m_z,temp_width,1)[0]
+                    # coding in a test case for box mesh
+                    if y_marker_array[jj] >= 0.5:
+                      f0.vector()[jj*3] = 1.0 #0.965925826289068 # 0.707106781186548
+                      f0.vector()[jj*3+1] = 0.0 #0.258819045102521 #0.707106781186548
+                      f0.vector()[jj*3+2] = 0.0
+                    else:
+                      f0.vector()[jj*3] = 1.0 #0.965925826289068 #0.707106781186548
+                      f0.vector()[jj*3+1] = 0.0 #-0.258819045102521 #-0.707106781186548
+                      f0.vector()[jj*3+2] = 0.0
 
             f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
             f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]

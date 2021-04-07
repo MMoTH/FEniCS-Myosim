@@ -130,7 +130,7 @@ def return_fluxes(self, y, Ca_conc):
         r6 = self.k_6 * np.ones(len(self.x))
         r6[r6 > self.parent_hs.max_rate] = self.parent_hs.max_rate
 
-        r7 = self.k_7_0 + (self.k_7_1 * np.power(self.x + self.x_ps, 4))
+        r7 = self.k_7_0 + (self.k_7_1 * np.power(self.x, 4))
         r7[r7 > self.parent_hs.max_rate] = self.parent_hs.max_rate
 
         r8 = self.k_8 * np.ones(len(self.x))

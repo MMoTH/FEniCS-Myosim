@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-sys.path.append("/home/fenics/shared/source_code/dependencies/")
-sys.path.append("/home/fenics/shared/revised_structure_attempt")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+#sys.path.append("/home/fenics/shared/source_code/dependencies/")
+#sys.path.append("/home/fenics/shared/revised_structure_attempt")
 import os as os
 from dolfin import *
 import numpy as np
@@ -632,6 +632,8 @@ def fenics(sim_params):
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
     test_marker_fcn = bc_output["test_marker_fcn"]
+    print "testing display array"
+    print sim_protocol["end_disp_array"]
 
 #-------------------------------------------------------------------------------
 #           Active stress calculation
@@ -710,26 +712,26 @@ def fenics(sim_params):
     p_f_array = p_f.vector().get_local()[:]
 
     # calculate magnitude of passive stress for guccione_fiber, guccione_transverse, and guccione_shear
-    """if save_cell_output:
+    #if save_cell_output:
 
         # Magnitude of bulk passive stress in fiber direction
-        Pg_fiber = inner(f0,Pg*f0)
-        Pg_transverse = inner(n0,Pg*n0)
-        Pg_shear = inner(n0,Pg*f0)
+        #Pg_fiber = inner(f0,Pg*f0)
+        #Pg_transverse = inner(n0,Pg*n0)
+        #Pg_shear = inner(n0,Pg*f0)
 
-        temp_DG_1 = project(alpha, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-        alphas = interpolate(temp_DG_1, Quad)
-        alpha_array = alphas.vector().get_local()[:]
+        #temp_DG_1 = project(alpha, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        #alphas = interpolate(temp_DG_1, Quad)
+        #alpha_array = alphas.vector().get_local()[:]
 
-        temp_DG_2 = project(Pg_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-        pgf = interpolate(temp_DG_2, Quad)
-        pgf_array = pgf.vector().get_local()[:]
-        temp_DG_3 = project(Pg_transverse, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-        pgt = interpolate(temp_DG_3, Quad)
-        pgt_array = pgt.vector().get_local()[:]
-        temp_DG_4 = project(Pg_shear, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-        pgs = interpolate(temp_DG_4, Quad)
-        pgs_array = pgs.vector().get_local()[:]"""
+        #temp_DG_2 = project(Pg_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        #pgf = interpolate(temp_DG_2, Quad)
+        #pgf_array = pgf.vector().get_local()[:]
+        #temp_DG_3 = project(Pg_transverse, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        #pgt = interpolate(temp_DG_3, Quad)
+        #pgt_array = pgt.vector().get_local()[:]
+        #temp_DG_4 = project(Pg_shear, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        #pgs = interpolate(temp_DG_4, Quad)
+        #pgs_array = pgs.vector().get_local()[:]
 
     # define cb force array to save
     cb_f_array = project(cb_force, Quad).vector().get_local()[:]
@@ -868,7 +870,7 @@ def fenics(sim_params):
 
                 if save_visual_output:
                     displacement_file << w.sub(0)
-                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
                     pk1temp.rename("pk1temp","active_stress")
                     active_stress_file << pk1temp
                     hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
@@ -988,8 +990,8 @@ def fenics(sim_params):
         hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
         pseudo_old.vector()[:] = project(pseudo_alpha, Quad).vector().get_local()[:]
         hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
-        #delta_hsl_array = project(sqrt(dot(f0, Cmat*f0))*hsl0, Quad).vector().get_local()[:] - hsl_array_old # for Myosim
-        delta_hsl_array = project(delta_hsl, Quad).vector().get_local()[:]
+        delta_hsl_array = project(sqrt(dot(f0, Cmat*f0))*hsl0, Quad).vector().get_local()[:] - hsl_array_old # for Myosim
+        #delta_hsl_array = project(delta_hsl, Quad).vector().get_local()[:]
         #pseudo_old = pseudo_alpha
         #pseudo_old.vector().get_local()[:] = project(pseudo_alpha,Quad).vector().get_local()[:]
         #print "pseudo old"
@@ -1049,7 +1051,7 @@ def fenics(sim_params):
 
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
-        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir)
+        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries)
         bcs = bc_update_dict["bcs"]
         print "current bcs"
         #print bcs
@@ -1063,7 +1065,7 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
             pk1temp.rename("pk1temp","active_stress")
             active_stress_file << pk1temp
             hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))

@@ -29,7 +29,8 @@ def move_cb_distributions(self, delta_hsl):
         # These appear in M_on
         self.y[1] = self.y[1] + (before_heads - after_heads)
 
-    if (self.kinetic_scheme == '4state_with_SRX'):
+    if (self.kinetic_scheme[0] == '4state_with_SRX'):
+        
         interp_positions = self.x - delta_x
 
         for i in np.arange(2):

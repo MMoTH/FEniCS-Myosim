@@ -194,33 +194,14 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             else:
                                 fiber_value = base_value
                             het_dolfin_dict[k].append(fiber_value)
-                        if temp_law == "inclusion":
-                            if "scaling_factor" in j:
-                                scaling_factor = j["scaling_factor"]
+
+                        if temp_law == "fiber_w_compliance_boxmesh":
+                            if "fiber_value" in j:
+                                fiber_value = j["fiber_value"]
                             else:
-                                scaling_factor = 20
-                            if "material_properties" in j:
-                                mat_prop = j["material_properties"]
-                            else:
-                                property = "transversely_isotropic"
-                            het_dolfin_dict[k].append(scaling_factor)
-                            het_dolfin_dict[k].append(mat_prop)
-                        if temp_law == "biphasic":
-                            if "normal" in j:
-                                normal = j["normal"]
-                            else:
-                                normal = "x"
-                            if "scaling_factor" in j:
-                                scaling_factor = j["scaling_factor"]
-                            else:
-                                scaling_factor = 20
-                            if "material_properties" in j:
-                                mat_prop = j["material_properties"]
-                            else:
-                                property = "transversely_isotropic"
-                            het_dolfin_dict[k].append(normal)
-                            het_dolfin_dict[k].append(scaling_factor)
-                            het_dolfin_dict[k].append(mat_prop)
+                                fiber_value = base_value
+                            het_dolfin_dict[k].append(fiber_value)
+
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -245,6 +226,8 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
 
         if hetero_law == "fiber_w_compliance":
             dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+        if hetero_law == "fiber_w_compliance_boxmesh":
+            dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
         if hetero_law == "inclusion":
             dolfin_functions = df_inclusion_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
@@ -349,6 +332,7 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_in
 
     return dolfin_functions
 
+
 def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of_int_points,geo_options):
     x_marker_array = geo_options["x_marker_array"]
     y_marker_array = geo_options["y_marker_array"]
@@ -413,5 +397,6 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
             elif normal == "z":
                 if z_marker_array[jj] <= z_length/2:
                     dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+
 
     return dolfin_functions

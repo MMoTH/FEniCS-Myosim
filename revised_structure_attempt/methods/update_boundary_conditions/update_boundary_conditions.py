@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 
-def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir):
+def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries):
 
     output_dict = {}
     print "updating bcs"
@@ -12,7 +12,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         b = assemble(Ftotal,form_compiler_parameters={"representation":"uflacs"})
 
         for boundary_condition_i in np.arange(np.shape(bcs)[0]-1):
-            bcs[boundary_condition_i].apply(b)
+            bcs[boundary_condition_i+1].apply(b)
 
 
         if not geo_options:
@@ -20,7 +20,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         elif sim_geometry == "cylinder":
             area = 3.14*geo_options["end_radius"][0]**2 #assuming enough segments are used to approximate a circle
         elif sim_geometry == "gmesh_cylinder":
-            area = 3.14
+            area = 3.05304
         elif sim_geometry == "box_mesh":
             area = 1.0
 
@@ -29,6 +29,8 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         for kk in x_dofs:
             rxn_force += f_int_total[kk]
         output_dict["rxn_force"] = rxn_force
+
+        #expr["P"].P = temp_traction # trying to remove traction, calculate rxn force, then re-apply traction
 
     # If ramp and hold
         # u_D.u_D = whatever it's supposed to be
@@ -39,7 +41,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         if traction_switch_flag < 1: # haven't switched bcs yet
             temp_stress = rxn_force/area
 
-            if temp_stress[0] >= sim_protocol["traction_magnitude"][0]:
+            if -1*temp_stress[0] >= sim_protocol["traction_magnitude"][0]:
                 print "switching to traction boundary condition"
                 expr["Press"].P = sim_protocol["traction_magnitude"][0]
                 if sim_geometry == "cylinder" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
@@ -48,6 +50,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 if sim_geometry == "unit_cube": #bcleft and such are not passed in. Can probably use .pop() here too
                     bcs = [bcleft, bclower, bcfront,bcfix]
                 traction_switch_flag = 1
+                sim_protocol["traction_switch_index"] = l
                 output_dict["traction_switch_flag"] = traction_switch_flag
                 output_dict["bcs"] = bcs
                 output_dict["expr"]=expr
@@ -96,11 +99,21 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             print "disp_value"
             print disp_value
-	    if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
-                expr["u_D"].u_D = disp_value[0]
+            sim_protocol["end_disp_array"][l] = max(disp_value)
+	    #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
+            if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (l > sim_protocol["traction_switch_index"] + 2):
+                #expr["u_D"].u_D = (sim_protocol["end_disp_array"][l]+min(disp_value))/2.
+                temp_V = VectorFunctionSpace(mesh,"CG",2)
+                temp_fcn = Function(temp_V)
+                u,p = w.split(True)
+                temp_fcn.assign(u)
+                bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
 		traction_switch_flag = 2
 		expr["Press"].P = 0.0
-                bcs.append(bcright)
+                #bcs.append(bcright)
+                bcs.append(bcright_2)
+                #bcright.apply(w.sub(0).vector())
+                #bcs.append(sim_protocol["bcright_after"])
             expr["Press"].P = expr["Press"].P
             bcs = bcs
             output_dict["traction_switch_flag"] = traction_switch_flag

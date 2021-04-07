@@ -1,4 +1,5 @@
 from dolfin import *
+import numpy as np
 
 ## set boundary conditions
 
@@ -23,9 +24,12 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
             radius = 1.0
+            length = 10.0
         else:
             center = 0.5
             radius = 0.5
+            # hard coding in length for simple case
+            length = 1.0
 
 
 
@@ -38,7 +42,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         class Right(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-14
-                return on_boundary and abs(x[0]-10.0) < tol
+                return on_boundary and abs(x[0]-length) < tol
         class Fix_y(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-14
@@ -70,6 +74,8 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_y.mark(facetboundaries, 3)
         fix_z.mark(facetboundaries,5)
 
+        
+
         # fix left face in x, right face is displacement (until traction bc may be triggered)
         bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
         bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
@@ -77,6 +83,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         bcfix_z = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z, method="pointwise")
         bcfix_y_right = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_right, method="pointwise")
         bcfix_z_right = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix_z_right, method="pointwise")
+        #bcright_after_switch = DirichletBC(W.sub(0).sub(0), disp_holder, facetboundaries, 2)
 
         bcs = [bcleft,bcfix_y,bcfix_z,bcfix_y_right,bcfix_z_right,bcright] # order matters!
 
@@ -86,6 +93,11 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
         bc_right_test.apply(test_marker_fcn.vector())
         output["test_marker_fcn"] = test_marker_fcn
+        print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+        protocol["end_disp_array"] = np.zeros(int(protocol["simulation_duration"][0]/protocol["simulation_timestep"][0]))
+        # storing this bc in the protocol dictionary bc it's already passed into update bcs
+        #protocol["bcright_after"] = bcright_after_switch
+
 
     elif sim_geometry == "box_mesh":
 
@@ -323,6 +335,8 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
             bc_right_test.apply(test_marker_fcn.vector())
             output["test_marker_fcn"] = test_marker_fcn
+            print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            protocol["end_disp_array"] = np.zeros(int(protocol["simulation_duration"][0]/protocol["simulation_timestep"][0]))
 
     output["bcs"] = bcs
     return output
