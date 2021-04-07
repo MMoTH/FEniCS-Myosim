@@ -88,6 +88,9 @@ def fenics(sim_params):
 
     facetboundaries = MeshFunction('size_t', mesh, mesh.topology().dim()-1)
     edgeboundaries = MeshFunction('size_t', mesh, mesh.topology().dim()-2)
+    subdomains = MeshFunction('int', mesh, 3)
+    no_of_cells = len(subdomains.array())
+    print 'no_of_cells: ', no_of_cells
 
 
     # from the mesh, define some things
@@ -312,6 +315,9 @@ def fenics(sim_params):
 
     # ------- Define function spaces on mesh using above elements --------------
 
+    # Constant function space for element-wise application of heterogeneous parameters
+    V0 = FunctionSpace(mesh, 'DG', 0)
+    param = Function(V0)
     # Quadrature space for information needed at gauss points, such as
     # hsl, cb_force, passive forces, etc.
     Quad = FunctionSpace(mesh, Quadelem)
@@ -415,7 +421,7 @@ def fenics(sim_params):
     # then it will be searched through for hetereogeneity in the appropriate function
 
     # Initialize all dolfin functions to take on their base value
-    dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
+    dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
 
     # parameters that are heterogeneous declared here as functions
     # Do these need to come from the input file? As part of declaration, "heterogenous = true"?
@@ -482,18 +488,21 @@ def fenics(sim_params):
 
     # Assign the heterogeneous parameters
     #heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
-    hs_params_list,dolfin_functions = assign_params.assign_heterogeneous_params(sim_params,hs_params,hs_params_list,dolfin_functions,geo_options,no_of_int_points)
+    hs_params_list,dolfin_functions = assign_params.assign_heterogeneous_params(sim_params,hs_params,hs_params_list,dolfin_functions,geo_options,no_of_int_points,no_of_cells)
     #print "cb density"
     #print dolfin_functions["passive_params"]["bt"][-1].vector().get_local()
     #print "k3"
 
     # Select fibers for visualization (exclude stiff regions)
     binary_mask = np.zeros((no_of_int_points),dtype=int)
-    for jj in np.arange(no_of_int_points):
+    print 'binary_mask vs c_param length: ', str(len(binary_mask)) + '/'+ str(len(dolfin_functions["passive_params"]["c"][-1].vector().get_local()))
+    for jj in np.arange(no_of_cells):
         hetero_c_param = dolfin_functions["passive_params"]["c"][-1].vector().get_local()[jj]
         original_c_param = float(passive_params["c"][0])
         if hetero_c_param != original_c_param:
-            binary_mask[jj] = 1
+            binary_mask[jj*4:jj*4+4] = 1
+
+    print 'first for c_param and binary mask: ', str(dolfin_functions["passive_params"]["c"][-1].vector().get_local()[0]) + '/' + str(binary_mask[:4])
 
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
@@ -512,11 +521,14 @@ def fenics(sim_params):
 
     # Test select visualization for fibers
     temp_f0 = f0.copy(deepcopy=True)
+    print 'len(temp_f0): ', len(temp_f0.vector().get_local())
+    print 'len(binary_mask): ', len(binary_mask)
     for index in np.arange(len(binary_mask)):
         if binary_mask[index] == 1:
             temp_f0.vector()[index*3] = 0.0
             temp_f0.vector()[index*3+1] = 0.0
             temp_f0.vector()[index*3+2] = 0.0
+    print 'no_of_int_points: ', no_of_int_points
 
     File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
@@ -1014,9 +1026,9 @@ def fenics(sim_params):
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "strain_kroon":
-                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
+                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
+                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)

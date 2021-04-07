@@ -600,7 +600,7 @@ class Forms(object):
 
         return f_adjusted
 
-    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa,binary_mask):
+    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa):
 
         mesh = self.parameters["mesh"]
         PK2 = stress_tensor

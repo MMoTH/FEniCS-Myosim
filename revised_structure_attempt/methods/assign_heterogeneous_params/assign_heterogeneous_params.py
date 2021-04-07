@@ -4,7 +4,7 @@ import numpy.random as r
 
 
 ## define heterogeneous parameters based on some rule
-def assign_heterogeneous_params(sim_params,hs_params_template,hs_params_list,dolfin_functions,geo_options,no_of_int_points):
+def assign_heterogeneous_params(sim_params,hs_params_template,hs_params_list,dolfin_functions,geo_options,no_of_int_points,no_of_cells):
 
     # Going to directly go through hs_params_list and then dolfin_functions and check for heterogeneity
     # hs_params_template is the base copy of myosim parameters, loop through this
@@ -29,7 +29,7 @@ def assign_heterogeneous_params(sim_params,hs_params_template,hs_params_list,dol
     het_dolfin_dict = iterate_dolfin_keys(dolfin_functions,het_dolfin_dict)
 
     # assign heterogeneous parametrs based on the desired law
-    dolfin_functions = assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,geo_options)
+    dolfin_functions = assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no_of_cells,geo_options)
 
     # Kurtis needs to update this
     #--------------------------------------------------------
@@ -226,7 +226,7 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
     print het_dolfin_dict
     return het_dolfin_dict
 
-def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,geo_options):
+def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no_of_cells,geo_options):
 
     for k in het_dolfin_dict.keys():
         #print "het_dolfin_dict"
@@ -241,7 +241,7 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,ge
             dolfin_functions = df_gaussian_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points)
 
         if hetero_law == "percent_fibrosis":
-            dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points)
+            dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells)
 
         if hetero_law == "fiber_w_compliance":
             dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
@@ -292,13 +292,13 @@ def scalar_fibrosis_law(hs_params_list,base_value,k,percent,scaling_factor,no_of
 
     return hs_params_list
 
-def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_prop,no_of_int_points):
+def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_prop,no_of_cells):
 
-    sample_indices = r.choice(no_of_int_points,int(percent*no_of_int_points), replace=False)
+    sample_indices = r.choice(no_of_cells,int(percent*no_of_cells), replace=False)
     #print "sample indices"
     #print sample_indices
 
-    for jj in np.arange(no_of_int_points):
+    for jj in np.arange(no_of_cells):
 
         if mat_prop == "isotropic":
 
