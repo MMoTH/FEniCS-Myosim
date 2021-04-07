@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-#sys.path.append("/home/fenics/shared/source_code/dependencies/")
-#sys.path.append("/home/fenics/shared/revised_structure_attempt")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+sys.path.append("/home/fenics/shared/source_code/dependencies/")
+sys.path.append("/home/fenics/shared/revised_structure_attempt")
 import os as os
 from dolfin import *
 import numpy as np
