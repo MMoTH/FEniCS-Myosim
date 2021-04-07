@@ -1,7 +1,7 @@
 # So far these are only needed to test standalone
 import sys
 import numpy as np
-sys.path.append("/home/fenics/shared/source_code/dependencies/circulatory_modules")
+sys.path.append("/home/fenics/shared/dependencies/circulatory_modules")
 #sys.path.append("/Users/charlesmann/Academic/UK/fenics/source_code/dependencies/cell_ion_module")
 
 ## Class for circulatory schemes
