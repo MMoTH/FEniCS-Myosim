@@ -930,14 +930,14 @@ def fenics(sim_params):
             overlap_counter = l
 
         # At each gauss point, solve for cross-bridge distributions using myosim
-        """print "calling myosim"
+        print "calling myosim"
         for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
             if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
-              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])"""
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
