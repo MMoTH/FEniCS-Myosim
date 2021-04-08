@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<VTKFile type="PPolyData" version="0.1">
+<PPolyData GhostLevel="0">
+<PPointData Vectors="vector">
+<PDataArray type="Float32" Name="vector" NumberOfComponents="3" />
+</PPointData>
+<PPoints>
+<PDataArray type="Float32" NumberOfComponents="3"/>
+</PPoints>
+<Piece Source="/home/fenics/shared/meshes/BiVMesh/./biv_idealized2_e2_fiber0.vtp" />
+</PPolyData>
+</VTKFile>
