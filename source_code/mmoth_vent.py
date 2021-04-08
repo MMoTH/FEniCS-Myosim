@@ -421,7 +421,13 @@ def fenics(sim_params):
     # then it will be searched through for hetereogeneity in the appropriate function
 
     # Initialize all dolfin functions to take on their base value
-    dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
+    # Kurtis putting in conditional. For fiber sims, need coordinates of points to assign heterogeneity
+    if (sim_geometry == "gmesh_cylinder"):
+        # fiber simulation
+        dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
+    else:
+        # element wise assignment
+        dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
 
     # parameters that are heterogeneous declared here as functions
     # Do these need to come from the input file? As part of declaration, "heterogenous = true"?

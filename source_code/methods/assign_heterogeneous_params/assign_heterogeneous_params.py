@@ -225,7 +225,7 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
             dolfin_functions = df_fibrosis_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells)
 
         if hetero_law == "fiber_w_compliance":
-            dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_cells,geo_options)
+            dolfin_functions = df_fiber_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
         if hetero_law == "fiber_w_compliance_boxmesh":
             dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
@@ -318,12 +318,11 @@ def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_
 
     return hs_params_list
 
-def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_cells,geo_options):
+def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_int_points,geo_options):
 
     end_marker_array = geo_options["end_marker_array"]
-    print "num cells",no_of_cells
 
-    for jj in np.arange(no_of_cells):
+    for jj in np.arange(no_of_int_points):
 
         if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
             if k == "cb_number_density":
