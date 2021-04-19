@@ -74,7 +74,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_y.mark(facetboundaries, 3)
         fix_z.mark(facetboundaries,5)
 
-        
+
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
         bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
@@ -310,7 +310,6 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcback = DirichletBC(W.sub(0).sub(1), expr["u_D"], facetboundaries, 7)
             bcfront = DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries,5)
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
-
 
             bcs = [bcleft, bcfront,bcback,bctop,bcright]
 
