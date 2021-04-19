@@ -28,6 +28,8 @@ from methods.update_boundary_conditions import update_boundary_conditions
 import recode_dictionary
 import json
 import timeit
+import datetime
+import append_to_log as aplog
 
 
 # For now, sticking to hieracrchy that this is called by fenics_driver.py
@@ -264,6 +266,7 @@ def fenics(sim_params):
     # displacement boundary expression for end of cell or fiber sims
     u_D = Expression(("u_D"), u_D = 0.0, degree = 0)
     # Forcing volume preserving for biaxial case
+    u_top = Expression(("u_top"), u_top = 0.0, degree = 0)
     u_front = Expression(("u_front"), u_front = 0.0, degree = 0)
 
     # traction boundary condition for end of cell/fiber, could use this to apply
@@ -275,6 +278,7 @@ def fenics(sim_params):
 
     expressions = {
         "u_D":u_D,
+        "u_top":u_top,
         "u_front":u_front,
         "Press":Press
     }
@@ -632,8 +636,8 @@ def fenics(sim_params):
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
     test_marker_fcn = bc_output["test_marker_fcn"]
-    print "testing display array"
-    print sim_protocol["end_disp_array"]
+    #print "testing display array"
+    #print sim_protocol["end_disp_array"]
 
 #-------------------------------------------------------------------------------
 #           Active stress calculation
@@ -1263,6 +1267,8 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 # for stand-alone testing
 input_file = sys.argv[1]
+start_time = datetime.datetime.now()
+start = timeit.default_timer()
 # Load in JSON dictionary
 with open(input_file, 'r') as json_input:
   input_parameters = json.load(json_input)
@@ -1284,3 +1290,5 @@ if input_parameters["growth_and_remodeling"]:
 #optimization_params = input_parameters["optimization_parameters"]
 
 fenics(sim_params)
+sim_duration = timeit.default_timer() - start
+aplog.append_to_log(all_params,start_time,sim_duration,input_file)

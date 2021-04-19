@@ -201,6 +201,33 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             else:
                                 fiber_value = base_value
                             het_dolfin_dict[k].append(fiber_value)
+                        if temp_law == "inclusion":
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            if "material_properties" in j:
+                                mat_prop = j["material_properties"]
+                            else:
+                                property = "transversely_isotropic"
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(mat_prop)
+                        if temp_law == "biphasic":
+                            if "normal" in j:
+                                normal = j["normal"]
+                            else:
+                                normal = "y"
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 20
+                            if "material_properties" in j:
+                                mat_prop = j["material_properties"]
+                            else:
+                                mat_prop = "transversely_isotropic"
+                            het_dolfin_dict[k].append(normal)
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(mat_prop)
 
 
     print "het_dolfin_dict is now "
