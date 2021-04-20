@@ -1096,9 +1096,9 @@ def fenics(sim_params):
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
+            """eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
             eigen_temp.rename('eigen_temp','stress eigen')
-            eigen_file << eigen_temp
+            eigen_file << eigen_temp"""
 
             pk2shear_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
             pk2shear_temp.rename("pk2shear_temp","PK2 shear")
