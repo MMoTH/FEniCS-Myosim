@@ -161,11 +161,11 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         z_marker = Expression("x[2]",degree=1)
 
         # Project the expression onto the mesh
-        x_marker_values = project(x_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        y_marker_values = project(y_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        z_marker_values = project(z_marker,FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+        x_marker_values = project(x_marker,FunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
+        y_marker_values = project(y_marker,FunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
+        z_marker_values = project(z_marker,FunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation":"uflacs"})
 
-        # Interpolate onto the FunctionSpace for quadrature points
+        """# Interpolate onto the FunctionSpace for quadrature points
         x_marker_on_mesh = interpolate(x_marker_values,Quad)
         y_marker_on_mesh = interpolate(y_marker_values,Quad)
         z_marker_on_mesh = interpolate(z_marker_values,Quad)
@@ -173,7 +173,11 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         # Create array of the expression values
         x_marker_array = x_marker_on_mesh.vector().get_local()
         y_marker_array = y_marker_on_mesh.vector().get_local()
-        z_marker_array = z_marker_on_mesh.vector().get_local()
+        z_marker_array = z_marker_on_mesh.vector().get_local()"""
+
+        x_marker_array = x_marker_values.vector().get_local()
+        y_marker_array = y_marker_values.vector().get_local()
+        z_marker_array = z_marker_values.vector().get_local()
 
         # Updating geometry options to save end_marker_array to assign heterogeneous parameters later
         geo_options["x_marker_array"] = x_marker_array
