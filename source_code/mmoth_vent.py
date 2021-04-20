@@ -184,18 +184,14 @@ def fenics(sim_params):
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
-        fibrotc_fiber_file = File(output_path + "fibrotic_f0")
+        fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
         #stress visualization
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
-<<<<<<< Updated upstream
-        eigen_file = File(output_path + "stress_eigen.pvd")
-        PK2_shear_file = File(output_path + "PK2_shear.pvd")
-=======
         #eigen_file = File(output_path + "stress_eigen.pvd")
         shearfs_file = File(output_path + "shear_fs.pvd")
         shearfn_file = File(output_path + "shear_fn.pvd")
->>>>>>> Stashed changes
+
 
         stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
         f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
@@ -1083,10 +1079,7 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-<<<<<<< Updated upstream
-=======
             # Save fiber vectors associated with non-fibrotic regions separately
->>>>>>> Stashed changes
             temp_f0 = f0.copy(deepcopy=True)
             for index in np.arange(len(binary_mask)):
                 if binary_mask[index] == 1:
@@ -1121,11 +1114,6 @@ def fenics(sim_params):
             eigen_temp.rename('eigen_temp','stress eigen')
             eigen_file << eigen_temp"""
 
-<<<<<<< Updated upstream
-            pk2shear_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
-            pk2shear_temp.rename("pk2shear_temp","PK2 shear")
-            PK2_shear_file << pk2shear_temp
-=======
             shearfn_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
             shearfn_temp.rename("shear fn","shear fn")
             shearfn_file << shearfn_temp
@@ -1133,7 +1121,6 @@ def fenics(sim_params):
             shearfs_temp = project(inner(s0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
             shearfs_temp.rename("shear fs","shear fs")
             shearfs_file << shearfs_temp
->>>>>>> Stashed changes
 
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
