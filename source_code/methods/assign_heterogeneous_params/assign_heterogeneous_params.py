@@ -257,10 +257,10 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
             dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
         if hetero_law == "inclusion":
-            dolfin_functions = df_inclusion_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+            dolfin_functions = df_inclusion_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
 
         if hetero_law == "biphasic":
-            dolfin_functions = df_biphasic_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_int_points,geo_options)
+            dolfin_functions = df_biphasic_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
 
     return dolfin_functions
 
@@ -360,12 +360,12 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_in
     return dolfin_functions
 
 
-def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of_int_points,geo_options):
+def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of_cells,geo_options):
     x_marker_array = geo_options["x_marker_array"]
     y_marker_array = geo_options["y_marker_array"]
     z_marker_array = geo_options["z_marker_array"]
 
-    for jj in np.arange(no_of_int_points):
+    for jj in np.arange(no_of_cells):
 
         if mat_prop == "isotropic":
 
@@ -381,7 +381,7 @@ def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of
 
     return dolfin_functions
 
-def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop,no_of_int_points,geo_options):
+def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop,no_of_cells,geo_options):
     x_marker_array = geo_options["x_marker_array"]
     y_marker_array = geo_options["y_marker_array"]
     z_marker_array = geo_options["z_marker_array"]
@@ -390,7 +390,7 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
     y_length = geo_options["end_y"][0] - geo_options["base_corner_y"][0]
     z_length = geo_options["end_z"][0] - geo_options["base_corner_z"][0]
 
-    for jj in np.arange(no_of_int_points):
+    for jj in np.arange(no_of_cells):
 
         if mat_prop == "isotropic":
 
