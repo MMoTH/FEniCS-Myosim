@@ -48,24 +48,24 @@ class Forms(object):
         u = self.parameters["displacement_variable"]
         d = u.ufl_domain().geometric_dimension()
         I = Identity(d)
-        F = self.Fmat()
-    	#F = self.Fe()
-        return 0.5*(F.T*F-I)
-    	#return 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
+        #F = self.Fmat()
+    	F = self.Fe()
+        #return 0.5*(F.T*F-I)
+    	return 0.5*(as_tensor(F[k,i]*F[k,j] - I[i,j], (i,j)))
 
 
     def Cmat(self):
 
         u = self.parameters["displacement_variable"]
         d = u.ufl_domain().geometric_dimension()
-        F = self.Fmat()
-        #F = self.Fe()
+        #F = self.Fmat()
+        F = self.Fe()
         return F.T*F
         #return as_tensor(F[k,i]*F[k,j],(i,j))
 
     def J(self):
-        F = self.Fmat()
-        #F = self.Fe()
+        #F = self.Fmat()
+        F = self.Fe()
         return det(F)
 
 
@@ -305,8 +305,8 @@ class Forms(object):
         d = u.ufl_domain().geometric_dimension()
         I = Identity(d)
         #F = self.Fmat()
-        #F = self.Fe()
-        F = I + grad(u)
+        F = self.Fe()
+        #F = I + grad(u)
 
         #F=Fe
         J = self.J()
@@ -403,7 +403,8 @@ class Forms(object):
 
     def Umat(self):
 
-        Fmat = self.Fmat()
+        #Fmat = self.Fmat()
+        Fmat = self.Fe()
         F0 = Fmat
         for j in range(15):
             F0 = 0.5* (F0 + inv(F0).T)

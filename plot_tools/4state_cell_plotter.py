@@ -9,28 +9,40 @@ import pandas as pd
 
 # Get desired gauss point we want to look at
 gauss_point = int(sys.argv[1])
+is_npy = int(sys.argv[2]) # user inputs 0 for csv files, 1 if saved as npy
+
 
 # Assuming this script is called from the directory containing output data
-populations = pd.read_csv('populations.csv',delimiter=',')
-populations = populations.to_numpy()
-populations = populations[:,1:] # get rid of first column
+if is_npy > 0:
+    populations = np.load('populations.npy')
+    active_stress = np.load('active_stress.npy')
+    overlap = np.load('overlap.npy')
+    hsl = np.load('hsl.npy')
+else:
+    populations = pd.read_csv('populations.csv',delimiter=',')
+    populations = populations.to_numpy()
+    populations = populations[:,1:] # get rid of first column
+    np.save("populations",populations,)
 
-#populations = populations[0:6569212]
+    #populations = populations[0:6569212]
 
-active_stress = pd.read_csv('active_stress.csv',delimiter=',')
-active_stress = active_stress.to_numpy()
-active_stress = active_stress[:,1:]
-active_stress = active_stress[:,gauss_point]
+    active_stress = pd.read_csv('active_stress.csv',delimiter=',')
+    active_stress = active_stress.to_numpy()
+    active_stress = active_stress[:,1:]
+    active_stress = active_stress[:,gauss_point]
+    np.save("active_stress",active_stress)
 
-overlap = pd.read_csv('overlap.csv',delimiter=',')
-overlap = overlap.to_numpy()
-overlap = overlap[:,1:]
-overlap = overlap[:,gauss_point]
+    overlap = pd.read_csv('overlap.csv',delimiter=',')
+    overlap = overlap.to_numpy()
+    overlap = overlap[:,1:]
+    overlap = overlap[:,gauss_point]
+    np.save("overlap",overlap)
 
-hsl = pd.read_csv('half_sarcomere_lengths.csv',delimiter=',')
-hsl = hsl.to_numpy()
-hsl = hsl[:,1:]
-hsl = hsl[:,gauss_point]
+    hsl = pd.read_csv('half_sarcomere_lengths.csv',delimiter=',')
+    hsl = hsl.to_numpy()
+    hsl = hsl[:,1:]
+    hsl = hsl[:,gauss_point]
+    np.save("hsl",hsl)
 
 #data_range = np.shape(active_stress)[0]
 data_range = 1199
