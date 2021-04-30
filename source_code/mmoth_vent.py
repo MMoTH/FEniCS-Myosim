@@ -286,6 +286,11 @@ def fenics(sim_params):
         "Press":Press
     }
 
+    if sim_protocol["simulation_type"][0] == "custom":
+        custom_disp_array = np.load("./custom_displacement.npy")
+    else:
+        custom_disp_array = []
+
 #-------------------------------------------------------------------------------
 #           Initialize finite elements and function spaces
 #-------------------------------------------------------------------------------
@@ -937,14 +942,14 @@ def fenics(sim_params):
             overlap_counter = l
 
         # At each gauss point, solve for cross-bridge distributions using myosim
-        """print "calling myosim"
+        print "calling myosim"
         for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
             if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
-              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])"""
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
             for  i in range(no_of_int_points):
@@ -986,9 +991,9 @@ def fenics(sim_params):
         #print u_temp(0.5,0,0.5)
         #print "u top middle"
         #print u_temp(0.5,1.,0.5)
-        stress_eigen = uflforms.eigen(PK2,Quad,fiberFS)
+        """stress_eigen = uflforms.eigen(PK2,Quad,fiberFS)
         if stress_eigen == "zero array":
-            stress_eigen = f0
+            stress_eigen = f0"""
 
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
@@ -1058,7 +1063,7 @@ def fenics(sim_params):
 
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
-        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries)
+        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries,custom_disp_array)
         bcs = bc_update_dict["bcs"]
         print "current bcs"
         #print bcs

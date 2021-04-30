@@ -164,7 +164,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_z.mark(facetboundaries,5)
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
-        if sim_type == "ramp_and_hold":
+        if sim_type == "ramp_and_hold" or sim_type == "custom":
 
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
@@ -269,7 +269,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         top.mark(facetboundaries, 6)
         back.mark(facetboundaries, 7)
 
-        if sim_type == "ramp_and_hold":
+        if sim_type == "ramp_and_hold" or sim_type == "custom":
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)

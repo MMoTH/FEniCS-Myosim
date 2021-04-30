@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 
-def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries):
+def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries,custom_disp):
 
     output_dict = {}
     print "updating bcs"
@@ -141,6 +141,15 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
     elif sim_protocol["simulation_type"][0] == "traction_hold":
         expr["Press"].P = traction_hold(time,sim_protocol,geo_options)
+        output_dict["expr"] = expr
+        output_dict["traction_switch_flag"] = traction_switch_flag
+        print "assigning bcs"
+        output_dict["bcs"] = bcs
+        output_dict["rxn_force"] = rxn_force
+
+    elif sim_protocol["simulation_type"][0] == "custom":
+        expr["u_D"].u_D = custom_disp[l+1]
+        print "u_D: ",expr["u_D"].u_D
         output_dict["expr"] = expr
         output_dict["traction_switch_flag"] = traction_switch_flag
         print "assigning bcs"
