@@ -1,20 +1,21 @@
 {
   "simulation_parameters": {
     "simulation_geometry": ["unit_cube"],
+    "rseed":[0],
     "protocol": {
       "simulation_type": ["ramp_and_hold"],
-      "simulation_duration": [200, "ms"],
+      "simulation_duration": [100.0, "ms"],
       "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
       "ramp_t_end":[5.0],
-      "ramp_magnitude":[0.115, "percentage length change"]
+      "ramp_magnitude":[0.0, "percentage length change"]
       },
-    "save_cell_output": [1],
+    "save_cell_output": [0],
     "save_visual_output": [1],
-    "output_path": ["./demo_outputs/cell_uniaxial_demo/"],
+    "output_path": ["./demo_outputs/cell_uniaxial_demo/contractile/30deg/"],
     "fiber_orientation" : {
          "fiber_direction": {
-             "theta":[0.0,"degrees (from + x-axis in xy-plane)"],
+             "theta":[30.0,"degrees (from + x-axis in xy-plane)"],
              "phi":[90.0,"degrees (from + z-axis in xz-plane)"]
              },
          "fiber_randomness": [0.0]
@@ -56,14 +57,14 @@
       "k_1": [1.00, "s^-1"],
       "k_force": [1.10e-3, "(N^-1)(m^2)"],
       "k_2": [200.0, "s^-1"],
-      "k_3": [272.0, "(nm^-1)(s^-1)"],
-      "k_4_0": [408.864648098121948, "s^-1"],
-      "k_4_1": [8.089, "nm^-4"],
+      "k_3": [100.0, "(nm^-1)(s^-1)"],
+      "k_4_0": [200, "s^-1"],
+      "k_4_1": [0.1, "nm^-4"],
       "k_cb": [0.001, "N*m^-1"],
       "x_ps": [5.0, "nm"],
-      "k_on": [0.0, "(M^-1)(s^-1)"],
-      "k_off": [175, "s^-1"],
-      "k_coop": [3.38],
+      "k_on": [5.0e8, "(M^-1)(s^-1)"],
+      "k_off": [200, "s^-1"],
+      "k_coop": [5.0],
       "bin_min": [-10, "nm"],
       "bin_max": [10, "nm"],
       "bin_width": [1.0, "nm"],
@@ -75,7 +76,7 @@
       "passive_mode": ["exponential"],
       "passive_exp_sigma": [500],
       "passive_exp_L": [80],
-      "passive_l_slack": [950, "nm"],
+      "passive_l_slack": [900, "nm"],
       "hsl_max_threshold": [1150, "nm"],
       "xfiber_fraction": [0, "unitless"]
   }
@@ -87,11 +88,13 @@
     "model": ["two_compartment"],
     "model_inputs": {
       "Ca_content": [1e-3,"Molar"],
-      "k_leak": [0.025],
-      "k_act": [6.84257497963],
-      "k_serca": [250.0],
+      "k_leak": [6e-4],
+      "k_act": [8.2e-2],
+      "k_serca": [8.0],
       "act_start": [10.0],
-      "act_end": [14.5]
+      "act_end": [10.01],
+      "act_open": [0.01, "ms"],
+      "cycle_freq": [0.1,"Hz"]
     }
   }
 },
@@ -103,7 +106,7 @@
        "passive_set_point": [0.0]
      },
      "fiber_reorientation":{
-       "law":["stress_kroon"],
+       "law":["strain_kroon"],
        "time_constant":[0.0]
      }
  }
