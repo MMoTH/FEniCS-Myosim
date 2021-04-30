@@ -40,7 +40,12 @@ class cell_ion_driver():
             # user specifies activation start and stop
             act_start = self.model_params["act_start"][0]
             act_end = self.model_params["act_end"][0]
-            self.activation[int(act_start/self.timestep):int(act_end/self.timestep)] = 1.0
+            act_open = self.model_params["act_open"][0]
+            #self.activation[int(act_start/self.timestep):int(()/self.timestep)] = 1.0
+            # For cyclical activation
+            period = 1./self.model_params["act_freq"][0]
+            for i in range(int((duration-act_start)/(period*self.timestep))+1):
+                activation[int((i*period+act_start)/self.timestep):int((i*period+act_start+act_open)/self.timestep)] = 1.0
             self.y = np.zeros(2)
             self.y[1] = self.Ca_content
             self.y[0] = 1e-7
