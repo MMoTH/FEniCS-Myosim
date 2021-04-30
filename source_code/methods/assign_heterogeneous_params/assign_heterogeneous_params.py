@@ -184,7 +184,7 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             if "material_properties" in j:
                                 mat_prop = j["material_properties"]
                             else:
-                                property = "transversely_isotropic"
+                                mat_prop = "transversely_isotropic"
                             het_dolfin_dict[k].append(percent)
                             het_dolfin_dict[k].append(scaling_factor)
                             het_dolfin_dict[k].append(mat_prop)
@@ -209,7 +209,7 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             if "material_properties" in j:
                                 mat_prop = j["material_properties"]
                             else:
-                                property = "transversely_isotropic"
+                                mat_prop = "transversely_isotropic"
                             het_dolfin_dict[k].append(scaling_factor)
                             het_dolfin_dict[k].append(mat_prop)
                         if temp_law == "biphasic":
