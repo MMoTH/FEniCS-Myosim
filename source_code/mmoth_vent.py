@@ -2,8 +2,8 @@ from __future__ import division
 import sys
 #sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
 #sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-sys.path.append("/home/fenics/shared/source_code/dependencies/")
-sys.path.append("/home/fenics/shared/revised_structure_attempt")
+sys.path.append("/home/fenics/shared/dependencies/")
+sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -982,6 +982,7 @@ def fenics(sim_params):
         #print "guccione passive stress"
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print PK2.vector().get_local().reshape(24,3,3)
+        #total_stress = project(PK2_passive + Pactive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print "checking displacement at midpoints"
         #u_temp,p_temp,c_temp = w.split(True)
         u_temp,p_temp = w.split(True)
@@ -1042,7 +1043,7 @@ def fenics(sim_params):
             elif ordering_law == "strain_kroon":
                 fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.new_stress_kroon(PK2_passive+Pactive,fiberFS,float(sim_timestep),kroon_time_constant)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
@@ -1158,9 +1159,9 @@ def fenics(sim_params):
             calcium_ds.iloc[0,:] = calcium[l]
             calcium_ds.to_csv(output_path + 'calcium.csv',mode='a',header=False)
 
-            for i in range(no_of_int_points):
+            """for i in range(no_of_int_points):
                 dumped_populations_ds.iloc[i,:] = dumped_populations[i,:]
-            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)
+            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)"""
 
             #tarray_ds[l] = tarray[l]
             #tarray_ds.to_csv(output_path + 'time.csv',mode='a',header=False)
