@@ -44,7 +44,7 @@ class cell_ion_driver():
             act_open = self.model_params["act_open"][0]
             #self.activation[int(act_start/self.timestep):int(()/self.timestep)] = 1.0
             # For cyclical activation
-            period = 1./self.model_params["act_freq"][0]
+            period = self.model_params["act_period"][0]
             for i in range(int((duration-act_start)/(period*self.timestep))+1):
                 self.activation[int((i*period+act_start)/self.timestep):int((i*period+act_start+act_open)/self.timestep)] = 1.0
             print 'activation array: ', self.activation
