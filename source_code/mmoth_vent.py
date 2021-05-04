@@ -1043,7 +1043,7 @@ def fenics(sim_params):
             elif ordering_law == "strain_kroon":
                 fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive+Pactive,fiberFS,float(sim_timestep),kroon_time_constant)
+                fdiff = uflforms.new_stress_kroon(PK2_passive+Fmat*Pactive,fiberFS,float(sim_timestep),kroon_time_constant)
 
             f0.vector()[:] += fdiff.vector()[:]
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
