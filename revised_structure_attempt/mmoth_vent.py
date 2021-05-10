@@ -173,6 +173,7 @@ def fenics(sim_params):
         displacement_file = File(output_path + "u_disp.pvd")
         active_stress_file = File(output_path + "active_stress_magnitude.pvd")
         hsl_file = File(output_path + "hsl_mesh.pvd")
+        pk2_fiber_passive_file = File(output_path + "pk2_passive_f0.pvd")
         # Want to visualize fiber directions through simulation
         fiber_file = File(output_path + "f0_vectors.pvd")
         sheet_file = File(output_path + "s0_vectors.pvd")
@@ -1019,6 +1020,9 @@ def fenics(sim_params):
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
+            pk2_fiber_passive = project(inner(f0,PK2*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk2_fiber_passive.rename("pk2_fiber_passive","passive in f0")
+            pk2_fiber_passive_file << pk2_fiber_passive
             #f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             #f0_temp.rename('f0','f0')
             #fiber_file << f0_temp

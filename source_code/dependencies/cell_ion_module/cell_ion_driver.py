@@ -51,6 +51,7 @@ class cell_ion_driver():
             self.basal_ca = self.model_params["basal_ca"][0]
             self.active_ca = self.model_params["active_ca"][0]
             self.t_act = self.model_params["t_act"][0]
+            self.t_end = self.model_params["t_end"][0]
 
 
         # Import the model
@@ -114,7 +115,9 @@ class cell_ion_driver():
 
             if l < self.t_act:
                 calcium_value = self.basal_ca
-            else:
+            elif self.t_act <= l and l < self.t_end:
                 calcium_value = self.active_ca
+            else:
+                calcium_value = self.basal_ca
 
         return calcium_value
