@@ -7,8 +7,6 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
     output = {}
 
-    sim_type = protocol["simulation_type"][0]
-
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
         # if ventricle or ellipsoid simulation, constrain base in longitudinal direction,
@@ -20,6 +18,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         bcs = [bctop]
 
     elif (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
+        sim_type = protocol["simulation_type"][0]
 
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
@@ -74,7 +73,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_y.mark(facetboundaries, 3)
         fix_z.mark(facetboundaries,5)
 
-        
+
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
         bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
@@ -100,6 +99,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
 
     elif sim_geometry == "box_mesh":
+        sim_type = protocol["simulation_type"][0]
 
         x_end = geo_options["end_x"][0]
         y_end = geo_options["end_y"][0]

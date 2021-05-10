@@ -22,7 +22,8 @@ else:
     populations = pd.read_csv('populations.csv',delimiter=',')
     populations = populations.to_numpy()
     populations = populations[:,1:] # get rid of first column
-    np.save("populations",populations,)
+    np.save("populations",populations)
+    #populations = np.load('populations.npy')
 
     #populations = populations[0:6569212]
 
@@ -45,7 +46,7 @@ else:
     np.save("hsl",hsl)
 
 #data_range = np.shape(active_stress)[0]
-data_range = 1199
+data_range = 900
 t = np.load('time.npy')
 #t = t[:-1]
 #t = t[0:1301]
@@ -104,18 +105,26 @@ plt.legend([srx_plot,drx_plot,a1bound_plot,a2bound_plot], ['M_SRX', 'M_DRX', 'M_
 
 ax2 = plt.subplot(322)
 ax2.plot(t,active_stress[0:data_range])
+ax2.set_ylabel('Active Stress (Pa)')
+#ax2.ylabel('Active Stress (Pa)')
 
 ax4 = plt.subplot(323)
 ax4.plot(t,hsl[0:data_range])
+ax4.set_ylabel('hsl (nm)')
+#ax4.ylabel('hsl (nm)')
 
 ax5 = plt.subplot(325)
 ax5.plot(t,n_on)
 ax5.plot(t,n_off)
 ax5.plot(t,n_on+n_off)
 ax5.plot(t,a2_bound,color='#d62728')
+ax5.set_ylabel('thin filament + FG state')
+#ax5.ylabel('thin filament + FG state')
 
 ax6 = plt.subplot(326)
 ax6.plot(t,overlap[0:data_range])
+ax6.set_ylabel('overlap')
+#ax6.ylabel('overlap')
 
 # Trying to animate cross-bridges from a1 and a2-------------------------------
 

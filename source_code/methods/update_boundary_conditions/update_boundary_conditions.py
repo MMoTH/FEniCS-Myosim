@@ -5,7 +5,6 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
     output_dict = {}
     print "updating bcs"
-    print sim_protocol["simulation_type"]
     # only really need to update if not ventricle simulation
     if (sim_geometry != "ventricle") and (sim_geometry != "ellipsoid"):
 
@@ -146,6 +145,10 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         print "assigning bcs"
         output_dict["bcs"] = bcs
         output_dict["rxn_force"] = rxn_force
+
+    if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
+        #don't change bcs
+        output_dict["bcs"] = bcs
 
     return output_dict
 
