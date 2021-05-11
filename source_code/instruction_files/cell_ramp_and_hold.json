@@ -4,15 +4,15 @@
     "rseed":[0],
     "protocol": {
       "simulation_type": ["ramp_and_hold"],
-      "simulation_duration": [100.0, "ms"],
+      "simulation_duration": [625.0, "ms"],
       "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
       "ramp_t_end":[5.0],
-      "ramp_magnitude":[0.0, "percentage length change"]
+      "ramp_magnitude":[0.1, "percentage length change"]
       },
     "save_cell_output": [0],
     "save_visual_output": [1],
-    "output_path": ["./demo_outputs/cell_uniaxial_demo/contractile/30deg/"],
+    "output_path": ["./demo_outputs/cell_uniaxial_demo/contractile_cycle/new_stress/30deg/kroon60/"],
     "fiber_orientation" : {
          "fiber_direction": {
              "theta":[30.0,"degrees (from + x-axis in xy-plane)"],
@@ -88,13 +88,13 @@
     "model": ["two_compartment"],
     "model_inputs": {
       "Ca_content": [1e-3,"Molar"],
-      "k_leak": [6e-4],
-      "k_act": [8.2e-2],
-      "k_serca": [8.0],
-      "act_start": [10.0],
-      "act_end": [10.01],
-      "act_open": [0.01, "ms"],
-      "cycle_freq": [0.1,"Hz"]
+      "k_leak": [0.008008008008],
+      "k_act": [1.4472186384349266],
+      "k_serca": [80.0],
+      "act_start": [7.0,"ms"],
+      "act_end": [20.0, "ms"],
+      "act_open": [4.5, "ms"],
+      "act_period": [120.0,"ms"]
     }
   }
 },
@@ -106,8 +106,8 @@
        "passive_set_point": [0.0]
      },
      "fiber_reorientation":{
-       "law":["strain_kroon"],
-       "time_constant":[0.0]
+       "law":["new_stress_kroon"],
+       "time_constant":[60.0]
      }
  }
 }
