@@ -321,6 +321,7 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_pro
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+                    dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
 
         else:
 
