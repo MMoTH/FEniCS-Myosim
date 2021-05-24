@@ -71,6 +71,8 @@ def fenics(sim_params):
         if "fiber_reorientation" in growth_params.keys():
             ordering_law = growth_params["fiber_reorientation"]["law"][0]
             kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
+            reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
+            print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
             print "loaded growth params"
 
 
@@ -882,8 +884,8 @@ def fenics(sim_params):
 
                 if save_visual_output:
                     displacement_file << w.sub(0)
-                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-                    pk1temp.rename("pk1temp","active_stress")
+                    pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+                    pk1temp.rename("pk2_active","active_stress")
                     active_stress_file << pk1temp
                     hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
                     hsl_temp.rename("hsl_temp","half-sarcomere length")
@@ -1035,7 +1037,7 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
+        if kroon_time_constant != 0.0 and l > float(reorient_start_time)/float(sim_timestep)+1:
 
             print "updating fiber orientation"
             if ordering_law == "stress_kroon":
@@ -1078,8 +1080,8 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-            pk1temp.rename("pk1temp","active_stress")
+            pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp.rename("pk2_active","active_stress")
             active_stress_file << pk1temp
             hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
             hsl_temp.rename("hsl_temp","half-sarcomere length")
@@ -1120,11 +1122,11 @@ def fenics(sim_params):
             eigen_temp.rename('eigen_temp','stress eigen')
             eigen_file << eigen_temp"""
 
-            shearfn_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            shearfn_temp = project(inner(n0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
             shearfn_temp.rename("shear fn","shear fn")
             shearfn_file << shearfn_temp
 
-            shearfs_temp = project(inner(s0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            shearfs_temp = project(inner(s0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
             shearfs_temp.rename("shear fs","shear fs")
             shearfs_file << shearfs_temp
 
