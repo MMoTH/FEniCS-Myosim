@@ -558,18 +558,18 @@ def fenics(sim_params):
     #M2ij = Function(TFQuad)
     #M3ij = Function(TFQuad)
 
-    Theta1 = Function(FunctionSpace(mesh,"DG",1))
-    Theta1.vector()[:] = 1.0
+    #Theta1 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta1.vector()[:] = 1.0
 
-    Theta2 = Function(FunctionSpace(mesh,"DG",1))
-    Theta2.vector()[:] = 1.0
+    #Theta2 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta2.vector()[:] = 1.0
 
-    Theta3 = Function(FunctionSpace(mesh,"DG",1))
-    Theta3.vector()[:] = 1.0
+    #Theta3 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta3.vector()[:] = 1.0
 
     # Based on the material coordinates, we can define different Growth Tensor Construct
 
-    Fg = Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij #always created, only updated if growth
+    #Fg = Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij #always created, only updated if growth
     #print "fg"
     #print str(Fg.vector().get_local())
     #Fg = as_tensor([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.]])
@@ -590,8 +590,8 @@ def fenics(sim_params):
              "sheet-normal": n0,
              "incompressible": isincomp,
              "hsl0": hsl0,
-             "Kappa":Constant(1e5),
-             "growth_tensor": Fg}
+             "Kappa":Constant(1e5)}
+             #"growth_tensor": Fg}
 
     # update passive params because now they are heterogeneous functions
     # need to generalize this? Need to initialize passive functions (and cb density)
@@ -914,8 +914,8 @@ def fenics(sim_params):
     calcium[0] = cell_ion.calculate_concentrations(0,0)
 
     # Initializing growth class if needed
-    if 'growth_params' in locals():
-        growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
+    #if 'growth_params' in locals():
+        #growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
 
     # Load in circulatory module
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -934,9 +934,12 @@ def fenics(sim_params):
             # Update circulatory model
             p_cav = uflforms.LVcavitypressure()
             V_cav = uflforms.LVcavityvol()
+            print "Volume of LV = ",V_cav
             circ_dict = circ_model.update_compartments(p_cav,V_cav,sim_timestep)
-            LVCavityvol.vol = V_cav
-            LVcav_array[l] = V_cav
+            LVCavityvol.vol = circ_dict["V_cav"]
+            LVcav_array[l] = circ_dict["V_cav"]
+            #LVCavityvol.vol = V_cav
+            #LVcav_array[l] = V_cav
             Pcav_array[l] = p_cav*0.0075
 
             # Now print out volumes, pressures, calcium
@@ -1214,7 +1217,7 @@ def fenics(sim_params):
 
         # Unload ventricle
 
-    LVCavityvol.vol = uflforms.LVcavityvol()
+    """LVCavityvol.vol = uflforms.LVcavityvol()
     print "Unloaded LV Cavity Volume = ", LVCavityvol.vol
 
     # Calculate the increment to LV volume
@@ -1275,7 +1278,7 @@ def fenics(sim_params):
         #f_int_total = b.copy()
         #for kk in x_dofs:
         #    rxn_force[l+(n+1)] += f_int_total[kk]
-        """if "growth_law" in growth_params.keys():
+        if "growth_law" in growth_params.keys():
             PK2_passive,Sff = uflforms.stress(hsl)
             Theta1, Theta2, Theta3 = growth_class.grow_mesh(PK2_passive,f0,Theta1,Theta2,Theta3,t[l])
             print "theta"
@@ -1295,7 +1298,7 @@ def fenics(sim_params):
             PK2_passive,Sff = uflforms.stress(hsl)
             hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:]
             print "growing mesh"
-            """
+
 
 
 
@@ -1352,7 +1355,7 @@ def fenics(sim_params):
 
         delta_hsl_array = hsl_array - hsl_array_old
 
-    """Theta2.vector()[:] = 1.0
+    Theta2.vector()[:] = 1.0
 
     # reloading mesh to look for difference in deformation
     for nload in np.arange(10):
@@ -1365,12 +1368,12 @@ def fenics(sim_params):
             bcs[boundary_condition_i+1].apply(b)
         f_int_total = b.copy()
         for kk in x_dofs:
-            rxn_force[l+10+(nload+1)] += f_int_total[kk]"""
+            rxn_force[l+10+(nload+1)] += f_int_total[kk]
 
     np.save('fx.npy',rxn_force)
 
 
-    """for n_grow in np.arange(10):
+    for n_grow in np.arange(10):
 
 
         #Get passive stress tensors from forms

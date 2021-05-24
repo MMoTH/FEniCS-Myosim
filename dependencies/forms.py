@@ -34,13 +34,13 @@ class Forms(object):
         return F
 
     def Fe(self):
-        Fg = self.parameters["growth_tensor"]
+        #Fg = self.parameters["growth_tensor"]
         F = self.Fmat()
-        if (Fg is None):
-            Fe = F
-        else:
-            print "calculating Fe"
+        if "growth_tensor" in self.parameters:
+            Fg = self.parameters["growth_tensor"]
             Fe = as_tensor(F[i,j]*inv(Fg)[j,k], (i,k))
+        else:
+            Fe = F
         return Fe
 
     def Emat(self):
