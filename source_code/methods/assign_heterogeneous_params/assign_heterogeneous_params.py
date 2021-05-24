@@ -228,7 +228,27 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             het_dolfin_dict[k].append(normal)
                             het_dolfin_dict[k].append(scaling_factor)
                             het_dolfin_dict[k].append(mat_prop)
-
+                        if temp_law == "percent_contractile":
+                            if "percent" in j:
+                                percent = j["percent"]
+                            else:
+                                percent = 0.33
+                            if "width" in j:
+                                width = j["width"]
+                            else:
+                                width = 1
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                            else:
+                                scaling_factor = 1.0
+                            if "contract_option" in j:
+                                contract_option = "no_contract"
+                            else:
+                                contract_option = "gauss_contract"
+                            het_dolfin_dict[k].append(percent)
+                            het_dolfin_dict[k].append(width)
+                            het_dolfin_dict[k].append(scaling_factor)
+                            het_dolfin_dict[k].append(contract_option)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -261,6 +281,9 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
 
         if hetero_law == "biphasic":
             dolfin_functions = df_biphasic_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
+
+        if hetero_law == "percent_contractile":
+            dolfin_functions = df_contractile_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-4],het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
 
     return dolfin_functions
 
@@ -426,5 +449,22 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
                 if z_marker_array[jj] <= z_length/2:
                     dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 
+
+    return dolfin_functions
+
+def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_factor,act_option,no_of_cells,geo_options):
+
+    sample_indices = r.choice(no_of_cells,int(percent*no_of_cells),replace=True)
+
+    values_array = r.normal(0.0,width,int(percent*no_of_cells))
+
+    for jj in np.arange(no_of_cells):
+
+        if jj in sample_indices:
+
+            if act_option == "no_contract":
+                dolfin_functions[k][-1].vector()[jj] = 0.0
+            else:
+                dolfin_functions[k][-1].vector()[jj] = scaling_factor*base_value*(1.0 + values_array[jj])
 
     return dolfin_functions
