@@ -67,22 +67,17 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
                 File('u_x.pvd') << u_x_projection
                 u_temp,p_temp = w.split(True)
-                print "u temp evaluated at right face?"
+                #print "u temp evaluated at right face?"
                 ux = inner(u_temp,x_dir)
                 ux_proj = project(ux,FunctionSpace(mesh,"CG",1))
                 print ux_proj.vector()[test_marker_fcn.vector()==1]
                 #print u_temp.vector()[test_marker_fcn.vector()==1]
-                print "test_marker shape"
-                print np.shape(test_marker_fcn.vector())
-                print "test marker vals"
-                print test_marker_fcn.vector()[test_marker_fcn.vector()==1]
-                print "u x proj shape"
-                print np.shape(u_x_projection.vector())
+                print "test_marker shape: ", np.shape(test_marker_fcn.vector())
+                print "test marker vals: ",test_marker_fcn.vector()[test_marker_fcn.vector()==1]
+                print "u x proj shape": , np.shape(u_x_projection.vector())
                 disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
-                print "disp_value"
-                print disp_value
-                print "max of disp"
-                print max(disp_value)
+                print "disp_value: ", disp_value
+                print "max of disp: ", max(disp_value)
 
 
         elif traction_switch_flag == 1:
@@ -96,7 +91,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             print "disp_value: ",disp_value
             sim_protocol["end_disp_array"][l] = max(disp_value)
-	    #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
+            #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
             if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (l > sim_protocol["traction_switch_index"] + 2):
                 #expr["u_D"].u_D = (sim_protocol["end_disp_array"][l]+min(disp_value))/2.
                 temp_V = VectorFunctionSpace(mesh,"CG",2)
@@ -115,13 +110,55 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             output_dict["traction_switch_flag"] = traction_switch_flag
             output_dict["bcs"] = bcs
             output_dict["expr"]=expr
-	elif traction_switch_flag == 2:
-	    # switched back to displacement bdry, don't do anything
-		expr["Press"].P = 0.0
-		expr["u_D"].u_D = expr["u_D"].u_D
-		output_dict["traction_switch_flag"] = traction_switch_flag
-		output_dict["bcs"] = bcs
-		output_dict["expr"] = expr
+
+        elif traction_switch_flag == 2:
+            # switched back to displacement bdry, don't do anything
+        	expr["Press"].P = 0.0
+        	expr["u_D"].u_D = expr["u_D"].u_D
+        	output_dict["traction_switch_flag"] = traction_switch_flag
+        	output_dict["bcs"] = bcs
+        	output_dict["expr"] = expr
+
+    elif sim_protocol["simulation_type"][0] == "stress_strain_loop":
+
+        #Loop flags
+        diastole = 1
+        isovolumic = 0
+        ejection = 0
+
+        #Diastolic Loading/Lengthening
+        if diastole == 1:
+            expr["Press"].P = traction_hold(cycle_time,sim_protocol,geo_options)
+            #print "traction: ", expr["Press"].P
+            if cycle_time == end_dias_time:
+                diastole = 0
+                isovolumic = 1
+
+        # Isovolumic Contraction
+        if isovolumic == 1:
+            fx_press = rxn_force/area
+            if fx_press <= afterload:
+                #fix displacement
+                temp_V = VectorFunctionSpace(mesh,"CG",2)
+                temp_fcn = Function(temp_V)
+                u,p = w.split(True)
+                temp_fcn.assign(u)
+                bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
+                bcs.append(bcright_2)
+                expr["u_D"].u_D = expr["u_D"].u_D
+                print "current displacement: ", expr["u_D"].u_D
+
+            else:
+                isovolumic = 0
+                ejection = 1
+                bcs.pop()
+                expr["Press"].P = afterload
+
+            output_dict["bcs"] = bcs
+            output_dict["expr"] = expr
+
+        if ejection == 1:
+            
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
