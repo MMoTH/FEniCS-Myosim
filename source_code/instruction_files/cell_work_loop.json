@@ -1,19 +1,26 @@
 {
   "simulation_parameters": {
     "simulation_geometry": ["unit_cube"],
+    "rseed":[1],
     "protocol": {
       "simulation_type": ["work_loop", "include ramp_and_hold options for pre-stretch"],
-      "simulation_duration": [200, "ms"],
+      "simulation_duration": [300.0, "ms"],
       "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
       "ramp_t_end":[5.0],
       "ramp_magnitude":[0.115, "percentage length change"],
       "traction_magnitude":[50000]
       },
-    "save_cell_output": [1],
+    "save_cell_output": [0],
     "save_visual_output": [1],
     "output_path": ["./output_cell_work_loop_demo/"],
-    "fiber_randomness": [0.0]
+    "fiber_orientation" : {
+         "fiber_direction": {
+             "theta":[0.0,"degrees (from + x-axis in xy-plane)"],
+             "phi":[90.0,"degrees (from + z-axis in xz-plane)"]
+             },
+         "fiber_randomness": [0.0]
+       }
   },
 
 
@@ -84,14 +91,23 @@
     "model": ["two_compartment_demo"],
     "model_inputs": {
       "Ca_content": [1e-3,"Molar"],
-      "k_leak": [0.025],
-      "k_act": [6.84257497963],
-      "k_serca": [250.0]
+      "k_leak": [0.008000800080008],
+      "k_act": [1.4472186384349266],
+      "k_serca": [80.0]
     }
   }
 },
 
 "growth_and_remodeling": {
-    "kroon_time_constant": [0.0]
-}
+     "eccentric_growth": {
+       "time_constant": [0.0],
+       "k_myo_damp": [0.0],
+       "passive_set_point": [0.0]
+     },
+     "fiber_reorientation":{
+       "law":["strain_kroon"],
+       "time_constant":[0.0],
+       "reorient_t_start":[125.0,"ms"]
+     }
+   }
 }
