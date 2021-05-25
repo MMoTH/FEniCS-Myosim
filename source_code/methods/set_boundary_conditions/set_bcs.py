@@ -329,13 +329,22 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
 
         if sim_type == "work_loop":
+
             marker_space = FunctionSpace(mesh,'CG',1)
             bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
             test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
             bc_right_test.apply(test_marker_fcn.vector())
             output["test_marker_fcn"] = test_marker_fcn
-            print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
             protocol["end_disp_array"] = np.zeros(int(protocol["simulation_duration"][0]/protocol["simulation_timestep"][0]))
+
+            if sim_geometry == "unit_cube":
+                bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+                bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+                bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+                bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+                bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)
+                bcs = [bcleft,bcfix,bclower,bcright]
 
     output["bcs"] = bcs
     return output
