@@ -40,6 +40,8 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
         if traction_switch_flag < 1: # haven't switched bcs yet
             temp_stress = rxn_force/area
+            print 'rxn_force: ', rxn_force
+            print 'temp_stress: ', temp_stress
 
             if -1*temp_stress[0] >= sim_protocol["traction_magnitude"][0]:
                 print "switching to traction boundary condition"
@@ -74,7 +76,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 #print u_temp.vector()[test_marker_fcn.vector()==1]
                 print "test_marker shape: ", np.shape(test_marker_fcn.vector())
                 print "test marker vals: ",test_marker_fcn.vector()[test_marker_fcn.vector()==1]
-                print "u x proj shape": , np.shape(u_x_projection.vector())
+                print "u x proj shape: " , np.shape(u_x_projection.vector())
                 disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
                 print "disp_value: ", disp_value
                 print "max of disp: ", max(disp_value)
@@ -119,26 +121,29 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         	output_dict["bcs"] = bcs
         	output_dict["expr"] = expr
 
+        output_dict["previous_rxn_force"] = rxn_force
+
     elif sim_protocol["simulation_type"][0] == "stress_strain_loop":
 
-        #Loop flags
-        diastole = 1
-        isovolumic = 0
-        ejection = 0
+        diastole = sim_protocol["diastole"]
+        isovolumic = sim_protocol["isovolumic"]
+        ejection = sim_protocol["ejection"]
+
+        print "diastole: ", diastole
+        print "isovolumic: ", isovolumic
+        print "ejection: ", ejection
 
         #Diastolic Loading/Lengthening
         if diastole == 1:
-            expr["Press"].P = traction_hold(cycle_time,sim_protocol,geo_options)
-            #print "traction: ", expr["Press"].P
-            if cycle_time == end_dias_time:
-                diastole = 0
-                isovolumic = 1
 
-        # Isovolumic Contraction
-        if isovolumic == 1:
-            fx_press = rxn_force/area
-            if fx_press <= afterload:
-                #fix displacement
+            cycle_time = sim_protocol["cycle_time"][0]
+
+            new_press = traction_ramp_and_hold(cycle_time,sim_protocol,geo_options)
+            expr["Press"].P = new_press
+            print "traction: ", expr["Press"].P
+            sim_protocol["cycle_time"][0] += sim_protocol["simulation_timestep"][0]
+
+            if cycle_time == sim_protocol["end_diastolic_time"][0]:
                 temp_V = VectorFunctionSpace(mesh,"CG",2)
                 temp_fcn = Function(temp_V)
                 u,p = w.split(True)
@@ -146,19 +151,85 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
                 bcs.append(bcright_2)
                 expr["u_D"].u_D = expr["u_D"].u_D
+                sim_protocol["diastole"] = 0
+                sim_protocol["isovolumic"] = 1
+                sim_protocol["cycle_time"][0] = 0.0
+
+            output_dict["bcs"] = bcs
+            output_dict["expr"] = expr
+
+        # Isovolumic Contraction
+        if isovolumic == 1:
+
+            fx_press = rxn_force/area
+
+            if -1*fx_press[0] <= sim_protocol["afterload"][0]:
+                #fix displacement
+                expr["u_D"].u_D = expr["u_D"].u_D
                 print "current displacement: ", expr["u_D"].u_D
 
             else:
-                isovolumic = 0
-                ejection = 1
+                sim_protocol["isovolumic"] = 0
+                sim_protocol["ejection"] = 1
                 bcs.pop()
-                expr["Press"].P = afterload
+                expr["Press"].P = sim_protocol["afterload"][0]
+                # Storing previous end disp for ejection phase
+                u_x = inner(w.sub(0),x_dir)
+                u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
+                disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
+                sim_protocol["previous_end_disp"] = disp_value
+                print 'previoius_end_disp: ', sim_protocol["previous_end_disp"]
 
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
 
         if ejection == 1:
-            
+
+            u_x = inner(w.sub(0),x_dir)
+            u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
+            File('u_x.pvd') << u_x_projection
+            u_temp,p_temp = w.split(True)
+            ux = inner(u_temp,x_dir)
+            ux_proj = project(ux,FunctionSpace(mesh,"CG",1))
+            disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
+            print "disp_value: ", disp_value
+            print "max of disp: ", max(disp_value)
+
+            if (disp_value[0] - sim_protocol["previous_end_disp"][0]) >= 0.0:
+                sim_protocol["ejection"] = 0
+                sim_protocol["isovolumic"] = 2
+                temp_V = VectorFunctionSpace(mesh,"CG",2)
+                temp_fcn = Function(temp_V)
+                u,p = w.split(True)
+                temp_fcn.assign(u)
+                bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
+                bcs.append(bcright_2)
+                expr["u_D"].u_D = expr["u_D"].u_D
+                sim_protocol["previous_rxn_force"] = rxn_force
+                print 'rxn_force: ', sim_protocol["previous_rxn_force"]
+
+            output_dict["bcs"] = bcs
+            output_dict["expr"] = expr
+
+        if isovolumic == 2:
+
+            if -1*(rxn_force[0] - sim_protocol["previous_rxn_force"]) >= 1e-4:
+                expr["u_D"].u_D = expr["u_D"].u_D
+                print "current displacement: ", expr["u_D"].u_D
+            else:
+                bcs.pop()
+                press_rxn = rxn_force/area
+                #expr["Press"].P = press_fxn
+                #sim_protocol["start_diastolic_pressure"][0] = press_rxn
+                expr["Press"].P = 0.0
+                sim_protocol["isovolumic"] = 0
+                sim_protocol["diastole"] = 1
+
+            output_dict["bcs"] = bcs
+            output_dict["expr"] = expr
+
+        sim_protocol["previous_rxn_force"] = rxn_force
+        output_dict["traction_switch_flag"] = traction_switch_flag
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
@@ -240,3 +311,31 @@ def ramp_and_hold(time,sim_protocol,geo_options):
         print "displacement is " + str(disp)
 
     return disp
+
+def traction_ramp_and_hold(cycle_time,sim_protocol,geo_options):
+
+    # created for stress_strain_loop protocol
+
+    length_scale = 1.0
+
+    if cycle_time >= sim_protocol["end_diastolic_time"][0]:
+        traction = length_scale*sim_protocol["end_diastolic_stress"][0]
+        print "Traction magnitude is " + str(traction)
+    else:
+        slope = (sim_protocol["end_diastolic_stress"][0])/(sim_protocol["end_diastolic_time"][0])
+        traction = length_scale*slope*cycle_time
+        print "Traction magnitude is " + str(traction)
+
+    return traction
+
+"""def traction_ramp_and_hold(time,sim_protocol,geo_options):
+    # use if reaction stress at end systole nonzero in simulation
+
+    if time >= sim_protocol["tract_t_end"][0]:
+        disp = length_scale*sim_protocol["end_diastolic_stress"][0]
+        print "Traction magnitude is " + str(disp)
+    else:
+        slope = (sim_protocol["end_diastolic_stress"][0] - sim_protocol["start_diastolic_pressure"][0])/(sim_protocol["tract_t_end"][0]-sim_protocol["tract_t_start"][0])
+        disp = length_scale*slope*time
+        print "Traction magnitude is " + str(disp)
+"""
