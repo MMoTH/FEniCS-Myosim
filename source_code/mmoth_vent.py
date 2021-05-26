@@ -277,6 +277,7 @@ def fenics(sim_params):
     # traction boundary condition for end of cell/fiber, could use this to apply
     # a traction to epicardium or something
     Press = Expression(("P"), P=0.0, degree=0)
+    #sim_protocol["start_diastolic_pressure"] = Press.P
 
     # Sometimes define an expression for active stress
     #cb_force2 = Expression(("f"), f=0.0, degree=0)
