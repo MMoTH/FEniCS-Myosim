@@ -141,7 +141,6 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             new_press = traction_ramp_and_hold(cycle_time,sim_protocol,geo_options)
             expr["Press"].P = new_press
             print "traction: ", expr["Press"].P
-            sim_protocol["cycle_time"][0] += sim_protocol["simulation_timestep"][0]
 
             if cycle_time == sim_protocol["end_diastolic_time"][0]:
                 temp_V = VectorFunctionSpace(mesh,"CG",2)
@@ -153,7 +152,6 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 expr["u_D"].u_D = expr["u_D"].u_D
                 sim_protocol["diastole"] = 0
                 sim_protocol["isovolumic"] = 1
-                sim_protocol["cycle_time"][0] = 0.0
 
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
@@ -178,7 +176,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 u_x_projection = project(u_x,FunctionSpace(mesh,"CG",1))
                 disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
                 sim_protocol["previous_end_disp"] = disp_value
-                print 'previoius_end_disp: ', sim_protocol["previous_end_disp"]
+                print 'previous_end_disp: ', sim_protocol["previous_end_disp"]
 
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
@@ -212,24 +210,28 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             output_dict["expr"] = expr
 
         if isovolumic == 2:
-
-            if -1*(rxn_force[0] - sim_protocol["previous_rxn_force"]) >= 1e-4:
+            print 'previous rxn force: ', sim_protocol["previous_rxn_force"]
+            print 'current rxn force: ', rxn_force
+            if abs(rxn_force[0] - sim_protocol["previous_rxn_force"][0]) >= 5:
                 expr["u_D"].u_D = expr["u_D"].u_D
                 print "current displacement: ", expr["u_D"].u_D
             else:
                 bcs.pop()
                 press_rxn = rxn_force/area
-                #expr["Press"].P = press_fxn
-                #sim_protocol["start_diastolic_pressure"][0] = press_rxn
-                expr["Press"].P = 0.0
+                expr["Press"].P = press_rxn[0]
+                sim_protocol["start_diastolic_pressure"] = -1*press_rxn[0]
+                #expr["Press"].P = 0.0
                 sim_protocol["isovolumic"] = 0
                 sim_protocol["diastole"] = 1
+                print "cycle period: ", sim_protocol["cycle_time"][0]
+                sim_protocol["cycle_time"][0] = 0.0
 
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
 
         sim_protocol["previous_rxn_force"] = rxn_force
         output_dict["traction_switch_flag"] = traction_switch_flag
+        sim_protocol["cycle_time"][0] += sim_protocol["simulation_timestep"][0]
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
@@ -312,7 +314,7 @@ def ramp_and_hold(time,sim_protocol,geo_options):
 
     return disp
 
-def traction_ramp_and_hold(cycle_time,sim_protocol,geo_options):
+"""def traction_ramp_and_hold(cycle_time,sim_protocol,geo_options):
 
     # created for stress_strain_loop protocol
 
@@ -327,15 +329,18 @@ def traction_ramp_and_hold(cycle_time,sim_protocol,geo_options):
         print "Traction magnitude is " + str(traction)
 
     return traction
-
-"""def traction_ramp_and_hold(time,sim_protocol,geo_options):
+"""
+def traction_ramp_and_hold(time,sim_protocol,geo_options):
     # use if reaction stress at end systole nonzero in simulation
 
-    if time >= sim_protocol["tract_t_end"][0]:
-        disp = length_scale*sim_protocol["end_diastolic_stress"][0]
-        print "Traction magnitude is " + str(disp)
+    length_scale = 1.0
+
+    if time >= sim_protocol["end_diastolic_time"][0]:
+        traction = length_scale*sim_protocol["end_diastolic_stress"][0]
+        print "Traction magnitude is " + str(traction)
     else:
-        slope = (sim_protocol["end_diastolic_stress"][0] - sim_protocol["start_diastolic_pressure"][0])/(sim_protocol["tract_t_end"][0]-sim_protocol["tract_t_start"][0])
-        disp = length_scale*slope*time
-        print "Traction magnitude is " + str(disp)
-"""
+        slope = (sim_protocol["end_diastolic_stress"][0] - sim_protocol["start_diastolic_pressure"])/(sim_protocol["end_diastolic_time"][0])
+        traction = length_scale*slope*time + sim_protocol["start_diastolic_pressure"]
+        print "Traction magnitude is " + str(traction)
+
+    return traction
