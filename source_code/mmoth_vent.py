@@ -181,6 +181,7 @@ def fenics(sim_params):
         displacement_file = File(output_path + "u_disp.pvd")
         active_stress_file = File(output_path + "active_stress_magnitude.pvd")
         hsl_file = File(output_path + "hsl_mesh.pvd")
+        rxn_force_file = File(output_path + "rxn_force.pvd")
         # Want to visualize fiber directions through simulation
         fiber_file = File(output_path + "f0_vectors.pvd")
         sheet_file = File(output_path + "s0_vectors.pvd")
@@ -277,7 +278,7 @@ def fenics(sim_params):
     # traction boundary condition for end of cell/fiber, could use this to apply
     # a traction to epicardium or something
     Press = Expression(("P"), P=0.0, degree=0)
-    #sim_protocol["start_diastolic_pressure"] = Press.P
+    sim_protocol["start_diastolic_pressure"] = Press.P
 
     # Sometimes define an expression for active stress
     #cb_force2 = Expression(("f"), f=0.0, degree=0)
@@ -891,6 +892,7 @@ def fenics(sim_params):
                     hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
                     hsl_temp.rename("hsl_temp","half-sarcomere length")
                     hsl_file << hsl_temp
+                    #rxn_force_file << 0.0
                     pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
                     pk2_save.rename("pk2_passive","pk2_passive")
                     pk2_passive_file << pk2_save
@@ -936,7 +938,7 @@ def fenics(sim_params):
                 print >>fdataPV, tstep, p_cav*0.0075 , Part*.0075, Pven*.0075, V_cav, V_ven, V_art, calcium[counter]
 
         # update calcium
-        calcium[l] = cell_ion.calculate_concentrations(sim_timestep,l)
+        calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
 
         # Quick hack
         if l == 0:
@@ -1073,8 +1075,12 @@ def fenics(sim_params):
         #print bcs
         traction_switch_flag = bc_update_dict["traction_switch_flag"]
         rxn_force[l] = bc_update_dict["rxn_force"]
+        #temp_rxn_force = bc_update_dict["rxn_force"][0]
+        #print 'temp rxn force: ', temp_rxn_force
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
+        if "cycle_period" in bc_update_dict.keys():
+            cell_ion_params["act_period"][0] = bc_update_dict["cycle_period"]
         print "current traction: ", Press.P
 
 
@@ -1087,6 +1093,7 @@ def fenics(sim_params):
             hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
+            #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
             temp_f0 = f0.copy(deepcopy=True)
