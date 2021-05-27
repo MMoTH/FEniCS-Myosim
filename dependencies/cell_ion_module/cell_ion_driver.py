@@ -57,7 +57,6 @@ class cell_ion_driver():
             # user specifies activation start and stop
             act_start = self.model_params["act_start"][0]
             print 'act_start: ', act_start
-            act_end = self.model_params["act_end"][0]
             act_open = self.model_params["act_open"][0]
             #self.activation[int(act_start/self.timestep):int(()/self.timestep)] = 1.0
             # For cyclical activation

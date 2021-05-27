@@ -4,7 +4,7 @@
     "rseed":[1],
     "protocol": {
       "simulation_type": ["work_loop", "include ramp_and_hold options for pre-stretch"],
-      "simulation_duration": [300.0, "ms"],
+      "simulation_duration": [200.0, "ms"],
       "simulation_timestep": [1.0, "ms"],
       "ramp_t_start":[0.0],
       "ramp_t_end":[5.0],
