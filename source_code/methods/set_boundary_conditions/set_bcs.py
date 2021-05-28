@@ -196,6 +196,24 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
             bcs = [bcleft,bcfix,bcfix22,bcfix33] #order matters!
 
+        if sim_type == "stress_strain_loop":
+
+            bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+
+            bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+            bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
+            bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
+            bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
+            bcs = [bcleft,bcfix,bcfix22,bcfix33]
+
+            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            protocol["previous_end_disp"] = 0.0
+            protocol["diastole"] = 1
+            protocol["isovolumic"] = 0
+            protocol["ejection"] = 0
+
         #if sim_type == "work_loop":
         marker_space = FunctionSpace(mesh,'CG',1)
         bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
