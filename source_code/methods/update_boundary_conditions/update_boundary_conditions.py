@@ -136,11 +136,10 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         #Diastolic Loading/Lengthening
         if diastole == 1:
 
-            cycle_time = sim_protocol["cycle_time"][0]
+            cycle_time = sim_protocol["track_and_update"]["cycle_time"][0]
 
-            new_press = traction_ramp_and_hold(cycle_time,sim_protocol,geo_options)
-            expr["Press"].P = new_press
-            print "traction: ", expr["Press"].P
+            expr["Press"].P = traction_ramp_and_hold(cycle_time,sim_protocol,geo_options)
+            print "traction (diastole): ", expr["Press"].P
 
             if cycle_time == sim_protocol["end_diastolic_time"][0]:
                 temp_V = VectorFunctionSpace(mesh,"CG",2)
@@ -149,6 +148,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 temp_fcn.assign(u)
                 bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
                 bcs.append(bcright_2)
+                expr["Press"].P = 0.0
                 expr["u_D"].u_D = expr["u_D"].u_D
                 sim_protocol["diastole"] = 0
                 sim_protocol["isovolumic"] = 1
@@ -191,7 +191,8 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             ux_proj = project(ux,FunctionSpace(mesh,"CG",1))
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             print "disp_value: ", disp_value
-            print "max of disp: ", max(disp_value)
+            print "previous end disp: ", sim_protocol["previous_end_disp"]
+            #print "max of disp: ", max(disp_value)
 
             if (disp_value[0] - sim_protocol["previous_end_disp"][0]) >= 0.0:
                 sim_protocol["ejection"] = 0
@@ -202,10 +203,12 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
                 temp_fcn.assign(u)
                 bcright_2 = DirichletBC(W.sub(0),temp_fcn,facetboundaries, 2)
                 bcs.append(bcright_2)
+                expr["Press"].P = 0.0
                 expr["u_D"].u_D = expr["u_D"].u_D
                 sim_protocol["previous_rxn_force"] = rxn_force
                 print 'rxn_force: ', sim_protocol["previous_rxn_force"]
 
+            sim_protocol["previous_end_disp"] = disp_value
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
 
@@ -218,20 +221,25 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             else:
                 bcs.pop()
                 press_rxn = rxn_force/area
-                expr["Press"].P = press_rxn[0]
+                expr["Press"].P = -1*press_rxn[0]
                 sim_protocol["start_diastolic_pressure"] = -1*press_rxn[0]
                 #expr["Press"].P = 0.0
                 sim_protocol["isovolumic"] = 0
                 sim_protocol["diastole"] = 1
-                print "cycle period: ", sim_protocol["cycle_time"][0]
-                sim_protocol["cycle_time"][0] = 0.0
+                print "cycle period: ", sim_protocol["track_and_update"]["cycle_time"][0]
+                sim_protocol["track_and_update"]["cycle_time"][0] = -1*sim_protocol["simulation_timestep"][0]
+                sim_protocol["track_and_update"]["cycle_l"][0] = -1
 
             output_dict["bcs"] = bcs
             output_dict["expr"] = expr
 
         sim_protocol["previous_rxn_force"] = rxn_force
         output_dict["traction_switch_flag"] = traction_switch_flag
-        sim_protocol["cycle_time"][0] += sim_protocol["simulation_timestep"][0]
+        sim_protocol["track_and_update"]["cycle_time"][0] += sim_protocol["simulation_timestep"][0]
+        print "next cycle_time",sim_protocol["track_and_update"]["cycle_time"][0]
+        sim_protocol["track_and_update"]["cycle_l"][0] += 1
+        print "next cycle_l",sim_protocol["track_and_update"]["cycle_l"][0]
+
 
     elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
