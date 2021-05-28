@@ -938,6 +938,7 @@ def fenics(sim_params):
                 print >>fdataPV, tstep, p_cav*0.0075 , Part*.0075, Pven*.0075, V_cav, V_ven, V_art, calcium[counter]
 
         # update calcium
+        cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
         calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
 
         # Quick hack
@@ -1079,8 +1080,6 @@ def fenics(sim_params):
         #print 'temp rxn force: ', temp_rxn_force
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
-        if "cycle_period" in bc_update_dict.keys():
-            cell_ion_params["act_period"][0] = bc_update_dict["cycle_period"]
         print "current traction: ", Press.P
 
 
