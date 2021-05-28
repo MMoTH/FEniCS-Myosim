@@ -180,6 +180,7 @@ def fenics(sim_params):
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
+        f0_deformed_file = File(output_path + "f0_deformed.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
 
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -347,6 +348,7 @@ def fenics(sim_params):
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
+    x_vec = Function(fiberFS)
     x_shape = np.shape(x_dir.vector())
     print x_shape
     print "x shape"
@@ -357,7 +359,20 @@ def fenics(sim_params):
         x_dir.vector()[jj*3] = 1.
         x_dir.vector()[jj*3+1] = 0.
         x_dir.vector()[jj*3+2] = 0.
+    for jj in np.arange(6648):
+        x_vec.vector()[jj*3] = 1.
+        x_vec.vector()[jj*3+1] = 0.
+        x_vec.vector()[jj*3+1] = 0.
+
     print x_dir.vector().get_local()
+    #f0_dot_xvec = inner(f0,x_vec)
+    #f0_dot_xvec_array = project(f0_dot_xvec, Quad).vector().get_local()[:]
+    #angle_array = np.arccos(f0_dot_xvec_array) # both f0 and x_vec are unit, just need their dot product
+    #np.save(output_path + "angle_array.npy",angle_array)
+    #f0_array = f0.vector().get_local()[:]
+    #x_vec_array = x_vec.vector().get_local()[:]
+    #np.save(output_path + "f0_array.npy",f0_array)
+    #np.save(output_path + "x_vec_array.npy",x_vec_array)
     #for jj in np.arange(no_of_int_points):
         #x_dir.vector()[jj*3] = 1.
         #x_dir.vector()[jj*3+1] = 0.
@@ -472,6 +487,14 @@ def fenics(sim_params):
     hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
     f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
 
+    f0_dot_x_vec = inner(f0,x_vec)
+    f0_dot_xvec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
+    angles_array = np.arccos(f0_dot_xvec_array)
+    np.save(output_path+"angles_array.npy",angles_array)
+    f0_array = project(f0,fiberFS).vector().get_local()[:]
+    x_vec_array = x_vec.vector().get_local()[:]
+    np.save(output_path+"f0_array.npy",f0_array)
+    np.save(output_path+"x_vec_array.npy",x_vec_array)
 
     # Assign the heterogeneous parameters
     #heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
@@ -835,13 +858,13 @@ def fenics(sim_params):
 
                 if save_visual_output:
                     displacement_file << w.sub(0)
-                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
                     pk1temp.rename("pk1temp","active_stress")
                     active_stress_file << pk1temp
-                    hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
+                    hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                     hsl_temp.rename("hsl_temp","half-sarcomere length")
                     hsl_file << hsl_temp
-                    pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
+                    pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation": "uflacs"})
                     pk2_save.rename("pk2_passive","pk2_passive")
                     pk2_passive_file << pk2_save
 
@@ -1013,16 +1036,16 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
             pk1temp.rename("pk1temp","active_stress")
             active_stress_file << pk1temp
-            hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
-            hsl_temp.rename("hsl_temp","half-sarcomere length")
-            hsl_file << hsl_temp
+            #hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
+            #hsl_temp.rename("hsl_temp","half-sarcomere length")
+            #hsl_file << hsl_temp
             np.save(output_path + 'fx',rxn_force)
-            pk2_fiber_passive = project(inner(f0,PK2*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-            pk2_fiber_passive.rename("pk2_fiber_passive","passive in f0")
-            pk2_fiber_passive_file << pk2_fiber_passive
+            #pk2_fiber_passive = project(inner(f0,PK2*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            #pk2_fiber_passive.rename("pk2_fiber_passive","passive in f0")
+            #pk2_fiber_passive_file << pk2_fiber_passive
             #f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             #f0_temp.rename('f0','f0')
             #fiber_file << f0_temp
@@ -1036,6 +1059,9 @@ def fenics(sim_params):
             #pk2_passive_save.rename("pk2_passive","pk2_passive")
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
+            #f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
+            #f0_deformed.rename('f0','f0_deformed')
+            #f0_deformed_file << f0_deformed
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
 
 
