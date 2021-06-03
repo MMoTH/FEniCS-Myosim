@@ -1,0 +1,8 @@
+{
+    "passive_params": {
+       "test_key": [100,{"heterogeneous":"true","law":"gaussian"}],
+       "cparam": [50, "not hetero"]
+       },
+    "cb_density": [69]
+     
+}
