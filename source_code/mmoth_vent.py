@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
-sys.path.append("/home/fenics/shared/dependencies/")
-sys.path.append("/home/fenics/shared/source_code")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+#sys.path.append("/home/fenics/shared/dependencies/")
+#sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -28,6 +28,8 @@ from methods.update_boundary_conditions import update_boundary_conditions
 import recode_dictionary
 import json
 import timeit
+#import datetime
+#import append_to_log as aplog
 
 
 # For now, sticking to hieracrchy that this is called by fenics_driver.py
@@ -69,6 +71,9 @@ def fenics(sim_params):
         if "fiber_reorientation" in growth_params.keys():
             ordering_law = growth_params["fiber_reorientation"]["law"][0]
             kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
+            reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
+            stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
+	    print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
             print "loaded growth params"
 
 
@@ -177,16 +182,22 @@ def fenics(sim_params):
         displacement_file = File(output_path + "u_disp.pvd")
         active_stress_file = File(output_path + "active_stress_magnitude.pvd")
         hsl_file = File(output_path + "hsl_mesh.pvd")
+        pk2_fiber_passive_file = File(output_path + "pk2_passive_f0.pvd")
+        rxn_force_file = File(output_path + "rxn_force.pvd")
         # Want to visualize fiber directions through simulation
         fiber_file = File(output_path + "f0_vectors.pvd")
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
+        fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
         #stress visualization
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
+        f0_deformed_file = File(output_path + "f0_deformed.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
-        eigen_file = File(output_path + "stress_eigen.pvd")
-        PK2_shear_file = File(output_path + "PK2_shear.pvd")
+        #eigen_file = File(output_path + "stress_eigen.pvd")
+        shearfs_file = File(output_path + "shear_fs.pvd")
+        shearfn_file = File(output_path + "shear_fn.pvd")
+
 
         stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
         f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
@@ -264,20 +275,28 @@ def fenics(sim_params):
     # displacement boundary expression for end of cell or fiber sims
     u_D = Expression(("u_D"), u_D = 0.0, degree = 0)
     # Forcing volume preserving for biaxial case
+    u_top = Expression(("u_top"), u_top = 0.0, degree = 0)
     u_front = Expression(("u_front"), u_front = 0.0, degree = 0)
 
     # traction boundary condition for end of cell/fiber, could use this to apply
     # a traction to epicardium or something
     Press = Expression(("P"), P=0.0, degree=0)
+    sim_protocol["start_diastolic_pressure"] = Press.P
 
     # Sometimes define an expression for active stress
     #cb_force2 = Expression(("f"), f=0.0, degree=0)
 
     expressions = {
         "u_D":u_D,
+        "u_top":u_top,
         "u_front":u_front,
         "Press":Press
     }
+
+    if sim_protocol["simulation_type"][0] == "custom":
+        custom_disp_array = np.load("./custom_displacement.npy")
+    else:
+        custom_disp_array = []
 
 #-------------------------------------------------------------------------------
 #           Initialize finite elements and function spaces
@@ -360,6 +379,7 @@ def fenics(sim_params):
     s0 = Function(fiberFS)
     n0 = Function(fiberFS)
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
+    x_vec = Function(fiberFS)
     x_shape = np.shape(x_dir.vector())
     print x_shape
     print "x shape"
@@ -370,7 +390,20 @@ def fenics(sim_params):
         x_dir.vector()[jj*3] = 1.
         x_dir.vector()[jj*3+1] = 0.
         x_dir.vector()[jj*3+2] = 0.
+    for jj in np.arange(6648):
+        x_vec.vector()[jj*3] = 1.
+        x_vec.vector()[jj*3+1] = 0.
+        x_vec.vector()[jj*3+1] = 0.
+
     print x_dir.vector().get_local()
+    #f0_dot_xvec = inner(f0,x_vec)
+    #f0_dot_xvec_array = project(f0_dot_xvec, Quad).vector().get_local()[:]
+    #angle_array = np.arccos(f0_dot_xvec_array) # both f0 and x_vec are unit, just need their dot product
+    #np.save(output_path + "angle_array.npy",angle_array)
+    #f0_array = f0.vector().get_local()[:]
+    #x_vec_array = x_vec.vector().get_local()[:]
+    #np.save(output_path + "f0_array.npy",f0_array)
+    #np.save(output_path + "x_vec_array.npy",x_vec_array)
     #for jj in np.arange(no_of_int_points):
         #x_dir.vector()[jj*3] = 1.
         #x_dir.vector()[jj*3+1] = 0.
@@ -491,6 +524,14 @@ def fenics(sim_params):
     hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
     f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
 
+    f0_dot_x_vec = inner(f0,x_vec)
+    f0_dot_xvec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
+    angles_array = np.arccos(f0_dot_xvec_array)
+    np.save(output_path+"angles_array.npy",angles_array)
+    f0_array = project(f0,fiberFS).vector().get_local()[:]
+    x_vec_array = x_vec.vector().get_local()[:]
+    np.save(output_path+"f0_array.npy",f0_array)
+    np.save(output_path+"x_vec_array.npy",x_vec_array)
 
     # Assign the heterogeneous parameters
     #heterogeneous_fcn_list,hs_params_list,passive_params_list = assign_params.assign_heterogeneous_params(sim_params,hs_params_list,passive_params_list,geo_options,heterogeneous_fcn_list,no_of_int_points)
@@ -638,8 +679,8 @@ def fenics(sim_params):
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
     test_marker_fcn = bc_output["test_marker_fcn"]
-    print "testing display array"
-    print sim_protocol["end_disp_array"]
+    #print "testing display array"
+    #print sim_protocol["end_disp_array"]
 
 #-------------------------------------------------------------------------------
 #           Active stress calculation
@@ -876,13 +917,15 @@ def fenics(sim_params):
 
                 if save_visual_output:
                     displacement_file << w.sub(0)
-                    pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-                    pk1temp.rename("pk1temp","active_stress")
+                    pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+                    pk1temp.rename("pk2_active","active_stress")
+
                     active_stress_file << pk1temp
-                    hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
+                    hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                     hsl_temp.rename("hsl_temp","half-sarcomere length")
                     hsl_file << hsl_temp
-                    pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation": "uflacs"})
+                    pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation": "uflacs"})
+                    #rxn_force_file << 0.0
                     pk2_save.rename("pk2_passive","pk2_passive")
                     pk2_passive_file << pk2_save
 
@@ -927,7 +970,8 @@ def fenics(sim_params):
                 print >>fdataPV, tstep, p_cav*0.0075 , Part*.0075, Pven*.0075, V_cav, V_ven, V_art, calcium[counter]
 
         # update calcium
-        calcium[l] = cell_ion.calculate_concentrations(sim_timestep,l)
+        cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
+        calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
 
         # Quick hack
         if l == 0:
@@ -976,6 +1020,7 @@ def fenics(sim_params):
         #print "guccione passive stress"
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print PK2.vector().get_local().reshape(24,3,3)
+        #total_stress = project(PK2_passive + Pactive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print "checking displacement at midpoints"
         #u_temp,p_temp,c_temp = w.split(True)
         u_temp,p_temp = w.split(True)
@@ -985,9 +1030,9 @@ def fenics(sim_params):
         #print u_temp(0.5,0,0.5)
         #print "u top middle"
         #print u_temp(0.5,1.,0.5)
-        stress_eigen = uflforms.eigen(PK2,Quad,fiberFS)
+        """stress_eigen = uflforms.eigen(PK2,Quad,fiberFS)
         if stress_eigen == "zero array":
-            stress_eigen = f0
+            stress_eigen = f0"""
 
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
@@ -1028,19 +1073,25 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > float(sim_protocol["ramp_t_end"][0])/float(sim_timestep)+1:
+        if kroon_time_constant != 0.0 and l > float(reorient_start_time)/float(sim_timestep)+1:
 
             print "updating fiber orientation"
             if ordering_law == "stress_kroon":
                 fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
             elif ordering_law == "strain_kroon":
                 fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
+		f0.vector()[:] += fdiff.vector()[:]
             elif ordering_law == "new_stress_kroon":
-                fdiff = uflforms.new_stress_kroon(PK2_passive,fiberFS,float(sim_timestep),kroon_time_constant)
-
-            f0.vector()[:] += fdiff.vector()[:]
+		if stress_name == "passive":
+                    stress_type = PK2_passive
+                elif stress_name == "active":
+                    stress_type = Fmat*Pactive
+                elif stress_name == "total":
+                    stress_type = PK2_passive + Fmat*Pactive
+                fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,no_of_int_points)
+		f0.vector()[:] += fdiff.vector()[:]
+	    #update fiber orientations
             s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
-            # update fiber orientations
 
 
             """if l == (no_of_time_steps - 1):
@@ -1057,12 +1108,14 @@ def fenics(sim_params):
 
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
-        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries)
+        bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries,custom_disp_array)
         bcs = bc_update_dict["bcs"]
         print "current bcs"
         #print bcs
         traction_switch_flag = bc_update_dict["traction_switch_flag"]
         rxn_force[l] = bc_update_dict["rxn_force"]
+        #temp_rxn_force = bc_update_dict["rxn_force"][0]
+        #print 'temp rxn force: ', temp_rxn_force
         u_D = bc_update_dict["expr"]["u_D"]
         Press = bc_update_dict["expr"]["Press"]
         print "current traction: ", Press.P
@@ -1071,13 +1124,15 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-            pk1temp.rename("pk1temp","active_stress")
+            pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp.rename("pk2_active","active_stress")
             active_stress_file << pk1temp
             hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
+            #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
+            # Save fiber vectors associated with non-fibrotic regions separately
             temp_f0 = f0.copy(deepcopy=True)
             for index in np.arange(len(binary_mask)):
                 if binary_mask[index] == 1:
@@ -1087,6 +1142,16 @@ def fenics(sim_params):
             f0_temp = project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
+            # Save fiber vectors associated with fibrotic regions separately
+            temp_fibrotic_f0 = f0.copy(deepcopy=True)
+            for index in np.arange(len(binary_mask)):
+                if binary_mask[index] == 0:
+                    temp_fibrotic_f0.vector()[index*3] = 0.0
+                    temp_fibrotic_f0.vector()[index*3+1] = 0.0
+                    temp_fibrotic_f0.vector()[index*3+2] = 0.0
+            f0_temp = project(temp_fibrotic_f0, VectorFunctionSpace(mesh, "DG", 0))
+            f0_temp.rename('fibrotic f0','fibrotic f0')
+            fibrotc_fiber_file << f0_temp
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
             #s0_temp.rename('s0','s0')
             #sheet_file << s0_temp
@@ -1097,14 +1162,21 @@ def fenics(sim_params):
             #pk2_passive_save.rename("pk2_passive","pk2_passive")
             #pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
+            #f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
+            #f0_deformed.rename('f0','f0_deformed')
+            #f0_deformed_file << f0_deformed
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
-            eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
+            """eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
             eigen_temp.rename('eigen_temp','stress eigen')
-            eigen_file << eigen_temp
+            eigen_file << eigen_temp"""
 
-            pk2shear_temp = project(inner(n0,PK2_passive*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
-            pk2shear_temp.rename("pk2shear_temp","PK2 shear")
-            PK2_shear_file << pk2shear_temp
+            shearfn_temp = project(inner(n0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            shearfn_temp.rename("shear fn","shear fn")
+            shearfn_file << shearfn_temp
+
+            shearfs_temp = project(inner(s0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+            shearfs_temp.rename("shear fs","shear fs")
+            shearfs_file << shearfs_temp
 
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
@@ -1137,9 +1209,9 @@ def fenics(sim_params):
             calcium_ds.iloc[0,:] = calcium[l]
             calcium_ds.to_csv(output_path + 'calcium.csv',mode='a',header=False)
 
-            for i in range(no_of_int_points):
+            """for i in range(no_of_int_points):
                 dumped_populations_ds.iloc[i,:] = dumped_populations[i,:]
-            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)
+            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)"""
 
             #tarray_ds[l] = tarray[l]
             #tarray_ds.to_csv(output_path + 'time.csv',mode='a',header=False)
@@ -1173,6 +1245,10 @@ def fenics(sim_params):
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
         if(MPI.rank(comm) == 0):
             fdataPV.close()
+    f0_dot_x_vec = inner(f0,x_vec)
+    f0_dot_x_vec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
+    angles_array = np.arccos(f0_dot_x_vec_array)
+    np.save(output_path+"final_angles_array.npy",angles_array)
 
     # -------------- Attempting growth here --------------------------------
 
@@ -1269,6 +1345,8 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 # for stand-alone testing
 input_file = sys.argv[1]
+#start_time = datetime.datetime.now()
+start = timeit.default_timer()
 # Load in JSON dictionary
 with open(input_file, 'r') as json_input:
   input_parameters = json.load(json_input)
@@ -1290,3 +1368,5 @@ if input_parameters["growth_and_remodeling"]:
 #optimization_params = input_parameters["optimization_parameters"]
 
 fenics(sim_params)
+sim_duration = timeit.default_timer() - start
+#aplog.append_to_log(all_params,start_time,sim_duration,input_file)

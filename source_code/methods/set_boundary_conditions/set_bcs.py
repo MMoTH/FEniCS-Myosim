@@ -74,7 +74,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_y.mark(facetboundaries, 3)
         fix_z.mark(facetboundaries,5)
 
-        
+
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
         bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
@@ -145,6 +145,10 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             def inside(self, x, on_boundary):
                 tol = 1E-14
                 return (near(x[0],0.0,tol) and near(x[1],y_end,tol) and near(x[2],0.0,tol))
+        class Fix_yz_at_center_of_right_face(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-3
+                return (near(x[0],x_end,tol) and near(x[1],y_center,tol) and near(x[2],z_center,tol))
 
         # Appropriately mark all facetboundaries
         facetboundaries.set_all(0)
@@ -157,6 +161,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix = Fix()
         fix2 = Fix2()
         fix3 = Fix3()
+        fix_yz_at_center_of_right_face = Fix_yz_at_center_of_right_face()
 
         left.mark(facetboundaries, 1)
         right.mark(facetboundaries, 2)
@@ -164,7 +169,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix_z.mark(facetboundaries,5)
 
         # fix left face in x, right face is displacement (until traction bc may be triggered)
-        if sim_type == "ramp_and_hold":
+        if sim_type == "ramp_and_hold" or sim_type == "custom":
 
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
@@ -195,6 +200,26 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
             bcs = [bcleft,bcfix,bcfix22,bcfix33] #order matters!
+
+        if sim_type == "stress_strain_loop":
+
+            bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+            bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+
+            bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+            bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
+            bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
+            bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
+            bc_fix_yz_rf1 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_yz_at_center_of_right_face,method="pointwise")
+            bc_fix_yz_rf2 = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_yz_at_center_of_right_face,method="pointwise")
+            bcs = [bcleft,bcfix,bcfix22,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix33]
+
+            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            protocol["previous_end_disp"] = 0.0
+            protocol["diastole"] = 1
+            protocol["isovolumic"] = 0
+            protocol["ejection"] = 0
 
         #if sim_type == "work_loop":
         marker_space = FunctionSpace(mesh,'CG',1)
@@ -269,18 +294,18 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         top.mark(facetboundaries, 6)
         back.mark(facetboundaries, 7)
 
-        if sim_type == "ramp_and_hold":
+        if sim_type == "ramp_and_hold" or sim_type == "custom":
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
             bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
             bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)        # u2 = 0 on front face
-            #fix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
+            #bcfix2 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix2,method="pointwise")
             #bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
             #bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
             #bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
-            bcs = [bcleft,bcfix,bclower,bcfront,bcright] #order matters!
+            bcs = [bcleft,bcfix,bclower,bcright] #order matters!
             # Trying shear
             """bcleft= DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), facetboundaries, 1)         # u1 = 0 on left face
             bcleft2 = DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 1)
@@ -311,7 +336,6 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcfront = DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries,5)
             bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
 
-
             bcs = [bcleft, bcfront,bcback,bctop,bcright]
 
         if sim_type == "traction_hold":
@@ -330,13 +354,43 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
 
         if sim_type == "work_loop":
+
             marker_space = FunctionSpace(mesh,'CG',1)
             bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
             test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
             bc_right_test.apply(test_marker_fcn.vector())
             output["test_marker_fcn"] = test_marker_fcn
-            print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
             protocol["end_disp_array"] = np.zeros(int(protocol["simulation_duration"][0]/protocol["simulation_timestep"][0]))
+
+            if sim_geometry == "unit_cube":
+                bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+                bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+                bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+                bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+                bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)
+                bcs = [bcleft,bcfix,bclower,bcright]
+
+        if sim_type == "stress_strain_loop":
+
+            marker_space = FunctionSpace(mesh,'CG',1)
+            bc_right_test = DirichletBC(marker_space,Constant(1),facetboundaries,2)
+            test_marker_fcn = Function(marker_space) # this is what we need to grab the displacement after potential shortening
+            bc_right_test.apply(test_marker_fcn.vector())
+            output["test_marker_fcn"] = test_marker_fcn
+            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+            protocol["previous_end_disp"] = 0.0
+            protocol["diastole"] = 1
+            protocol["isovolumic"] = 0
+            protocol["ejection"] = 0
+
+            if sim_geometry == "unit_cube":
+                bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
+                bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
+                bcfix = DirichletBC(W.sub(0), Constant((0.0, 0.0, 0.0)), fix, method="pointwise") # at one vertex u = v = w = 0
+                bclower= DirichletBC(W.sub(0).sub(2), Constant((0.0)), facetboundaries, 4)        # u3 = 0 on lower face
+                bcfront= DirichletBC(W.sub(0).sub(1), Constant((0.0)), facetboundaries, 5)
+                bcs = [bcleft,bcfix,bclower]
 
     output["bcs"] = bcs
     return output
