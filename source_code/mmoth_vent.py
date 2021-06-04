@@ -25,6 +25,7 @@ from methods.assign_heterogeneous_params import initialize_dolfin_functions as i
 from methods.set_boundary_conditions import set_bcs as set_bcs
 from methods.circulatory_module import circulatory_module as cm
 from methods.update_boundary_conditions import update_boundary_conditions
+from methods.grow_mesh import grow_mesh
 import recode_dictionary
 import json
 import timeit
@@ -63,7 +64,7 @@ def fenics(sim_params):
     gaussian_width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
     # growth parameters
-    if growth_params:
+    if 'growth_params' in locals():
         if "eccentric_growth" in growth_params.keys():
             ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
             set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
@@ -75,6 +76,8 @@ def fenics(sim_params):
             stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
 	    print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
             print "loaded growth params"
+    else:
+        k_myo_damp = 0.0
 
 
 
@@ -262,7 +265,7 @@ def fenics(sim_params):
     j7_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     y_interp = np.zeros((no_of_int_points)*n_array_length)
     calcium = np.zeros(no_of_time_steps)
-    rxn_force = np.zeros(no_of_time_steps)
+    rxn_force = np.zeros(no_of_time_steps+21)
     delta_hsl_array = np.zeros(no_of_int_points)
     traction_switch_flag = 0
 
@@ -585,24 +588,29 @@ def fenics(sim_params):
 #           Initialize the solver and forms parameters, continuum tensors
 #-------------------------------------------------------------------------------
 
+    # Initialize growth functions if needed
+
     # Create growth tensor. Initialized as identity
-    M1ij = project(as_tensor(f0[m]*f0[k], (m,k)),TFQuad)
-    M2ij = project(as_tensor(s0[m]*s0[k], (m,k)),TFQuad)
-    M3ij = project(as_tensor(n0[m]*n0[k], (m,k)),TFQuad)
+    M1ij = project(as_tensor(f0[m]*f0[k], (m,k)),TF)
+    M2ij = project(as_tensor(s0[m]*s0[k], (m,k)),TF)
+    M3ij = project(as_tensor(n0[m]*n0[k], (m,k)),TF)
     #M1ij = Function(TFQuad)
     #print "m1ij shape = " + str(np.shape(M1ij.vector()))
     #M2ij = Function(TFQuad)
     #M3ij = Function(TFQuad)
 
-    Theta1 = Function(Quad)
-    Theta1.vector()[:] = 1.0
+    #Theta1 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta1.vector()[:] = 1.0
 
-    Theta2 = Function(Quad)
-    Theta2.vector()[:] = 1.0
+    #Theta2 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta2.vector()[:] = 1.0
+
+    #Theta3 = Function(FunctionSpace(mesh,"DG",1))
+    #Theta3.vector()[:] = 1.0
 
     # Based on the material coordinates, we can define different Growth Tensor Construct
 
-    Fg = project(Theta1*(M1ij) +  Theta2*(M2ij + M3ij),TFQuad)
+    #Fg = Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij #always created, only updated if growth
     #print "fg"
     #print str(Fg.vector().get_local())
     #Fg = as_tensor([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.]])
@@ -623,8 +631,8 @@ def fenics(sim_params):
              "sheet-normal": n0,
              "incompressible": isincomp,
              "hsl0": hsl0,
-             "Kappa":Constant(1e5),
-             "growth_tensor": Fg}
+             "Kappa":Constant(1e5)}
+             #"growth_tensor": Fg}
 
     # update passive params because now they are heterogeneous functions
     # need to generalize this? Need to initialize passive functions (and cb density)
@@ -648,6 +656,7 @@ def fenics(sim_params):
 
     # Get deformation gradient
     Fmat = uflforms.Fmat()
+    #Fmat = uflforms.Fe()
     test_FS = FunctionSpace(mesh,Velem)
     Fmat2 = Function(TF)
     #d = u.ufl_domain().geometric_dimension()
@@ -678,7 +687,8 @@ def fenics(sim_params):
     bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,geo_options,mesh,W,facetboundaries,expressions)
     bcs = bc_output["bcs"]
     bcright = bcs[-1]
-    test_marker_fcn = bc_output["test_marker_fcn"]
+    if (sim_protocol["simulation_type"][0] != "cycle"):
+        test_marker_fcn = bc_output["test_marker_fcn"]
     #print "testing display array"
     #print sim_protocol["end_disp_array"]
 
@@ -862,6 +872,7 @@ def fenics(sim_params):
         Pcav_array[0] = uflforms.LVcavitypressure()*0.0075
 
         LVCavityvol.vol = uflforms.LVcavityvol()
+        print "Unloaded LV Cavity Volume = ", LVCavityvol.vol
 
         # Calculate the increment to LV volume
         end_diastolic_volume = sim_protocol["initial_end_diastolic_volume"][0]
@@ -895,20 +906,19 @@ def fenics(sim_params):
 
             delta_hsl_array = hsl_array - hsl_array_old
 
-            if save_cell_output:
-                temp_DG_1 = project(alpha, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-                alphas = interpolate(temp_DG_1, Quad)
-                alpha_array = alphas.vector().get_local()[:]
-
-                """temp_DG_2 = project(Pg_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-                pgf = interpolate(temp_DG_2, Quad)
-                pgf_array = pgf.vector().get_local()[:]
-                temp_DG_3 = project(Pg_transverse, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-                pgt = interpolate(temp_DG_3, Quad)
-                pgt_array = pgt.vector().get_local()[:]
-                temp_DG_4 = project(Pg_shear, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-                pgs = interpolate(temp_DG_4, Quad)
-                pgs_array = pgs.vector().get_local()[:]"""
+            #if save_cell_output:
+                #temp_DG_1 = project(alpha, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                #alphas = interpolate(temp_DG_1, Quad)
+                #alpha_array = alphas.vector().get_local()[:]
+                #temp_DG_2 = project(Pg_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                #pgf = interpolate(temp_DG_2, Quad)
+                #pgf_array = pgf.vector().get_local()[:]
+                #temp_DG_3 = project(Pg_transverse, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                #pgt = interpolate(temp_DG_3, Quad)
+                #pgt_array = pgt.vector().get_local()[:]
+                #temp_DG_4 = project(Pg_shear, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                #pgs = interpolate(temp_DG_4, Quad)
+                #pgs_array = pgs.vector().get_local()[:]
 
 
             if(MPI.rank(comm) == 0):
@@ -946,6 +956,10 @@ def fenics(sim_params):
     # Initialize calcium concentration from cell_ion module
     calcium[0] = cell_ion.calculate_concentrations(0,0)
 
+    # Initializing growth class if needed
+    #if 'growth_params' in locals():
+        #growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
+
     # Load in circulatory module
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
         circ_model = cm.circ_module(windkessel_params)
@@ -957,17 +971,23 @@ def fenics(sim_params):
         print "Time step number " + str(l)
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
+            # update calcium
+            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,t[l])
+
             # Update circulatory model
             p_cav = uflforms.LVcavitypressure()
             V_cav = uflforms.LVcavityvol()
+            print "Volume of LV = ",V_cav
             circ_dict = circ_model.update_compartments(p_cav,V_cav,sim_timestep)
-            LVCavityvol.vol = V_cav
-            LVcav_array[counter] = V_cav
-            Pcav_array[counter] = p_cav*0.0075
+            LVCavityvol.vol = circ_dict["V_cav"]
+            LVcav_array[l] = circ_dict["V_cav"]
+            #LVCavityvol.vol = V_cav
+            #LVcav_array[l] = V_cav
+            Pcav_array[l] = p_cav*0.0075
 
             # Now print out volumes, pressures, calcium
             if(MPI.rank(comm) == 0):
-                print >>fdataPV, tstep, p_cav*0.0075 , Part*.0075, Pven*.0075, V_cav, V_ven, V_art, calcium[counter]
+                print >>fdataPV, t[l], circ_dict["p_cav"]*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"], calcium[l]
 
         # update calcium
         cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
@@ -1023,7 +1043,7 @@ def fenics(sim_params):
         #total_stress = project(PK2_passive + Pactive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         #print "checking displacement at midpoints"
         #u_temp,p_temp,c_temp = w.split(True)
-        u_temp,p_temp = w.split(True)
+        #u_temp,p_temp = w.split(True)
         #print u_temp.vector().get_local().reshape(27,3)
         #print "u bottom middle"
         #p1 = Point(0.5,0.0,0.5)
@@ -1106,19 +1126,38 @@ def fenics(sim_params):
                     print np.reshape(strain_eigen.vector().get_local(),(no_of_int_points,3))"""
 
 
+        """# Kurtis putting call to growth function here
+        if "growth_law" in growth_params.keys():
+            Theta1, Theta2, Theta3 = growth_class.grow_mesh(PK2_passive,f0,Theta1,Theta2,Theta3,t[l])
+            print "theta values"
+            print project(Theta1,FunctionSpace(mesh,"CG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
+            Fg = Theta1*(M1ij) + Theta2*M2ij + Theta3*M3ij
+            uflforms.parameters["growth_tensor"] = Fg
+            Fe = uflforms.Fe()
+            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            ALE.move(mesh, project(u, VectorFunctionSpace(mesh, 'CG', 1)))
+            File(output_path + "mesh_grown.pvd") << mesh"""
+
+
+
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
+        # quick hack
+        if sim_geometry == "ellipsoid":
+            x_dofs = 0.0
+            test_marker_fcn = 0.0
+            traction_switch_flag = 0.0
+            x_dir = 0.0 # generalize the input to bc_update dict to be a dictionary that is updated as needed
         bc_update_dict = update_boundary_conditions.update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expressions,t[l],traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries,custom_disp_array)
         bcs = bc_update_dict["bcs"]
-        print "current bcs"
+        #print "current bcs"
         #print bcs
-        traction_switch_flag = bc_update_dict["traction_switch_flag"]
-        rxn_force[l] = bc_update_dict["rxn_force"]
-        #temp_rxn_force = bc_update_dict["rxn_force"][0]
-        #print 'temp rxn force: ', temp_rxn_force
-        u_D = bc_update_dict["expr"]["u_D"]
-        Press = bc_update_dict["expr"]["Press"]
-        print "current traction: ", Press.P
+        if not (sim_geometry == "ventricle" or sim_geometry == "ellipsoid"):
+            traction_switch_flag = bc_update_dict["traction_switch_flag"]
+            rxn_force[l] = bc_update_dict["rxn_force"]
+            u_D = bc_update_dict["expr"]["u_D"]
+            Press = bc_update_dict["expr"]["Press"]
+            print "current traction: ", Press.P
 
 
         # Save visualization info
@@ -1252,8 +1291,165 @@ def fenics(sim_params):
 
     # -------------- Attempting growth here --------------------------------
 
-    Fg00 = 1.0
-    """for n_grow in np.arange(10):
+        # Unload ventricle
+
+    """LVCavityvol.vol = uflforms.LVcavityvol()
+    print "Unloaded LV Cavity Volume = ", LVCavityvol.vol
+
+    # Calculate the increment to LV volume
+    #end_diastolic_volume = sim_protocol["initial_end_diastolic_volume"][0]
+    #total_vol_loading = end_diastolic_volume - LVCavityvol.vol
+    #volume_increment = total_vol_loading/sim_protocol["reference_loading_steps"][0]
+
+    for lmbda_value in range(0, sim_protocol["reference_loading_steps"][0]):
+
+        print "Diastolic loading step " + str(lmbda_value)
+
+        LVCavityvol.vol -= volume_increment
+
+        p_cav = uflforms.LVcavitypressure()
+        V_cav = uflforms.LVcavityvol()
+
+        hsl_array_old = hsl_array
+
+        #solver.solvenonlinear()
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+
+        displacement_file << w.sub(0)
+
+        hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
+
+
+        temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, Quad)
+        p_f_array = p_f.vector().get_local()[:]
+
+        for ii in range(np.shape(hsl_array)[0]):
+            if p_f_array[ii] < 0.0:
+                p_f_array[ii] = 0.0
+
+        delta_hsl_array = hsl_array - hsl_array_old
+    #Press.P = 0.0
+    Fe = uflforms.Fe()
+    #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+
+    for n in np.arange(10):
+        # Kurtis putting call to growth function here
+        Theta1.vector()[:] += 0.02
+        #Fg = project(Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij,TFQuad)
+        #uflforms.parameters["growth_tensor"] = Fg
+        #Fe = uflforms.Fe()
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        print "FG"
+        print project(Fg).vector().get_local()[0:9]
+        print "Fe"
+        Fe = uflforms.Fe()
+        print project(Fe).vector().get_local()[0:9]
+        print "F"
+        print project(Fmat).vector().get_local()[0:9]
+        displacement_file << w.sub(0)
+        #b = assemble(Ftotal,form_compiler_parameters={"representation":"uflacs"})
+        #for boundary_condition_i in np.arange(np.shape(bcs)[0]-1):
+        #    bcs[boundary_condition_i+1].apply(b)
+        #f_int_total = b.copy()
+        #for kk in x_dofs:
+        #    rxn_force[l+(n+1)] += f_int_total[kk]
+        if "growth_law" in growth_params.keys():
+            PK2_passive,Sff = uflforms.stress(hsl)
+            Theta1, Theta2, Theta3 = growth_class.grow_mesh(PK2_passive,f0,Theta1,Theta2,Theta3,t[l])
+            print "theta"
+            #print project(Theta1,FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
+            #print "theta values"
+            #print project(Theta1,FunctionSpace(mesh,"CG",1),form_compiler_parameters={"representation":"uflacs"}).vector().get_local()
+            Fg = project(Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij,TFQuad)
+            print "FG"
+            #print Fg.vector().get_local()[0:9]
+            uflforms.parameters["growth_tensor"] = Fg
+            Fe = uflforms.Fe()
+            print "FE"
+            #print project(Fe,TFQuad).vector().get_local()[0:9]
+            Fmat = uflforms.Fmat()
+            #print project(Fmat,TFQuad).vector().get_local()[0:9]
+            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            PK2_passive,Sff = uflforms.stress(hsl)
+            hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:]
+            print "growing mesh"
+
+
+
+
+    #Press.P = 0.0
+
+
+
+
+    #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+    #displacement_file << w.sub(0)
+    ALE.move(mesh, project(u, VectorFunctionSpace(mesh, 'CG', 1)))
+    File(output_path + "mesh_grown.pvd") << mesh
+    Theta1.vector()[:] = 1.0
+    solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+    displacement_file << w.sub(0)
+
+    #Re load, see how diastole differs
+        # Unload ventricle
+
+    LVCavityvol.vol = uflforms.LVcavityvol()
+    print "Unloaded LV Cavity Volume = ", LVCavityvol.vol
+
+    # Calculate the increment to LV volume
+    end_diastolic_volume = sim_protocol["initial_end_diastolic_volume"][0]
+    total_vol_loading = end_diastolic_volume - LVCavityvol.vol
+    volume_increment = total_vol_loading/sim_protocol["reference_loading_steps"][0]
+
+    for lmbda_value in range(0, sim_protocol["reference_loading_steps"][0]):
+
+        print "Diastolic loading step " + str(lmbda_value)
+
+        LVCavityvol.vol += volume_increment
+
+        p_cav = uflforms.LVcavitypressure()
+        V_cav = uflforms.LVcavityvol()
+
+        hsl_array_old = hsl_array
+
+        #solver.solvenonlinear()
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+
+        displacement_file << w.sub(0)
+
+        hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
+
+
+        temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, Quad)
+        p_f_array = p_f.vector().get_local()[:]
+
+        for ii in range(np.shape(hsl_array)[0]):
+            if p_f_array[ii] < 0.0:
+                p_f_array[ii] = 0.0
+
+        delta_hsl_array = hsl_array - hsl_array_old
+
+    Theta2.vector()[:] = 1.0
+
+    # reloading mesh to look for difference in deformation
+    for nload in np.arange(10):
+        Press.P +=500
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        displacement_file << w.sub(0)
+        print "traction is ",Press.P
+        b = assemble(Ftotal,form_compiler_parameters={"representation":"uflacs"})
+        for boundary_condition_i in np.arange(np.shape(bcs)[0]-1):
+            bcs[boundary_condition_i+1].apply(b)
+        f_int_total = b.copy()
+        for kk in x_dofs:
+            rxn_force[l+10+(nload+1)] += f_int_total[kk]
+
+    np.save('fx.npy',rxn_force)
+
+
+    for n_grow in np.arange(10):
 
 
         #Get passive stress tensors from forms
@@ -1361,8 +1557,8 @@ hs_params = input_parameters["myosim_parameters"]
 cell_ion_params = input_parameters["electrophys_parameters"]["cell_ion_parameters"]
 all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 #monodomain_params = input_parameters["electrophys_parameters"]["monodomain_parameters"]
-#windkessel_params = input_parameters["windkessel_parameters"]
-if input_parameters["growth_and_remodeling"]:
+windkessel_params = input_parameters["windkessel_parameters"]
+if "growth_and_remodeling" in input_parameters.keys():
     growth_params = input_parameters["growth_and_remodeling"]
     all_params.append(growth_params)
 #optimization_params = input_parameters["optimization_parameters"]

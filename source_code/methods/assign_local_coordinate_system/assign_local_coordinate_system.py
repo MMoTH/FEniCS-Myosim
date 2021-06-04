@@ -32,19 +32,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     m_y = 1./sqrt(2.)
     m_z = 0.0"""
 
-    theta = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
-    phi   = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
-    width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
-    # Convert fiber angles into Cartesian coordinates with radius 1
-    m_x = sin(phi)*cos(theta)
-    m_y = sin(phi)*sin(theta)
-    m_z = cos(phi)
-
-    # Functions that are useful in unit cube and cylinder for calculating
-    # fibrous area, or the long (x) axis to assign local coordinate systems
-    test_marker_fcn = Function(marker_space)
-    z_axis       = Function(fiberFS)
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
         casename = lv_options["casename"]
@@ -58,6 +46,20 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         f.close()
 
     if (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
+
+        theta = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
+        phi   = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
+        width = sim_params["fiber_orientation"]["fiber_randomness"][0]
+
+        # Convert fiber angles into Cartesian coordinates with radius 1
+        m_x = sin(phi)*cos(theta)
+        m_y = sin(phi)*sin(theta)
+        m_z = cos(phi)
+
+        # Functions that are useful in unit cube and cylinder for calculating
+        # fibrous area, or the long (x) axis to assign local coordinate systems
+        test_marker_fcn = Function(marker_space)
+        z_axis       = Function(fiberFS)
 
         if sim_geometry == "cylinder":
             radius = geo_options["base_radius"][0]
@@ -156,6 +158,20 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
     if sim_geometry == "box_mesh":
 
+        theta = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
+        phi   = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
+        width = sim_params["fiber_orientation"]["fiber_randomness"][0]
+
+        # Convert fiber angles into Cartesian coordinates with radius 1
+        m_x = sin(phi)*cos(theta)
+        m_y = sin(phi)*sin(theta)
+        m_z = cos(phi)
+
+        # Functions that are useful in unit cube and cylinder for calculating
+        # fibrous area, or the long (x) axis to assign local coordinate systems
+        test_marker_fcn = Function(marker_space)
+        z_axis       = Function(fiberFS)
+
         x_marker = Expression("x[0]",degree=1)
         y_marker = Expression("x[1]",degree=1)
         z_marker = Expression("x[2]",degree=1)
@@ -212,6 +228,20 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
                 n0.vector()[jj*3+kk] = n0_holder[kk]
 
     if (sim_geometry == "unit_cube"):
+
+        theta = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["theta"][0])
+        phi   = math.radians(sim_params["fiber_orientation"]["fiber_direction"]["phi"][0])
+        width = sim_params["fiber_orientation"]["fiber_randomness"][0]
+
+        # Convert fiber angles into Cartesian coordinates with radius 1
+        m_x = sin(phi)*cos(theta)
+        m_y = sin(phi)*sin(theta)
+        m_z = cos(phi)
+
+        # Functions that are useful in unit cube and cylinder for calculating
+        # fibrous area, or the long (x) axis to assign local coordinate systems
+        test_marker_fcn = Function(marker_space)
+        z_axis       = Function(fiberFS)
 
         for jj in np.arange(no_of_int_points):
 

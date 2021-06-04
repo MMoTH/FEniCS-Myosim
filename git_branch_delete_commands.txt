@@ -1,0 +1,3 @@
+git push -d <remote_name> <branch_name> (deletes on remote repository)
+git branch -d <branch_name> (deletes local branch)
+

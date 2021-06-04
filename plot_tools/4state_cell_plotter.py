@@ -9,31 +9,44 @@ import pandas as pd
 
 # Get desired gauss point we want to look at
 gauss_point = int(sys.argv[1])
+is_npy = int(sys.argv[2]) # user inputs 0 for csv files, 1 if saved as npy
+
 
 # Assuming this script is called from the directory containing output data
-populations = pd.read_csv('populations.csv',delimiter=',')
-populations = populations.to_numpy()
-populations = populations[:,1:] # get rid of first column
+if is_npy > 0:
+    populations = np.load('populations.npy')
+    active_stress = np.load('active_stress.npy')
+    overlap = np.load('overlap.npy')
+    hsl = np.load('hsl.npy')
+else:
+    populations = pd.read_csv('populations.csv',delimiter=',')
+    populations = populations.to_numpy()
+    populations = populations[:,1:] # get rid of first column
+    np.save("populations",populations)
+    #populations = np.load('populations.npy')
 
-#populations = populations[0:6569212]
+    #populations = populations[0:6569212]
 
-active_stress = pd.read_csv('active_stress.csv',delimiter=',')
-active_stress = active_stress.to_numpy()
-active_stress = active_stress[:,1:]
-active_stress = active_stress[:,gauss_point]
+    active_stress = pd.read_csv('active_stress.csv',delimiter=',')
+    active_stress = active_stress.to_numpy()
+    active_stress = active_stress[:,1:]
+    active_stress = active_stress[:,gauss_point]
+    np.save("active_stress",active_stress)
 
-overlap = pd.read_csv('overlap.csv',delimiter=',')
-overlap = overlap.to_numpy()
-overlap = overlap[:,1:]
-overlap = overlap[:,gauss_point]
+    overlap = pd.read_csv('overlap.csv',delimiter=',')
+    overlap = overlap.to_numpy()
+    overlap = overlap[:,1:]
+    overlap = overlap[:,gauss_point]
+    np.save("overlap",overlap)
 
-hsl = pd.read_csv('half_sarcomere_lengths.csv',delimiter=',')
-hsl = hsl.to_numpy()
-hsl = hsl[:,1:]
-hsl = hsl[:,gauss_point]
+    hsl = pd.read_csv('half_sarcomere_lengths.csv',delimiter=',')
+    hsl = hsl.to_numpy()
+    hsl = hsl[:,1:]
+    hsl = hsl[:,gauss_point]
+    np.save("hsl",hsl)
 
 #data_range = np.shape(active_stress)[0]
-data_range = 1199
+data_range = 900
 t = np.load('time.npy')
 #t = t[:-1]
 #t = t[0:1301]
@@ -92,18 +105,26 @@ plt.legend([srx_plot,drx_plot,a1bound_plot,a2bound_plot], ['M_SRX', 'M_DRX', 'M_
 
 ax2 = plt.subplot(322)
 ax2.plot(t,active_stress[0:data_range])
+ax2.set_ylabel('Active Stress (Pa)')
+#ax2.ylabel('Active Stress (Pa)')
 
 ax4 = plt.subplot(323)
 ax4.plot(t,hsl[0:data_range])
+ax4.set_ylabel('hsl (nm)')
+#ax4.ylabel('hsl (nm)')
 
 ax5 = plt.subplot(325)
 ax5.plot(t,n_on)
 ax5.plot(t,n_off)
 ax5.plot(t,n_on+n_off)
 ax5.plot(t,a2_bound,color='#d62728')
+ax5.set_ylabel('thin filament + FG state')
+#ax5.ylabel('thin filament + FG state')
 
 ax6 = plt.subplot(326)
 ax6.plot(t,overlap[0:data_range])
+ax6.set_ylabel('overlap')
+#ax6.ylabel('overlap')
 
 # Trying to animate cross-bridges from a1 and a2-------------------------------
 

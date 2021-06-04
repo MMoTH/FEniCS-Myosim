@@ -7,8 +7,6 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
     output = {}
 
-    sim_type = protocol["simulation_type"][0]
-
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
         # if ventricle or ellipsoid simulation, constrain base in longitudinal direction,
@@ -20,6 +18,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         bcs = [bctop]
 
     elif (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
+        sim_type = protocol["simulation_type"][0]
 
         if sim_geometry == "cylinder" or sim_geometry == "gmesh_cylinder":
             center = 0.0
@@ -100,6 +99,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
 
 
     elif sim_geometry == "box_mesh":
+        sim_type = protocol["simulation_type"][0]
 
         x_end = geo_options["end_x"][0]
         y_end = geo_options["end_y"][0]
