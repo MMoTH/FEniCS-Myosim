@@ -1,7 +1,7 @@
 from __future__ import division
 import sys
 sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/revised_structure_attempt/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
 #sys.path.append("/home/fenics/shared/dependencies/")
 #sys.path.append("/home/fenics/shared/source_code/")
 import os as os
