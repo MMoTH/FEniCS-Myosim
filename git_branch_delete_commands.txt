@@ -1,3 +1,7 @@
 git push -d <remote_name> <branch_name> (deletes on remote repository)
 git branch -d <branch_name> (deletes local branch)
 
+To start tracking a new branch (recommended to use this command upon branch creation before changes are made):
+git push -u origin <local-branch>
+
+
