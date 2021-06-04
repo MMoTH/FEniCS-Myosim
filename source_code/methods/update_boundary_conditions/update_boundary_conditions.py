@@ -93,7 +93,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             print "disp_value: ",disp_value
             sim_protocol["end_disp_array"][l] = max(disp_value)
             #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
-            if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (cycle_time > sim_protocol["traction_switch_index"] + 2):
+            if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (l > sim_protocol["traction_switch_index"] + 2):
                 #expr["u_D"].u_D = (sim_protocol["end_disp_array"][l]+min(disp_value))/2.
                 temp_V = VectorFunctionSpace(mesh,"CG",2)
                 temp_fcn = Function(temp_V)

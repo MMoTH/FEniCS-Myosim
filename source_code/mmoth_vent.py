@@ -64,18 +64,21 @@ def fenics(sim_params):
     gaussian_width = sim_params["fiber_orientation"]["fiber_randomness"][0]
 
     # growth parameters
-    if 'growth_params' in locals():
-        if "eccentric_growth" in growth_params.keys():
-            ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
-            set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
-            k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
-        if "fiber_reorientation" in growth_params.keys():
-            ordering_law = growth_params["fiber_reorientation"]["law"][0]
-            kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
-            reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
-            stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
-	    print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
-            print "loaded growth params"
+    #if 'growth_params' in locals():
+    print "ASSIGNING GROWTH PARAMS"
+    if "eccentric_growth" in growth_params.keys():
+        ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
+        set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
+        k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
+    if "fiber_reorientation" in growth_params.keys():
+        print "ASSIGNING FIBER REMODELING LAW PARAMS"
+        ordering_law = growth_params["fiber_reorientation"]["law"][0]
+        kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
+        print "KROON TIME CONSTANT =",kroon_time_constant
+        reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
+        stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
+        print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
+        print "loaded growth params"
     else:
         k_myo_damp = 0.0
 
@@ -462,6 +465,7 @@ def fenics(sim_params):
         # fiber simulation
         dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
     else:
+        print "element wise assignment of dolfin functions!!!!!!"
         # element wise assignment
         dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
 
@@ -990,7 +994,11 @@ def fenics(sim_params):
                 print >>fdataPV, t[l], circ_dict["p_cav"]*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"], calcium[l]
 
         # update calcium
-        cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
+        # Don't need cycle time for all simulations. For now, just alexus' work loop simulation
+        if "track_and_update" in sim_protocol.keys():
+            cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
+        else:
+            cycle_l = l
         calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
 
         # Quick hack
@@ -1093,25 +1101,25 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
-        if kroon_time_constant != 0.0 and l > float(reorient_start_time)/float(sim_timestep)+1:
-
-            print "updating fiber orientation"
-            if ordering_law == "stress_kroon":
-                fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
-            elif ordering_law == "strain_kroon":
-                fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
-		f0.vector()[:] += fdiff.vector()[:]
-            elif ordering_law == "new_stress_kroon":
-		if stress_name == "passive":
-                    stress_type = PK2_passive
-                elif stress_name == "active":
-                    stress_type = Fmat*Pactive
-                elif stress_name == "total":
-                    stress_type = PK2_passive + Fmat*Pactive
-                fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,no_of_int_points)
-		f0.vector()[:] += fdiff.vector()[:]
-	    #update fiber orientations
-            s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
+        if 'kroon_time_constant' in locals():
+            if l > float(reorient_start_time)/float(sim_timestep)+1:
+                print "updating fiber orientation"
+                if ordering_law == "stress_kroon":
+                    fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
+                elif ordering_law == "strain_kroon":
+                    fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
+		    f0.vector()[:] += fdiff.vector()[:]
+                elif ordering_law == "new_stress_kroon":
+		    if stress_name == "passive":
+                        stress_type = PK2_passive
+                    elif stress_name == "active":
+                        stress_type = Fmat*Pactive
+                    elif stress_name == "total":
+                        stress_type = PK2_passive + Fmat*Pactive
+                    fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,no_of_int_points)
+		    f0.vector()[:] += fdiff.vector()[:]
+	        #update fiber orientations
+                s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
 
 
             """if l == (no_of_time_steps - 1):
@@ -1557,7 +1565,8 @@ hs_params = input_parameters["myosim_parameters"]
 cell_ion_params = input_parameters["electrophys_parameters"]["cell_ion_parameters"]
 all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 #monodomain_params = input_parameters["electrophys_parameters"]["monodomain_parameters"]
-windkessel_params = input_parameters["windkessel_parameters"]
+if "windkessel_parameters" in input_parameters.keys():
+    windkessel_params = input_parameters["windkessel_parameters"]
 if "growth_and_remodeling" in input_parameters.keys():
     growth_params = input_parameters["growth_and_remodeling"]
     all_params.append(growth_params)

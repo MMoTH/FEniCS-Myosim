@@ -297,6 +297,7 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
             dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)"""
 
 	if hetero_law == "fibrosis_w_compliance":
+            print "het dict",het_dolfin_dict[k]
             dolfin_functions = df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-4],het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
 
         if hetero_law == "inclusion":
@@ -394,13 +395,14 @@ def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_
 
 def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_cells,no_of_int_points,geo_options):
 
-    end_marker_array = geo_options["x_marker_array"]
+    end_marker_array = geo_options["end_marker_array"]
 
-    #for jj in np.arange(no_of_int_points):
-    for jj in np.arange(no_of_cells):
+    for jj in np.arange(no_of_int_points):
+    #for jj in np.arange(no_of_cells):
 
-        if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 0.5:
+        if (end_marker_array[jj] > 9.0) or (end_marker_array[jj] < geo_options["compliance_first_bdry_end"][0]):
             if k == "cb_number_density":
+                print "ASSIGNING CROSSBRIDGE DENSITY"
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
             else:
                 dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
@@ -410,6 +412,8 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_ce
 def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,percent,scaling_factor,mat_prop,no_of_cells,geo_options):
 
     end_marker_array = geo_options["x_marker_array"]
+    print "SHAPE OF END MARKER ARRAY", np.shape(end_marker_array)
+    print "NO OF CELLS", no_of_cells
     compliant_cell_array = []
     remaining_cell_array = []
     total_cell_array = np.arange(no_of_cells)
@@ -419,6 +423,7 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
         if end_marker_array[jj] < 0.5:
             compliant_cell_array.append(jj)
             if k == "cb_number_density":
+                print "ASSIGNING CROSSBRIDGE DENSITY TO ", fiber_value
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
             else:
                 dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
@@ -440,7 +445,8 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
             if jj in sample_indices:
 
                 if k == "cb_number_density":
-                    dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+                    #dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+                    print "don't want to touch density for remaining elements!!!!!"
                 else:
                     dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
@@ -453,7 +459,8 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
             if jj in sample_indices:
 
                 if k == "cb_number_density":
-                    dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+                    print "don't want to mess with density here!!!!!"
+                    #dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
                 else:
                     dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 

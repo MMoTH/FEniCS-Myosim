@@ -199,6 +199,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         geo_options["x_marker_array"] = x_marker_array
         geo_options["y_marker_array"] = y_marker_array
         geo_options["z_marker_array"] = z_marker_array
+        geo_options["end_marker_array"] = x_marker_array
 
         for jj in np.arange(no_of_int_points):
 
