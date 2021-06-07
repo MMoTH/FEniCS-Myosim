@@ -1,7 +1,8 @@
 from dolfin import *
 import numpy as np
+#import mpi
 import mshr
-#import vtk_py
+import vtk_py
 import os
 
 ## Import the appropriate mesh to mmoth-vent
@@ -90,7 +91,7 @@ def import_mesh(sim_geometry, options):
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
 
         if sim_geometry == "ellipsoid":
-            casename = "ellipsoidal"
+            casename = "ellipsoid_scaled"
         else:
             casename = "New_mesh" #New_mesh is the default casename in scripts sent from Dr. Lee
 
@@ -106,12 +107,31 @@ def import_mesh(sim_geometry, options):
 
         if "hdf5" in mesh_path:
 
+            print "Importing hdf5 mesh"
+
             mesh = Mesh()
             f = HDF5File(mpi_comm_world(), mesh_path, 'r')
             f.read(mesh, casename, False)
-            ugrid = vtk_py.convertXMLMeshToUGrid(mesh)
-            ugrid = vtk_py.rotateUGrid(ugrid, sx=0.1, sy=0.1, sz=0.1)
-            mesh = vtk_py.convertUGridToXMLMesh(ugrid)
+            # had to read casename for scaled mesh. Now switch casename back to original
+            # to access all other functions for ellipsoid sim
+            print "SIM_GEOMETRY",sim_geometry
+            if sim_geometry == "ellipsoid":
+                print "CHANGING CASENAME"
+                lv_options["casename"] = "ellipsoidal"
+            #f.close()
+
+            #ugrid = vtk_py.convertXMLMeshToUGrid(mesh)
+            #ugrid = vtk_py.rotateUGrid(ugrid, sx=0.1, sy=0.1, sz=0.1)
+            #mesh = vtk_py.convertUGridToXMLMesh(ugrid)
+
+            #f = HDF5File(mpi_comm_world(), mesh_path, 'a')
+            #f.write(mesh,"ellipsoid_scaled")
+            #f.close()
+
             lv_options["f"] = f
+            #hdf5_file = HDF5File(mpi_comm_world(),'scaled_mesh.hdf5',"w")
+            #hdf5_file.write(mesh,"Mesh")
+
+
 
     return mesh,lv_options
