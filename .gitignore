@@ -9,4 +9,5 @@ working_directory_untracked/
 LV_closed2.py
 _site/
 Gemfile.lock
+vtk/
 Doxygen_documentation/
