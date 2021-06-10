@@ -149,6 +149,10 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             def inside(self, x, on_boundary):
                 tol = 1E-3
                 return (near(x[0],x_end,tol) and near(x[1],y_center,tol) and near(x[2],z_center,tol))
+	class Fix_yz_at_center_of_left_face(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-3
+                return (near(x[0],0.0,tol) and near(x[1],y_center,tol) and near(x[2],z_center,tol))
 
         # Appropriately mark all facetboundaries
         facetboundaries.set_all(0)
@@ -162,6 +166,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix2 = Fix2()
         fix3 = Fix3()
         fix_yz_at_center_of_right_face = Fix_yz_at_center_of_right_face()
+	fix_yz_at_center_of_left_face = Fix_yz_at_center_of_left_face()
 
         left.mark(facetboundaries, 1)
         right.mark(facetboundaries, 2)
@@ -213,7 +218,9 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
             bc_fix_yz_rf1 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_yz_at_center_of_right_face,method="pointwise")
             bc_fix_yz_rf2 = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_yz_at_center_of_right_face,method="pointwise")
-            bcs = [bcleft,bcfix,bcfix22,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix33]
+	    bcfix_yz_lf1 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_yz_at_center_of_left_face,method="pointwise")
+            bcfix_yz_lf2 = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_yz_at_center_of_left_face,method="pointwise")
+            bcs = [bcleft,bcfix,bcfix22,bcfix33,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix_yz_lf1,bcfix_yz_lf2]
 
             #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
             protocol["previous_end_disp"] = 0.0

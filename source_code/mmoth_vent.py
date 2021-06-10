@@ -66,6 +66,10 @@ def fenics(sim_params):
     # growth parameters
     #if 'growth_params' in locals():
     print "ASSIGNING GROWTH PARAMS"
+    if "save_fx_only" in sim_params.keys():
+        save_fx_only = sim_params["save_fx_only"][0]
+    else:
+        save_fx_only = 0
     if "eccentric_growth" in growth_params.keys():
         ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
         set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
@@ -569,9 +573,10 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 
     #save initial f0, s0, n0, hsl0
-    hsl_temp = project(hsl0,FunctionSpace(mesh,'DG',1))
-    hsl_temp.rename("hsl_temp","half-sarcomere length")
-    hsl_file << hsl_temp
+    if save_visual_output:
+        hsl_temp = project(hsl0,FunctionSpace(mesh,'DG',0))
+        hsl_temp.rename("hsl_temp","half-sarcomere length")
+        hsl_file << hsl_temp
 
     # Test select visualization for fibers
     temp_f0 = f0.copy(deepcopy=True)
@@ -999,7 +1004,11 @@ def fenics(sim_params):
             cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
         else:
             cycle_l = l
-        calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
+
+        if not ((sim_geometry == "ventricle") or (sim_geometry == "ellipsoid")):
+            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
+
+	# else, calcium already calculated for ventricle sims. Standardize time input for calcium!
 
         # Quick hack
         if l == 0:
@@ -1167,14 +1176,15 @@ def fenics(sim_params):
             Press = bc_update_dict["expr"]["Press"]
             print "current traction: ", Press.P
 
-
+        if save_fx_only:
+            np.save(output_path + 'fx',rxn_force)
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
             pk1temp.rename("pk2_active","active_stress")
             active_stress_file << pk1temp
-            hsl_temp = project(hsl,FunctionSpace(mesh,'DG',1))
+            hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
             hsl_temp.rename("hsl_temp","half-sarcomere length")
             hsl_file << hsl_temp
             #rxn_force_file << temp_rxn_force
@@ -1256,9 +1266,9 @@ def fenics(sim_params):
             calcium_ds.iloc[0,:] = calcium[l]
             calcium_ds.to_csv(output_path + 'calcium.csv',mode='a',header=False)
 
-            """for i in range(no_of_int_points):
+            for i in range(no_of_int_points):
                 dumped_populations_ds.iloc[i,:] = dumped_populations[i,:]
-            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)"""
+            dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)
 
             #tarray_ds[l] = tarray[l]
             #tarray_ds.to_csv(output_path + 'time.csv',mode='a',header=False)
