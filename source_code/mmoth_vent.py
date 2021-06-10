@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-#sys.path.append("/home/fenics/shared/dependencies/")
-#sys.path.append("/home/fenics/shared/source_code/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+sys.path.append("/home/fenics/shared/dependencies/")
+sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -747,8 +747,10 @@ def fenics(sim_params):
 
         cb_force = cb_force + f_holder
 
-    Pactive = cb_force * as_tensor(f0[m]*f0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(s0[m]*s0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(n0[m]*n0[k], (m,k))
-
+    #Pactive = cb_force * as_tensor(f0[m]*f0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(s0[m]*s0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(n0[m]*n0[k], (m,k))
+    cb_force2 = Expression(("f"), f=0, degree=1)
+    Scalefactor2 = Constant(5)
+    Pactive = Scalefactor2 * cb_force2 * as_tensor(f0[i]*f0[j], (i,j))
 #-------------------------------------------------------------------------------
 #           Now hsl function is initiated, make sure all arrays are initialized
 #-------------------------------------------------------------------------------
@@ -1007,15 +1009,26 @@ def fenics(sim_params):
         else:
             overlap_counter = l
 
+
+        t_trans = 30
+    	t0 = 20
+    	tr = 15
+    	if(t[l] < t_trans):
+        	#cb_force2.f = 70000*sin(cell_time/40.0*3.14)
+        	cb_force2.f = 70000*0.5*(1 - cos(pi*t[l]/t0))
+		#print cb_force2.f
+    	else:
+    		A =  70000*0.5*(1 - cos(pi*t_trans/t0))
+    		cb_force2.f = A*exp(-1.0*(t[l] - t_trans)/tr)
         # At each gauss point, solve for cross-bridge distributions using myosim
         print "calling myosim"
-        for mm in np.arange(no_of_int_points):
+        """for mm in np.arange(no_of_int_points):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
             if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
-              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
+              j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])"""
 
         if save_cell_output:
             for  i in range(no_of_int_points):
