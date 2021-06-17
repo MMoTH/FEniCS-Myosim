@@ -145,14 +145,38 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             def inside(self, x, on_boundary):
                 tol = 1E-14
                 return (near(x[0],0.0,tol) and near(x[1],y_end,tol) and near(x[2],0.0,tol))
-        class Fix_yz_at_center_of_right_face(SubDomain):
+        class Fix_y_points_at_right_face(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-3
-                return (near(x[0],x_end,tol) and near(x[1],y_center,tol) and near(x[2],z_center,tol))
-	class Fix_yz_at_center_of_left_face(SubDomain):
+                return (near(x[0],x_end,tol) and near(x[1],y_center,tol))
+        class Fix_z_points_at_right_face(SubDomain):
             def inside(self, x, on_boundary):
                 tol = 1E-3
-                return (near(x[0],0.0,tol) and near(x[1],y_center,tol) and near(x[2],z_center,tol))
+                return (near(x[0],x_end,tol) and near(x[2],z_center,tol))
+	class Fix_y_points_at_left_face(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-3
+                return (near(x[0],0.0,tol) and near(x[1],y_center,tol))
+        class Fix_z_points_at_left_face(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-3
+                return (near(x[0],0.0,tol) and near(x[2],z_center,tol))
+	class Left_back_midpoint(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return (near(x[0],0.0,tol) and near(x[1],y_center,tol) and near(x[2],0.0,tol))
+        class Left_top_midpoint(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return (near(x[0],0.0,tol) and near(x[1],y_end,tol) and near(x[2],z_center,tol))
+        class Left_front_midpoint(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return (near(x[0],0.0,tol) and near(x[1],y_center,tol) and near(x[2],z_end,tol))
+        class Left_bottom_midpoint(SubDomain):
+            def inside(self, x, on_boundary):
+                tol = 1E-14
+                return (near(x[0],0.0,tol) and near(x[1],0.0,tol) and near(x[2],z_center,tol))
 
         # Appropriately mark all facetboundaries
         facetboundaries.set_all(0)
@@ -165,8 +189,14 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         fix = Fix()
         fix2 = Fix2()
         fix3 = Fix3()
-        fix_yz_at_center_of_right_face = Fix_yz_at_center_of_right_face()
-	fix_yz_at_center_of_left_face = Fix_yz_at_center_of_left_face()
+        fix_y_points_at_right_face = Fix_y_points_at_right_face()
+	fix_z_points_at_right_face = Fix_z_points_at_right_face()
+        fix_y_points_at_left_face = Fix_y_points_at_left_face()
+        fix_z_points_at_left_face = Fix_z_points_at_left_face()
+	left_back_midpoint = Left_back_midpoint()
+        left_top_midpoint = Left_top_midpoint()
+        left_front_midpoint = Left_front_midpoint()
+        left_bottom_midpoint = Left_bottom_midpoint()
 
         left.mark(facetboundaries, 1)
         right.mark(facetboundaries, 2)
@@ -216,12 +246,16 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcfix22 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix2,method="pointwise")
             bcfix3 = DirichletBC(W.sub(0).sub(0), Constant((0.0)),fix3,method="pointwise")
             bcfix33 = DirichletBC(W.sub(0).sub(2), Constant((0.0)),fix3,method="pointwise")
-            bc_fix_yz_rf1 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_yz_at_center_of_right_face,method="pointwise")
-            bc_fix_yz_rf2 = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_yz_at_center_of_right_face,method="pointwise")
-	    bcfix_yz_lf1 = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_yz_at_center_of_left_face,method="pointwise")
-            bcfix_yz_lf2 = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_yz_at_center_of_left_face,method="pointwise")
-            bcs = [bcleft,bcfix,bcfix22,bcfix33,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix_yz_lf1,bcfix_yz_lf2]
-
+            bc_fix_y_rf = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_points_at_right_face,method="pointwise")
+            bc_fix_z_rf = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z_points_at_right_face,method="pointwise")
+	    bc_fix_y_lf = DirichletBC(W.sub(0).sub(1), Constant((0.0)),fix_y_points_at_left_face,method="pointwise")
+            bc_fix_z_lf = DirichletBC(W.sub(0).sub(2), Constant((0.0)), fix_z_points_at_left_face,method="pointwise")
+            bcleft_back_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_back_midpoint,method="pointwise")
+            bcleft_top_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_top_midpoint,method="pointwise")
+            bcleft_front_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_front_midpoint,method="pointwise")
+            bcleft_bottom_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_bottom_midpoint,method="pointwise")
+	    #bcs = [bcleft,bcleft_back_mp,bcleft_top_mp,bcleft_front_mp,bcleft_bottom_mp,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix_yz_lf1,bcfix_yz_lf2]
+	    bcs = [bcleft, bc_fix_y_rf, bc_fix_z_rf, bc_fix_y_lf, bc_fix_z_lf]
             #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
             protocol["previous_end_disp"] = 0.0
             protocol["diastole"] = 1

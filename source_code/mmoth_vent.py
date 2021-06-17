@@ -117,8 +117,11 @@ def fenics(sim_params):
 
     else:
         #ventricle modeling
-        deg = 4
-        no_of_int_points = 14 * np.shape(mesh.cells())[0]
+        # Kurtis changing this 6/17/21 to test accuracy/time
+        #deg = 4
+        #no_of_int_points = 14 * np.shape(mesh.cells())[0]
+        deg = 2
+        no_of_int_points = 4 * np.shape(mesh.cells())[0]
         #set surface id numbers
         topid = 4
         LVendoid = 2
@@ -400,7 +403,7 @@ def fenics(sim_params):
         x_dir.vector()[jj*3] = 1.
         x_dir.vector()[jj*3+1] = 0.
         x_dir.vector()[jj*3+2] = 0.
-    for jj in np.arange(6648):
+    for jj in np.arange(no_of_int_points):
         x_vec.vector()[jj*3] = 1.
         x_vec.vector()[jj*3+1] = 0.
         x_vec.vector()[jj*3+1] = 0.
@@ -1125,7 +1128,7 @@ def fenics(sim_params):
                         stress_type = Fmat*Pactive
                     elif stress_name == "total":
                         stress_type = PK2_passive + Fmat*Pactive
-                    fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,no_of_int_points)
+                    fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 		    f0.vector()[:] += fdiff.vector()[:]
 	        #update fiber orientations
                 s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)

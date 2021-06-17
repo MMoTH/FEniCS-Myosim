@@ -601,7 +601,7 @@ class Forms(object):
 
         return f_adjusted
 
-    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa,no_of_int_points):
+    def new_stress_kroon(self,stress_tensor,FunctionSpace,step_size,kappa,binary_mask):
 
         mesh = self.parameters["mesh"]
         PK2 = stress_tensor
@@ -609,11 +609,18 @@ class Forms(object):
         f = PK2*f0/sqrt(inner(PK2*f0,PK2*f0))
 	
 	f_proj = project(f,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        for i in range(no_of_int_points):
+        """for i in range(no_of_int_points):
             f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
             if np.all(np.isnan(f_array)):
                 
 		f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
+                f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
+                f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]"""
+	for i in range(len(binary_mask)):
+            f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
+            if binary_mask[i] == 1:
+
+                f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
                 f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
                 f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]
 

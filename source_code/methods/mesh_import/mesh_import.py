@@ -91,7 +91,7 @@ def import_mesh(sim_geometry, options):
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
 
         if sim_geometry == "ellipsoid":
-            casename = "ellipsoid_scaled"
+            casename = "ellipsoid_scaled_2"
         else:
             casename = "New_mesh" #New_mesh is the default casename in scripts sent from Dr. Lee
 

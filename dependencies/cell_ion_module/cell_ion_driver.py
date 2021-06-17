@@ -94,7 +94,8 @@ class cell_ion_driver():
         if self.model_name == "three_state_calcium":
             cycle = 0.0
             # Time is passed in as ms, not seconds
-            t = float(l)/1000
+            t = l%170
+            t = float(t)/1000
             print "calcium time is = " + str(t)
             # Don't plan on using this transient much, hard coding some stuff
             #t_act = 0.0
