@@ -255,8 +255,9 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
             bcleft_front_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_front_midpoint,method="pointwise")
             bcleft_bottom_mp = DirichletBC(W.sub(0), Constant((0.0,0.0,0.0)), left_bottom_midpoint,method="pointwise")
 	    #bcs = [bcleft,bcleft_back_mp,bcleft_top_mp,bcleft_front_mp,bcleft_bottom_mp,bc_fix_yz_rf1,bc_fix_yz_rf2,bcfix_yz_lf1,bcfix_yz_lf2]
-	    bcs = [bcleft, bc_fix_y_rf, bc_fix_z_rf, bc_fix_y_lf, bc_fix_z_lf]
-            #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
+	    #bcs = [bcleft, bc_fix_y_rf, bc_fix_z_rf, bc_fix_y_lf, bc_fix_z_lf]
+            bcs = [bcleft,bcfix,bcfix22,bcfix33,bc_fix_y_rf,bc_fix_z_rf]
+	    #print "KURTIS LOOK HERE, ASSIGNING PROTOCOL ARRAY"
             protocol["previous_end_disp"] = 0.0
             protocol["diastole"] = 1
             protocol["isovolumic"] = 0
