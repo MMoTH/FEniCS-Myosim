@@ -27,11 +27,12 @@ class circ_module():
             self.systole = 0
             self.AV_new = 0
             self.MV_new = 0
+            self.end_systole = 0
 
             # Compartment pressures
-            self.Part = 0.0
-            self.Pven = 0.0
-            self.PLV = 0.0
+            self.Part = params["Part"]
+            self.Pven = params["Pven"] 
+            self.PLV = params["PLV"]
 
             # Flow between compartments
             self.Qao = 0.0
@@ -49,6 +50,10 @@ class circ_module():
     def update_compartments(self,p_cav,V_cav,step_size):
 
         if self.model == "three_compartment_wk":
+
+            # Always set "end_systole" tp 0. Should only switch to 1 once
+            self.end_systole = 0
+            self.end_diastole = 0
             print "updating windkessel"
 
             self.V_cav = V_cav
@@ -86,9 +91,11 @@ class circ_module():
             self.Qper = 1.0/self.Rper*(self.Part - self.Pven);
 
             if(self.MV_old == 1 and self.MV_new == 0):
+                self.end_diastole = 1
                 self.systole = 1
             if(self.AV_old == 1 and self.AV_new == 0):
                 self.systole = 0
+                self.end_systole = 1
 
             self.MV_old = self.MV_new
             self.AV_old = self.AV_new
@@ -108,5 +115,7 @@ class circ_module():
             self.output_dict["V_ven"] = self.V_ven
             self.output_dict["Pven"] = self.Pven
             self.output_dict["Part"] = self.Part
+            self.outupt_dict["end_systole"] = self.end_systole
+            self.output_dict["end_diastole"] = self.end_disp_array
 
         return self.output_dict

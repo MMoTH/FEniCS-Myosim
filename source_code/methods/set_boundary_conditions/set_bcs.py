@@ -337,6 +337,7 @@ def set_bcs(sim_geometry,protocol,geo_options,mesh,W,facetboundaries,expr):
         back.mark(facetboundaries, 7)
 
         if sim_type == "ramp_and_hold" or sim_type == "custom":
+            print "checking expression",expr["u_D"].u_D
             # Similar to cylinder but without fixing displacement along y and z axes to prevent rotation
             bcleft= DirichletBC(W.sub(0).sub(0), Constant((0.0)), facetboundaries, 1)         # u1 = 0 on left face
             bcright= DirichletBC(W.sub(0).sub(0), expr["u_D"], facetboundaries, 2)
