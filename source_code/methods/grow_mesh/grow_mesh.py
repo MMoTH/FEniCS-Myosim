@@ -47,3 +47,35 @@ class growth():
             theta3 = theta2
 
         return theta1,theta2,theta3
+
+
+    def grow_ellipsoid(self):
+
+        #pseudo code for now
+        # Need mesh passed in, growth stimulus
+
+        # Save current EDP?
+        # Need boundary conditions passed in?
+        # Will need the dictionary of expressions as well
+        # Need reference cavity volume saved, initialized as class property?
+
+        # Need to unload the ventricle
+        #------------------------------------
+
+        # First, solve variational problem without active stress
+        # Define F1 - F4 but omit active stress term
+
+
+        # Then, unload the LV back to reference volume?
+        # current_volume = expr["LVCavityvol"].vol
+        # reference_volume = self.reference_volume
+        # vol_increment = (current_volume - reference_volume)/10 # 10 is arbitrary
+        # for i in np.arange(10):
+        #    expr["LVCavityvol"].vol -= vol_increment
+        #    solve(Ftotal = 0, bcs = bcs, ...)
+
+        # Update theta1, theta2, theta3 in general. Here, just for concentric, update theta2 and theta3
+        # Need the current stimulus value (will come from previous cycle for now, end systolic active stress?)
+        # stim_value_projected = ...
+        #
+        # theta2 += (1./self.s0_time_constant)*((stim_fcn_projected - set_point_fcn)/set_point_fcn)
