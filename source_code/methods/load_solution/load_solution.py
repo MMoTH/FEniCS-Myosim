@@ -26,8 +26,8 @@ def load_solution(load_solution_dir,sim_geometry,sim_protocol,n_array_length):
     Press.P = df.Press[0]
     #cb_f_array = df.cb_f_array[:]
     #p_f_array = df.p_f_array[:]
-    cb_f_array = np.load('cb_f_array.npy')
-    p_f_array = np.load('p_f_array.npy')
+    cb_f_array = np.load(load_solution_dir+'cb_f_array.npy')
+    p_f_array = np.load(load_solution_dir+'p_f_array.npy')
 
     expressions = {
         "LVCavityvol":LVCavityvol,
@@ -136,12 +136,18 @@ def load_solution(load_solution_dir,sim_geometry,sim_protocol,n_array_length):
     wk_params = {}
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
         # load in more windkessel parameters
-        df_wk = pd.read_csv(load_solution_dir+'sol_df_wk.csv')
+        """df_wk = pd.read_csv(load_solution_dir+'sol_df_wk.csv')
         wk_params["V_ven"] = df_wk.V_ven[0]
         wk_params["V_art"] = df_wk.V_art[0]
         wk_params["Part"] = df_wk.Part[0]
         wk_params["Pven"] = df_wk.Pven[0]
-        wk_params["PLV"] = df_wk.PLV[0]
+        wk_params["PLV"] = df_wk.PLV[0]"""
+	fdataPV = np.loadtxt(load_solution_dir+"PV_.txt")
+        wk_params["PLV"] = fdataPV[-1,1]
+        wk_params["Part"] = fdataPV[-1,2]
+        wk_params["Pven"] = fdataPV[-1,3]
+        wk_params["V_ven"] = fdataPV[-1,5]
+        wk_params["V_art"] = fdataPV[-1,6]
 
 
 

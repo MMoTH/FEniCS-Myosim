@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-sys.path.append("/home/fenics/shared/dependencies/")
-sys.path.append("/home/fenics/shared/source_code/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+#sys.path.append("/home/fenics/shared/dependencies/")
+#sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -61,8 +61,15 @@ def fenics(sim_params):
     t = np.linspace(0,sim_duration,no_of_time_steps)
     save_cell_output = sim_params["save_cell_output"][0] # myosim output
     save_visual_output = sim_params["save_visual_output"][0] # paraview files for visualization
-    load_solution = sim_params["load_solution"][0]
-    load_solution_dir = sim_params["load_solution"][1]
+    if "load_solution" in sim_params.keys():
+	load_solution = sim_params["load_solution"][0]
+	load_solution_dir = sim_params["load_solution"][1]
+    else:
+	load_solution = 0
+    if "save_solution" in sim_params.keys():
+	save_solution_flag = sim_params["save_solution"][0]
+    else:
+	save_solution_flag = 0
     output_path = sim_params["output_path"][0]
     print "output path: ", output_path
 
@@ -227,16 +234,16 @@ def fenics(sim_params):
         #eigen_file = File(output_path + "stress_eigen.pvd")
         shearfs_file = File(output_path + "shear_fs.pvd")
         shearfn_file = File(output_path + "shear_fn.pvd")
-
+	shearsn_file = File(output_path + "shear_sn.pvd")
 
         stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
         f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
 
 
-        if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
-            # initialize a file for pressures and volumes in windkessel
-            if (MPI.rank(comm) == 0):
-                fdataPV = open(output_path + "PV_.txt", "w", 0)
+    if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
+        # initialize a file for pressures and volumes in windkessel
+        if (MPI.rank(comm) == 0):
+            fdataPV = open(output_path + "PV_.txt", "w", 0)
 
     if save_cell_output:
 
@@ -293,6 +300,11 @@ def fenics(sim_params):
     y_interp = np.zeros((no_of_int_points)*n_array_length)
     calcium = np.zeros(no_of_time_steps)
     rxn_force = np.zeros(no_of_time_steps+21)
+    avg_fdiff_x_array = np.zeros(no_of_time_steps)
+    avg_fdiff_y_array = np.zeros(no_of_time_steps)
+    avg_fdiff_z_array = np.zeros(no_of_time_steps)
+    reorient_finish_array = np.zeros(no_of_time_steps)
+    avg_fdiff_norm_array = np.zeros(no_of_time_steps)
     delta_hsl_array = np.zeros(no_of_int_points)
     traction_switch_flag = 0
 
@@ -895,7 +907,7 @@ def fenics(sim_params):
     # passive material contribution
     F1 = derivative(Wp, w, wtest)*dx
 
-    # active stress contribution (Pactive is PK1, transform to PK2)
+    # active stress contribution (Pactive is PK2, transform to PK1)
     F2 = inner(Fmat*Pactive, grad(v))*dx
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -1030,10 +1042,10 @@ def fenics(sim_params):
 
                     if save_visual_output:
                         displacement_file << w.sub(0)
-                        pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
-                        pk1temp.rename("pk2_active","active_stress")
+                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+                        pk2temp.rename("pk2_active","active_stress")
 
-                        active_stress_file << pk1temp
+                        active_stress_file << pk2temp
                         hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                         hsl_temp.rename("hsl_temp","half-sarcomere length")
                         hsl_file << hsl_temp
@@ -1168,10 +1180,10 @@ def fenics(sim_params):
 
         # Saving concentric growth stimulus here
         if end_systole > 0:
-            end_systolic_stress_calc = inner(f0,(PK2 + Fmat*Pactive)*f0)
+            end_systolic_stress_calc = inner(f0,(PK2 + Pactive)*f0)
             concentric_growth_stimulus = project(end_systolic_stress_calc,FunctionSpace(mesh,"DG",1))
         if end_diastole > 0:
-            end_diastolic_stress_calc = inner(f0,(PK2+Fmat*Pactive)*f0)
+            end_diastolic_stress_calc = inner(f0,(PK2+Pactive)*f0)
             eccentric_growth_stimulus = project(end_diastolic_stress_calc,FunctionSpace(mesh,"DG",1))
         #print PK2.vector().get_local().reshape(24,3,3)
         #total_stress = project(PK2_passive + Pactive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
@@ -1229,22 +1241,34 @@ def fenics(sim_params):
                 p_f_array[ii] = 0.0
 
         # Kroon update fiber orientation?
+	"""if stress_name == "passive":
+            driver_type = PK2_passive
+        elif stress_name == "active":
+            driver_type = Pactive
+        elif stress_name == "total":
+            driver_type = PK2_passive + Pactive
+	elif stress_name == "strain":
+	    driver_type = Emat
+	if ordering_law == "strain_kroon":
+	    driver_type = Emat"""
         if 'kroon_time_constant' in locals():
-            if l > float(reorient_start_time)/float(sim_timestep)+1:
+            if stress_name == "passive":
+                driver_type = PK2_passive
+            elif stress_name == "active":
+                driver_type = Pactive
+            elif stress_name == "total":
+                driver_type = PK2_passive + Pactive
+            if ordering_law == "strain_kroon":
+                driver_type = Emat
+            if l > float(reorient_start_time)/float(sim_timestep):
                 print "updating fiber orientation"
                 if ordering_law == "stress_kroon":
                     fdiff = uflforms.stress_kroon(PK2,Quad,fiberFS,TF_kroon,float(sim_timestep),kroon_time_constant)
                 elif ordering_law == "strain_kroon":
-                    fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant)
+                    fdiff = uflforms.kroon_law(fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 		    f0.vector()[:] += fdiff.vector()[:]
                 elif ordering_law == "new_stress_kroon":
-		    if stress_name == "passive":
-                        stress_type = PK2_passive
-                    elif stress_name == "active":
-                        stress_type = Fmat*Pactive
-                    elif stress_name == "total":
-                        stress_type = PK2_passive + Fmat*Pactive
-                    fdiff = uflforms.new_stress_kroon(stress_type,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
+                    fdiff = uflforms.new_stress_kroon(driver_type,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 		    f0.vector()[:] += fdiff.vector()[:]
 	        #update fiber orientations
                 s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
@@ -1300,12 +1324,13 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
-            pk1temp = project(inner(f0,Fmat*Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
-            pk1temp.rename("pk2_active","active_stress")
-            active_stress_file << pk1temp
-            hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
-            hsl_temp.rename("hsl_temp","half-sarcomere length")
-            hsl_file << hsl_temp
+            if cb_number_density != 0:
+		pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+		pk2temp.rename("pk2_active","active_stress")
+		active_stress_file << pk2temp
+            #hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
+            #hsl_temp.rename("hsl_temp","half-sarcomere length")
+            #hsl_file << hsl_temp
             #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
@@ -1328,6 +1353,25 @@ def fenics(sim_params):
             f0_temp = project(temp_fibrotic_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('fibrotic f0','fibrotic f0')
             fibrotc_fiber_file << f0_temp
+	    # Save fdiff for unit cube and simple shear simulations
+            if "reorient_start_time" in locals():
+                if l > float(reorient_start_time)/float(sim_timestep) and (sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear") and (not (sim_geometry == "gmesh_cylinder")):
+		    no_of_vectors = int(len(fdiff.vector().get_local())/3)
+		    fdiff_array = abs(fdiff.vector().get_local().reshape(no_of_vectors,3))
+		    for i in range(no_of_vectors-1):	
+		        fdiff_array[0] += fdiff_array[i+1]
+		    avg_fdiff_array = fdiff_array[0]/no_of_vectors
+		    avg_fdiff_x_array[l] = avg_fdiff_array[0]
+		    avg_fdiff_y_array[l] = avg_fdiff_array[1]
+		    avg_fdiff_z_array[l] = avg_fdiff_array[2]
+		    avg_fdiff_norm_array[l]	= np.linalg.norm(avg_fdiff_array)	
+		    np.save(output_path + 'avg_fdiff_x', avg_fdiff_x_array)
+		    np.save(output_path + 'avg_fdiff_y', avg_fdiff_y_array)
+		    np.save(output_path + 'avg_fdiff_z', avg_fdiff_z_array)
+		    np.save(output_path + 'avg_fdiff_norm', avg_fdiff_norm_array)
+		    if np.linalg.norm(avg_fdiff_array) < 1E-4:
+		        reorient_finish_array[l] = l/sim_timestep
+		        np.save(output_path + 'reorient_finish',reorient_finish_array)
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
             #s0_temp.rename('s0','s0')
             #sheet_file << s0_temp
@@ -1346,14 +1390,18 @@ def fenics(sim_params):
             eigen_temp.rename('eigen_temp','stress eigen')
             eigen_file << eigen_temp"""
 
-            shearfn_temp = project(inner(n0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
-            shearfn_temp.rename("shear fn","shear fn")
-            shearfn_file << shearfn_temp
+            if "reorient_t_start" in locals():
+                shearfn_temp = project(inner(n0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+                shearfn_temp.rename("shear fn","shear fn")
+                shearfn_file << shearfn_temp
 
-            shearfs_temp = project(inner(s0,(PK2_passive+Fmat*Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
-            shearfs_temp.rename("shear fs","shear fs")
-            shearfs_file << shearfs_temp
-
+                shearfs_temp = project(inner(s0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+                shearfs_temp.rename("shear fs","shear fs")
+                shearfs_file << shearfs_temp
+	
+	        shearsn_temp = project(inner(s0,driver_type*n0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+	        shearsn_temp.rename("shear_sn","shear_sn")
+	        shearsn_file << shearsn_temp
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
 
@@ -1479,17 +1527,17 @@ def fenics(sim_params):
     angles_array = np.arccos(f0_dot_x_vec_array)
     np.save(output_path+"final_angles_array.npy",angles_array)
 
-    if sim_params["save_solution"][0] > 0:
+    if save_solution_flag > 0:
         print "Trying to save full solution to load into another simulation"
         hsl = project(hsl,Quad)
-        wk_params_to_save = {}
-        if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
+        #wk_params_to_save = {}
+        """if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
             wk_params_to_save["Part"] = circ_dict["Part"]
             wk_params_to_save["Pven"] = circ_dict["Pven"]
             wk_params_to_save["PLV"] = circ_dict["PLV"]
             wk_params_to_save["V_ven"] = circ_dict["V_ven"]
-            wk_params_to_save["V_art"] = circ_dict["V_art"]
-        save_solution.save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array,wk_params_to_save)
+            wk_params_to_save["V_art"] = circ_dict["V_art"]"""
+        save_solution.save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array)
 
     # -------------- Attempting growth here --------------------------------
 

@@ -58,7 +58,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
 
             else:
                 # still in the ramp and hold stage
-                expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options)
+                expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options,expr["u_D"].u_D)
                 output_dict["bcs"] = bcs
                 output_dict["expr"]=expr
                 output_dict["traction_switch_flag"] = traction_switch_flag
@@ -242,7 +242,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
         print "next cycle_l",sim_protocol["track_and_update"]["cycle_l"][0]
 
 
-    elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
+    elif sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear" or sim_protocol["simulation_type"][0] == "ramp_and_hold_biaxial":
         expr["u_D"].u_D = ramp_and_hold(time,sim_protocol,geo_options,expr["u_D"].u_D)
         print "u_D: ",expr["u_D"].u_D
         expr["u_front"].u_front = (1./((1.+expr["u_D"].u_D)*(1.+expr["u_D"].u_D))-1.)

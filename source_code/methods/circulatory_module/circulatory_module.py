@@ -115,7 +115,7 @@ class circ_module():
             self.output_dict["V_ven"] = self.V_ven
             self.output_dict["Pven"] = self.Pven
             self.output_dict["Part"] = self.Part
-            self.outupt_dict["end_systole"] = self.end_systole
-            self.output_dict["end_diastole"] = self.end_disp_array
+            self.output_dict["end_systole"] = self.end_systole
+            self.output_dict["end_diastole"] = self.end_diastole
 
         return self.output_dict

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array,wk_params):
+def save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array):
 
     print "saving solution"
     f = HDF5File(mpi_comm_world(), output_path+"solution.hdf5",'w')
@@ -52,14 +52,14 @@ def save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdo
     # Save myosim populations
     f.write(y_vec,"y_vec")
 
-    if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
+    """if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
         # save windkessel stuff
         columns_wk = ['V_ven','V_art','Part','PLV','Pven']
         sol_df_wk = pd.DataFrame(columns=columns)
-        row_wk = {'V_ven':wk_params["V_ven"],'V_art':wk_params["V_art"],'Part':wk_params["Part"],'PLV':wk_params["PLV"],'Pven',wk_params["Pven"]}
+        row_wk = {'V_ven':wk_params["V_ven"],'V_art':wk_params["V_art"],'Part':wk_params["Part"],'PLV':wk_params["PLV"],'Pven':wk_params["Pven"]}
         sol_df_wk = pd.DataFrame(data=row)
-        sol_df_wk.to_csv(output_path+'sol_df_wk.csv')
+        sol_df_wk.to_csv(output_path+'sol_df_wk.csv')"""
 
 
 

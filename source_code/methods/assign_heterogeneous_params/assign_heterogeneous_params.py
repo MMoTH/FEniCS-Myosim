@@ -364,7 +364,7 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_pro
                 if k == "cb_number_density":
                     dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
                 else:
-                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 11750
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
@@ -402,7 +402,7 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_ce
 
         if (end_marker_array[jj] > 9.0) or (end_marker_array[jj] < geo_options["compliance_first_bdry_end"][0]):
             if k == "cb_number_density":
-                print "ASSIGNING CROSSBRIDGE DENSITY"
+                #print "ASSIGNING CROSSBRIDGE DENSITY"
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
             else:
                 dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
@@ -422,11 +422,12 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
 
         if end_marker_array[jj] < 0.5:
             compliant_cell_array.append(jj)
-            if k == "cb_number_density":
+            """if k == "cb_number_density":
                 print "ASSIGNING CROSSBRIDGE DENSITY TO ", fiber_value
                 dolfin_functions[k][-1].vector()[jj] = fiber_value
-            else:
-                dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+            else:"""
+            dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+	    dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
 
     print "compliant_cell_array: ", compliant_cell_array
     for index in total_cell_array:
@@ -446,9 +447,10 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
 
                 if k == "cb_number_density":
                     #dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
-                    print "don't want to touch density for remaining elements!!!!!"
+                    #print "don't want to touch density for remaining elements!!!!!"
+		    pass
                 else:
-                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 3130 
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
@@ -459,8 +461,9 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
             if jj in sample_indices:
 
                 if k == "cb_number_density":
-                    print "don't want to mess with density here!!!!!"
+                    #print "don't want to mess with density here!!!!!"
                     #dolfin_functions[k][-1].vector()[jj] = base_value*scaling_factor #make 20 specified by user
+		    pass
                 else:
                     dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
 
@@ -476,7 +479,7 @@ def df_inclusion_law(dolfin_functions,base_value,k,scaling_factor,mat_prop,no_of
         if mat_prop == "isotropic":
 
             if x_marker_array[jj] > 1.0 and x_marker_array[jj] <= 2.0 and y_marker_array[jj] > 1.0 and y_marker_array[jj] <= 2.0 and z_marker_array[jj] > 1.0 and z_marker_array[jj] <= 2.0:
-                dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                dolfin_functions["passive_params"][k][-1].vector()[jj] = 3130 
                 dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                 dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                 dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
@@ -502,19 +505,19 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
 
             if normal == "x":
                 if x_marker_array[jj] <= x_length/2:
-                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 3130
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
             elif normal == "y":
                 if y_marker_array[jj] <= y_length/2:
-                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 3130
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
             elif normal == "z":
                 if z_marker_array[jj] <= z_length/2:
-                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 2360
+                    dolfin_functions["passive_params"][k][-1].vector()[jj] = 3130
                     dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
                     dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
@@ -536,17 +539,40 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
 
 def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_factor,act_option,no_of_cells,geo_options):
 
-    sample_indices = r.choice(no_of_cells,int(percent*no_of_cells),replace=True)
+    end_marker_array = geo_options["x_marker_array"]
+    
+    print "NO OF CELLS", no_of_cells
+    compliant_cell_array = []
+    remaining_cell_array = []
+    total_cell_array = np.arange(no_of_cells)
 
-    values_array = r.normal(0.0,width,int(percent*no_of_cells))
+    for jj in total_cell_array:
 
-    for jj in np.arange(no_of_cells):
+	# create compliant, non-contracting end and track corresponding indices
+        if end_marker_array[jj] < 0.5:
+            compliant_cell_array.append(jj)
+            dolfin_functions["passive_params"]["c"][-1].vector()[jj] = 26.6 
+	    dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
 
-        if jj in sample_indices:
+    print "compliant_cell_array: ", compliant_cell_array
+    for index in total_cell_array:
+        if index not in compliant_cell_array:
+            remaining_cell_array.append(index)
+    remaining_no_of_cells = len(remaining_cell_array)
+    print "remaining_no_of_cells: ", remaining_no_of_cells
+    #print "remaining_cell_array: ", remaining_cell_array
+    sample_indices = r.choice(remaining_cell_array,int(percent*remaining_no_of_cells), replace=False)
+
+    values_array = r.normal(0.0,width,int(percent*remaining_no_of_cells))
+    value_index_dict = dict(zip(sample_indices,values_array))
+
+    for jj in remaining_cell_array:
+
+        if jj in value_index_dict.keys():
 
             if act_option == "no_contract":
                 dolfin_functions[k][-1].vector()[jj] = 0.0
             else:
-                dolfin_functions[k][-1].vector()[jj] = scaling_factor*base_value*(1.0 + values_array[jj])
+                dolfin_functions[k][-1].vector()[jj] = scaling_factor*base_value*(1.0 + value_index_dict[jj])
 
     return dolfin_functions

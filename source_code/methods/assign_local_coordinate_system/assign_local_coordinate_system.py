@@ -103,6 +103,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
             #if (temp_tester_array[jj] < dig_array[jj]) or (temp_tester_array[jj] > -dig_array[jj] + 10.0):
             if (end_marker_array[jj] > start_end_compliance) or (end_marker_array[jj] < end_beginning_compliance):
+                print "assigning end fibers"
                 # inside left end
                 f0.vector()[jj*3] = 1.0
                 f0.vector()[jj*3+1] = 0.0
@@ -131,9 +132,9 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
                       f0.vector()[jj*3+1] = 0.0 #-0.258819045102521 #-0.707106781186548
                       f0.vector()[jj*3+2] = 0.0
 
-            f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
-            f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
-            f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
+            #f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
+            #f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
+            #f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
 
             f0_holder = f0.vector().array()[jj*3:jj*3+3]
             f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
