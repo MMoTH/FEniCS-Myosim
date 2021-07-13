@@ -15,6 +15,14 @@ class Forms(object):
 
         self.parameters = self.default_parameters()
         self.parameters.update(params)
+        """if "growth_tensor" in self.parameters:
+            self.Fg = self.parameters["growth_tensor"]
+            self.M1ij = self.parameters["M1"]
+            self.M2ij = self.parameters["M2"]
+            self.M3ij = self.parameters["M3"]
+            self.TF = self.parameters["TF"]
+        else:
+            self.Fg = Identity(3)"""
 
     def default_parameters(self):
         return {#"bff"  : 29.0,
@@ -33,10 +41,26 @@ class Forms(object):
         F = I + grad(u)
         return F
 
+    """def update_Fg(self,theta1,theta2,theta3):
+
+        Fg = self.Fg
+        M1ij = self.M1ij
+        M2ij = self.M2ij
+        M3ij = self.M3ij
+
+        Fg = theta1*M1ij + theta2*M2ij + theta3*M3ij
+
+        print "Fg updated", project(Fg,self.TF).vector().get_local()
+
+        self.Fg = Fg"""
+
     def Fe(self):
         #Fg = self.parameters["growth_tensor"]
         F = self.Fmat()
+        #Fg = self.Fg
+        #Fe = as_tensor(F[i,j]*inv(Fg)[j,k], (i,k))
         if "growth_tensor" in self.parameters:
+            print "growth tensor exists, creating Fe"
             Fg = self.parameters["growth_tensor"]
             Fe = as_tensor(F[i,j]*inv(Fg)[j,k], (i,k))
         else:
@@ -239,6 +263,7 @@ class Forms(object):
         x = u + X
 
         F = self.Fmat()
+
         N = self.parameters["facet_normal"]
         n = cofac(F)*N
 
@@ -615,12 +640,12 @@ class Forms(object):
         PK2 = stress_tensor
         f0 = self.parameters["fiber"]
         f = PK2*f0/sqrt(inner(PK2*f0,PK2*f0))
-	
+
 	f_proj = project(f,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         """for i in range(no_of_int_points):
             f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
             if np.all(np.isnan(f_array)):
-                
+
 		f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
                 f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
                 f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]"""

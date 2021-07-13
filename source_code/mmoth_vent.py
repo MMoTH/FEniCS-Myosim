@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-#sys.path.append("/home/fenics/shared/dependencies/")
-#sys.path.append("/home/fenics/shared/source_code/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+sys.path.append("/home/fenics/shared/dependencies/")
+sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -78,7 +78,7 @@ def fenics(sim_params):
 
     # growth parameters
     #if 'growth_params' in locals():
-    print "ASSIGNING GROWTH PARAMS"
+    #print "ASSIGNING GROWTH PARAMS"
     if "save_fx_only" in sim_params.keys():
         save_fx_only = sim_params["save_fx_only"][0]
     else:
@@ -88,14 +88,14 @@ def fenics(sim_params):
         set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
         k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
     if "fiber_reorientation" in growth_params.keys():
-        print "ASSIGNING FIBER REMODELING LAW PARAMS"
+        #print "ASSIGNING FIBER REMODELING LAW PARAMS"
         ordering_law = growth_params["fiber_reorientation"]["law"][0]
         kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
-        print "KROON TIME CONSTANT =",kroon_time_constant
+        #print "KROON TIME CONSTANT =",kroon_time_constant
         reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
         stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
-        print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
-        print "loaded growth params"
+        #print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
+        #print "loaded growth params"
     else:
         k_myo_damp = 0.0
 
@@ -160,7 +160,7 @@ def fenics(sim_params):
 
 
     no_of_cells = len(subdomains.array())
-    print 'no_of_cells: ', no_of_cells
+    #print 'no_of_cells: ', no_of_cells
 
 
     # from the mesh, define some things
@@ -401,7 +401,7 @@ def fenics(sim_params):
     fiberFS = FunctionSpace(mesh, VQuadelem)
 
     # Tensor function space
-    TF = TensorFunctionSpace(mesh, 'CG', 2)
+    TF = TensorFunctionSpace(mesh, 'DG', 1)
     TFQuad = FunctionSpace(mesh, Telem2)
     TF_kroon = TensorFunctionSpace(mesh,'DG',1)
 
@@ -422,11 +422,11 @@ def fenics(sim_params):
                 #W = FunctionSpace(mesh, MixedElement([Velem,Qelem,Relem]))
                 W = FunctionSpace(mesh, MixedElement([Velem,Qelem]))
             x_dofs = W.sub(0).sub(0).dofmap().dofs() # will use this for x rxn forces later
-            print "assigned W"
+            #print "assigned W"
         else:
             W = FunctionSpace(mesh, MixedElement([Velem,Qelem,Relem,VRelem]))
 
-    print str(W)
+    #print str(W)
     # Function space to differentiate fibrous tissue from contractile for fiber simulations
     # Can use thise to mark gauss points according to a user defined law in "assign_heterogeneous_params"
     marker_space = FunctionSpace(mesh, 'CG', 1)
@@ -447,10 +447,10 @@ def fenics(sim_params):
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
     x_vec = Function(fiberFS)
     x_shape = np.shape(x_dir.vector())
-    print x_shape
-    print "x shape"
+    #print x_shape
+    #print "x shape"
     x2_shape = np.shape(x_dir.vector().get_local())
-    print x2_shape
+    #print x2_shape
     #x_dir.vector()[:] = Constant((1.,0.,0.))
     for jj in np.arange(int(x2_shape[0]/3)):
         x_dir.vector()[jj*3] = 1.
@@ -461,7 +461,7 @@ def fenics(sim_params):
         x_vec.vector()[jj*3+1] = 0.
         x_vec.vector()[jj*3+1] = 0.
 
-    print x_dir.vector().get_local()
+    #print x_dir.vector().get_local()
     #f0_dot_xvec = inner(f0,x_vec)
     #f0_dot_xvec_array = project(f0_dot_xvec, Quad).vector().get_local()[:]
     #angle_array = np.arccos(f0_dot_xvec_array) # both f0 and x_vec are unit, just need their dot product
@@ -512,7 +512,7 @@ def fenics(sim_params):
     dolfin_functions = {}
     dolfin_functions["passive_params"] = passive_params
     dolfin_functions["cb_number_density"] = hs_params["cb_number_density"]
-    print "dolfin dict init"
+    #print "dolfin dict init"
     #print dolfin_functions
     # If anything else needs to eventually be initialized as a function for heterogeneity,
     # add it here. For example if introducing heterogeneity with cell_ion_params:
@@ -525,7 +525,7 @@ def fenics(sim_params):
         # fiber simulation
         dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
     else:
-        print "element wise assignment of dolfin functions!!!!!!"
+        #print "element wise assignment of dolfin functions!!!!!!"
         # element wise assignment
         dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
 
@@ -584,7 +584,7 @@ def fenics(sim_params):
     if load_solution > 0:
         hsl0 = functions_loaded["hsl0"]
         y_vec = functions_loaded["y_vec"]
-        print "loaded y_vec, checking here"
+        #print "loaded y_vec, checking here"
         print y_vec.vector().get_local()
     else:
         hsl0    = Function(Quad)
@@ -630,14 +630,14 @@ def fenics(sim_params):
 
     # Select fibers for visualization (exclude stiff regions)
     binary_mask = np.zeros((no_of_int_points),dtype=int)
-    print 'binary_mask vs c_param length: ', str(len(binary_mask)) + '/'+ str(len(dolfin_functions["passive_params"]["c"][-1].vector().get_local()))
+    #print 'binary_mask vs c_param length: ', str(len(binary_mask)) + '/'+ str(len(dolfin_functions["passive_params"]["c"][-1].vector().get_local()))
     for jj in np.arange(no_of_cells):
         hetero_c_param = dolfin_functions["passive_params"]["c"][-1].vector().get_local()[jj]
         original_c_param = float(passive_params["c"][0])
         if hetero_c_param != original_c_param:
             binary_mask[jj*4:jj*4+4] = 1
 
-    print 'first for c_param and binary mask: ', str(dolfin_functions["passive_params"]["c"][-1].vector().get_local()[0]) + '/' + str(binary_mask[:4])
+    #print 'first for c_param and binary mask: ', str(dolfin_functions["passive_params"]["c"][-1].vector().get_local()[0]) + '/' + str(binary_mask[:4])
 
     temp_fcn_visualization = Function(Quad)
     for mm in np.arange(no_of_int_points):
@@ -657,14 +657,14 @@ def fenics(sim_params):
 
     # Test select visualization for fibers
     temp_f0 = f0.copy(deepcopy=True)
-    print 'len(temp_f0): ', len(temp_f0.vector().get_local())
-    print 'len(binary_mask): ', len(binary_mask)
+    #print 'len(temp_f0): ', len(temp_f0.vector().get_local())
+    #print 'len(binary_mask): ', len(binary_mask)
     for index in np.arange(len(binary_mask)):
         if binary_mask[index] == 1:
             temp_f0.vector()[index*3] = 0.0
             temp_f0.vector()[index*3+1] = 0.0
             temp_f0.vector()[index*3+2] = 0.0
-    print 'no_of_int_points: ', no_of_int_points
+    #print 'no_of_int_points: ', no_of_int_points
 
     File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
     File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
@@ -685,23 +685,27 @@ def fenics(sim_params):
     #M2ij = Function(TFQuad)
     #M3ij = Function(TFQuad)
 
-    #Theta1 = Function(FunctionSpace(mesh,"DG",1))
-    #Theta1.vector()[:] = 1.0
+    Theta1 = Function(FunctionSpace(mesh,"DG",1))
+    Theta1.vector()[:] = 1.0
 
-    #Theta2 = Function(FunctionSpace(mesh,"DG",1))
-    #Theta2.vector()[:] = 1.0
+    Theta2 = Function(FunctionSpace(mesh,"DG",1))
+    Theta2.vector()[:] = 1.0
 
-    #Theta3 = Function(FunctionSpace(mesh,"DG",1))
-    #Theta3.vector()[:] = 1.0
+    Theta3 = Function(FunctionSpace(mesh,"DG",1))
+    Theta3.vector()[:] = 1.0
 
     # Based on the material coordinates, we can define different Growth Tensor Construct
 
-    #Fg = Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij #always created, only updated if growth
+    Fg = Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij #always created, only updated if growth
+
     #print "fg"
     #print str(Fg.vector().get_local())
     #Fg = as_tensor([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.]])
     #print "Fg"
     #print Fg[0][0]
+
+
+
 
 
     # parameters for forms file
@@ -717,8 +721,12 @@ def fenics(sim_params):
              "sheet-normal": n0,
              "incompressible": isincomp,
              "hsl0": hsl0,
-             "Kappa":Constant(1e5)}
-             #"growth_tensor": Fg}
+             "Kappa":Constant(1e5),
+             "growth_tensor": Fg,
+             "M1": M1ij,
+             "M2": M2ij,
+             "M3": M3ij,
+             "TF": TF}
 
     # update passive params because now they are heterogeneous functions
     # need to generalize this? Need to initialize passive functions (and cb density)
@@ -742,8 +750,8 @@ def fenics(sim_params):
 
     # Get deformation gradient
     Fmat = uflforms.Fmat()
-    print "Fmat"
-    print project(Fmat,TensorFunctionSpace(mesh,"DG",1)).vector().get_local()
+    Fe = uflforms.Fe()
+    #print project(Fmat,TensorFunctionSpace(mesh,"DG",1)).vector().get_local()
     #Fmat = uflforms.Fe()
     test_FS = FunctionSpace(mesh,Velem)
     Fmat2 = Function(TF)
@@ -774,7 +782,7 @@ def fenics(sim_params):
     # returns a dictionary of bcs and potentially a test_marker_fcn for work loops
     bc_output = set_bcs.set_bcs(sim_geometry,sim_protocol,geo_options,mesh,W,facetboundaries,expressions)
     bcs = bc_output["bcs"]
-    print "bcs",bcs
+    #print "bcs",bcs
     bcright = bcs[-1]
     if (sim_protocol["simulation_type"][0] != "cycle"):
         test_marker_fcn = bc_output["test_marker_fcn"]
@@ -870,7 +878,7 @@ def fenics(sim_params):
         p_f_array = expressions_loaded["p_force_loaded"]
     print "cb force array"
     print cb_f_array
-    print np.shape(cb_f_array)
+    #print np.shape(cb_f_array)
     print "passive array"
     print p_f_array
 
@@ -968,6 +976,136 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 #           Initial loading (for ventricle)
 #-------------------------------------------------------------------------------
+
+
+    # Growing mesh here starting from reference mesh. Hard coded stuff for preliminary sim
+    if growth_params:
+        load_stimuli_path = sim_params["load_stimuli_path"][0]
+        f = HDF5File(mpi_comm_world(),load_stimuli_path,'r')
+        growth_fcn_space = FunctionSpace(mesh,"DG",1)
+        concentric_growth_stimulus_loaded = Function(growth_fcn_space)
+        eccentric_growth_stimulus_loaded = Function(growth_fcn_space)
+        conc_set_point = Function(growth_fcn_space)
+        ecc_set_point = Function(growth_fcn_space)
+        f.read(concentric_growth_stimulus_loaded,"concentric_growth_stimulus")
+        f.read(eccentric_growth_stimulus_loaded,"eccentric_growth_stimulus")
+        assign(conc_set_point,concentric_growth_stimulus_loaded)
+        assign(ecc_set_point,eccentric_growth_stimulus_loaded)
+        f.close()
+        conc_set_point *= 0.9
+        ecc_set_point *= 0.9
+        conc_set_point = project(conc_set_point,growth_fcn_space)
+        ecc_set_point = project(ecc_set_point,growth_fcn_space)
+
+        # trying to solve before changing anything.
+        LVCavityvol.vol = uflforms.LVcavityvol()
+        p_cav = uflforms.LVcavitypressure()
+        hsl_array_old = hsl_array
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        hsl_array = project(hsl, Quad).vector().get_local()[:]
+        temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, Quad)
+        p_f_array = p_f.vector().get_local()[:]
+
+        for ii in range(np.shape(hsl_array)[0]):
+            if p_f_array[ii] < 0.0:
+                p_f_array[ii] = 0.0
+
+        delta_hsl_array = hsl_array - hsl_array_old
+
+        for i in np.arange(20):
+            #Theta1 += (1/10.)*(concentric_growth_stimulus_loaded - conc_set_point)/conc_set_point
+            Theta2.vector()[:] += 0.01
+            Theta3.vector()[:] += 0.01
+            #Fg = project(Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij,TF)
+            #print "FG"
+            #print Fg.vector().get_local()[0:9]
+            #uflforms.parameters["growth_tensor"] = Fg
+            #Fe = uflforms.Fe()
+            #print "FE"
+            #print project(Fe,TF).vector().get_local()[0:9]
+            #Fmat = uflforms.Fmat()
+            #print project(Fmat,TF).vector().get_local()[0:9]
+
+            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            print "FG"
+            print project(Fg,TF).vector().get_local()[0:9]
+            print "Fe"
+            Fe = uflforms.Fe()
+            print project(Fe,TF).vector().get_local()[0:9]
+            print "F"
+            print project(Fmat,TF).vector().get_local()[0:9]
+            displacement_file << w.sub(0)
+            p_cav = uflforms.LVcavitypressure()
+            V_cav = uflforms.LVcavityvol()
+            LVCavityvol.vol = V_cav
+            print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, LVCavityvol.vol, 0.0, 0.0, 0.0
+
+
+
+
+
+            #PK2_passive,Sff = uflforms.stress(hsl)
+            #hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:]
+            """print "Theta1",project(Theta1,growth_fcn_space).vector().get_local()
+            #Theta3 += (1/10.)*(concentric_growth_stimulus_loaded - conc_set_point)/conc_set_point
+            #print "Theta3",project(Theta3,growth_fcn_space).vector().get_local()
+            #Fg = Theta1*(M1ij) + Theta2*M2ij + Theta3*M3ij
+            uflforms.update_Fg(Theta1,Theta2,Theta3)
+            #uflforms.parameters["growth_tensor"] = Fg
+            #Fe = uflforms.Fe()
+            #Fmat = uflforms.Fmat()
+            #print "Fg"
+            #print project(Fg,TF).vector().get_local()
+            Fe = uflforms.Fe()
+            print "Fe"
+            print project(Fe,TF).vector().get_local()
+            #print "Fe", Fe.vector().get_local()
+            print "F",project(Fmat).vector().get_local()
+            hsl_array_old = hsl_array
+
+            PK2_passive,Sff = uflforms.stress(hsl)
+            Passive_fiber = inner(f0,PK2_passive*f0)
+
+            temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            pgf = interpolate(temp_DG_2, Quad)
+            pgf_array = pgf.vector().get_local()[:]
+            print "passive in fiber before solve", pgf_array"""
+
+
+            #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            #Fe = uflforms.Fe()
+            """print "F after solve",project(Fmat).vector().get_local()
+            hsl_array = project(hsl, Quad).vector().get_local()[:]
+            temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            p_f = interpolate(temp_DG, Quad)
+            p_f_array = p_f.vector().get_local()[:]
+
+            for ii in range(np.shape(hsl_array)[0]):
+                if p_f_array[ii] < 0.0:
+                    p_f_array[ii] = 0.0
+
+            delta_hsl_array = hsl_array - hsl_array_old
+            displacement_file << w.sub(0)
+            PK2_passive,Sff = uflforms.stress(hsl)
+            Passive_fiber = inner(f0,PK2_passive*f0)
+
+            temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            pgf = interpolate(temp_DG_2, Quad)
+            pgf_array = pgf.vector().get_local()[:]
+            print "passive in fiber after solve", pgf_array
+            p_cav = uflforms.LVcavitypressure()"""
+            #print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, LVCavityvol.vol, 0.0, 0.0, 0.0
+
+        ALE.move(mesh, project(u, VectorFunctionSpace(mesh, 'CG', 1)))
+        File(output_path + "mesh_grown.pvd") << mesh
+        Theta2.vector()[:] = 1.0
+        Theta3.vector()[:] = 1.0
+        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        displacement_file << w.sub(0)
+
+        print "KURTIS STOP HERE TO LOOK AT GROWN MESH"
+
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
@@ -1072,8 +1210,11 @@ def fenics(sim_params):
     calcium[0] = cell_ion.calculate_concentrations(0,0)
 
     # Initializing growth class if needed
-    #if 'growth_params' in locals():
-        #growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
+    if growth_params:
+        print "initializing growth class"
+        growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
+    else:
+        print "no growth parameters given"
 
     # Load in circulatory module
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -1093,6 +1234,13 @@ def fenics(sim_params):
 
     for l in np.arange(no_of_time_steps):
         tic = timeit.default_timer()
+
+        """if growth_params:
+            print "growth params in locals"
+            if "growth_law" in growth_params.keys():
+                growth_class.grow_ellipsoid(mesh,concentric_growth_stimulus,windkessel_params["PLV"][0],expressions,bcs,fdataPV,Wp,w,wtest,dx,c11,X,u,dw,displacement_file,uflforms,Pactive,Fmat,v)
+        else:
+            print "skipping growing ellipsoid" """
 
         print "Time step number " + str(l)
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -1358,13 +1506,13 @@ def fenics(sim_params):
                 if l > float(reorient_start_time)/float(sim_timestep) and (sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear") and (not (sim_geometry == "gmesh_cylinder")):
 		    no_of_vectors = int(len(fdiff.vector().get_local())/3)
 		    fdiff_array = abs(fdiff.vector().get_local().reshape(no_of_vectors,3))
-		    for i in range(no_of_vectors-1):	
+		    for i in range(no_of_vectors-1):
 		        fdiff_array[0] += fdiff_array[i+1]
 		    avg_fdiff_array = fdiff_array[0]/no_of_vectors
 		    avg_fdiff_x_array[l] = avg_fdiff_array[0]
 		    avg_fdiff_y_array[l] = avg_fdiff_array[1]
 		    avg_fdiff_z_array[l] = avg_fdiff_array[2]
-		    avg_fdiff_norm_array[l]	= np.linalg.norm(avg_fdiff_array)	
+		    avg_fdiff_norm_array[l]	= np.linalg.norm(avg_fdiff_array)
 		    np.save(output_path + 'avg_fdiff_x', avg_fdiff_x_array)
 		    np.save(output_path + 'avg_fdiff_y', avg_fdiff_y_array)
 		    np.save(output_path + 'avg_fdiff_z', avg_fdiff_z_array)
@@ -1398,7 +1546,7 @@ def fenics(sim_params):
                 shearfs_temp = project(inner(s0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
                 shearfs_temp.rename("shear fs","shear fs")
                 shearfs_file << shearfs_temp
-	
+
 	        shearsn_temp = project(inner(s0,driver_type*n0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
 	        shearsn_temp.rename("shear_sn","shear_sn")
 	        shearsn_file << shearsn_temp
@@ -1537,6 +1685,7 @@ def fenics(sim_params):
             wk_params_to_save["PLV"] = circ_dict["PLV"]
             wk_params_to_save["V_ven"] = circ_dict["V_ven"]
             wk_params_to_save["V_art"] = circ_dict["V_art"]"""
+
         save_solution.save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array)
 
     # -------------- Attempting growth here --------------------------------
