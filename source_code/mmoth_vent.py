@@ -235,6 +235,7 @@ def fenics(sim_params):
         shearfs_file = File(output_path + "shear_fs.pvd")
         shearfn_file = File(output_path + "shear_fn.pvd")
 	shearsn_file = File(output_path + "shear_sn.pvd")
+	shearfs_stress_file = File(output_path + "shear_stress_fs.pvd")
 
         stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
         f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
@@ -1344,7 +1345,7 @@ def fenics(sim_params):
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
             # Save fiber vectors associated with fibrotic regions separately
-            temp_fibrotic_f0 = f0.copy(deepcopy=True)
+            """temp_fibrotic_f0 = f0.copy(deepcopy=True)
             for index in np.arange(len(binary_mask)):
                 if binary_mask[index] == 0:
                     temp_fibrotic_f0.vector()[index*3] = 0.0
@@ -1352,10 +1353,10 @@ def fenics(sim_params):
                     temp_fibrotic_f0.vector()[index*3+2] = 0.0
             f0_temp = project(temp_fibrotic_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('fibrotic f0','fibrotic f0')
-            fibrotc_fiber_file << f0_temp
+            fibrotc_fiber_file << f0_temp"""
 	    # Save fdiff for unit cube and simple shear simulations
             if "reorient_start_time" in locals():
-                if l > float(reorient_start_time)/float(sim_timestep) and (sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear") and (not (sim_geometry == "gmesh_cylinder")):
+                if l > float(reorient_start_time)/float(sim_timestep) and (not (sim_geometry == "gmesh_cylinder")):
 		    no_of_vectors = int(len(fdiff.vector().get_local())/3)
 		    fdiff_array = abs(fdiff.vector().get_local().reshape(no_of_vectors,3))
 		    for i in range(no_of_vectors-1):	
@@ -1369,7 +1370,7 @@ def fenics(sim_params):
 		    np.save(output_path + 'avg_fdiff_y', avg_fdiff_y_array)
 		    np.save(output_path + 'avg_fdiff_z', avg_fdiff_z_array)
 		    np.save(output_path + 'avg_fdiff_norm', avg_fdiff_norm_array)
-		    if np.linalg.norm(avg_fdiff_array) < 1E-4:
+		    if np.linalg.norm(avg_fdiff_array) < 1E-2:
 		        reorient_finish_array[l] = l/sim_timestep
 		        np.save(output_path + 'reorient_finish',reorient_finish_array)
             #s0_temp = project(s0, VectorFunctionSpace(mesh, "DG", 0))
@@ -1381,7 +1382,7 @@ def fenics(sim_params):
             #pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
             #pk2_passive_save.rename("pk2_passive","pk2_passive")
             #pk2_passive_file << pk2_passive_save
-            np.save(output_path+"j7",j7_fluxes)
+            #np.save(output_path+"j7",j7_fluxes)
             #f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
             #f0_deformed.rename('f0','f0_deformed')
             #f0_deformed_file << f0_deformed
@@ -1390,7 +1391,7 @@ def fenics(sim_params):
             eigen_temp.rename('eigen_temp','stress eigen')
             eigen_file << eigen_temp"""
 
-            if "reorient_t_start" in locals():
+            if "reorient_start_time" in locals():
                 shearfn_temp = project(inner(n0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
                 shearfn_temp.rename("shear fn","shear fn")
                 shearfn_file << shearfn_temp
@@ -1402,6 +1403,10 @@ def fenics(sim_params):
 	        shearsn_temp = project(inner(s0,driver_type*n0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
 	        shearsn_temp.rename("shear_sn","shear_sn")
 	        shearsn_file << shearsn_temp
+
+		shearfs_stress_temp = project(inner(s0,(PK2_passive + Pactive)*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
+                shearfs_stress_temp.rename("shear stress fs","shear stress fs")
+                shearfs_stress_file << shearfs_stress_temp
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
 

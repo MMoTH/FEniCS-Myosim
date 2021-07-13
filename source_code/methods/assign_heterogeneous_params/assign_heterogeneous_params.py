@@ -539,6 +539,8 @@ def df_biphasic_law(dolfin_functions,base_value,k,normal,scaling_factor,mat_prop
 
 def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_factor,act_option,no_of_cells,geo_options):
 
+    from scipy.stats import truncnorm
+
     end_marker_array = geo_options["x_marker_array"]
     
     print "NO OF CELLS", no_of_cells
@@ -563,8 +565,10 @@ def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_facto
     #print "remaining_cell_array: ", remaining_cell_array
     sample_indices = r.choice(remaining_cell_array,int(percent*remaining_no_of_cells), replace=False)
 
-    values_array = r.normal(0.0,width,int(percent*remaining_no_of_cells))
+    #values_array = r.normal(0.0,width,int(percent*remaining_no_of_cells))
+    values_array = truncnorm.rvs(-1.88,3, scale=0.53, size=int(percent*remaining_no_of_cells))
     value_index_dict = dict(zip(sample_indices,values_array))
+    print value_index_dict
 
     for jj in remaining_cell_array:
 
