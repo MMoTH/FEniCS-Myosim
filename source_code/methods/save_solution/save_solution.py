@@ -29,7 +29,6 @@ def save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdo
     # Save expressions
     # Save as numpy?
 
-
     #f.write(temp,"/LVCavityvol")
     row = {'LVCavityvol':[LVCavityvol.vol],'u_D':[u_D.u_D],'u_top':[u_top.u_top],'u_front':[u_front.u_front],'Press':[Press.P]}
     sol_df = pd.DataFrame(data=row)

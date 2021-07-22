@@ -1,9 +1,9 @@
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-sys.path.append("/home/fenics/shared/dependencies/")
-sys.path.append("/home/fenics/shared/source_code/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+#sys.path.append("/home/fenics/shared/dependencies/")
+#sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -83,19 +83,20 @@ def fenics(sim_params):
         save_fx_only = sim_params["save_fx_only"][0]
     else:
         save_fx_only = 0
-    if "eccentric_growth" in growth_params.keys():
-        ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
-        set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
-        k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
-    if "fiber_reorientation" in growth_params.keys():
-        #print "ASSIGNING FIBER REMODELING LAW PARAMS"
-        ordering_law = growth_params["fiber_reorientation"]["law"][0]
-        kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
-        #print "KROON TIME CONSTANT =",kroon_time_constant
-        reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
-        stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
-        #print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
-        #print "loaded growth params"
+    if 'growth_params' in locals():
+        if "eccentric_growth" in growth_params.keys():
+            ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
+            set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
+            k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
+        if "fiber_reorientation" in growth_params.keys():
+            #print "ASSIGNING FIBER REMODELING LAW PARAMS"
+            ordering_law = growth_params["fiber_reorientation"]["law"][0]
+            kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
+            #print "KROON TIME CONSTANT =",kroon_time_constant
+            reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
+            stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
+            #print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
+            #print "loaded growth params"
     else:
         k_myo_damp = 0.0
 
@@ -979,7 +980,7 @@ def fenics(sim_params):
 
 
     # Growing mesh here starting from reference mesh. Hard coded stuff for preliminary sim
-    if growth_params:
+    """if growth_params:
         load_stimuli_path = sim_params["load_stimuli_path"][0]
         f = HDF5File(mpi_comm_world(),load_stimuli_path,'r')
         growth_fcn_space = FunctionSpace(mesh,"DG",1)
@@ -1009,14 +1010,14 @@ def fenics(sim_params):
 
         for ii in range(np.shape(hsl_array)[0]):
             if p_f_array[ii] < 0.0:
-                p_f_array[ii] = 0.0
+                p_f_array[ii] = 0.0"""
 
-        delta_hsl_array = hsl_array - hsl_array_old
+        #delta_hsl_array = hsl_array - hsl_array_old
 
-        for i in np.arange(20):
+        #for i in np.arange(10):
             #Theta1 += (1/10.)*(concentric_growth_stimulus_loaded - conc_set_point)/conc_set_point
-            Theta2.vector()[:] += 0.01
-            Theta3.vector()[:] += 0.01
+            #Theta2.vector()[:] += 0.01
+            #Theta3.vector()[:] += 0.01
             #Fg = project(Theta1*(M1ij) +  Theta2*M2ij + Theta3*M3ij,TF)
             #print "FG"
             #print Fg.vector().get_local()[0:9]
@@ -1027,19 +1028,19 @@ def fenics(sim_params):
             #Fmat = uflforms.Fmat()
             #print project(Fmat,TF).vector().get_local()[0:9]
 
-            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
-            print "FG"
-            print project(Fg,TF).vector().get_local()[0:9]
-            print "Fe"
-            Fe = uflforms.Fe()
-            print project(Fe,TF).vector().get_local()[0:9]
-            print "F"
-            print project(Fmat,TF).vector().get_local()[0:9]
-            displacement_file << w.sub(0)
-            p_cav = uflforms.LVcavitypressure()
-            V_cav = uflforms.LVcavityvol()
-            LVCavityvol.vol = V_cav
-            print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, LVCavityvol.vol, 0.0, 0.0, 0.0
+            #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            #print "FG"
+            #print project(Fg,TF).vector().get_local()[0:9]
+            #print "Fe"
+            #Fe = uflforms.Fe()
+            #print project(Fe,TF).vector().get_local()[0:9]
+            #print "F"
+            #print project(Fmat,TF).vector().get_local()[0:9]
+            #displacement_file << w.sub(0)
+            #p_cav = uflforms.LVcavitypressure()
+            #V_cav = uflforms.LVcavityvol()
+            #LVCavityvol.vol = V_cav
+            #print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, LVCavityvol.vol, 0.0, 0.0, 0.0
 
 
 
@@ -1047,64 +1048,71 @@ def fenics(sim_params):
 
             #PK2_passive,Sff = uflforms.stress(hsl)
             #hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:]
-            """print "Theta1",project(Theta1,growth_fcn_space).vector().get_local()
+            #print "Theta1",project(Theta1,growth_fcn_space).vector().get_local()
             #Theta3 += (1/10.)*(concentric_growth_stimulus_loaded - conc_set_point)/conc_set_point
             #print "Theta3",project(Theta3,growth_fcn_space).vector().get_local()
             #Fg = Theta1*(M1ij) + Theta2*M2ij + Theta3*M3ij
-            uflforms.update_Fg(Theta1,Theta2,Theta3)
+            #uflforms.update_Fg(Theta1,Theta2,Theta3)
             #uflforms.parameters["growth_tensor"] = Fg
             #Fe = uflforms.Fe()
             #Fmat = uflforms.Fmat()
             #print "Fg"
             #print project(Fg,TF).vector().get_local()
-            Fe = uflforms.Fe()
-            print "Fe"
-            print project(Fe,TF).vector().get_local()
+            #Fe = uflforms.Fe()
+            #print "Fe"
+            #print project(Fe,TF).vector().get_local()
             #print "Fe", Fe.vector().get_local()
-            print "F",project(Fmat).vector().get_local()
-            hsl_array_old = hsl_array
+            #print "F",project(Fmat).vector().get_local()
+            #hsl_array_old = hsl_array
 
-            PK2_passive,Sff = uflforms.stress(hsl)
-            Passive_fiber = inner(f0,PK2_passive*f0)
+            #PK2_passive,Sff = uflforms.stress(hsl)
+            #Passive_fiber = inner(f0,PK2_passive*f0)
 
-            temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-            pgf = interpolate(temp_DG_2, Quad)
-            pgf_array = pgf.vector().get_local()[:]
-            print "passive in fiber before solve", pgf_array"""
+            #temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            #pgf = interpolate(temp_DG_2, Quad)
+            #pgf_array = pgf.vector().get_local()[:]
+            #print "passive in fiber before solve", pgf_array"""
 
 
             #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
             #Fe = uflforms.Fe()
-            """print "F after solve",project(Fmat).vector().get_local()
-            hsl_array = project(hsl, Quad).vector().get_local()[:]
-            temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-            p_f = interpolate(temp_DG, Quad)
-            p_f_array = p_f.vector().get_local()[:]
+            #print "F after solve",project(Fmat).vector().get_local()
+            #hsl_array = project(hsl, Quad).vector().get_local()[:]
+            #temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            #p_f = interpolate(temp_DG, Quad)
+            #p_f_array = p_f.vector().get_local()[:]
 
-            for ii in range(np.shape(hsl_array)[0]):
-                if p_f_array[ii] < 0.0:
-                    p_f_array[ii] = 0.0
+            #for ii in range(np.shape(hsl_array)[0]):
+                #if p_f_array[ii] < 0.0:
+                    #p_f_array[ii] = 0.0
 
-            delta_hsl_array = hsl_array - hsl_array_old
-            displacement_file << w.sub(0)
-            PK2_passive,Sff = uflforms.stress(hsl)
-            Passive_fiber = inner(f0,PK2_passive*f0)
+            #delta_hsl_array = hsl_array - hsl_array_old
+            #displacement_file << w.sub(0)
+            #PK2_passive,Sff = uflforms.stress(hsl)
+            #Passive_fiber = inner(f0,PK2_passive*f0)
 
-            temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-            pgf = interpolate(temp_DG_2, Quad)
-            pgf_array = pgf.vector().get_local()[:]
-            print "passive in fiber after solve", pgf_array
-            p_cav = uflforms.LVcavitypressure()"""
+            #temp_DG_2 = project(Passive_fiber, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            #pgf = interpolate(temp_DG_2, Quad)
+            #pgf_array = pgf.vector().get_local()[:]
+            #print "passive in fiber after solve", pgf_array
+            #p_cav = uflforms.LVcavitypressure()"""
             #print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, LVCavityvol.vol, 0.0, 0.0, 0.0
 
-        ALE.move(mesh, project(u, VectorFunctionSpace(mesh, 'CG', 1)))
-        File(output_path + "mesh_grown.pvd") << mesh
-        Theta2.vector()[:] = 1.0
-        Theta3.vector()[:] = 1.0
-        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
-        displacement_file << w.sub(0)
+        #ALE.move(mesh, project(u, VectorFunctionSpace(mesh, 'CG', 1)))
+        #File(output_path + "mesh_grown.pvd") << mesh
+        #Theta2.vector()[:] = 1.0
+        #Theta3.vector()[:] = 1.0
+        #solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        #print "FG"
+        #print project(Fg,TF).vector().get_local()[0:9]
+        #print "Fe"
+        #Fe = uflforms.Fe()
+        #print project(Fe,TF).vector().get_local()[0:9]
+        #print "F"
+        #print project(Fmat,TF).vector().get_local()[0:9]
+        #displacement_file << w.sub(0)
 
-        print "KURTIS STOP HERE TO LOOK AT GROWN MESH"
+        #print "KURTIS STOP HERE TO LOOK AT GROWN MESH"
 
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -1145,6 +1153,14 @@ def fenics(sim_params):
 
                 #solver.solvenonlinear()
                 solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+
+                print "FG"
+                print project(Fg,TF).vector().get_local()[0:9]
+                print "Fe"
+                Fe = uflforms.Fe()
+                print project(Fe,TF).vector().get_local()[0:9]
+                print "F"
+                print project(Fmat,TF).vector().get_local()[0:9]
 
                 hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
 
@@ -1210,7 +1226,7 @@ def fenics(sim_params):
     calcium[0] = cell_ion.calculate_concentrations(0,0)
 
     # Initializing growth class if needed
-    if growth_params:
+    if 'growth_params' in locals():
         print "initializing growth class"
         growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
     else:
@@ -1319,7 +1335,21 @@ def fenics(sim_params):
 
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
-        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+	try:
+            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+        except:
+	    f0_dot_x_vec = inner(f0,x_vec)
+	    f0_dot_x_vec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
+	    angles_array = np.arccos(f0_dot_x_vec_array)
+	    np.save(output_path+"final_angles_array.npy",angles_array)
+
+	print "FG"
+        print project(Fg,TF).vector().get_local()[0:9]
+        print "Fe"
+        Fe = uflforms.Fe()
+        print project(Fe,TF).vector().get_local()[0:9]
+        print "F"
+        print project(Fmat,TF).vector().get_local()[0:9]
 
 
 
@@ -1685,7 +1715,7 @@ def fenics(sim_params):
             wk_params_to_save["PLV"] = circ_dict["PLV"]
             wk_params_to_save["V_ven"] = circ_dict["V_ven"]
             wk_params_to_save["V_art"] = circ_dict["V_art"]"""
-
+	
         save_solution.save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array)
 
     # -------------- Attempting growth here --------------------------------
