@@ -1506,9 +1506,9 @@ def fenics(sim_params):
 		pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
 		pk2temp.rename("pk2_active","active_stress")
 		active_stress_file << pk2temp
-            #hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
-            #hsl_temp.rename("hsl_temp","half-sarcomere length")
-            #hsl_file << hsl_temp
+                hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
+                hsl_temp.rename("hsl_temp","half-sarcomere length")
+                hsl_file << hsl_temp
             #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
