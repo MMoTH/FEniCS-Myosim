@@ -272,6 +272,11 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
             for kk in range(3):
                 n0.vector()[jj*3+kk] = n0_holder[kk]
 
+    # Kurtis adding this in for a quick test
+    #f0.vector()[(no_of_int_points-1)*3] = 0.0
+    #f0.vector()[(no_of_int_points-1)*3+1] = 1.0
+    #f0.vector()[(no_of_int_points-1)*3+2] = 0.0
+
     return f0,s0,n0,geo_options
 
 def update_local_coordinate_system(fiber_direction,coord_params):

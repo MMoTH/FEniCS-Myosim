@@ -217,6 +217,7 @@ def fenics(sim_params):
     if save_visual_output:
         # Can visualize pretty much anything. For now, just looking at deformation
         # and the active stress magnitude
+        tensor_file = File(output_path + "active_stress_tensor.pvd")
         displacement_file = File(output_path + "u_disp.pvd")
         active_stress_file = File(output_path + "active_stress_magnitude.pvd")
         hsl_file = File(output_path + "hsl_mesh.pvd")
@@ -252,6 +253,10 @@ def fenics(sim_params):
         # active stress
         active_stress_ds = pd.DataFrame(np.zeros(no_of_int_points),index=None)
         active_stress_ds = active_stress_ds.transpose()
+
+        # saving f0 vectors
+        f0_components = np.empty((no_of_int_points,3,no_of_time_steps))
+        f0_components[:] = np.NaN
 
         calcium_ds = pd.DataFrame(np.zeros(no_of_int_points),index=None)
         calcium_ds = calcium_ds.transpose()
@@ -593,6 +598,11 @@ def fenics(sim_params):
         hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
         f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
     hsl_old = Function(Quad)
+    # save array of f0
+    f0_array = project(f0,fiberFS).vector().get_local()[:]
+    f0_array.reshape((no_of_int_points,3))
+    f0_array1 = np.reshape(f0_array,(no_of_int_points,3))
+    np.save(output_path+'f0_array.npy',f0_array)
 
     # Defining functions to calculate how far hsl is from reference, to be used
     # to get back to reference length over time
@@ -1196,7 +1206,7 @@ def fenics(sim_params):
 
                     if save_visual_output:
                         displacement_file << w.sub(0)
-                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
                         pk2temp.rename("pk2_active","active_stress")
 
                         active_stress_file << pk2temp
@@ -1503,12 +1513,16 @@ def fenics(sim_params):
         if save_visual_output:
             displacement_file << w.sub(0)
             if cb_number_density != 0:
-		pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+		pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
 		pk2temp.rename("pk2_active","active_stress")
 		active_stress_file << pk2temp
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
                 hsl_file << hsl_temp
+                Pactive_temp = project(Pactive,TensorFunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+                Pactive_temp.rename("Pactive","Pactive")
+                tensor_file << Pactive_temp
+                
             #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
@@ -1556,13 +1570,13 @@ def fenics(sim_params):
             #n0_temp = project(n0, VectorFunctionSpace(mesh, "DG", 0))
             #n0_temp.rename('n0','n0')
             #sheet_normal_file << n0_temp
-            #pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-            #pk2_passive_save.rename("pk2_passive","pk2_passive")
-            #pk2_passive_file << pk2_passive_save
+            pk2_passive_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+            pk2_passive_save.rename("pk2_passive","pk2_passive")
+            pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
-            #f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
-            #f0_deformed.rename('f0','f0_deformed')
-            #f0_deformed_file << f0_deformed
+            f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
+            f0_deformed.rename('f0','f0_deformed')
+            f0_deformed_file << f0_deformed
             #File(output_path + "fiber.pvd") << project(f0, VectorFunctionSpace(mesh, "DG", 0))
             """eigen_temp = project(stress_eigen,VectorFunctionSpace(mesh,'DG',0))
             eigen_temp.rename('eigen_temp','stress eigen')
@@ -1603,6 +1617,10 @@ def fenics(sim_params):
 
             active_stress_ds.iloc[0,:] = cb_f_array[:]
             active_stress_ds.to_csv(output_path + 'active_stress.csv',mode='a',header=False)
+ 
+            # if we want an array of the fiber vectors in the current configuration throughout time  
+            #f0_components[:,:,l] = np.reshape(project(Fmat*f0,fiberFS).vector().get_local()[:],(24,3))
+            #np.save(output_path+'f0_current_config.npy',f0_components)
 
             #active_stress_ds = active_stress_ds.transpose()
             hsl_array_ds.iloc[0,:] = hsl_array[:]
