@@ -7,7 +7,7 @@ nav_order: 1
 
 Summary
 -------
-A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/demos/cell_isometric_twitch_demo/cell_isometric_twitch_demo.json" >here</a>.
+A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/cell_isometric_demo/cell_displacement_ramp_and_hold_demo.json" >here</a>.
 
 Simulation Protocol
 -------------------
@@ -20,6 +20,20 @@ Boundary Conditions & Assumptions
 - A single point on the left face is completely fixed to prevent rigid body translation.
 - The edges on the ends along the y and z-axes are constrained to remain along that axis to allow expansion/compression due to incompressibility while keeping the cross-section area square and prevent rigid-body rotation.
 - The passive response is modeled as transversely isotropic using a combination of the Guccione strain energy function[^3] and one representing the myofiber response[^4]. More information about the passive stress formulation can be found [here](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/tissue_mechanics/tissue_mechanics.html).
+
+Run the Simulation
+------------------
+To run the simulation, make sure Docker is running and enter the command line of your container by following the instructions [here](https://mmoth.github.io/FEniCS-Myosim/pages/getting_started/installation/installation.html#enter-container-command-line). Navigate to the directory containing the demo. Within Docker, this can be done by:  
+
+```
+cd /home/fenics/shared/demos/cell_isometric_demo/
+```
+
+Then execute the command  
+```
+python /home/fenics/shared/source_code/mmoth_vent.py cell_displacement_ramp_and_hold_demo.json
+```
+to run the simulation. This should create the directory "output/" within the current directory and save the results there.
 
 Visualizing Results
 -------------------

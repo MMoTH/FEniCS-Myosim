@@ -17,7 +17,7 @@
     "save_visual_output": [1],
     "save_solution": [1],
     "load_solution": [0, "/home/fenics/shared/working_directory_untracked/test_saving_unit_cube/"],
-    "output_path": ["/mnt/home/f0101140/Desktop/demo_output/unit_cube_demos/cell_isometric_twitch_demo_output_test_fiber_index/"],
+    "output_path": ["/home/fenics/shared/demos/cell_isometric_demo/output/"],
     "fiber_orientation":{
       "fiber_randomness": [0],
       "fiber_direction":{
