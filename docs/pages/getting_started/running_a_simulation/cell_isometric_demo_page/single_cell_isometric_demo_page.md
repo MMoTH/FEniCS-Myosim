@@ -7,11 +7,11 @@ nav_order: 1
 
 Summary
 -------
-A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/demos/cell_isometric_twitch_demo/cell_isometric_twitch_demo.json" >here (fix download).</a>
+A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/demos/cell_isometric_twitch_demo/cell_isometric_twitch_demo.json" >here</a>.
 
 Simulation Protocol
 -------------------
-The muscle cell is stretched 11.5% over 5 ms so that the half-sarcomere length increases from 950 nm to 1100 nm. This stretch is maintained for 15 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed.
+The muscle cell is stretched 11.5% over 5 ms so that the half-sarcomere length increases from 950 nm to 1100 nm. This stretch is maintained for 15 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
@@ -19,6 +19,7 @@ Boundary Conditions & Assumptions
 - Right face displacement is prescribed to give the desired magnitude of stretch.
 - A single point on the left face is completely fixed to prevent rigid body translation.
 - The edges on the ends along the y and z-axes are constrained to remain along that axis to allow expansion/compression due to incompressibility while keeping the cross-section area square and prevent rigid-body rotation.
+- The passive response is modeled as transversely isotropic using a combination of the Guccione strain energy function[^3] and one representing the myofiber response[^4]. More information about the passive stress formulation can be found [here](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/tissue_mechanics/tissue_mechanics.html)
 
 Visualizing Results
 -------------------
@@ -32,12 +33,20 @@ from the output directory. The first number represents the index of the integrat
   <source src="test.mp4" type="video/mp4">
 </video>
 
-And the cube deformation is seen in Paraview, shown below. From Paraview, load the "u_disp.pvd" and "active_stress.pvd" files. Once these are loaded and user has hit "Apply", to view the active stress information on the deformed cube:  
+The bottom left animated panel shows the cross-bridge population over time. for a completely isometric twitch, the cross-bridge distributions are not strained and thus remain centered at x = 0.
 
-* Highlight both items in the "Pipeline Browser"
-* Right click -> Add Filter -> Alphabetical -> Append Attributes  
-* Apply the "Warp by Vector" filter  
-The color shows the magnitude of active stress generated in the f0 direction (the direction shown by the vectors in the bottom image):
+The unit cube deformation is seen in Paraview, shown below. The left panel is colored according to half-sarcomere length and the right is colored by active stress. To visualize these results:
+
+* Open Paraview, and select "Open" at the top left. Navigate to the output directory of the demo simulation.
+* Load the "u_disp.pvd", "active_stress_magnitude.pvd", and "hsl_mesh.pvd" files.
+* In the pipeline browser, click "Apply". The unit cube should appear.
+* Hold shift and select all items in the "Pipeline Browser".
+* Right click -> Add Filter -> Alphabetical -> Append Attributes.
+* Click "Apply".  
+* Either use the shortcut or Right click -> Add Filter -> Alphabetical -> Warp by Vector.
+* click "Apply".
+
+The cube can now be animated according to the displacement, and the coloring of the cube can be based on displacement, active stress generated in the fiber (*f0*) direction (shown in the below picture), or half-sarcomere length.
 
 <video width="800" height="500" controls>
   <source src="cell_isometric_demo_animation.mp4" type="video/mp4">
@@ -46,3 +55,6 @@ The color shows the magnitude of active stress generated in the f0 direction (th
 <img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/cell_isometric_demo_page/f0_cell_isometric_demo_2.png?raw=true" width="800" height="500">
 
 [^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608
+[^2]: Mann, C. K., Lee, L. C., Campbell, K. S., & Wenk, J. F. (2020). Force-dependent recruitment from myosin OFF-state increases end-systolic pressure-volume relationship in left ventricle. Biomechanics and modeling in mechanobiology, 19(6), 2683–2692. https://doi.org/10.1007/s10237-020-01331-6
+[^3]: Guccione, J. M., McCulloch, A. D., & Waldman, L. K. (1991). Passive material properties of intact ventricular myocardium determined from a cylindrical model. Journal of biomechanical engineering, 113(1), 42–55. https://doi.org/10.1115/1.2894084
+[^4]: Xi, C., Kassab, G. S., & Lee, L. C. (2019). Microstructure-based finite element model of left ventricle passive inflation. Acta biomaterialia, 90, 241–253. https://doi.org/10.1016/j.actbio.2019.04.016
