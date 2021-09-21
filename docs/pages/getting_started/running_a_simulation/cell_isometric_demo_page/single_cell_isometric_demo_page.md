@@ -7,7 +7,7 @@ nav_order: 1
 
 Summary
 -------
-A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/cell_isometric_demo/cell_displacement_ramp_and_hold_demo.json" >here</a>.
+A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient with fixed length. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/cell_isometric_demo/cell_displacement_ramp_and_hold_demo.json" >here</a>.
 
 Simulation Protocol
 -------------------

@@ -7,7 +7,7 @@ nav_order: 2
 
 Summary
 -------
-A unit cube mesh consisting of six tetrahedron elements is used to model a single muscle cell response.
+A unit cube mesh consisting of six tetrahedral elements is used to model a single muscle cell tension response to a twitch calcium transient with an applied traction on the right face. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/cell_isometric_demo/cell_displacement_ramp_and_hold_demo.json"
 
 Simulation Protocol
 -------------------
