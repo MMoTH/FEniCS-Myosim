@@ -39,9 +39,6 @@ And the cube deformation is seen in Paraview, shown below. From Paraview, load t
 * Apply the "Warp by Vector" filter  
 The color shows the magnitude of active stress generated in the f0 direction (the direction shown by the vectors in the bottom image):
 
-<video width="800" height="500" controls>
-  <source src="displacement_animation.m4v" type="video/mp4">
-</video>
 <img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/cell_isometric_demo_page/f0_cell_isometric_demo_2.png?raw=true" width="800" height="500">
 
 [^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608
