@@ -1,9 +1,16 @@
+# @Author: charlesmann
+# @Date:   2021-01-31T16:05:33-05:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2021-09-21T12:06:44-04:00
+
+
+
 remote_theme: pmarsceill/just-the-docs
 
 # Auxiliary links for the upper right navigation.
 aux_links:
 
-  "FEniCS-MyoSim Repository":
+  "MyoFE Repository":
   - "https://github.com/MMoTH/FEniCS-Myosim"
 
 
@@ -17,4 +24,4 @@ aux_links:
 footer_content: "Written by the Computational Biomechanics Lab at University of Kentucky"
 
 # This is the title of the website
-title: "FEniCS-MyoSim"
+title: "MyoFE"
