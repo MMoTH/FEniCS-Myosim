@@ -60,7 +60,7 @@ The unit cube deformation is seen in Paraview, shown below. The left panel is co
 * Either use the shortcut or Right click -> Add Filter -> Alphabetical -> Warp by Vector.
 * click "Apply".
 
-The cube can now be animated according to the displacement, and the coloring of the cube can be based on displacement, active stress generated in the fiber (*f0*) direction (shown in the below picture), or half-sarcomere length.
+The cube can now be animated according to the displacement, and the coloring of the cube can be based on displacement, active stress generated in the fiber (**f0**) direction (shown in the below picture), or half-sarcomere length.
 
 <video width="800" height="500" controls>
   <source src="cell_isometric_demo_animation.mp4" type="video/mp4">
