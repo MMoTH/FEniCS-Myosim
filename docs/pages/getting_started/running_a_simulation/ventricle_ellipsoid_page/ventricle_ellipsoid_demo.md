@@ -32,5 +32,5 @@ from the output directory.
 
 The LV deformation can be seen below by applying the "Warp by Vector" filter to the "u_disp.pvd" files in the output directory using Paraview.
 <video width="800" height="500" controls>
-  <source src="final_animation_deformation.m4v" type="video/mp4">
+  <source src="final_animation_deformation.mp4" type="video/mp4">
 </video>
