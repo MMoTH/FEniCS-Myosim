@@ -29,8 +29,8 @@ The deformation as viewed in Paraview:
   <source src="shortening_animation.mp4" type="video/mp4">
 </video>
 
-The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face):  
-![List of containers](aligned_twitch_stress.png)
+For traction values of 10%-90% of the peak stress of the aligned fiber, force and length traces are shown below:
+![List of containers](rep_aligned_traces.png)
 
 
 [^1]: Gonzalez, E., Messi, M. L., & Delbono, O. (2000). The specific force of single intact extensor digitorum longus and soleus mouse muscle fibers declines with aging. J Membr Biol, 178(3), 175-183. doi:10.1007/s002320010025
