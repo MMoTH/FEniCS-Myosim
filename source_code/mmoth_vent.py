@@ -1,3 +1,10 @@
+# @Author: charlesmann
+# @Date:   2021-09-20T19:22:52-04:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2021-09-22T10:21:06-04:00
+
+
+
 from __future__ import division
 import sys
 sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
@@ -1390,6 +1397,10 @@ def fenics(sim_params):
 
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
+        if save_visual_output:
+            pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk2temp.rename("pk2_active","active_stress")
+            active_stress_file << pk2temp
         #print "hsl_old after solve"
         #print project(hsl_old,Quad).vector().get_local()[:]
         hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
@@ -1513,16 +1524,16 @@ def fenics(sim_params):
         if save_visual_output:
             displacement_file << w.sub(0)
             if cb_number_density != 0:
-		pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
-		pk2temp.rename("pk2_active","active_stress")
-		active_stress_file << pk2temp
+		        #pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+		        #pk2temp.rename("pk2_active","active_stress")
+		        #active_stress_file << pk2temp
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
                 hsl_file << hsl_temp
                 Pactive_temp = project(Pactive,TensorFunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
                 Pactive_temp.rename("Pactive","Pactive")
                 tensor_file << Pactive_temp
-                
+
             #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
@@ -1617,8 +1628,8 @@ def fenics(sim_params):
 
             active_stress_ds.iloc[0,:] = cb_f_array[:]
             active_stress_ds.to_csv(output_path + 'active_stress.csv',mode='a',header=False)
- 
-            # if we want an array of the fiber vectors in the current configuration throughout time  
+
+            # if we want an array of the fiber vectors in the current configuration throughout time
             #f0_components[:,:,l] = np.reshape(project(Fmat*f0,fiberFS).vector().get_local()[:],(24,3))
             #np.save(output_path+'f0_current_config.npy',f0_components)
 
@@ -1733,7 +1744,7 @@ def fenics(sim_params):
             wk_params_to_save["PLV"] = circ_dict["PLV"]
             wk_params_to_save["V_ven"] = circ_dict["V_ven"]
             wk_params_to_save["V_art"] = circ_dict["V_art"]"""
-	
+
         save_solution.save_solution(output_path,mesh,f0,n0,s0,facetboundaries,edgeboundaries,subdomains,LVCavityvol,u_D,u_top,u_front,Press,hs_params_list,dolfin_functions,W,w,hsl,y_vec,bcs,concentric_growth_stimulus,eccentric_growth_stimulus,cb_f_array,p_f_array)
 
     # -------------- Attempting growth here --------------------------------

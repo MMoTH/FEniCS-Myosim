@@ -11,7 +11,7 @@ A unit cube mesh consisting of six tetrahedral elements is used to model a singl
 
 Simulation Protocol
 -------------------
-The muscle cell is stretched 5% over the first 10 time steps. Then the cell is activated with a skeletal muscle calcium transient approximation from (citation) using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) In the 12th time-step, a traction boundary condition of 50 kPa is applied for the remainder of the simulation.
+A traction is incrementally applied on the right face of the cube over the first 20 ms, reaching a maximum value of 10 kPa which is fixed for the remainder of the simulation. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
@@ -25,12 +25,16 @@ Results
 If plotted using the k_plotter_npy.py file, the cell-level model results are below:
 
 <video width="800" height="500" controls>
-  <source src="cube_deformation_isotonic_twitch.m4v" type="video/mp4">
+  <source src="test.mp4" type="video/mp4">
 </video>
 
 And the cube deformation is seen in Paraview here:
 <video width="800" height="500" controls>
-  <source src="cube_deformation_isotonic_twitch_paraview.m4v" type="video/mp4">
+  <source src="deformation_animation.mp4" type="video/mp4">
 </video>
 
 Note, "muscle" shortens while being activated such that the active stress contribution from cross-bridges satisfies the traction boundary condition. As [Ca<sup>2+</sup>] decreases (and thus, active stress), the muscle cell is lengthened such that the passive stress response bears the majority of the traction boundary condition. Also note the cross-bridges (bottom left plot) are shifted away from x=0 with the length change. In fact, the rapid length change as active stress drops is responsible for pulling the myosin heads off of binding sites, further facilitating relaxation.
+
+
+[^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608
+[^2]: Mann, C. K., Lee, L. C., Campbell, K. S., & Wenk, J. F. (2020). Force-dependent recruitment from myosin OFF-state increases end-systolic pressure-volume relationship in left ventricle. Biomechanics and modeling in mechanobiology, 19(6), 2683–2692. https://doi.org/10.1007/s10237-020-01331-6

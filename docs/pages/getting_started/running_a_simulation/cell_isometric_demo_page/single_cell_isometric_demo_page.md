@@ -11,7 +11,7 @@ A unit cube mesh consisting of six tetrahedral elements is used to model a singl
 
 Simulation Protocol
 -------------------
-The muscle cell is stretched 11.5% over 5 ms so that the half-sarcomere length increases from 950 nm to 1100 nm. This stretch is maintained for 15 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
+The muscle cell is stretched 11.5% over 20 ms so that the half-sarcomere length increases from 950 nm to 1100 nm. This stretch is maintained for 15 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
@@ -60,7 +60,7 @@ The unit cube deformation is seen in Paraview, shown below. The left panel is co
 * Either use the shortcut or Right click -> Add Filter -> Alphabetical -> Warp by Vector.
 * click "Apply".
 
-The cube can now be animated according to the displacement, and the coloring of the cube can be based on displacement, active stress generated in the fiber (**f0**) direction (shown in the below picture), or half-sarcomere length.
+The cube can now be animated according to the displacement, and the coloring of the cube can be based on displacement, active stress generated in the fiber (**f0**) direction (shown in the below picture), or half-sarcomere length. **Note:** Visualizations in Paraview are a linear projection. Therefore displacement of midpoint nodes on the elements are not shown. Keep this in mind when using the unit cube for testing, as it is possible to misinterpret. For example, periodic boundary conditions are needed to simulate simple shear.
 
 <video width="800" height="500" controls>
   <source src="cell_isometric_demo_animation.mp4" type="video/mp4">
