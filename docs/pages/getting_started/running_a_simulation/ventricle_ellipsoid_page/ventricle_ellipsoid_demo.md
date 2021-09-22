@@ -28,9 +28,9 @@ python /home/fenics/shared/source_code/plot_tools/viepvloop.py _PV.txt
 ```
 from the output directory.
 
-<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/ventricle_ellipsoid_page/pv_loop.png?raw=true" width="800" height="400">
+![List of containers](pvloops_steadystate.png)
 
 The LV deformation can be seen below by applying the "Warp by Vector" filter to the "u_disp.pvd" files in the output directory using Paraview.
-<video width="800" height="500" controls>
+<video width="800" height="400" controls>
   <source src="final_animation_deformation.mp4" type="video/mp4">
 </video>
