@@ -11,7 +11,7 @@ A unit cube mesh consisting of six tetrahedral elements is used to model a singl
 
 Simulation Protocol
 -------------------
-A traction is incrementally applied on the right face of the cube over the first 20 ms, reaching a maximum value of 10 kPa which is fixed for the remainder of the simulation. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
+A traction is incrementally applied on the right face of the cube over the first 20 ms, reaching a maximum value of 10 kPa which is fixed for the remainder of the simulation. Then the cell is activated at t = 30 ms with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------

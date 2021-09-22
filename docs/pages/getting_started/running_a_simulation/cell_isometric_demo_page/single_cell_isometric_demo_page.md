@@ -11,7 +11,7 @@ A unit cube mesh consisting of six tetrahedral elements is used to model a singl
 
 Simulation Protocol
 -------------------
-The muscle cell is stretched 11.5% over 20 ms so that the half-sarcomere length increases from 950 nm to 1100 nm. This stretch is maintained for 15 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
+The muscle cell is stretched 10% over 20 ms so that the half-sarcomere length increases from 950 nm to 1045 nm. This stretch is maintained for 10 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to approach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed. Cross-bridge mechanics are simulated using a three-state kinetic scheme[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
