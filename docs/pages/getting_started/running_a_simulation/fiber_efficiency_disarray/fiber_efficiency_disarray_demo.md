@@ -29,8 +29,17 @@ The deformation as viewed in Paraview:
   <source src="shortening_animation.mp4" type="video/mp4">
 </video>
 
-For traction values of 10%-90% of the peak stress of the aligned fiber, force and length traces are shown below:
-![List of containers](rep_aligned_traces.png)
+For traction values of 10%-90% of the peak stress of the disarray fiber, force and length traces are shown below compared to the aligned fiber:
+![List of containers](representative_ls_traces.png)
+
+Some analysis of calculated work, shortening, myosin ATPase and efficiency:
+
+![List of containers](ls_analysis_scaled.png)
+
+And a representative efficiency vs. disarray vs. traction plot:
+
+![List of containers](3d_efficiency.png)
+
 
 
 [^1]: Gonzalez, E., Messi, M. L., & Delbono, O. (2000). The specific force of single intact extensor digitorum longus and soleus mouse muscle fibers declines with aging. J Membr Biol, 178(3), 175-183. doi:10.1007/s002320010025
