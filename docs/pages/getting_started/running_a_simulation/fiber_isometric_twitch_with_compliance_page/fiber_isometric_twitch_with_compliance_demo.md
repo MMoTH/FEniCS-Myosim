@@ -11,7 +11,7 @@ A muscle fiber twitch simulation with fixed fiber length. A cylinder geometry in
 
 Simulation Protocol
 -------------------
-The right face of the fiber is displaced 5% over 10 ms to induce a resting tension. This displacement is maintained for the duration of the simulation to keep the fiber length fixed. A calcium concentration of 1e-7 M is maintained to allow the cross-bridges to reach steady state. At t = 300 ms, the myofibrils are activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model. Contraction occurs the compliant tissue at either end. The contractile parameters are tuned to match twitch stress data from literature[^2].
+The right face of the fiber is displaced 5% over 10 ms to induce a resting tension. This displacement is maintained for the duration of the simulation to keep the fiber length fixed. A calcium concentration of 1e-7 M is maintained to allow the cross-bridges to reach steady state. At t = 300 ms, the myofibrils are activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model. Contraction occurs against the compliant tissue at either end. The contractile parameters are tuned to match twitch stress data from literature[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
