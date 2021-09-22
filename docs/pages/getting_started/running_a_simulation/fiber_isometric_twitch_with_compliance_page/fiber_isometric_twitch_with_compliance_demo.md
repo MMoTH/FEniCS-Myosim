@@ -1,5 +1,5 @@
 ---
-title: Fiber Isometric Twitch With Compliance
+title: Fiber Isometric Twitch: Aligned
 parent: Demos
 grand_parent: Getting Started
 nav_order: 3
