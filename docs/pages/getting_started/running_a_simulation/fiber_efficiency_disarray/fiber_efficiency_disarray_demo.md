@@ -34,7 +34,7 @@ For traction values of 10%-90% of the peak stress of the disarray fiber, force a
 
 Some analysis of calculated work, shortening, myosin ATPase and efficiency:
 
-![List of containers](ls_analysis_scaled.png)
+![List of containers](ls_analysis_re_fit.png)
 
 And a representative efficiency vs. disarray vs. traction plot:
 
