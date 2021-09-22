@@ -34,7 +34,7 @@ And the cube deformation is seen in Paraview here (some tips for this visualizat
   <source src="deformation_animation.mp4" type="video/mp4">
 </video>
 
-Note, the "muscle" shortens while being activated such that the active stress contribution from cross-bridges and the passive stress response satisfies the traction boundary condition. As [Ca<sup>2+</sup>] decreases (and thus, active stress), the muscle cell is lengthened such that the passive stress response bears the majority of the traction boundary condition. Also note the cross-bridges (bottom left plot) are shifted away from x=0 with the length change. In fact, the rapid length change as active stress drops is responsible for pulling the myosin heads off of binding sites, further facilitating relaxation.
+Note, the "muscle" shortens while being activated such that the active stress contribution from cross-bridges and the passive stress response satisfies the traction boundary condition. As [Ca<sup>2+</sup>] decreases (and thus, active stress), the muscle cell is lengthened such that the passive stress response bears the majority of the traction boundary condition. Also note the cross-bridges (bottom left plot) are shifted away from x=0 with the length change. 
 
 
 [^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608
