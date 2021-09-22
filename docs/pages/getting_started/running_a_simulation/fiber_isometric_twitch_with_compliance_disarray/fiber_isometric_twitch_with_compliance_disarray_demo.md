@@ -1,5 +1,5 @@
 ---
-title: Fiber Isometric Twitch: Disarray
+title: Fiber Isometric Twitch- Disarray
 parent: Demos
 grand_parent: Getting Started
 nav_order: 4
