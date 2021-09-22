@@ -16,9 +16,10 @@ A traction is incrementally applied on the right face of the cube over the first
 Boundary Conditions & Assumptions
 ---------------------------------
 - Left face displacement is fixed in the x-direction.
-- Right face displacement is prescribed to give the desired magnitude of stretch for the first 10 time step, then switched to a traction boundary on this face of 50 kPa.
+- Right face displacement is prescribed to give the desired magnitude of stretch.
 - A single point on the left face is completely fixed to prevent rigid body translation.
-- The edges on the ends are fixed in either y or z to allow expansion/compression due to incompressibility while keeping the cross-section area rectangular.
+- The edges on the ends along the y and z-axes are constrained to remain along that axis to allow expansion/compression due to incompressibility while keeping the cross-section area square and prevent rigid-body rotation.
+- The passive response is modeled as transversely isotropic using a combination of the Guccione strain energy function[^3] and one representing the myofiber response[^4]. More information about the passive stress formulation can be found [here](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/tissue_mechanics/tissue_mechanics.html).
 
 Results
 -------------------
@@ -38,3 +39,5 @@ Note, the "muscle" shortens while being activated such that the active stress co
 
 [^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608
 [^2]: Mann, C. K., Lee, L. C., Campbell, K. S., & Wenk, J. F. (2020). Force-dependent recruitment from myosin OFF-state increases end-systolic pressure-volume relationship in left ventricle. Biomechanics and modeling in mechanobiology, 19(6), 2683–2692. https://doi.org/10.1007/s10237-020-01331-6
+[^3]: Guccione, J. M., McCulloch, A. D., & Waldman, L. K. (1991). Passive material properties of intact ventricular myocardium determined from a cylindrical model. Journal of biomechanical engineering, 113(1), 42–55. https://doi.org/10.1115/1.2894084
+[^4]: Xi, C., Kassab, G. S., & Lee, L. C. (2019). Microstructure-based finite element model of left ventricle passive inflation. Acta biomaterialia, 90, 241–253. https://doi.org/10.1016/j.actbio.2019.04.016
