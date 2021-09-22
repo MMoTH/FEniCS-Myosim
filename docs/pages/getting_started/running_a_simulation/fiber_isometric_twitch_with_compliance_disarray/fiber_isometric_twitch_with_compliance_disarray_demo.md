@@ -29,8 +29,13 @@ The deformation as viewed in Paraview:
   <source src="aligned_fiber_twitch.mp4" type="video/mp4">
 </video>
 
-The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face):  
+The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face) as compared to the aligned fiber demo:  
 ![List of containers](twitch_comp.png)
+
+A comprehensive sweep through of disarray magnitudes and some analysis of stress and contraction kinetics are shown below. Stress traces are plotted as means +/- standard deviations for simulations of the same disarray magnitude but different random seed:
+![List of containers](twitch_traces.png)
+![List of containers](twitch_analysis_nox.png)
+
 
 
 [^1]: Gonzalez, E., Messi, M. L., & Delbono, O. (2000). The specific force of single intact extensor digitorum longus and soleus mouse muscle fibers declines with aging. J Membr Biol, 178(3), 175-183. doi:10.1007/s002320010025
