@@ -7,7 +7,7 @@ nav_order: 5
 
 Summary
 -------
-A muscle fiber twitch simulation in which a prescribed traction is applied to the fiber's end once the fiber's active stress is high enough to exceed it. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/fiber_twitch_aligned_demo/fiber_isometric_twitch_aligned_demo.json">here</a>. This simulation is part of the manuscript in preparation "Myofibril Disarray Leads to Inefficiency, Quicker Relaxation in Contraction in Finite Element Simulations of Skeletal Muscle Fibers". It is recommended to run this demo with substantial computational resources.
+A muscle fiber twitch simulation in which a prescribed traction is applied to the fiber's end once the fiber's active stress is high enough to exceed it. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/fiber_efficiency_aligned_demo/fiber_loaded_shortening_aligned_10pct_afterload_demo.json">here</a>. This simulation is part of the manuscript in preparation "Myofibril Disarray Leads to Inefficiency, Quicker Relaxation in Contraction in Finite Element Simulations of Skeletal Muscle Fibers". It is recommended to run this demo with substantial computational resources.
 
 Simulation Protocol
 -------------------
