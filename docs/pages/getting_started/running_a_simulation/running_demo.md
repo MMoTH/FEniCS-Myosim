@@ -28,13 +28,12 @@ Demos
 -----
 - [Cell Isometric Twitch](/cell_isometric_demo_page/single_cell_isometric_demo_page.md)
 - [Cell Isotonic Twitch](/cell_isotonic_twitch_page/cell_isotonic_twitch_demo.md)
-- [Fiber Isometric Twitch With Compliance](/fiber_isometric_twitch_with_compliance_page/fiber_isometric_twitch_with_compliance_demo.md)
-- ~~Fiber Loaded Shortening Twitch~~
-- ~~Fiber Isometric Tetanus~~
-- [Ellipsoidal Ventricle](/ventricle_ellipsoid_page/ventricle_ellipsoid_demo.md)
-- ~~Rat Ventricle~~
-- ~~Fiber Realignment~~
-- ~~Particle Swarm Optimization~~
+- [Fiber Isometric Twitch Aligned](/fiber_isometric_twitch_with_compliance_page/fiber_isometric_twitch_with_compliance_demo.md)
+- [Fiber Isometric Twitch Disarray](/fiber_isometric_twitch_with_compliance_disarray/fiber_isometric_twitch_with_compliance_disarray_demo.md)
+- [Fiber Efficiency Aligned](/fiber_efficiency_aligned/fiber_efficiency_aligned_demo.md)
+- [Fiber Efficiency Disarray](/fiber_efficiency_disarray/fiber_efficiency_disarray_demo.md)
+- [Ellipsoidal LV](/ventricle_ellipsoid_page/ventricle_ellipsoid_demo.md)
+
 
 <a href="../installation/installation.html" class="btn btn--primary"><< Installation</a>
 <a href="../building_a_mesh/mesh_generation_readme.html" class="btn btn--primary">Building a Mesh >></a>
