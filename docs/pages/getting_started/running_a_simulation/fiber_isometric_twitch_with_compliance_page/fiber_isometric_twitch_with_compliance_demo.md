@@ -7,19 +7,19 @@ nav_order: 3
 
 Summary
 -------
-A muscle fiber twitch simulation with fixed fiber length. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils.  
+A muscle fiber twitch simulation with fixed fiber length. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/fiber_twitch_aligned_demo/fiber_isometric_twitch_aligned_demo.json">here</a>. This simulation is part of the manuscript in preparation "Myofibril Disarray Leads to Inefficiency, Quicker Relaxation in Contraction in Finite Element Simulations of Skeletal Muscle Fibers".
 
 Simulation Protocol
 -------------------
-The right end of the fiber is displaced to the right 14% over 5 ms to induce a passive stress response. This stretch is maintained for 10 ms at a calcium concentration of 1e-7 M to allow the cross-bridges to reach steady state. Then the cell is activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model, and stretch held fixed, allowing the myofibrils to contract against the compliance at either end. The contractile parameters are tuned to match twitch stress data from literature[^2].
+The right face of the fiber is displaced 5% over 10 ms to induce a resting tension. This displacement is maintained for the duration of the simulation to keep the fiber length fixed. A calcium concentration of 1e-7 M is maintained to allow the cross-bridges to reach steady state. At t = 300 ms, the myofibrils are activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model. Contraction occurs the compliant tissue at either end. The contractile parameters are tuned to match twitch stress data from literature[^2].
 
 Boundary Conditions & Assumptions
 ---------------------------------
 - Left face displacement is fixed in the x-direction.
-- Notes on the left fact on the y and z-axes are constrained to remain on those axes to prevent rigid body rotation and translation
+- Nodes on the left face on the y and z-axes are constrained to remain on those axes to prevent rigid body rotation and translation
 - Right face displacement is prescribed to give the desired magnitude of stretch.
 - The material is incompressible.
-- All myofibril active stress is along the long-axis.
+- All myofibril active stress is generated along the myofibril direction (no cross-myofibril contraction).
 
 Results
 -------
@@ -27,6 +27,9 @@ Results
 A representative myofibril result plot obtained from k_plotter_npy.py:  
 * Insert plots
 
+<video width="800" height="500" controls>
+  <source src="aligned_fiber_twitch.mp4" type="video/mp4">
+</video>
 The mesh deformation, color coded to indicate magnitude of active-stress:  
 
 
