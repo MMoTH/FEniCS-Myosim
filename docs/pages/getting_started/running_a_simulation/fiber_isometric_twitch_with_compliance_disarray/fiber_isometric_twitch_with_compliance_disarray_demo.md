@@ -1,13 +1,13 @@
 ---
-title: Fiber Isometric Twitch With Compliance
+title: Disarray Fiber Isometric Twitch With Compliance
 parent: Demos
 grand_parent: Getting Started
-nav_order: 3
+nav_order: 4
 ---
 
 Summary
 -------
-A muscle fiber twitch simulation with fixed fiber length. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/fiber_twitch_aligned_demo/fiber_isometric_twitch_aligned_demo.json">here</a>. This simulation is part of the manuscript in preparation "Myofibril Disarray Leads to Inefficiency, Quicker Relaxation in Contraction in Finite Element Simulations of Skeletal Muscle Fibers". It is recommended to run this demo with substantial computational resources.
+A muscle fiber twitch simulation with fixed fiber length in which disarray is introduced. A cylinder geometry in which the ends represent non-contracting, fibrous tissue with a nonlinear stiffness and the quadrature points represent contracting myofibrils. Unit vectors at each quadrature point representing myofibril orientation are drawn from a normal distribution. The instruction file is included in the repository, and can be downloaded <a href="https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/fiber_twitch_aligned_demo/fiber_isometric_twitch_aligned_demo.json">here</a>. This simulation is part of the manuscript in preparation "Myofibril Disarray Leads to Inefficiency, Quicker Relaxation in Contraction in Finite Element Simulations of Skeletal Muscle Fibers". It is recommended to run this demo with substantial computational resources.
 
 Simulation Protocol
 -------------------
