@@ -29,7 +29,7 @@ If plotted using the k_plotter_npy.py file, the cell-level model results are bel
   <source src="test.mp4" type="video/mp4">
 </video>
 
-And the cube deformation is seen in Paraview here:
+And the cube deformation is seen in Paraview here (some tips for this visualization are included in the [cell isometric demo](https://mmoth.github.io/FEniCS-Myosim/pages/getting_started/running_a_simulation/cell_isometric_demo_page/single_cell_isometric_demo_page.html)):
 <video width="800" height="500" controls>
   <source src="deformation_animation.mp4" type="video/mp4">
 </video>
