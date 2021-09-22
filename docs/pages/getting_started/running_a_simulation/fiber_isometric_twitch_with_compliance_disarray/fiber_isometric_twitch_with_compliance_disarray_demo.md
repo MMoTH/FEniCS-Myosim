@@ -11,7 +11,7 @@ A muscle fiber twitch simulation with fixed fiber length in which disarray is in
 
 Simulation Protocol
 -------------------
-The right face of the fiber is displaced 5% over 10 ms to induce a resting tension. This displacement is maintained for the duration of the simulation to keep the fiber length fixed. A calcium concentration of 1e-7 M is maintained to allow the cross-bridges to reach steady state. At t = 300 ms, the myofibrils are activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model. Contraction occurs the compliant tissue at either end. The contractile parameters are tuned to match twitch stress data from literature[^2].
+The right face of the fiber is displaced 5% over 10 ms to induce a resting tension. This displacement is maintained for the duration of the simulation to keep the fiber length fixed. A calcium concentration of 1e-7 M is maintained to allow the cross-bridges to reach steady state. At t = 300 ms, the myofibrils are activated with a skeletal muscle calcium transient approximation[^1] using the [two-compartment calcium](../../../model_formulations/calcium_models/two_compartment_model/two_compartment_model.md) model. Contraction occurs the compliant tissue at either end. The contractile parameters are tuned to match twitch stress data from literature[^2]. In the instruction file, the magnitude of disarray can be set by altering the value of "fiber_randomness", and changing the random seeding "rseed" yields different myofibril distributions.
 
 Boundary Conditions & Assumptions
 ---------------------------------
@@ -30,7 +30,7 @@ The deformation as viewed in Paraview:
 </video>
 
 The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face):  
-![List of containers](aligned_twitch_stress.png)
+![List of containers](twitch_comp.png)
 
 
 [^1]: Gonzalez, E., Messi, M. L., & Delbono, O. (2000). The specific force of single intact extensor digitorum longus and soleus mouse muscle fibers declines with aging. J Membr Biol, 178(3), 175-183. doi:10.1007/s002320010025
