@@ -7,7 +7,7 @@ nav_order: 7
 
 Summary
 -------
-A left ventricle (LV) simulation using a simplified ellipsoidal geometry. The cavity volume is equal to that of a Sprague-Dawley female rat. This simulates five cardiac cycles at which the LV produces a steady state pressure-volume (PV) loop.
+A left ventricle (LV) simulation using a simplified ellipsoidal geometry. The cavity volume is equal to that of a Sprague-Dawley female rat. This simulates five cardiac cycles at which the LV produces a steady state pressure-volume (PV) loop. Instruction file found [here](https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/ellipsoid_lv_steady_state_demo/ellipsoid_ventricle_5beats_demo.json).
 
 Simulation Protocol
 -------------------
