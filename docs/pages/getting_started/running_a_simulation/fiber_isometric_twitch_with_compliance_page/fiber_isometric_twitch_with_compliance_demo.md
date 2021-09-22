@@ -23,17 +23,14 @@ Boundary Conditions & Assumptions
 
 Results
 -------
-*(update with final contraction parameters when paper is submitted)*  
-A representative myofibril result plot obtained from k_plotter_npy.py:  
-* Insert plots
+The deformation as viewed in Paraview:
 
 <video width="800" height="500" controls>
   <source src="aligned_fiber_twitch.mp4" type="video/mp4">
 </video>
-The mesh deformation, color coded to indicate magnitude of active-stress:  
 
-
-The stress on the right face (reaction force in the x-direction resolved over the reference area of the right face):  
+The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face):  
+![List of containers](aligned_twitch_stress.png)
 
 
 [^1]: Gonzalez, E., Messi, M. L., & Delbono, O. (2000). The specific force of single intact extensor digitorum longus and soleus mouse muscle fibers declines with aging. J Membr Biol, 178(3), 175-183. doi:10.1007/s002320010025
