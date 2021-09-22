@@ -1,5 +1,5 @@
 ---
-title: Ellipsoidal Ventricle
+title: Ellipsoidal LV
 parent: Demos
 grand_parent: Getting Started
 nav_order: 7
