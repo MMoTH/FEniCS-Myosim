@@ -26,7 +26,7 @@ Results
 The deformation as viewed in Paraview:
 
 <video width="800" height="500" controls>
-  <source src="aligned_fiber_twitch.mp4" type="video/mp4">
+  <source src="disarray_twitch.mp4" type="video/mp4">
 </video>
 
 The total fiber stress as measured on the left face (reaction force in the long axis direction resolved over the reference area of the right face) as compared to the aligned fiber demo:  
