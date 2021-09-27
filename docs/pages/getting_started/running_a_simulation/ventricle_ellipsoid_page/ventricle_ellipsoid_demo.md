@@ -24,7 +24,7 @@ Results
 -------
 The resulting pressure-volume loop, along with circulatory pressures, volumes and intracellular calcium are plotted below. These results can be plotted by executing  
 ```
-python /home/fenics/shared/source_code/plot_tools/viepvloop.py _PV.txt
+python /home/fenics/shared/source_code/plot_tools/viewpvloop.py _PV.txt
 ```
 from the output directory.
 

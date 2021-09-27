@@ -20,6 +20,7 @@ Boundary Conditions & Assumptions
 - A single point on the left face is completely fixed to prevent rigid body translation.
 - The edges on the ends along the y and z-axes are constrained to remain along that axis to allow expansion/compression due to incompressibility while keeping the cross-section area square and prevent rigid-body rotation.
 - The passive response is modeled as transversely isotropic using a combination of the Guccione strain energy function[^3] and one representing the myofiber response[^4]. More information about the passive stress formulation can be found [here](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/tissue_mechanics/tissue_mechanics.html).
+- Contraction is driven by the [three state kinetic scheme](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/cell_mechanics/cell_mechanics.html).
 
 Run the Simulation
 ------------------

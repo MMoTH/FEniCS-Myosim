@@ -20,6 +20,7 @@ Boundary Conditions & Assumptions
 - A single point on the left face is completely fixed to prevent rigid body translation.
 - The edges on the ends along the y and z-axes are constrained to remain along that axis to allow expansion/compression due to incompressibility while keeping the cross-section area square and prevent rigid-body rotation.
 - The passive response is modeled as transversely isotropic using a combination of the Guccione strain energy function[^3] and one representing the myofiber response[^4]. More information about the passive stress formulation can be found [here](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/tissue_mechanics/tissue_mechanics.html).
+- Contraction is driven by the [three state kinetic scheme](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/cell_mechanics/cell_mechanics.html).
 
 Results
 -------------------
@@ -34,7 +35,7 @@ And the cube deformation is seen in Paraview here (some tips for this visualizat
   <source src="deformation_animation.mp4" type="video/mp4">
 </video>
 
-Note, the "muscle" shortens while being activated such that the active stress contribution from cross-bridges and the passive stress response satisfies the traction boundary condition. As [Ca<sup>2+</sup>] decreases (and thus, active stress), the muscle cell is lengthened such that the passive stress response bears the majority of the traction boundary condition. Also note the cross-bridges (bottom left plot) are shifted away from x=0 with the length change. 
+Note, the "muscle" shortens while being activated such that the active stress contribution from cross-bridges and the passive stress response satisfies the traction boundary condition. As [Ca<sup>2+</sup>] decreases (and thus, active stress), the muscle cell is lengthened such that the passive stress response bears the majority of the traction boundary condition. Also note the cross-bridges (bottom left plot) are shifted away from x=0 with the length change.
 
 
 [^1]: Baylor, S. M., & Hollingworth, S. (2003). Sarcoplasmic reticulum calcium release compared in slow-twitch and fast-twitch fibres of mouse muscle. J Physiol, 551(Pt 1), 125-138. doi:10.1113/jphysiol.2003.041608

@@ -19,6 +19,7 @@ Boundary Conditions & Assumptions
 - Nodes on the left face on the y and z-axes are constrained to remain on those axes to prevent rigid body rotation and translation
 - Right face displacement is prescribed to give the desired magnitude of stretch.
 - The material is incompressible.
+- Contraction is driven by the [four state kinetic scheme](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/cell_mechanics/cell_mechanics.html).
 - All myofibril active stress is generated along the myofibril direction (no cross-myofibril contraction).
 
 Results

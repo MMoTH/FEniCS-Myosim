@@ -15,5 +15,6 @@ Do we need text here?
 
 ## Three State w/Super Relaxed Myosin
 Currently, the only implemented cell contraction model is the "Three State with Super Relaxed Myosin" scheme.
-## Seven State
+
+## Four State
 and here
