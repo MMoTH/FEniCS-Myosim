@@ -7,7 +7,7 @@ nav_order: 8
 
 Summary
 -------
-A left ventricle (LV) simulation using a simplified ellipsoidal geometry with a simple "infarct" induced. The cavity volume is equal to that of a Sprague-Dawley female rat. This simulates five cardiac cycles during which fiber orientation can vary according to the [remodeling law]() driven by total stress. Instruction file found [here](https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/ellipsoid_lv_steady_state_demo/ellipsoid_ventricle_5beats_demo.json).
+A left ventricle (LV) simulation using a simplified ellipsoidal geometry with a simple "infarct" induced. The cavity volume is equal to that of a Sprague-Dawley female rat. This simulates five cardiac cycles during which fiber orientation can vary according to the [remodeling law](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/growth_and_remodeling/fiber_remodeling.html) driven by total stress. Instruction file found [here](https://github.com/MMoTH/FEniCS-Myosim/blob/master/demos/ellipsoid_lv_steady_state_demo/ellipsoid_ventricle_5beats_demo.json).
 
 Simulation Protocol
 -------------------
