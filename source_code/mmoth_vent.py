@@ -90,16 +90,17 @@ def fenics(sim_params):
         save_fx_only = sim_params["save_fx_only"][0]
     else:
         save_fx_only = 0
-    if 'growth_params' in locals():
+    if 'growth_params' in globals():
+        print "loading growth params"
         if "eccentric_growth" in growth_params.keys():
             ecc_growth_rate = growth_params["eccentric_growth"]["time_constant"][0]
             set_point = growth_params["eccentric_growth"]["passive_set_point"][0]
             k_myo_damp = Constant(growth_params["eccentric_growth"]["k_myo_damp"][0])
         if "fiber_reorientation" in growth_params.keys():
-            #print "ASSIGNING FIBER REMODELING LAW PARAMS"
+            print "ASSIGNING FIBER REMODELING LAW PARAMS"
             ordering_law = growth_params["fiber_reorientation"]["law"][0]
             kroon_time_constant = growth_params["fiber_reorientation"]["time_constant"][0]
-            #print "KROON TIME CONSTANT =",kroon_time_constant
+            print "KROON TIME CONSTANT =",kroon_time_constant
             reorient_start_time = growth_params["fiber_reorientation"]["reorient_t_start"][0]
             stress_name = growth_params["fiber_reorientation"]["stress_type"][0]
             #print "reorient start timestep", float(reorient_start_time)/float(sim_timestep)+1
@@ -406,6 +407,13 @@ def fenics(sim_params):
     # Quadrature space for information needed at gauss points, such as
     # hsl, cb_force, passive forces, etc.
     Quad = FunctionSpace(mesh, Quadelem)
+    # go ahead and get coordinates of quadrature points
+    gdim = mesh.geometry().dim()
+    xq = Quad.tabulate_dof_coordinates().reshape((-1,gdim))
+    geo_options["xq"] = xq
+    print "xq 0",xq[0]
+    #print "quadrature coordinates", xq
+    #print "shape of xq",np.shape(xq)
 
     # Function space for myosim populations
     Quad_vectorized_Fspace = FunctionSpace(mesh, MixedElement(n_array_length*[Quadelem]))
@@ -540,7 +548,7 @@ def fenics(sim_params):
     else:
         #print "element wise assignment of dolfin functions!!!!!!"
         # element wise assignment
-        dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,V0)
+        dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,Quad)
 
     # parameters that are heterogeneous declared here as functions
     # Do these need to come from the input file? As part of declaration, "heterogenous = true"?
@@ -1213,7 +1221,7 @@ def fenics(sim_params):
 
                     if save_visual_output:
                         displacement_file << w.sub(0)
-                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
                         pk2temp.rename("pk2_active","active_stress")
 
                         active_stress_file << pk2temp
@@ -1243,9 +1251,9 @@ def fenics(sim_params):
     calcium[0] = cell_ion.calculate_concentrations(0,0)
 
     # Initializing growth class if needed
-    if 'growth_params' in locals():
+    if 'growth_params' in globals():
         print "initializing growth class"
-        growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
+        #growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
     else:
         print "no growth parameters given"
 
@@ -1370,13 +1378,15 @@ def fenics(sim_params):
 
 
 
-        #print "guccione passive stress"
+        print "PK2"
         PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
 
         # Saving concentric growth stimulus here
+        print "saving stimuli"
         if end_systole > 0:
             end_systolic_stress_calc = inner(f0,(PK2 + Pactive)*f0)
             concentric_growth_stimulus = project(end_systolic_stress_calc,FunctionSpace(mesh,"DG",1))
+        print "saving end diastole"
         if end_diastole > 0:
             end_diastolic_stress_calc = inner(f0,(PK2+Pactive)*f0)
             eccentric_growth_stimulus = project(end_diastolic_stress_calc,FunctionSpace(mesh,"DG",1))
@@ -1398,7 +1408,7 @@ def fenics(sim_params):
         # Update functions and arrays
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         if save_visual_output:
-            pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+            pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
             pk2temp.rename("pk2_active","active_stress")
             active_stress_file << pk2temp
         #print "hsl_old after solve"
@@ -1469,6 +1479,7 @@ def fenics(sim_params):
                 elif ordering_law == "new_stress_kroon":
                     fdiff = uflforms.new_stress_kroon(driver_type,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 		    f0.vector()[:] += fdiff.vector()[:]
+                    print "Fiber orientation updated"
 	        #update fiber orientations
                 s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
 
@@ -1530,20 +1541,24 @@ def fenics(sim_params):
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
                 hsl_file << hsl_temp
-                Pactive_temp = project(Pactive,TensorFunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
+                Pactive_temp = project(Pactive,TensorFunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
                 Pactive_temp.rename("Pactive","Pactive")
                 tensor_file << Pactive_temp
 
             #rxn_force_file << temp_rxn_force
             np.save(output_path + 'fx',rxn_force)
             # Save fiber vectors associated with non-fibrotic regions separately
-            temp_f0 = f0.copy(deepcopy=True)
+            """temp_f0 = f0.copy(deepcopy=True)
             for index in np.arange(len(binary_mask)):
                 if binary_mask[index] == 1:
                     temp_f0.vector()[index*3] = 0.0
                     temp_f0.vector()[index*3+1] = 0.0
                     temp_f0.vector()[index*3+2] = 0.0
             f0_temp = project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
+            f0_temp.rename('f0','f0')
+            fiber_file << f0_temp"""
+            print "saving f0"
+            f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
             fiber_file << f0_temp
             # Save fiber vectors associated with fibrotic regions separately
@@ -2018,7 +2033,10 @@ all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 if "windkessel_parameters" in input_parameters.keys():
     windkessel_params = input_parameters["windkessel_parameters"]
 if "growth_and_remodeling" in input_parameters.keys():
+    print "assigning growth_params"
     growth_params = input_parameters["growth_and_remodeling"]
+    if 'growth_params' in locals():
+        print "growth check worked"
     all_params.append(growth_params)
 #optimization_params = input_parameters["optimization_parameters"]
 

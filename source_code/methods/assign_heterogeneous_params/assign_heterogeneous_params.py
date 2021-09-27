@@ -139,7 +139,7 @@ def assign_hs_values(het_hs_dict,hs_params_list,no_of_int_points,geo_options):
 
         else:
             print "instruction file law is",hetero_law
-            print "invalid law. Please choose from `gaussian` or `percent_fibrosis`"
+            print "invalid law. Please choose from `gaussian` or `percent_fibrosis`, or 'fiber_w_compliance'"
 
     return hs_params_list
 
@@ -269,6 +269,10 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                             het_dolfin_dict[k].append(width)
                             het_dolfin_dict[k].append(scaling_factor)
                             het_dolfin_dict[k].append(contract_option)
+                        if temp_law == "rat_ellipsoid_infarct":
+                            if "scaling_factor" in j:
+                                scaling_factor = j["scaling_factor"]
+                                het_dolfin_dict[k].append(scaling_factor)
 
     print "het_dolfin_dict is now "
     print het_dolfin_dict
@@ -308,6 +312,9 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
 
         if hetero_law == "percent_contractile":
             dolfin_functions = df_contractile_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-4],het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
+
+        if hetero_law == "rat_ellipsoid_infarct":
+            dolfin_functions = df_rat_ellipsoid_infarct(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)
 
     return dolfin_functions
 
@@ -575,4 +582,21 @@ def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_facto
             else:
                 dolfin_functions[k][-1].vector()[jj] = scaling_factor*base_value*(1.0 + value_index_dict[jj])
 
+    return dolfin_functions
+
+def df_rat_ellipsoid_infarct(dolfin_functions,base_value,k,scaling_factor,no_of_int_points,geo_options):
+    print "base_value",base_value
+    print "scaling factor?",scaling_factor
+    xq = geo_options["xq"] # coordinate of quadrature points
+    print "num int points",no_of_int_points
+    print "K",k
+    print dolfin_functions["passive_params"][k][-1].vector()
+    for jj in np.arange(no_of_int_points):
+        
+        if xq[jj][0] > 0 and (np.sqrt(xq[jj][1]**2 + (xq[jj][2]-(-.44089))**2) < .2044):
+            dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+            dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+            dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+            dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+            dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
     return dolfin_functions
