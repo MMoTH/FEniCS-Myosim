@@ -19,6 +19,7 @@ Boundary Conditions & Assumptions
 - LV base is fixed in the z-direction.
 - Mean rigid body rotation and translation are zero.
 - LV cavity volume is prescribed to match that solved for by a 3 compartment circulatory model.
+- Contraction is driven by the [three state kinetic scheme](https://mmoth.github.io/FEniCS-Myosim/pages/model_formulations/cell_mechanics/cell_mechanics.html).
 
 Results
 -------

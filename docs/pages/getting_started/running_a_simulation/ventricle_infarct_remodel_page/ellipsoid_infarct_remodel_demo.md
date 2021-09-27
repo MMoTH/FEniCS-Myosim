@@ -24,15 +24,11 @@ Boundary Conditions & Assumptions
 
 Results
 -------
-The resulting pressure-volume loop, along with circulatory pressures, volumes and intracellular calcium are plotted below. These results can be plotted by executing  
-```
-python /home/fenics/shared/source_code/plot_tools/viewpvloop.py _PV.txt
-```
-from the output directory.
-
-![List of containers](pvloops_steadystate.png)
-
-The LV deformation can be seen below by applying the "Warp by Vector" filter to the "u_disp.pvd" files in the output directory using Paraview.
+The LV deformation and reference fiber orientations **f<sub>0</sub>** can be seen below, each colored by the stiffness of the tissue. To visualize the progression of **f<sub>0</sub>**:
+- Load in the "f0_vectors.pvd" and "c_param.pvd" files. Click "Apply".
+- Highlight both in the "Pipeline Browser", right click -> Add Filter -> Alphabetical -> Append Attributes. Click "Apply".
+- With the "AppendAttributes1" selected, apply the "Glyph" filter making sure that the orientation array and scale arrays  dropdown in the "Properties" panel are set to "f0".
+- Repeat the above steps with the "u_disp.pvd" and "c_param.pvd" files, applying the "Warp by Vector" filter instead of "Glyph" to view the deformation colored by the stiffness parameter.
 <video width="800" height="400" controls>
-  <source src="final_animation_deformation.mp4" type="video/mp4">
+  <source src="def_remodel.mp4" type="video/mp4">
 </video>
