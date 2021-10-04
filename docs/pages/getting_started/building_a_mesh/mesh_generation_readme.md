@@ -4,11 +4,6 @@ parent: Getting Started
 nav_order: 4
 ---
 
-<div class="notice--info">
-  <h4>Message</h4>
-  <p>This page is under  construction.</p>
-</div>
-
 One of the strengths of the finite element method is the ability to solve problems over complex geometries. Given cardiac MRI (CMR) data, ventricle specific meshes can be generated.
 
 First, download [MeVisLab](https://www.mevislab.de/download/) version >= 3.1.1. Any previous version will be lacking required modules. Additionally, the following files are required from the MMotH-Fenics-UK repository and can be found in the [mesh_generation](https://github.com/mmoth-kurtis/MMotH-Fenics-UK/tree/master/mesh_generation) subdirectory:  
