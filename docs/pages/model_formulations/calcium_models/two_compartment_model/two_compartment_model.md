@@ -12,7 +12,7 @@ Let y be a vector of length 2 such that y[0] represents calcium in the cytoplasm
 
 <center><i><sup>dy[1]</sup>&frasl;<sub>dt</sub> = -dy[0]</i></center>  
 
-<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/model_formulations/calcium_models/two_compartment_model/ca_1_eqn.jpg?raw=true" align="center" border="0"  width="369" height="39" />
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/calcium_models/two_compartment_model/ca_1_eqn.jpeg?raw=true" align="center" border="0"  width="369" height="39" />
 
 k<sub>leak</sub>: The rate of constant flow of calcium from the sarcoplasmic reticulum to the cytoplasm.  
 activation: Either 1 or 0 representing status of muscle activation.  
