@@ -21,7 +21,7 @@ elif (t >= t_p):
 
 This yields the following:
 
-<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/cell_isometric_demo_page/f0_cell_isometric_demo_2.png?raw=true" width="800" height="500">
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/calcium_models/dyna_paper_model/dyna_ca.png?raw=true" width="800" height="500">
 
 [^1]: Laurita, K. R., & Singal, A. (2001). Mapping action potentials and calcium transients simultaneously from the intact heart.
 Am J Physiol Heart Circ Physiol, 280(5), H2053-2060. doi:10.1152/ajpheart.2001.280.5.H2053
