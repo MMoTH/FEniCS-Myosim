@@ -16,9 +16,9 @@ Each gauss point within a finite element is treated as a representative half-sar
 MyoSim accepts user-defined kinetic schemes. Included in the repository are the 3-state w/SRX[^1] and 4-state w/SRX.
 
 ## 3-State w/SRX
-This kinetic scheme is explained in detail in the footnoted manuscript, along with the fluxes. Briefly, myosin heads are assumed to occupy one of three states: a super-relaxed, detached state (SRX), a disordered-relaxed detached state (DRX), and an attached, post-powerstroke state (FG). Binding sites on the thin filament are either OFF or ON, and once ON they are either BOUND or UNBOUND. Binding sites are activated in the presence of intracellular calcium and are coupled to the thick filament through the J<sub>3</sub> flux. Together, the fluxes describe a system of ordinary differential equations to be solved at every timestep.
+This kinetic scheme is explained in detail in the footnoted manuscript, along with the fluxes. Briefly, myosin heads are assumed to occupy one of three states: a super-relaxed, detached state (SRX), a disordered-relaxed detached state (DRX), and an attached, post-powerstroke state (FG). Binding sites on the thin filament are either OFF or ON, and once ON they are either BOUND or UNBOUND. Binding sites are activated in the presence of intracellular calcium and are coupled to the thick filament through the J<sub>3</sub> flux. Together, the fluxes describe a system of ordinary differential equations to be solved at every timestep that yields the relative population in each of the states. From here, the populations in any attached state (cross-bridges) are modeled as linear springs.
 
-<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/model_formulations/cell_mechanics/three_state_corrected_background.png?raw=true" width="800" height="500">
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/cell_mechanics/three_state_corrected_background.png?raw=true" width="800" height="500">
 
 
 [^1]: Campbell, K. S., Janssen, P. M. L., & Campbell, S. G. (2018). Force-Dependent Recruitment from the Myosin Off State Contributes to Length-Dependent Activation. Biophys J, 115(3), 543-553. doi:10.1016/j.bpj.2018.07.006
