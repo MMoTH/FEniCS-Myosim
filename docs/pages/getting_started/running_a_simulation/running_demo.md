@@ -33,7 +33,7 @@ Demos
 - [Fiber Efficiency Aligned](/fiber_efficiency_aligned/fiber_efficiency_aligned_demo.md)
 - [Fiber Efficiency Disarray](/fiber_efficiency_disarray/fiber_efficiency_disarray_demo.md)
 - [Ellipsoidal LV](/ventricle_ellipsoid_page/ventricle_ellipsoid_demo.md)
-- [Ellipsoidal Infarct Fiber Remodeling](/ventricle_infarct_remodel_page/ellipsoid_infarct_remodeling_demo.md)
+- [Ellipsoidal Infarct Fiber Remodeling](/ventricle_infarct_remodel_page/ellipsoid_infarct_remodel_demo.md)
 
 
 <a href="../installation/installation.html" class="btn btn--primary"><< Installation</a>
