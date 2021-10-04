@@ -6,17 +6,20 @@ nav_order: 2
 ---
 Dyna Paper Calcium Transient
 ----------------------------
-The following adapted[^1] equation gives the calcium transient used in the paper "Force-Dependent Recruitment From Myosin OFF-State Increases End-Systolic
-Pressure-Volume Relationship in Left Ventricle"[^2].
+The following (written in pseudocode) adapted[^1] equation gives the calcium transient used in the paper "Force-Dependent Recruitment From Myosin OFF-State Increases End-Systolic Pressure-Volume Relationship in Left Ventricle"[^2].
+
+t<sub>p</sub> = cardiac_period*cycle + self.t_act+0.01
+fCa = 25
+fCa_2 = 2.5
 
 if t <= self.t_act:  
     pCa = 7  
-    calcium_value = 10**(-1*pCa)  
-elif ((cardiac_period*cycle+self.t_act) < t) and (t < (t_p)):  
+    calcium_value = 10<sup>-pCa</sup>  
+elif ((cardiac_period*cycle+self.t_act) < t) and (t < (t<sub>p</sub>)):  
     pCa = (t - (cardiac_period*cycle+self.t_act))/0.02  
-    calcium_value = (1 + 9*np.sin(3.14*pCa))1E-7  
-elif (t >= t_p):  
-    pCa = 0.5*np.exp(-np.power((t - t_p)fCa, fCa_2))  
+    calcium_value = (1 + 9sin(3.14*pCa))1E-7  
+elif (t >= t<sub>p</sub>):  
+    pCa = 0.5*np.exp(-np.power((t - t<sub>p</sub>)fCa, fCa_2))  
     calcium_value = (1+9*np.sin(3.14*pCa))1E-7  
 
 This yields the following:
