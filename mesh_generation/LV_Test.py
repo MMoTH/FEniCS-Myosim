@@ -1,5 +1,12 @@
+# @Author: charlesmann
+# @Date:   2021-06-22T12:00:19-04:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2021-10-01T15:10:00-04:00
+
+
+
 import sys
-sys.path.append("/home/fenics/shared/")
+sys.path.append("/home/fenics/shared/dependencies/")
 
 import vtk
 import os
@@ -9,19 +16,19 @@ from dolfin import *
 from mpi4py import MPI as pyMPI
 
 def pig_lv():
-	
+
 	casename = "New_mesh" #"ellipsoidal_from_MRI"
 	meshfilename =  casename + ".vtk" #"ellipsoidal.vtk"#
 
 	outdir = "./" +casename + "/"
 	directory = os.getcwd() + '/' +  casename + "/"
 	ugrid = vtk_py.readUGrid(meshfilename)
-	
+
 
 	#print (ugrid)
-	
+
 	mesh = vtk_py.convertUGridToXMLMesh(ugrid)
-	
+
 	print (mesh)
 	comm2 = pyMPI.COMM_WORLD
 
@@ -29,7 +36,7 @@ def pig_lv():
 
 	matid = MeshFunction('size_t',fenics_mesh_ref, 3, mesh.domains())
 
-	
+
 	meshname = casename
 	ztop =  max(fenics_mesh_ref.coordinates()[:,2])
 	ztrans = Expression(("0.0", "0.0", str(-ztop)), degree = 1)
@@ -45,13 +52,15 @@ def pig_lv():
 
 	quad_deg = 4
 	VQuadelem = VectorElement("Quadrature", mesh.ufl_cell(), degree=quad_deg, quad_scheme="default")
+        Quadelem = FiniteElement("Quadrature",mesh.ufl_cell(),degree=quad_deg,quad_scheme="default")
 	VQuadelem._quad_scheme = 'default'
 	fiberFS = FunctionSpace(mesh, VQuadelem)
-	isepiflip = True #False
-	isendoflip = True #True
-	endo_angle = 60; epi_angle = -60; casedir="./";  
-	
-	ef, es, en, eC, eL, eR = vtk_py.addLVfiber(mesh, fiberFS, "lv", endo_angle, epi_angle, casedir, isepiflip, isendoflip, isapexflip=False)
+	isepiflip = False #False
+	isendoflip = False #True #True
+	endo_angle = 60; epi_angle = -60; casedir="./";
+        hslFS = FunctionSpace(mesh,Quadelem)
+
+	hsl,ef, es, en, eC, eL, eR = vtk_py.addLVfiber(mesh, fiberFS, hslFS, "lv", endo_angle, epi_angle, 900.0,1000.0,casedir,isepiflip, isendoflip, isapexflip=False)
 
 	matid_filename = outdir + meshname + "_matid.pvd"
 	File(matid_filename) << matid
@@ -59,16 +68,17 @@ def pig_lv():
 	f = HDF5File(mesh.mpi_comm(), directory + meshname+".hdf5", 'w')
 	f.write(mesh, meshname)
 	f.close()
-	
-	f = HDF5File(mesh.mpi_comm(), directory + meshname+".hdf5", 'a') 
-	f.write(fenics_facet_ref, meshname+"/"+"facetboundaries") 
-	f.write(fenics_edge_ref, meshname+"/"+"edgeboundaries") 
-	f.write(matid, meshname+"/"+"matid") 
-	f.write(ef, meshname+"/"+"eF") 
-	f.write(es, meshname+"/"+"eS") 
+
+	f = HDF5File(mesh.mpi_comm(), directory + meshname+".hdf5", 'a')
+	f.write(fenics_facet_ref, meshname+"/"+"facetboundaries")
+	f.write(fenics_edge_ref, meshname+"/"+"edgeboundaries")
+	f.write(matid, meshname+"/"+"matid")
+        f.write(hsl,meshname+"/"+"hsl0")
+	f.write(ef, meshname+"/"+"eF")
+	f.write(es, meshname+"/"+"eS")
 	f.write(en, meshname+"/"+"eN")
-	f.write(eC, meshname+"/"+"eC") 
-	f.write(eL, meshname+"/"+"eL") 
+	f.write(eC, meshname+"/"+"eC")
+	f.write(eL, meshname+"/"+"eL")
 	f.write(eR, meshname+"/"+"eR")
 
 	f.close()
@@ -81,5 +91,5 @@ def pig_lv():
 
 
 	return 0
-	
+
 s = pig_lv()

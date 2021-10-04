@@ -5,7 +5,9 @@ from vtk_py import *
 def addLVfiber(mesh, V, F, casename, endo_angle, epi_angle, hsl0_endo, hsl0_epi, casedir, isepiflip, isendoflip, isapexflip=False):
 
 
-	fiberV = Function(V)
+        print "hsl0 at epi",hsl0_epi
+        print "hsl0 at endo",hsl0_endo
+        fiberV = Function(V)
 	sheetV = Function(V)
 	sheetnormV = Function(V)
 	cV = Function(V)
