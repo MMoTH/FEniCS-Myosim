@@ -13,14 +13,14 @@ fCa = 25
 fCa_2 = 2.5
 
 if t <= self.t_act:  
-emsp pCa = 7  
-emsp calcium_value = 10<sup>-pCa</sup>  
-elif ((cardiac_period*cycle+self.t_act) < t) and (t < (t<sub>p</sub>)):  
-emsp pCa = (t - (cardiac_period*cycle+self.t_act))/0.02  
-emsp calcium_value = (1 + 9sin(3.14*pCa))1E-7  
+&emsp; pCa = 7  
+&emsp; calcium_value = 10<sup>-pCa</sup>  
+elif ((cardiac_period)(cycle)+self.t_act) < t) and (t < (t<sub>p</sub>)):  
+&emsp; pCa = (t - (cardiac_period)(cycle)+self.t_act))/0.02  
+&emsp; calcium_value = (1 + 9sin(3.14pCa))1E-7  
 elif (t >= t<sub>p</sub>):  
-emsp pCa = 0.5*exp(-np.power((t - t<sub>p</sub>)fCa, fCa_2))  
-emsp calcium_value = (1+9*np.sin(3.14*pCa))1E-7  
+&emsp; pCa = 0.5exp(-np.power((t - t<sub>p</sub>)fCa, fCa_2))  
+&emsp; calcium_value = (1+9np.sin(3.14*pCa))1E-7  
 
 This yields the following:
 
