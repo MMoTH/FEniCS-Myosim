@@ -15,8 +15,8 @@ Let Q<sub>ao</sub>, Q<sub>mv</sub>, Q<sub>per</sub> denote the flows through the
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/qmv.jpeg?raw=true" width="199" height="46">  
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/qper.jpeg?raw=true" width="199" height="46">  
 
-<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/dvcav_dt.jpeg?raw=true" width="161" height="43">
-<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/dvart_dt.jpeg?raw=true" width="161" height="43">
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/dvcav_dt.jpeg?raw=true" width="161" height="43">  
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/dvart_dt.jpeg?raw=true" width="161" height="43">  
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/hemodynamics/dvven_dt.jpeg?raw=true" width="161" height="43">  
 
 This cavity volume is then constrained to this value during the solving of the weak form. This is done by introducing a Lagrange multiplier that ends up taking on the value of the cavity pressure.
