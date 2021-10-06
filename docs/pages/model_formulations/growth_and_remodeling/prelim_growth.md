@@ -21,9 +21,14 @@ Animations of preliminary concentric growth are shown below. The active stress a
   <source src="growth_and_filling.mp4" type="video/mp4">
 </video>
 
-and then the 5 beat simulation is run again:
+and then the 5 beat simulation is run again. Initial simulation is shown on the left, and the grown mesh simulation shown on the right with the corresponding PV loops below:
 
+<video width="800" height="500" controls>
+  <source src="5beat_comparison.mp4" type="video/mp4">
+</video>
 
+<p style="text-align: center;"><img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/growth_and_remodeling/growth_pvloop.tiff?raw=true" width="74" height="21">
+</p>
 
 [^1]: Rodriguez, E. K., Hoger, A., & McCulloch, A. D. (1994). Stress-dependent finite growth in soft elastic tissues. Journal of biomechanics, 27(4), 455–467. https://doi.org/10.1016/0021-9290(94)90021-3
 [^2]: Sharifi, H., Mann, C.K., Rockward, A.L. et al. Multiscale simulations of left ventricular growth and remodeling. Biophys Rev (2021). https://doi.org/10.1007/s12551-021-00826-5
