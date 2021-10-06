@@ -27,7 +27,7 @@ and then the 5 beat simulation is run again. Initial simulation is shown on the 
   <source src="5beat_comparison.mp4" type="video/mp4">
 </video>
 
-<p style="text-align: center;"><img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/growth_and_remodeling/growth_pvloop.tiff?raw=true" width="74" height="21">
+<p style="text-align: center;"><img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/model_formulations/growth_and_remodeling/growth_pvloop.jpeg?raw=true" width="74" height="21">
 </p>
 
 [^1]: Rodriguez, E. K., Hoger, A., & McCulloch, A. D. (1994). Stress-dependent finite growth in soft elastic tissues. Journal of biomechanics, 27(4), 455–467. https://doi.org/10.1016/0021-9290(94)90021-3
