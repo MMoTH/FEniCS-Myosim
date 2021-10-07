@@ -50,7 +50,7 @@ def pig_lv():
 
 	gdim = mesh.geometry().dim()
 
-	quad_deg = 4
+	quad_deg = 2
 	VQuadelem = VectorElement("Quadrature", mesh.ufl_cell(), degree=quad_deg, quad_scheme="default")
         Quadelem = FiniteElement("Quadrature",mesh.ufl_cell(),degree=quad_deg,quad_scheme="default")
 	VQuadelem._quad_scheme = 'default'
