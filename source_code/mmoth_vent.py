@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-09-22T10:21:06-04:00
+# @Last modified time: 2021-10-07T14:03:22-04:00
 
 
 
@@ -1513,7 +1513,8 @@ def fenics(sim_params):
         print "updating boundary conditions"
         # Update boundary conditions/expressions (need to include general displacements and tractions)
         # quick hack
-        if sim_geometry == "ellipsoid":
+        if sim_geometry == "ellipsoid" or sim_geometry == "ventricle":
+            x_dofs = 0.0
             x_dofs = 0.0
             test_marker_fcn = 0.0
             traction_switch_flag = 0.0
