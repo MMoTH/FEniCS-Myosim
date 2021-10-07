@@ -37,8 +37,8 @@ Laxis = ([0,0,1])
 #zoffset = clip_info["z_offset"]
 zoffset = 0.0
 ###################################################################
-endofilename = 'endo_surface.stl'
-epifilename = 'epi_surface.stl'
+endofilename = 'endo_stl_scaled.stl'
+epifilename = 'epi_stl_scaled.stl'
 
 
 angle = np.arccos(Laxis[2])
