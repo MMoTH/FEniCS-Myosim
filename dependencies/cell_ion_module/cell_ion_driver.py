@@ -1,3 +1,10 @@
+# @Author: charlesmann
+# @Date:   2021-09-20T19:22:52-04:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2021-10-11T11:07:39-04:00
+
+
+
 # So far these are only needed to test standalone
 import sys
 import numpy as np
@@ -76,6 +83,14 @@ class cell_ion_driver():
             self.t_act = self.model_params["t_act"][0]
             self.t_end = self.model_params["t_end"][0]
 
+        if self.model_name == "rice_fit":
+            self.diastolic_ca = self.model_params["diastolic_ca"][0]
+            self.peak_ca = self.model_params["peak_ca"][0]
+            self.tau_1 = self.model_params["tau_1"][0]
+            self.tau_2 = self.model_params["tau_2"][0]
+            self.t_act = self.model_params["t_act"][0]
+            self.period = self.model_params["cardiac_period"][0]
+
 
         # Import the model
         #self.model = __import__(model_name)
@@ -143,5 +158,19 @@ class cell_ion_driver():
                 calcium_value = self.active_ca
             else:
                 calcium_value = self.basal_ca
+
+        if self.model_name == "rice_fit":
+            print "l",l
+            t = l%self.period
+            t = float(t)/1000
+            tau1 = self.tau_1
+            tau2 = self.tau_2
+            beta = (tau1/tau2)**(-1./((tau1/tau2)-1.))-(tau1/tau2)**(-1/(1-tau2/tau1))
+            print "beta",beta
+            if t < self.t_act:
+                calcium_value = self.diastolic_ca
+            else:
+                calcium_value = self.diastolic_ca+((self.peak_ca-self.diastolic_ca)/beta)*(np.exp(-(t-self.t_act)/tau1)-np.exp(-(t-self.t_act)/tau2))
+
 
         return calcium_value
