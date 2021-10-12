@@ -113,6 +113,9 @@ def import_mesh(sim_geometry, options):
             f = HDF5File(mpi_comm_world(), mesh_path, 'r')
             if "grown_mesh" in options.keys():
               casename = "grown_mesh" 
+            if options["scaled"][0] == "True":
+              print "using scaled version of mesh"
+              casename = "scaled_mesh"
             f.read(mesh, casename, False)
             # had to read casename for scaled mesh. Now switch casename back to original
             # to access all other functions for ellipsoid sim
