@@ -22,7 +22,7 @@ class cell_ion_module():
 
         # Specify model to be ran
         temp = params["model"][0]
-        temp = "rice_fit"
+        
 
         base_dir = "cell_ion_module."
         model_name = base_dir + temp
