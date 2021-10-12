@@ -57,6 +57,7 @@ def fenics(sim_params):
     sim_geometry = sim_params["simulation_geometry"][0] #unit_cube, cylinder, ventricle
     if sim_geometry == "unit_cube":
         geo_options = {}
+        print "creating empy geo_options dictionary"
     else:
         geo_options = sim_params["geometry_options"]
 
@@ -161,7 +162,8 @@ def fenics(sim_params):
         facetboundaries = MeshFunction('size_t', mesh, mesh.topology().dim()-1)
         edgeboundaries = MeshFunction('size_t', mesh, mesh.topology().dim()-2)
         subdomains = MeshFunction('int', mesh, 3)
-
+    print "checking geo_options after mesh import"
+    print geo_options
     File(output_path + '/test_mesh_import.pvd') << mesh
 
     # define communicator, for running with multiple cores in parallel
@@ -410,8 +412,8 @@ def fenics(sim_params):
     # go ahead and get coordinates of quadrature points
     gdim = mesh.geometry().dim()
     xq = Quad.tabulate_dof_coordinates().reshape((-1,gdim))
-    geo_options["xq"] = xq
-    print "xq 0",xq[0]
+    #geo_options["xq"] = xq
+    #print "xq 0",xq[0]
     #print "quadrature coordinates", xq
     #print "shape of xq",np.shape(xq)
 
