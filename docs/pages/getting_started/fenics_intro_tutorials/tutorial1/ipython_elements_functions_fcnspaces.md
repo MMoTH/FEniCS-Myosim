@@ -42,16 +42,23 @@ Mesh 2 is shown below. Note the refinement in x, y, and z. The rest of this tuto
 
 Now to do anything interesting with our mesh, we need to define what type of finite elements we want to use. First, consider the definition of a finite element (Ciarlet 1975):  
 
-*"A finite element is a triple (T, V, L), where:
+*"A finite element is a triple (T, V, L), where:  
        - T is a closed, bounded subset of R^d with nonempty interior
-         and piecewise smooth boundary.
-       - V = V(T) is a finite dimensional function space on T of dimension n
+         and piecewise smooth boundary.  
+       - V = V(T) is a finite dimensional function space on T of dimension n  
        - L is the set of degrees of freedom (nodes) L = {l1,l2,...,ln} and
          is a basis for the dual space V' (space of bounded linear functionals
          on V)"*
 
-More concretely, *T* gives us the discretization of our domain, *V* is the function space we use to approximate the solution on each of the subdomains (elements), and *L* is the evaluation of V on the nodes. Creating the unit cube mesh above, we have discretized our domain using tetrahedrons. To form a full finite element, we need to decide on a function space to approximate our solution. For our problem, we are trying to solve for displacement (a vector quantity) that we assume varies quadratically within an element. For this, we will use the quadratic Lagrange polynomials:
+More concretely, *T* gives us the discretization of our domain, *V* is the function space we use to approximate the solution on each of the subdomains (elements), and *L* is the evaluation of V on the nodes. Creating the unit cube mesh above, we have discretized our domain using tetrahedrons. To form a full finite element, we need to decide on a function space to approximate our solution. Let's start by considering a scalar quantity (say temperature) that we want to approximate as varying linearly within an element, and we want it to be continuous between elements. For this, we would use continuous Lagrange, linear polynomials. To create this type of finite element, we use:  
+```
+Q_elem = FiniteElement("CG", mesh1.ufl_cell(), 1, quad_scheme = "default")
+```
+
+ For our problem, we are trying to solve for displacement (a vector quantity) that we assume varies quadratically within an element. For this, we will use the quadratic Lagrange polynomials:
 
 ```
 V_elem = VectorElement("CG", mesh.ufl_cell(), 2, quad_scheme = "default")
 ```
+
+Here, we specify that we want a vector element ()
