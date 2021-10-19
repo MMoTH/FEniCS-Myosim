@@ -1,3 +1,9 @@
+---
+parent: Getting Started
+title: "FEniCS Tutorials"
+nav_order: 4
+---
+
 - Open Docker
 - Start container
 - Enter container
@@ -96,36 +102,7 @@ Because these are typical elements, you can actually skip the formal creation of
 Q_fcn_space = FunctionSpace(mesh1,"CG",1)
 V_fcn_space = VectorFunctionSpace(mesh1,"CG",2)
 ```
-However, you cannot skip the element creation and use the FunctionSpace command to create a vector function space. To illustrate this, consider the following:
-```
-V_fcn_space = FunctionSpace(mesh1,V_elem)
-V_fcn_space2 = VectorFunctionSpace(mesh1,"CG",2)
-V_fcn_space3 = FunctionSpace(mesh1,"CG",2)
-
-v1 = Function(V_fcn_space)
-v2 = Function(V_fcn_space2)
-v3 = Function(V_fcn_space3)
-
-In [37]: v1
-Out[37]: Coefficient(FunctionSpace(Mesh(VectorElement(FiniteElement('Lagrange', tetrahedron, 1), dim=3), 0), VectorElement(FiniteElement('Lagrange', tetrahedron, 2, quad_scheme='default'), dim=3)), 16)
-
-In [38]: v2
-Out[38]: Coefficient(FunctionSpace(Mesh(VectorElement(FiniteElement('Lagrange', tetrahedron, 1), dim=3), 0), VectorElement(FiniteElement('Lagrange', tetrahedron, 2), dim=3)), 19)
-
-In [39]: v3
-Out[39]: Coefficient(FunctionSpace(Mesh(VectorElement(FiniteElement('Lagrange', tetrahedron, 1), dim=3), 0), FiniteElement('Lagrange', tetrahedron, 2)), 22)
-```
-Note that the first two functions are using a VectorElement of dimension 3, whereas the third function is a normal FiniteElement. Furthermore, let's access the arrays that will hold the function values (we will get more into accessing these arrays later):
-```
-In [41]: np.shape(v1.vector().array())
-Out[41]: (81,)
-
-In [42]: np.shape(v2.vector().array())
-Out[42]: (81,)
-
-In [43]: np.shape(v3.vector().array())
-Out[43]: (27,)
-```
+However, you cannot skip the element creation and use the FunctionSpace command to create a vector function space.
 
 Keep in mind these functions are global. In mesh1, for quadrate tetrahedrons, there are 27 nodes (one at each vertex, one at each midpoint). For a vector element, we expect each node to have 3 components. For a scalar element, each node has just one element. The first two functions are equivalent, the third is not.
 
