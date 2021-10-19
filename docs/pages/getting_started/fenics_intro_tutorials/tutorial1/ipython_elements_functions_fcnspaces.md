@@ -5,9 +5,11 @@ grand_parent: Getting Started
 nav_order: 1
 ---
 
+These tutorials will utilize Ipython within the Docker container. Ipython is a command line program that allows for real time execution of python code and is very useful for prototyping. Ipython will allow users to closely look at and experiment with FEniCS code.
+
 In general, the goal is to solve for the displacement at the nodes during each time step that satisfies the balance of linear momentum. To do this we need to do the following:  
 
-- Discretize our domain
+- Discretize the domain
 - Describe the finite elements we want to use to solve our problem
 - Describe the weak form we are trying to solve (and specify boundary conditions that aren't in the weak form. Remember, traction boundary conditions show up in the weak form, essential (displacement) boundary conditions are specified).
 - Solve and update relevant quantities.
