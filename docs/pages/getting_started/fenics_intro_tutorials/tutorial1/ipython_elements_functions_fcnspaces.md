@@ -39,3 +39,19 @@ File('mesh2.pvd') << mesh2
 ```
 Mesh 2 is shown below. Note the refinement in x, y, and z. The rest of this tutorial will use the coarse unit cube mesh.
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/mesh2.png?raw=true" width="800" height="500">
+
+Now to do anything interesting with our mesh, we need to define what type of finite elements we want to use. First, consider the definition of a finite element (Ciarlet 1975):  
+
+*"A finite element is a triple (T, V, L), where:
+       - T is a closed, bounded subset of R^d with nonempty interior
+         and piecewise smooth boundary.
+       - V = V(T) is a finite dimensional function space on T of dimension n
+       - L is the set of degrees of freedom (nodes) L = {l1,l2,...,ln} and
+         is a basis for the dual space V' (space of bounded linear functionals
+         on V)"*
+
+More concretely, *T* gives us the discretization of our domain, *V* is the function space we use to approximate the solution on each of the subdomains (elements), and *L* is the evaluation of V on the nodes. Creating the unit cube mesh above, we have discretized our domain using tetrahedrons. To form a full finite element, we need to decide on a function space to approximate our solution. For our problem, we are trying to solve for displacement (a vector quantity) that we assume varies quadratically within an element. For this, we will use the quadratic Lagrange polynomials:
+
+```
+V_elem = VectorElement("CG", mesh.ufl_cell(), 2, quad_scheme = "default")
+```
