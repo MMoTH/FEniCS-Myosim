@@ -21,3 +21,19 @@ ipython
 
 This should take you to the starting Ipython screen as seen below:  
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/ipython_start_screen.png?raw=true" width="800" height="500">
+
+Now we can execute python code. Let's start with importing numpy and dolfin:
+```
+from dolfin import *
+import numpy as np
+```
+Let's start with a basic built-in unit cube mesh provide by FEniCS:
+```
+mesh = UnitCubeMesh(1,1,1)
+mesh2 = UnitCubeMesh(10,8,6)
+```
+where the inputs define the refinement in the x, y, and z-directions respectively. These meshes can be saved and viewed in Paraview:
+```
+File('mesh.pvd') << mesh
+File('mesh2.pvd') << mesh2
+```
