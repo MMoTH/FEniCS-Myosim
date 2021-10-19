@@ -1313,9 +1313,11 @@ def fenics(sim_params):
         if "track_and_update" in sim_protocol.keys():
             cycle_l = sim_protocol["track_and_update"]["cycle_l"][0]
         else:
-            cycle_l = l
+            cycle_l = t[l]
 
         if not ((sim_geometry == "ventricle") or (sim_geometry == "ellipsoid")):
+            print sim_timestep
+            print "cycle_l",cycle_l
             calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
 
 	# else, calcium already calculated for ventricle sims. Standardize time input for calcium!
