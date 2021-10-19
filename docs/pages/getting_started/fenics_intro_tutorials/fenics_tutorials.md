@@ -6,3 +6,8 @@ has_children: true
 has_toc: false
 ---
 Test2
+
+Tutorials
+-----
+- [Finite Elements, Functions, and Function Spaces](/tutorial1/ipython_elements_functions_fcnspaces.md)
+- [Functions & Expressions](/tutorial2/ipython_learning1.md)
