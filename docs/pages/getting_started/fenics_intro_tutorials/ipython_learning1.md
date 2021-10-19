@@ -1,7 +1,7 @@
 ---
-parent: Getting Started
-title: "FEniCS Tutorials"
-nav_order: 4
+parent: FEniCS Tutorials
+title: "FEniCS Tutorials1"
+nav_order: 2
 ---
 
 - Open Docker
