@@ -1,7 +1,7 @@
 ---
 title: "Building a Mesh"
 parent: Getting Started
-nav_order: 4
+nav_order: 3
 ---
 
 One of the strengths of the finite element method is the ability to solve problems over complex geometries. Given cardiac MRI (CMR) data, ventricle specific meshes can be generated.
