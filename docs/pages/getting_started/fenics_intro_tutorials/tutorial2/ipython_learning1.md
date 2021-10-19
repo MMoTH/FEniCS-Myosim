@@ -5,6 +5,8 @@ grand_parent: Getting Started
 nav_order: 2
 ---
 
+This was a first draft. Need to tidy things up - Kurtis
+
 - Open Docker
 - Start container
 - Enter container
