@@ -1,6 +1,7 @@
 ---
 title: FEniCS Tutorials1
 parent: FEniCS Tutorials
+grand_parent: Getting Started
 nav_order: 2
 ---
 
