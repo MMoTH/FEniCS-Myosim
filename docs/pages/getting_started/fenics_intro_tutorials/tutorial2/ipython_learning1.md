@@ -1,6 +1,6 @@
 ---
-parent: FEniCS Tutorials
 title: FEniCS Tutorials1
+parent: FEniCS Tutorials
 nav_order: 2
 ---
 
