@@ -1250,7 +1250,7 @@ def fenics(sim_params):
     cell_ion = cell_ion_driver.cell_ion_driver(cell_ion_params,sim_timestep,sim_duration)
 
     # Initialize calcium concentration from cell_ion module
-    calcium[0] = cell_ion.calculate_concentrations(0,0)
+    calcium[0] = cell_ion.calculate_concentrations(sim_timestep,0)
 
     # Initializing growth class if needed
     if 'growth_params' in globals():

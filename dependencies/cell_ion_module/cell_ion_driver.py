@@ -90,6 +90,33 @@ class cell_ion_driver():
             self.tau_2 = self.model_params["tau_2"][0]
             self.t_act = self.model_params["t_act"][0]
             self.period = self.model_params["cardiac_period"][0]
+    
+        if self.model_name == "porcine_spline":
+            self.breaks = [0.0,0.1,0.2,0.31,0.49,0.6] #times to switch to different splines in s
+            self.period = 600 #ms
+            self.coefs = np.zeros((5,4))
+            self.coefs[0,0] = 0.46100006687048
+            self.coefs[0,1] = -0.163627006687048
+            self.coefs[0,2] = 0.0190527
+            self.coefs[0,3] = 0.00027
+            self.coefs[1,0] = 0.091539799388559
+            self.coefs[1,1] = -0.025326986625904
+            self.coefs[1,2] = 0.000157300668705
+            self.coefs[1,3] = 0.001
+            self.coefs[2,0] = -0.005276964220075
+            self.coefs[2,1] = 0.002134953190664
+            self.coefs[2,2] = -0.002161902674819
+            self.coefs[2,3] = 0.000854
+            self.coefs[3,0] = 0.005885946055328
+            self.coefs[3,1] = 0.000393554998039
+            self.coefs[3,2] = -0.001883766774062
+            self.coefs[3,3] = 0.000635
+            self.coefs[4,0] = 0.009373587527503
+            self.coefs[4,1] = 0.003571965867916
+            self.coefs[4,2] = -0.001169973018190
+            self.coefs[4,3] = 0.000343
+            self.coefs = self.coefs*(1e-4)
+            self.spline_counter = 0
 
 
         # Import the model
@@ -171,6 +198,29 @@ class cell_ion_driver():
                 calcium_value = self.diastolic_ca
             else:
                 calcium_value = self.diastolic_ca+((self.peak_ca-self.diastolic_ca)/beta)*(np.exp(-(t-self.t_act)/tau1)-np.exp(-(t-self.t_act)/tau2))
+
+        if self.model_name == "porcine_spline":
+            
+            t = l%self.period
+                
+            if t < time_step:
+                # started a new cycle, reset the spline counter
+                self.spline_counter = 0
+
+            t = float(t)/1000 # convert time to seconds
+                
+            
+            if t < self.breaks[self.spline_counter+1]:
+                # do nothing
+                print "not updating spline counter"
+            else:
+                self.spline_counter +=1
+
+            calcium_value = self.coefs[self.spline_counter,0]*((t-self.breaks[self.spline_counter])**3) + \
+                        self.coefs[self.spline_counter,1]*((t-self.breaks[self.spline_counter])**2) + \
+                        self.coefs[self.spline_counter,2]*(t-self.breaks[self.spline_counter]) + \
+                        self.coefs[self.spline_counter,3]
+                
 
 
         return calcium_value
