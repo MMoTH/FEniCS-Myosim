@@ -37,3 +37,5 @@ where the inputs define the refinement in the x, y, and z-directions respectivel
 File('mesh.pvd') << mesh
 File('mesh2.pvd') << mesh2
 ```
+Mesh 2 is shown below. Note the refinement in x, y, and z. The rest of this tutorial will use the coarse unit cube mesh.
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/mesh2.png?raw=true" width="800" height="500">
