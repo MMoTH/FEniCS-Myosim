@@ -18,3 +18,6 @@ First, let's get familiar with the different types of FEniCS objects. Open docke
 ```
 ipython
 ```
+
+This should take you to the starting Ipython screen as seen below:  
+<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/cell_isometric_demo_page/f0_cell_isometric_demo_2.png?raw=true" width="800" height="500">
