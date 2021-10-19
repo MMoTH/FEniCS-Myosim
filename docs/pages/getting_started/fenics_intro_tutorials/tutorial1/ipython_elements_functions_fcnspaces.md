@@ -20,4 +20,4 @@ ipython
 ```
 
 This should take you to the starting Ipython screen as seen below:  
-<img src="https://github.com/mmoth-kurtis/MMotH-Vent/blob/master/docs/pages/getting_started/running_a_simulation/cell_isometric_demo_page/f0_cell_isometric_demo_2.png?raw=true" width="800" height="500">
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/ipython_start_screen.png?raw=true" width="800" height="500">
