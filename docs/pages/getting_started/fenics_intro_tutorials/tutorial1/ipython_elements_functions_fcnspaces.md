@@ -5,7 +5,7 @@ grand_parent: Getting Started
 nav_order: 1
 ---
 
-These tutorials will utilize Ipython within the Docker container. Ipython is a command line program that allows for real time execution of python code and is very useful for prototyping. Ipython will allow users to closely look at and experiment with FEniCS code. UFL documentation can be found (here)[https://readthedocs.org/projects/fenics-ufl/downloads/pdf/stable/]. See p.5 - 9 for discussions about finite elements.
+These tutorials will utilize Ipython within the Docker container. Ipython is a command line program that allows for real time execution of python code and is very useful for prototyping. Ipython will allow users to closely look at and experiment with FEniCS code. UFL documentation can be found [here](https://readthedocs.org/projects/fenics-ufl/downloads/pdf/stable/). See p.5 - 9 for discussions about finite elements.
 
 In general, the goal is to solve for the displacement at the nodes during each time step that satisfies the balance of linear momentum. To do this we need to do the following:  
 
