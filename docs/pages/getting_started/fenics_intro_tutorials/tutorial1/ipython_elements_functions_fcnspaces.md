@@ -5,7 +5,7 @@ grand_parent: Getting Started
 nav_order: 1
 ---
 
-These tutorials will utilize Ipython within the Docker container. Ipython is a command line program that allows for real time execution of python code and is very useful for prototyping. Ipython will allow users to closely look at and experiment with FEniCS code.
+These tutorials will utilize Ipython within the Docker container. Ipython is a command line program that allows for real time execution of python code and is very useful for prototyping. Ipython will allow users to closely look at and experiment with FEniCS code. UFL documentation can be found (here)[https://readthedocs.org/projects/fenics-ufl/downloads/pdf/stable/]. See p.5 - 9 for discussions about finite elements.
 
 In general, the goal is to solve for the displacement at the nodes during each time step that satisfies the balance of linear momentum. To do this we need to do the following:  
 
@@ -50,15 +50,39 @@ Now to do anything interesting with our mesh, we need to define what type of fin
          is a basis for the dual space V' (space of bounded linear functionals
          on V)"*
 
-More concretely, *T* gives us the discretization of our domain, *V* is the function space we use to approximate the solution on each of the subdomains (elements), and *L* is the evaluation of V on the nodes. Creating the unit cube mesh above, we have discretized our domain using tetrahedrons. To form a full finite element, we need to decide on a function space to approximate our solution. Let's start by considering a scalar quantity (say temperature) that we want to approximate as varying linearly within an element, and we want it to be continuous between elements. For this, we would use continuous Lagrange, linear polynomials. To create this type of finite element, we use:  
+More concretely, *T* gives us the discretization of our domain, *V* is the function space we use to approximate the solution on each of the subdomains (elements), and *L* is the evaluation of V on the nodes. Creating the unit cube mesh above, we have discretized our domain using tetrahedrons. To form a full finite element, we need to decide on a function space to approximate our solution. Let's start by considering a scalar quantity (say temperature) that we want to approximate as varying linearly within an element, and we want it to be continuous between elements. For this, we would use continuous Lagrange, linear polynomials. To create this type of basic finite element, we use:  
 ```
-Q_elem = FiniteElement("CG", mesh1.ufl_cell(), 1, quad_scheme = "default")
+Q_elem = FiniteElement("CG", mesh.ufl_cell(), 1, quad_scheme = "default")
 ```
 
- For our problem, we are trying to solve for displacement (a vector quantity) that we assume varies quadratically within an element. For this, we will use the quadratic Lagrange polynomials:
+Where "CG" stands for "Continuous Galerkin" (continuous between elements), "mesh.ufl_cell()" returns "tetrahedron", and "1" is the order of the polynomial (linear). With a tetrahedral geometry using linear polynomials, our degrees of freedom is the evaluation of the polynomials at the four vertices of the tetrahedron.  
+
+ For our problem, we are trying to solve for displacement (a vector quantity) that we assume varies quadratically within an element. For this, we will use the quadratic Lagrange polynomials, and the shortcut command "VectorElement" which is technically a mixed element where all elements are equal:
 
 ```
 V_elem = VectorElement("CG", mesh.ufl_cell(), 2, quad_scheme = "default")
 ```
 
-Here, we specify that we want a vector element ()
+This is equivalent to declaring a basic quadratic CG element, and using it to declare a mixed element (we will see mixed elements later in our code):
+```
+Q_elem2 = FiniteElement("CG", mesh.ufl_cell(), 2, quad_scheme = "default")
+V_elem2 = Q_elem2 * Q_elem2 * Q_elem2
+```
+
+
+Defining the finite element gives a description of how the solution will be approximated *locally*, and then using the finite element and mesh we construct a global finite element function space:
+
+```
+Q_fcn_space = FunctionSpace(mesh,Q_elem)
+V_fcn_space = FunctionSpace(mesh,V_elem)
+```
+
+With a basis defined and the function space created, we can interpolate to get values anywhere within out geometry.
+
+A quick note: The other type of element we use is called a "Quadrature Element". This element is used to obtain values ONLY AT THE ELEMENT QUADRATURE POINTS. In other words, you cannot interpolate using this element to get values at other coordinates. To do that, a projection must be done to a function space using one of the standard elements. MyoSim is solved using a quadrature element.
+
+We can now define functions that belong to these finite element function spaces. Functions are useful to store the information we solve for along the way. For example, let's create a function that is meant to hold our displacement solution:  
+```
+u = Function(V_fcn_space)
+```
+Let's take a quick look at the shape of u. 
