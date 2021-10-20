@@ -118,3 +118,19 @@ Notice the shape of Q_dofmap is (8,3). Since it's a scalar function space using 
 
 Assigning Function Values
 ------------------------
+Let's create two functions on Q_fcn_space that are easier to deal with:
+```
+alpha = Function(Q_fcn_space)
+beta = Function(Q_fcn_space)
+```
+There are a couple of ways to assign function values. You can change the elements of the function's .vector() attribute directly, or use the assign() function.  
+You can assign individual elements of alpha (representing the function value at a specific vertex):  
+```
+alpha.vector()[1] = 4.0
+```
+Looking back at the Q_dofmap, we just assigned alpha to take on the value of 4.0 at the coordinate [0.,0.,0.]. Let's take a look at this function in Paraview to verify this.  
+```
+alpha_file = File("alpha.pvd") # create paraview file
+alpha_file << alpha # save the function to the file
+```
+<img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/alpha_viz.png?raw=true" width="800" height="500">
