@@ -134,3 +134,29 @@ alpha_file = File("alpha.pvd") # create paraview file
 alpha_file << alpha # save the function to the file
 ```
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/alpha_viz.png?raw=true" width="800" height="500">
+
+This verifies the assignment we have performed. Also note that because Q_fcn_space uses linear polynomials, alpha varies linearly from 4.0 at the origin, to 0.0 at the other vertices. We can also check the value of alpha at different points throughout our mesh. For this, we need to create a "point" object:  
+```
+p = Point(0.5,0.5,0)
+alpha(p)
+```
+evaluates alpha at the point p, which comes out to 2.
+
+We can also assign the full array of alpha values:
+```
+temp_alpha_values = np.linspace(0,np.shape(alpha.vector().array())[0],np.shape(alpha.vector().array())[0])
+alpha.vector()[:] = temp_alpha_values
+alpha_file = File("alpha.pvd")
+alpha_file << alpha
+```
+Finally, we can assign one function to take on the value of another:
+```
+assign(alpha,beta) #beta was initialized to zero, so we've reset alpha to be all zeros as well
+```
+It is more often the case that function values are assigned based on mathematical relationship, for example the stretch calculated from the Cauchy stretch tensor. This is one of the great things about FEniCS. One can (with things properly initialized) assign the relationship:
+```
+alpha = sqrt(dot(f0, Cmat*f0))
+```
+and as f0 (fiber direction) and the right Cauchy tensor are updated, alpha will be updated throughout the mesh as well.
+
+It is encouraged to play with creating and assigning different function values to get used to using the degree of freedom mapping. It is also encouraged to create a new function space using discontinuous (DG) Lagrange elements (both of order 0 and 1), and to visualize your functions in ParaView to see if they match what you expect. A final note: ParaView does not visualize above linear projections. In FEniCS, it is valid to create a scalar function space using continuous quadratic polynomials ("CG2"), but saving the function to a ParaView file will only save a CG1 projection.
