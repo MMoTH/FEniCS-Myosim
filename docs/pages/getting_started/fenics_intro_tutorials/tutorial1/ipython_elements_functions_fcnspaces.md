@@ -159,4 +159,7 @@ alpha = sqrt(dot(f0, Cmat*f0))
 ```
 and as f0 (fiber direction) and the right Cauchy tensor are updated, alpha will be updated throughout the mesh as well.
 
-It is encouraged to play with creating and assigning different function values to get used to using the degree of freedom mapping. It is also encouraged to create a new function space using discontinuous (DG) Lagrange elements (both of order 0 and 1), and to visualize your functions in ParaView to see if they match what you expect. A final note: ParaView does not visualize above linear projections. In FEniCS, it is valid to create a scalar function space using continuous quadratic polynomials ("CG2"), but saving the function to a ParaView file will only save a CG1 projection.
+It is encouraged to play with creating and assigning different function values to get used to using the degree of freedom mapping. It is also encouraged to create a new function space using discontinuous (DG) Lagrange elements (both of order 0 and 1), and to visualize your functions in ParaView to see if they match what you expect.  
+Some final notes:  
+- ParaView does not visualize above linear projections. In FEniCS, it is valid to create a scalar function space using continuous quadratic polynomials ("CG2"), but saving the function to a ParaView file will only save a CG1 projection.
+- In our version of FEniCS, visualization at the integration points for quadrature elements is not implemented. This requires projecting from the quadrature function space to one of the others for visualization which may introduce errors. More of this will be discussed in a later tutorial.
