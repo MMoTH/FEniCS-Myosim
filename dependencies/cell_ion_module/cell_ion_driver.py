@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-10-11T11:07:39-04:00
+# @Last modified time: 2021-10-20T13:18:50-04:00
 
 
 
@@ -90,7 +90,7 @@ class cell_ion_driver():
             self.tau_2 = self.model_params["tau_2"][0]
             self.t_act = self.model_params["t_act"][0]
             self.period = self.model_params["cardiac_period"][0]
-    
+
         if self.model_name == "porcine_spline":
             self.breaks = [0.0,0.1,0.2,0.31,0.49,0.6] #times to switch to different splines in s
             self.period = 600 #ms
@@ -124,7 +124,7 @@ class cell_ion_driver():
         #self.model_class = self.model.init(model_params)
 
 
-    def calculate_concentrations(self,time_step,l):
+    def calculate_concentrations(self,time_step,l,ind):
 
         if self.model_name == "file_input":
 
@@ -167,7 +167,7 @@ class cell_ion_driver():
 
             def derivs(t, y):
                 dy = np.zeros(np.size(y))
-                dy[0] = (self.k_leak + self.activation[l] * self.k_act) * y[1] - \
+                dy[0] = (self.k_leak + self.activation[ind] * self.k_act) * y[1] - \
                         self.k_serca * y[0]
                 dy[1] = -dy[0]
                 return dy
@@ -200,16 +200,16 @@ class cell_ion_driver():
                 calcium_value = self.diastolic_ca+((self.peak_ca-self.diastolic_ca)/beta)*(np.exp(-(t-self.t_act)/tau1)-np.exp(-(t-self.t_act)/tau2))
 
         if self.model_name == "porcine_spline":
-            
+
             t = l%self.period
-                
+
             if t < time_step:
                 # started a new cycle, reset the spline counter
                 self.spline_counter = 0
 
             t = float(t)/1000 # convert time to seconds
-                
-            
+
+
             if t < self.breaks[self.spline_counter+1]:
                 # do nothing
                 print "not updating spline counter"
@@ -220,7 +220,7 @@ class cell_ion_driver():
                         self.coefs[self.spline_counter,1]*((t-self.breaks[self.spline_counter])**2) + \
                         self.coefs[self.spline_counter,2]*(t-self.breaks[self.spline_counter]) + \
                         self.coefs[self.spline_counter,3]
-                
+
 
 
         return calcium_value

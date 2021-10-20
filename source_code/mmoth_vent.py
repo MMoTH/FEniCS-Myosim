@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-10-07T14:03:22-04:00
+# @Last modified time: 2021-10-20T13:17:58-04:00
 
 
 
@@ -1289,7 +1289,7 @@ def fenics(sim_params):
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
             # update calcium
-            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,t[l])
+            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,t[l],l)
 
             # Update circulatory model
             p_cav = uflforms.LVcavitypressure()
