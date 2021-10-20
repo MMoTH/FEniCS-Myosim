@@ -1318,7 +1318,7 @@ def fenics(sim_params):
         if not ((sim_geometry == "ventricle") or (sim_geometry == "ellipsoid")):
             print sim_timestep
             print "cycle_l",cycle_l
-            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l)
+            calcium[l] = cell_ion.calculate_concentrations(sim_timestep,cycle_l,l)
 
 	# else, calcium already calculated for ventricle sims. Standardize time input for calcium!
 
