@@ -40,6 +40,8 @@ File('mesh2.pvd') << mesh2
 Mesh 2 is shown below. Note the refinement in x, y, and z. The rest of this tutorial will use the coarse unit cube mesh.
 <img src="https://github.com/MMoTH/FEniCS-Myosim/blob/master/docs/pages/getting_started/fenics_intro_tutorials/tutorial1/mesh2.png?raw=true" width="800" height="500">
 
+Creating a Finite Element
+--------------------------
 Now to do anything interesting with our mesh, we need to define what type of finite elements we want to use. First, consider the definition of a finite element (Ciarlet 1975):  
 
 *"A finite element is a triple (T, V, L), where:  
@@ -69,7 +71,8 @@ Q_elem2 = FiniteElement("CG", mesh.ufl_cell(), 2, quad_scheme = "default")
 V_elem2 = Q_elem2 * Q_elem2 * Q_elem2
 ```
 
-
+Creating a Finite Element Function Space
+----------------------------------------
 Defining the finite element gives a description of how the solution will be approximated *locally*, and then using the finite element and mesh we construct a global finite element function space:
 
 ```
@@ -113,4 +116,5 @@ np.shape(Q_dofmap)
 ```
 Notice the shape of Q_dofmap is (8,3). Since it's a scalar function space using linear tets, there should only be one value at each vertex (the four corners of the cube). Indeed, looking at Q_dofmap, it's a list of the coordinates representing the corners of the cube.
 
-##Assigning Function Values
+Assigning Function Values
+------------------------
