@@ -85,4 +85,30 @@ We can now define functions that belong to these finite element function spaces.
 ```
 u = Function(V_fcn_space)
 ```
-Let's take a quick look at the shape of u. 
+u is a FEniCS object, not just an array of numbers. If we want to view the array of function values, or store a copy of the function values, we can do  
+```
+u.vector().array()
+temp_u = u.vector().array()
+```
+We could also use the "get_local()" method, which gets the function values on the local process if things are being executed in parallel  
+```
+u.vector().get_local()
+```
+Let's just do a quick sanity check to verify the number of elements of our temp_u array. The function u belongs to a vector function space in our three dimensional mesh. Thus, for each node there should be three components (x, y, and z). We are using a basic unit cube mesh with refinement one, and quadratic tets. Thus there is a node at each vertex of a tetrahedron, and also at each midpoint. This leads to 27 nodes, each with 3 components, thus 81 elements in our temp_u array.
+```
+np.shape(u.vector().array())
+```
+produces the output  
+```
+Out[45]: (81,)
+```
+Now we can see function values, but for them to be useful we need a mapping between the indices of temp_u, and the coordinates of our mesh. Let's create that mapping:
+```
+gdim = mesh.geometry().dim() # get the dimension of our mesh. Will take on value of 3 for 3-dimensional mesh
+V_dofmap = V_fcn_space.tabulate_dof_coordinates().reshape((-1,gdim)) # mapping comes from the function space
+Q_dofmap = Q_fcn_space.tabulate_dof_coordinates().reshape((-1,gdim)) # Q is scalar function space, using only tet vertices
+V_dofmap
+Q_dofmap
+np.shape(Q_dofmap)
+```
+Notice the shape of Q_dofmap is (8,3). Since it's a scalar function space using linear tets, there should only be one value at each vertex (the four corners of the cube). Indeed, looking at Q_dofmap, it's a list of the coordinates representing the corners of the cube.
