@@ -112,3 +112,5 @@ Q_dofmap
 np.shape(Q_dofmap)
 ```
 Notice the shape of Q_dofmap is (8,3). Since it's a scalar function space using linear tets, there should only be one value at each vertex (the four corners of the cube). Indeed, looking at Q_dofmap, it's a list of the coordinates representing the corners of the cube.
+
+##Assigning Function Values
