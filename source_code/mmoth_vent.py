@@ -186,6 +186,7 @@ def fenics(sim_params):
         # Kurtis changing this 6/17/21 to test accuracy/time
         #deg = 4
         #no_of_int_points = 14 * np.shape(mesh.cells())[0]
+        
         deg = 2
         no_of_int_points = 4 * np.shape(mesh.cells())[0]
         #set surface id numbers
@@ -469,7 +470,7 @@ def fenics(sim_params):
         n0 = Function(fiberFS)
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
     x_vec = Function(fiberFS)
-    x_shape = np.shape(x_dir.vector())
+    #x_shape = np.shape(x_dir.vector())
     #print x_shape
     #print "x shape"
     x2_shape = np.shape(x_dir.vector().get_local())
@@ -1605,6 +1606,7 @@ def fenics(sim_params):
             pk2_passive_save.rename("pk2_passive","pk2_passive")
             pk2_passive_file << pk2_passive_save
             np.save(output_path+"j7",j7_fluxes)
+            np.save(output_path+"j4",j4_fluxes)
             f0_deformed = project(Fmat*f0,VectorFunctionSpace(mesh,"DG",0))
             f0_deformed.rename('f0','f0_deformed')
             f0_deformed_file << f0_deformed
