@@ -239,7 +239,10 @@ def fenics(sim_params):
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
-        fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
+        #fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
+        # set up f0 vs time array
+        f0_vs_time_array = np.zeros((no_of_int_points,3,no_of_time_steps))
+        print "shape of f0 vs time",np.shape(f0_vs_time_array)
         #stress visualization
         pk2_passive_file = File(output_path + "pk2_passive.pvd")
         f0_deformed_file = File(output_path + "f0_deformed.pvd")
@@ -413,6 +416,7 @@ def fenics(sim_params):
     # go ahead and get coordinates of quadrature points
     gdim = mesh.geometry().dim()
     xq = Quad.tabulate_dof_coordinates().reshape((-1,gdim))
+    np.save(output_path + 'quadrature_dof',xq)
     #geo_options["xq"] = xq
     #print "xq 0",xq[0]
     #print "quadrature coordinates", xq
@@ -468,6 +472,7 @@ def fenics(sim_params):
         f0 = Function(fiberFS)
         s0 = Function(fiberFS)
         n0 = Function(fiberFS)
+
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
     x_vec = Function(fiberFS)
     #x_shape = np.shape(x_dir.vector())
@@ -1484,6 +1489,8 @@ def fenics(sim_params):
                 elif ordering_law == "new_stress_kroon":
                     fdiff = uflforms.new_stress_kroon(driver_type,fiberFS,float(sim_timestep),kroon_time_constant,binary_mask)
 		    f0.vector()[:] += fdiff.vector()[:]
+                    print "CHECKING NUMBER OF FIBER VECTORS"
+                    print np.shape(f0.vector().get_local())
                     print "Fiber orientation updated"
 	        #update fiber orientations
                 s0,n0 = lcs.update_local_coordinate_system(f0,coord_params)
@@ -1540,6 +1547,12 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
+
+            # Save all fiber vectors 
+            f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
+            f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
+            print "shape of temp f0_vs-time",np.shape(f0_vs_time_temp2)
+            f0_vs_time_array[:,:,l] = f0_vs_time_temp2
             if cb_number_density != 0:
 		        #pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
 		        #pk2temp.rename("pk2_active","active_stress")
@@ -1576,7 +1589,7 @@ def fenics(sim_params):
                     temp_fibrotic_f0.vector()[index*3+2] = 0.0
             f0_temp = project(temp_fibrotic_f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('fibrotic f0','fibrotic f0')
-            fibrotc_fiber_file << f0_temp
+            #fibrotc_fiber_file << f0_temp
 	    # Save fdiff for unit cube and simple shear simulations
             if "reorient_start_time" in locals():
                 if l > float(reorient_start_time)/float(sim_timestep) and (sim_protocol["simulation_type"][0] == "ramp_and_hold" or sim_protocol["simulation_type"][0] == "ramp_and_hold_simple_shear") and (not (sim_geometry == "gmesh_cylinder")):
@@ -1692,6 +1705,8 @@ def fenics(sim_params):
             delta_hsl_array_ds.to_csv(output_path + 'delta_hsl.csv',mode='a',header=False)
 
         if l == (no_of_time_steps-1): # at last time step
+            # save full f0_vs_time 
+            np.save(output_path+"f0_vs_time.npy",f0_vs_time_array)
             # interpolate cross-bridges one last time to account for final solve
             for mm in np.arange(no_of_int_points):
                 delta_x = delta_hsl_array[mm]*filament_compliance_factor
@@ -1751,10 +1766,11 @@ def fenics(sim_params):
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
         if(MPI.rank(comm) == 0):
             fdataPV.close()
-    f0_dot_x_vec = inner(f0,x_vec)
-    f0_dot_x_vec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
-    angles_array = np.arccos(f0_dot_x_vec_array)
-    np.save(output_path+"final_angles_array.npy",angles_array)
+    # This was for fiber simulations
+    #f0_dot_x_vec = inner(f0,x_vec)
+    #f0_dot_x_vec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
+    #angles_array = np.arccos(f0_dot_x_vec_array)
+    #np.save(output_path+"final_angles_array.npy",angles_array)
 
     if save_solution_flag > 0:
         print "Trying to save full solution to load into another simulation"
