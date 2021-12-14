@@ -110,7 +110,7 @@ class myofilaments():
         x_overlap = self.thin_filament_length - x_no_overlap
         max_x_overlap = self.thick_filament_length - self.bare_zone_length
 
-        if (x_overlap < 0.0):
+        if (x_overlap <= 0.0):
             n_overlap = 0.0
 
         if ((x_overlap > 0.0) & (x_overlap <= max_x_overlap)):
@@ -130,6 +130,6 @@ class myofilaments():
         if protrusion > 0.0:
             x_overlap = max_x_overlap - protrusion
             n_overlap = x_overlap/max_x_overlap
-
+        #print n_overlap
         #print "hs length " +str(self.parent_hs.hs_length)
         return n_overlap
