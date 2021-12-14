@@ -47,10 +47,15 @@ def return_fluxes(self, y, Ca_conc):
         else:
             Jon = 0.0
 
+        if Jon <= 0.0:
+            Jon = 0.0
+
         if (self.n_overlap > 0.0):
             Joff = self.k_off * (n_on - n_bound) * \
             (1.0 + self.k_coop * ((self.n_overlap - n_on) / self.n_overlap))
         else:
+            Joff = 0.0
+        if Joff <= 0.0:
             Joff = 0.0
         """if (self.n_overlap > 0.0):
             if self.n_overlap > n_on:

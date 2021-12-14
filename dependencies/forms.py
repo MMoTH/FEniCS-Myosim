@@ -649,13 +649,13 @@ class Forms(object):
 		f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
                 f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
                 f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]"""
-	for i in range(len(binary_mask)):
+	"""for i in range(len(binary_mask)):
             f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
             if binary_mask[i] == 1:
 
                 f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
                 f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
-                f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]
+                f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]"""
 
         """for index in np.arange(len(binary_mask)):
             if binary_mask[index] == 1:
