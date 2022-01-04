@@ -46,7 +46,7 @@ else:
     np.save("hsl",hsl)
 
 #data_range = np.shape(active_stress)[0]
-data_range = 900
+data_range = 1500
 t = np.load('time.npy')
 #t = t[:-1]
 #t = t[0:1301]

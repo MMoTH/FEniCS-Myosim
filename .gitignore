@@ -4,9 +4,11 @@
 *.pvd
 *.vtu
 *.auto
+*.mp4
 working_directory_untracked/
 LV_closed2.py
 _site/
 Gemfile.lock
 vtk/
 Doxygen_documentation/
+preliminary_growth/output*
