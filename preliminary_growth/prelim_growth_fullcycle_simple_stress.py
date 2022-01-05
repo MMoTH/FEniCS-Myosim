@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T13:59:41-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-05T12:54:21-05:00
+# @Last modified time: 2022-01-05T13:53:06-05:00
 
 from dolfin import *
 import sys
@@ -11,8 +11,7 @@ from methods import initialize_spaces
 from methods import initialize_functions
 from methods import create_boundary_conditions
 from methods import create_weak_form
-from methods import diastolic_filling
-from methods import diastolic_unloading
+from methods import full_cardiac_cycle
 from methods import calculate_stimulus_function
 from methods import calculate_deviation_function
 from methods import calculate_thetas
@@ -25,13 +24,14 @@ input_file = sys.argv[1]
 mesh, f, input_parameters = load_mesh.load_mesh(input_file)
 
 # save reference mesh
+# KURTIS CONDENSE THIS INTO FILES DICTIONARY
 print "Saving reference mesh"
-File('./output/reference_mesh.pvd') << mesh
-total_sol_file = File('./output/total_displacement.pvd')
-p_f_file = File('./output/passive_force.pvd')
-dev_file = File('./output/deviation.pvd')
-theta_file = File('./output/theta_ff.pvd')
-fdataPV = open('./output/PV_.txt', "w", 0)
+File('./fc_output/reference_mesh.pvd') << mesh
+total_sol_file = File('./fc_output/total_displacement.pvd')
+p_f_file = File('./fc_output/passive_force.pvd')
+dev_file = File('./fc_output/deviation.pvd')
+theta_file = File('./fc_output/theta_ff.pvd')
+fdataPV = open('./fc_output/PV_.txt', "w", 0)
 
 print "Setting up function spaces"
 # Set up elements and spaces for growth
@@ -55,10 +55,12 @@ ref_vol = uflforms.LVcavityvol()
 functions["LVCavityvol"].vol = ref_vol
 
 # Load to ED, get stimulus, use as set point
-functions = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, 0, total_sol_file, p_f_file)
+#functions = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, 0, total_sol_file, p_f_file)
+# Try to implement a full cardiac cycle, stimulus will be calculated within
+functions = full_cardiac_cycle.full_cycle()
 
 # Calculate the stimulus value. Without any perturbation, the stimulus value is the set point
-functions["set_point"] = calculate_stimulus_function.calculate_stimulus_function(fcn_spaces,functions,uflforms)
+#functions["set_point"] = calculate_stimulus_function.calculate_stimulus_function(fcn_spaces,functions,uflforms)
 
 # Unload the ventricle so we grow from the reference
 functions = diastolic_unloading.diastolic_unloading(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, ref_vol,0, total_sol_file, p_f_file)
@@ -74,12 +76,19 @@ functions["set_point"] *= Constant(0.8)
 #    calculate theta_ff, theta_ss, theta_nn
 #    with Fg updated, solve weak form
 #    use solution from above to move mesh to new grown state
+
+# Set up a simulation state class/dictionary. If we are going to grow in
+# the middle of cardiac simulations and continue on, we need to be able to
+# save things like windkessel volumes and pressures
+sim_state = 
+
+
 tol = 100
 growth_iter_counter = 1
 print "tolerance =",tol
 print "current maximum deviation =",np.amax(functions["deviation"].vector().get_local())
 print "growth iteration ",growth_iter_counter
-
+stop
 while np.average(functions["deviation"].vector().get_local()) > tol:
 
     print "within while loop"
@@ -89,20 +98,24 @@ while np.average(functions["deviation"].vector().get_local()) > tol:
     functions["w"].vector()[:] = 0.0
 
     # Load to ED
-    functions = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, growth_iter_counter, total_sol_file, p_f_file)
+    #functions = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, growth_iter_counter, total_sol_file, p_f_file)
+    # Full cycle here, including stimulus_temp
+
 
     # Calculate stimulus
     # Note! If functions["stimulus"] is used here, Fg will get prematurely updated, and there will be non-convergence
     # when trying to unload back to the reference
-    functions["stimulus_temp"] = calculate_stimulus_function.calculate_stimulus_function(fcn_spaces,functions,uflforms)
+    #functions["stimulus_temp"] = calculate_stimulus_function.calculate_stimulus_function(fcn_spaces,functions,uflforms)
 
     # Unload back to reference
     functions = diastolic_unloading.diastolic_unloading(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, ref_vol, growth_iter_counter, total_sol_file, p_f_file)
 
     # Now, assign the stimulus function and proceed.
+    # EDIT TO INCLUDE S0, N0
     functions["stimulus"].assign(functions["stimulus_temp"])
 
     # Calculate deviation
+    # EDIT TO INCLUDE S0, N0
     functions["deviation"] = calculate_deviation_function.calculate_deviation_function(fcn_spaces,functions)
 
     # Calculate thetas

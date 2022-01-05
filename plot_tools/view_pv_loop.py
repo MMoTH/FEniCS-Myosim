@@ -13,7 +13,7 @@ time, LV_pressure, arterial_pressure, venous_pressure, LV_vol, ven_vol, art_vol,
 #pressure = data[:,1]
 #volume = data[:2]
 fig, (ax1, ax2, ax3)  = plt.subplots(nrows=3,ncols=1)
-ax1.plot(LV_vol[10000:],LV_pressure[10000:])
+ax1.plot(LV_vol,LV_pressure)
 ax1.set_xlabel('Volume (mL)')
 ax1.set_ylabel('LV Pressure (mmHg)')
 

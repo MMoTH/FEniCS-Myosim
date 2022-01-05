@@ -1,11 +1,11 @@
 # @Author: charlesmann
 # @Date:   2022-01-04T16:33:04-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-04T17:01:47-05:00
+# @Last modified time: 2022-01-05T12:22:51-05:00
 
 from dolfin import *
 
-def save(total_sol_file, p_f_file, theta_file, dev_file, mesh, functions, fcn_spaces, uflforms, growth_iter_counter):
+def save(total_sol_file, p_f_file, theta_file, dev_file, mesh, functions, fcn_spaces, uflforms, pv_file, growth_iter_counter):
 
     # Want to check passive stress
     pk2_global, sff = uflforms.stress(functions["hsl"])
@@ -27,3 +27,7 @@ def save(total_sol_file, p_f_file, theta_file, dev_file, mesh, functions, fcn_sp
     temp = project(functions["deviation"],fcn_spaces["stimulusFS"],form_compiler_parameters={"representation":"uflacs"})
     temp.rename('deviation','deviation')
     dev_file << temp
+
+    # probably don't want to save this here. Save in diastolic filling?
+    p_cav = uflforms.LVcavitypressure()
+    print >> pv_file, p_cav*0.0075 , uflforms.LVcavityvol()
