@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T13:59:41-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-08T13:29:20-05:00
+# @Last modified time: 2022-01-10T10:28:13-05:00
 
 from dolfin import *
 import sys
@@ -142,7 +142,6 @@ while np.average(functions["deviation_ss"].vector().get_local()) > tol:
     print "CURRENT AVERAGE DEVIATION =",np.average(functions["deviation_ss"].vector().get_local())
 
     # Calculate deviation
-    # EDIT TO INCLUDE S0, N0
     functions = calculate_deviation_function.calculate_deviation_function(fcn_spaces,functions)
 
     print "deviation_ff",functions["deviation_ff"].vector().get_local()
