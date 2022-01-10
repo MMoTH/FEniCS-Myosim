@@ -101,7 +101,8 @@ class Forms(object):
         X = SpatialCoordinate(mesh)
         ds = dolfin.ds(subdomain_data = self.parameters["facetboundaries"])
 
-        F = self.Fmat()
+        #F = self.Fmat()
+        F = self.Fe()
 
         vol_form = -Constant(1.0/3.0) * inner(det(F)*dot(inv(F).T, N), X + u)*ds(self.parameters["LVendoid"])
 
@@ -173,8 +174,8 @@ class Forms(object):
     def TempActiveStress(self,time):
         print "inside tempactivestress"
         f0 = self.parameters["fiber"]
-        cbforce = Expression('A*(B+sin((B/C)*time + D))', A=15000., B=1., C=16., D=80.2, time = time, degree=0)
-
+        #cbforce = Expression('A*(B+sin((B/C)*time + D))', A=30000., B=1., C=16., D=80.2, time = time, degree=0)
+        cbforce = Expression(("f"), f=0, degree=1)
         Pactive = cbforce * as_tensor(f0[i]*f0[j], (i,j))
         return Pactive, cbforce
 
@@ -262,7 +263,8 @@ class Forms(object):
         X = SpatialCoordinate(mesh)
         x = u + X
 
-        F = self.Fmat()
+        #F = self.Fmat()
+        F = self.Fe()
 
         N = self.parameters["facet_normal"]
         n = cofac(F)*N

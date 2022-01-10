@@ -8,8 +8,8 @@
     },
     "protocol": {
       "simulation_type": ["cycle"],
-      "simulation_duration": [0.1, "ms"],
-      "simulation_timestep": [0.1, "ms"],
+      "simulation_duration": [134.0, "ms"],
+      "simulation_timestep": [0.5, "ms"],
       "initial_end_diastolic_volume": [0.25],
       "reference_loading_steps": [10]
     },
@@ -120,15 +120,15 @@
 },
   "windkessel_parameters": {
     "model": ["three_compartment_wk"],
-    "Cao": [8.6e-5, "ml/Pa"],
-    "Cven": [0.43e-3, "ml/Pa"],
-    "Vart0": [0.16625, "volume for 0 pressure in art in mL"],
+    "Cao": [2.0e-5, "ml/Pa"],
+    "Cven": [0.5e-3, "ml/Pa"],
+    "Vart0": [0.65, "volume for 0 pressure in art in mL"],
     "Vven0": [1.25, "volume for 0 pressure in vc in mL"],
-    "Rao": [4e5, "Aortic resistance, Pa*s/mL"],
-    "Rven": [520e3, "Venous resistance, Pa*s/mL"],
-    "Rper": [1500e4, "Peripheral resistance, Pa*s/mL"],
-    "V_ven": [2.0, "ED venous volume in mL"],
-    "V_art": [1.25, "ED arterial volume in mL"]
+    "Rao": [700e3, "Aortic resistance, Pa*s/mL"],
+    "Rven": [2000e3, "Venous resistance, Pa*s/mL"],
+    "Rper": [4000e3, "Peripheral resistance, Pa*s/mL"],
+    "V_ven": [3.4, "ED venous volume in mL"],
+    "V_art": [0.90, "ED arterial volume in mL"]
   },
 "growth_and_remodeling": {
    "growth_law": ["concentric_10pct"],

@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T14:47:31-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-04T11:34:18-05:00
+# @Last modified time: 2022-01-07T11:00:35-05:00
 
 from dolfin import *
 import sys
@@ -114,8 +114,12 @@ def create_weak_form(mesh,fcn_spaces,functions):
     F1 = derivative(Wp, w, wtest)*dx
 
     # active stress contribution (Pactive is PK2, transform to PK1)
-    #F2 = inner(Fmat*Pactive, grad(v))*dx
-    # Going to make Pactive from a simple expression later when testing concentric growth
+    # temporary active stress
+    Pactive, cbforce = uflforms.TempActiveStress(0.0)
+    functions["Pactive"] = Pactive
+    functions["cbforce"] = cbforce
+    F2 = inner(Fmat*Pactive, grad(v))*dx
+
 
     # LV volume increase
     Wvol = uflforms.LVV0constrainedE()
@@ -133,17 +137,17 @@ def create_weak_form(mesh,fcn_spaces,functions):
 
     F4 = derivative(L4, w, wtest)
 
-    Ftotal = F1 + F3 + F4
+    Ftotal = F1 + F2 + F3 + F4
 
     Ftotal_growth = F1 + F3_p + F4
 
     Jac1 = derivative(F1, w, dw)
-    #Jac2 = derivative(F2, w, dw)
+    Jac2 = derivative(F2, w, dw)
     Jac3 = derivative(F3, w, dw)
     Jac3_p = derivative(F3_p,w,dw)
     Jac4 = derivative(F4, w, dw)
 
-    Jac = Jac1 + Jac3 + Jac4
+    Jac = Jac1 + Jac2 + Jac3 + Jac4
     Jac_growth = Jac1 + Jac3_p + Jac4
 
-    return Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions
+    return Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions, Pactive

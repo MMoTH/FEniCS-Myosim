@@ -1,11 +1,11 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T16:23:13-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-03T16:00:13-05:00
+# @Last modified time: 2022-01-06T14:32:46-05:00
 
 from dolfin import *
 
-def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, iter_number, total_sol_file,p_f_file):
+def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, iter_number, total_sol_file,p_f_file):
 
     filling_file = File('./output/iter_'+str(iter_number)+'/load_disp.pvd')
 
@@ -15,7 +15,7 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, iter_nu
 
     LVCavityvol.vol = uflforms.LVcavityvol()
 
-    end_diastolic_volume = 0.25 #mL
+    end_diastolic_volume = edv #mL
     total_vol_loading = end_diastolic_volume - LVCavityvol.vol
     volume_increment = total_vol_loading/n_load_steps
 

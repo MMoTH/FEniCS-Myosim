@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-10-20T13:17:58-04:00
+# @Last modified time: 2022-01-06T14:26:46-05:00
 
 
 
@@ -186,7 +186,7 @@ def fenics(sim_params):
         # Kurtis changing this 6/17/21 to test accuracy/time
         #deg = 4
         #no_of_int_points = 14 * np.shape(mesh.cells())[0]
-        
+
         deg = 2
         no_of_int_points = 4 * np.shape(mesh.cells())[0]
         #set surface id numbers
@@ -1552,7 +1552,7 @@ def fenics(sim_params):
         if save_visual_output:
             displacement_file << w.sub(0)
 
-            # Save all fiber vectors 
+            # Save all fiber vectors
             f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
             f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
             print "shape of temp f0_vs-time",np.shape(f0_vs_time_temp2)
@@ -1709,7 +1709,7 @@ def fenics(sim_params):
             delta_hsl_array_ds.to_csv(output_path + 'delta_hsl.csv',mode='a',header=False)
 
         if l == (no_of_time_steps-1): # at last time step
-            # save full f0_vs_time 
+            # save full f0_vs_time
             if 'kroon_time_constant' in locals():
                 np.save(output_path+"f0_vs_time.npy",f0_vs_time_array)
             # interpolate cross-bridges one last time to account for final solve

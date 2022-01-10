@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2022-01-04T16:33:04-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-05T12:22:51-05:00
+# @Last modified time: 2022-01-07T14:28:50-05:00
 
 from dolfin import *
 
@@ -11,7 +11,7 @@ def save(total_sol_file, p_f_file, theta_file, dev_file, mesh, functions, fcn_sp
     pk2_global, sff = uflforms.stress(functions["hsl"])
 
     # Save grown mesh
-    grown_mesh_file = File("./output/iter_"+str(growth_iter_counter)+"/"+"grown_mesh.pvd")
+    grown_mesh_file = File("./fc_output/iter_"+str(growth_iter_counter)+"/"+"grown_mesh.pvd")
     grown_mesh_file << mesh
 
     # Save displacement
@@ -24,10 +24,10 @@ def save(total_sol_file, p_f_file, theta_file, dev_file, mesh, functions, fcn_sp
     temp2.rename('theta_ff','theta_ff')
     theta_file << temp2
 
-    temp = project(functions["deviation"],fcn_spaces["stimulusFS"],form_compiler_parameters={"representation":"uflacs"})
-    temp.rename('deviation','deviation')
+    temp = project(functions["deviation_ss"],fcn_spaces["stimulusFS"],form_compiler_parameters={"representation":"uflacs"})
+    temp.rename('deviation_ss','deviation_ss')
     dev_file << temp
 
     # probably don't want to save this here. Save in diastolic filling?
-    p_cav = uflforms.LVcavitypressure()
-    print >> pv_file, p_cav*0.0075 , uflforms.LVcavityvol()
+    #p_cav = uflforms.LVcavitypressure()
+    #print >> pv_file, p_cav*0.0075 , uflforms.LVcavityvol()

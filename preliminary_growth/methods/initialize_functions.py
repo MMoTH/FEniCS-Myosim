@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T14:23:29-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-12-30T11:35:32-05:00
+# @Last modified time: 2022-01-07T10:36:30-05:00
 from dolfin import *
 import sys
 sys.path.append('/home/fenics/shared/source_code/methods/assign_heterogeneous_params/')
@@ -26,13 +26,23 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     W = fcn_spaces["solution_space"]
     quadFS = fcn_spaces["quadrature_space"]
 
-    stimulus = Function(stimulusFS)
-    stimulus_temp = Function(stimulusFS)
-    deviation = Function(stimulusFS)
-    set_point = Function(stimulusFS)
+    stimulus_ff = Function(stimulusFS)
+    stimulus_ff_temp = Function(stimulusFS)
+    stimulus_ss = Function(stimulusFS)
+    stimulus_ss_temp = Function(stimulusFS)
+    stimulus_nn = Function(stimulusFS)
+    stimulus_nn_temp = Function(stimulusFS)
+    deviation_ff = Function(stimulusFS)
+    deviation_ss = Function(stimulusFS)
+    deviation_nn = Function(stimulusFS)
+    set_point_ff = Function(stimulusFS)
+    set_point_ss = Function(stimulusFS)
+    set_point_nn = Function(stimulusFS)
 
     # initializing deviation to large number for while loop
-    deviation.vector()[:] = 1000
+    deviation_ff.vector()[:] = 1000
+    deviation_ss.vector()[:] = 1000
+    deviation_nn.vector()[:] = 1000
 
     # We can use the same function space to define our theta's that make up the
     # growth deformation gradient
@@ -87,8 +97,12 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     fcns["theta_ff"] = theta_ff
     fcns["theta_nn"] = theta_nn
     fcns["theta_ss"] = theta_ss
-    fcns["stimulus"] = stimulus
-    fcns["deviation"] = deviation
+    fcns["stimulus_ff"] = stimulus_ff
+    fcns["stimulus_nn"] = stimulus_nn
+    fcns["stimulus_ss"] = stimulus_ss
+    fcns["deviation_ff"] = deviation_ff
+    fcns["deviation_ss"] = deviation_ss
+    fcns["deviation_nn"] = deviation_nn
     fcns["w"] = w
     fcns["f0"] = f0
     fcns["s0"] = s0
@@ -113,7 +127,11 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     fcns["wtest"] = wtest
     fcns["dolfin_functions"] = dolfin_functions
     fcns["facetboundaries"] = facetboundaries
-    fcns["set_point"] = set_point
-    fcns["stimulus_temp"] = stimulus_temp # saving at end diastole, then assigning to stimulus before growth
+    fcns["set_point_ff"] = set_point_ff
+    fcns["set_point_ss"] = set_point_ss
+    fcns["set_point_nn"] = set_point_nn
+    fcns["stimulus_ff_temp"] = stimulus_ff_temp # these are saved during the simulation, and assigned to components of Fg later
+    fcns["stimulus_ss_temp"] = stimulus_ss_temp
+    fcns["stimulus_nn_temp"] = stimulus_nn_temp
 
     return fcns

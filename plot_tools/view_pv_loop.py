@@ -5,9 +5,9 @@ import numpy as np
 plt.style.use('seaborn-bright')
 
 pv_file_input = sys.argv[1]
-time, LV_pressure, arterial_pressure, venous_pressure, LV_vol, ven_vol, art_vol, calcium = np.loadtxt(pv_file_input, skiprows=0, unpack=True, usecols=(0,1,2,3,4,5,6,7))
+time, LV_pressure, arterial_pressure, venous_pressure, LV_vol, ven_vol, art_vol = np.loadtxt(pv_file_input, skiprows=0, unpack=True, usecols=(0,1,2,3,4,5,6))
 #time, LV_pressure, LV_vol, ven_vol, art_vol = np.loadtxt(pv_file_input, skiprows=0, unpack=True, usecols=(0,1,2,3,4))
-
+calcium = np.zeros(np.shape(time))
 
 #time = data[:,0]
 #pressure = data[:,1]
