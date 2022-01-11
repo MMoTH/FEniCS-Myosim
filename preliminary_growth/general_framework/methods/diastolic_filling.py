@@ -1,11 +1,12 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T16:23:13-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-10T20:09:11-05:00
+# @Last modified time: 2022-01-11T17:20:12-05:00
 
 from dolfin import *
+import numpy as np
 
-def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps):
+def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps, arrays_and_values):
 
     #filling_file = File('./output/iter_'+str(iter_number)+'/load_disp.pvd')
 
@@ -30,9 +31,22 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
         p_cav = uflforms.LVcavitypressure()
         V_cav = uflforms.LVcavityvol()
 
-        #hsl_array_old = hsl_array
+        arrays_and_values["hsl_array_old"] = arrays_and_values["hsl_array"]
 
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+
+        arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+
+        temp_DG = project(functions["Sff"], fcn_spaces["stimulusFS"], form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+        arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+
+        for ii in range(np.shape(arrays_and_values["hsl_array"])[0]):
+            if arrays_and_values["p_f_array"][ii] < 0.0:
+                arrays_and_values["p_f_array"][ii] = 0.0
+
+        arrays_and_values["delta_hsl_array"] = arrays_and_values["hsl_array"] - arrays_and_values["hsl_array_old"]
+
 
 	    # Save displacement to check the loading
         #filling_file << w.sub(0)
@@ -44,4 +58,4 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
 
     functions["w"] = w
 
-    return functions
+    return functions, arrays_and_values

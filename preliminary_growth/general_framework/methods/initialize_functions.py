@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T14:23:29-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-10T20:54:20-05:00
+# @Last modified time: 2022-01-11T17:04:31-05:00
 from dolfin import *
 import sys
 sys.path.append('/home/fenics/shared/source_code/methods/assign_heterogeneous_params/')
@@ -25,6 +25,7 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     fiberFS = fcn_spaces["material_coord_system_space"]
     W = fcn_spaces["solution_space"]
     quadFS = fcn_spaces["quadrature_space"]
+    quad_vecFS = fcn_spaces["quad_vectorized_space"]
 
     stimulus_ff = Function(stimulusFS)
     stimulus_ff_temp = Function(stimulusFS)
@@ -67,8 +68,7 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     f.read(s0,"ellipsoidal/eS")
     f.read(n0,"ellipsoidal/eN")
 
-    # close f
-    f.close()
+
 
     # Finally, use these theta values to initialize Fg
     # Just like for vector functions, we need to define a function space for these
@@ -83,8 +83,28 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     # heterogeneity later
     dolfin_functions = {}
     dolfin_functions["passive_params"] = input_parameters["forms_parameters"]["passive_law_parameters"]
+    dolfin_functions["cb_number_density"] = input_parameters["myosim_parameters"]["cb_number_density"]
     dolfin_functions = initialize_dolfin_functions.initialize_dolfin_functions(dolfin_functions,quadFS)
 
+
+    # Some Myosim related functions
+    hsl0    = Function(quadFS)
+    hsl_old = Function(quadFS)
+    pseudo_alpha = Function(quadFS)
+    pseudo_old = Function(quadFS)
+    pseudo_old.vector()[:] = 1.0
+    hsl_diff_from_reference = Function(quadFS)
+    hsl_diff_from_reference.vector()[:] = 0.0
+    try:
+        f.read(hsl0, "ellipsoidal" + "/" + "hsl0")
+
+    except:
+        hsl0.vector()[:] = input_parameters["myosim_parameters"]["initial_hs_length"][0]
+
+    # close f
+    f.close()
+
+    y_vec   = Function(quad_vecFS)
 
     #---------------------------------
     # Now functions for the weak form
@@ -134,5 +154,10 @@ def initialize_functions(mesh, fcn_spaces, f, input_parameters):
     fcns["stimulus_ff_temp"] = stimulus_ff_temp # these are saved during the simulation, and assigned to components of Fg later
     fcns["stimulus_ss_temp"] = stimulus_ss_temp
     fcns["stimulus_nn_temp"] = stimulus_nn_temp
+    fcns["hsl0"] = hsl0
+    fcns["hsl_old"] = hsl_old
+    fcns["pseudo_alpha"] = pseudo_alpha
+    fcns["pseudo_old"] = pseudo_old
+    fcns["y_vec"] = y_vec
 
     return fcns

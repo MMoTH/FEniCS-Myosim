@@ -1,16 +1,16 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T12:20:28-05:00
+# @Last modified time: 2022-01-11T17:11:57-05:00
 
 
 
 from __future__ import division
 import sys
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-#sys.path.append("/home/fenics/shared/dependencies/")
-#sys.path.append("/home/fenics/shared/source_code/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+sys.path.append("/home/fenics/shared/dependencies/")
+sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -2054,6 +2054,8 @@ recode_dictionary.recode(input_parameters)
 sim_params = input_parameters["simulation_parameters"]
 passive_params = input_parameters["forms_parameters"]["passive_law_parameters"]
 hs_params = input_parameters["myosim_parameters"]
+print "hs_params"
+print hs_params
 cell_ion_params = input_parameters["electrophys_parameters"]["cell_ion_parameters"]
 all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 #monodomain_params = input_parameters["electrophys_parameters"]["monodomain_parameters"]

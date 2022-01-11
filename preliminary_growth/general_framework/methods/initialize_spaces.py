@@ -1,15 +1,19 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T14:07:31-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-10T19:52:02-05:00
+# @Last modified time: 2022-01-11T16:53:43-05:00
 from dolfin import *
+import numpy as np
 
-def initialize_spaces(mesh):
+def initialize_spaces(mesh, n_array_length):
 
     deg = 2
+    no_of_int_points = 4 * np.shape(mesh.cells())[0] #4 comes from using degree 2
+
     parameters["form_compiler"]["quadrature_degree"]=deg
     parameters["form_compiler"]["representation"] = "quadrature"
     fcn_spaces = {}
+
 
     # Set up Vector quadrature space for the material coordinate system {f0,s0,n0}
     VQuadelem = VectorElement("Quadrature", mesh.ufl_cell(), degree=deg, quad_scheme="default")
@@ -21,6 +25,9 @@ def initialize_spaces(mesh):
     Quadelem = FiniteElement("Quadrature", tetrahedron, degree=deg, quad_scheme="default")
     Quadelem._quad_scheme = 'default'
     Quad = FunctionSpace(mesh, Quadelem)
+
+    # Function space for myosim populations
+    Quad_vectorized_Fspace = FunctionSpace(mesh, MixedElement(n_array_length*[Quadelem]))
 
 
     # For the weak form
@@ -59,5 +66,6 @@ def initialize_spaces(mesh):
     fcn_spaces["material_coord_system_space"] = fiberFS
     fcn_spaces["solution_space"] = W
     fcn_spaces["quadrature_space"] = Quad
+    fcn_spaces["quad_vectorized_space"] = Quad_vectorized_Fspace
 
-    return fcn_spaces
+    return fcn_spaces, no_of_int_points

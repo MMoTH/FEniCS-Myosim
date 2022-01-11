@@ -1,19 +1,43 @@
 {
-  "geometry": {
-      "mesh_path": ["/home/fenics/shared/meshes/ellipsoidal_degree_2.hdf5"],
+  "simulation_parameters": {
+    "simulation_geometry": ["ellipsoid"],
+    "rseed": [0],
+    "geometry_options": {
+      "mesh_path": ["/mnt/home/f0101140/Desktop/FEniCS-Myosim/meshes/ellipsoidal_degree_2.hdf5"],
       "scaled": ["False"]
-  },
-
-  "protocol": {
-      "cardiac_period": [200.0, "ms"],
-      "termination_condition": ["simulation_end_time",1200.0],
+    },
+    "protocol": {
+      "simulation_type": ["cycle"],
+      "simulation_duration": [1200.0, "ms"],
       "simulation_timestep": [0.1, "ms"],
       "initial_end_diastolic_volume": [0.24],
-      "reference_loading_steps": [10]
+      "reference_loading_steps": [30]
+    },
+    "save_cell_output": [0],
+    "save_visual_output": [1],
+    "save_solution": [1],
+    "load_solution": [0, "/mnt/home/f0101140/Desktop/kurtis_output/new_ellipsoid_deg2_test_ca_cycle1/"],
+    "output_path": ["/mnt/gs18/scratch/users/f0101140/rat_infarct_sims/healthy_LV_baseline_no_cond_longer_diastole_12_28_v1/"],
+    "fiber_orientation":{
+      "fiber_randomness": [0]
+    }
   },
 
-  "output_options": {
-    "output_path": ["/home/fenics/shared/preliminary_growth/general_framework/output/"]
+  "optimization_parameters": {
+    "num_particles": [10],
+    "max_iterations": [10],
+    "num_variables": [0, "number to optimize, if > 0 triggers optimization"],
+    "singlecell_target_force": [150694.0, "hard coding for now to test pso"],
+    "w": [0.3],
+    "c1": [0.5],
+    "c2": [0.5],
+    "point_generation": ["uniform"],
+
+    "variables_and_bounds": {
+      "k_3": [[2000, 6000], 0.0, 0.0],
+      "k_4_0": [[501, 4000], 0.0, 0.0],
+      "k_force": [[1e-5, 1e-3], 0.0, 0.0]
+    }
   },
 
   "forms_parameters": {
@@ -104,6 +128,19 @@
     "Rper": [1200e4, "Peripheral resistance, Pa*s/mL"],
     "V_ven": [2.2, "ED venous volume in mL"],
     "V_art": [1.25, "ED arterial volume in mL"]
-  }
+  },
+"growth_and_remodeling": {
+     "eccentric_growth": {
+       "time_constant": [0.0],
+       "k_myo_damp": [0.0],
+       "passive_set_point": [0.0]
+     },
+     "fiber_reorientation":{
+       "stress_type":["total"],
+       "law":["new_stress_kroon"],
+       "time_constant":[10.0],
+       "reorient_t_start":[1000000.0,"ms"]
+     }
+   }
 
 }

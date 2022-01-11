@@ -1,14 +1,16 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T14:47:31-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-10T19:52:46-05:00
+# @Last modified time: 2022-01-11T17:06:38-05:00
 
 from dolfin import *
 import sys
 sys.path.append("/home/fenics/shared/dependencies/")
 from forms import Forms
 
-def create_weak_form(mesh,fcn_spaces,functions):
+def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
+
+    m,k = indices(2)
 
 
     # Need to set up the strain energy functions and cavity volume info
@@ -111,9 +113,51 @@ def create_weak_form(mesh,fcn_spaces,functions):
 
     # active stress contribution (Pactive is PK2, transform to PK1)
     # temporary active stress
-    Pactive, cbforce = uflforms.TempActiveStress(0.0)
+    #Pactive, cbforce = uflforms.TempActiveStress(0.0)
+
+    functions["hsl_old"].vector()[:] = functions["hsl0"].vector()[:]
+    functions["hsl_diff_from_reference"] = (functions["hsl_old"] - functions["hsl0"])/functions["hsl0"]
+    functions["pseudo_alpha"] = functions["pseudo_old"]*(1.-(arrays_and_values["k_myo_damp"]*(functions["hsl_diff_from_reference"])))
+    alpha_f = sqrt(dot(f0, Cmat*f0)) # actual stretch based on deformation gradient
+    functions["hsl"] = functions["pseudo_alpha"]*alpha_f*functions["hsl0"]
+    functions["delta_hsl"] = functions["hsl"] - functions["hsl_old"]
+
+    cb_force = Constant(0.0)
+
+    y_vec_split = split(functions["y_vec"])
+
+    for jj in range(arrays_and_values["no_of_states"]):
+        f_holder = Constant(0.0)
+        temp_holder = 0.0
+
+        if arrays_and_values["state_attached"][jj] == 1:
+            cb_ext = arrays_and_values["cb_extensions"][jj]
+
+            for kk in range(arrays_and_values["no_of_x_bins"]):
+                dxx = arrays_and_values["xx"][kk] + functions["delta_hsl"] * arrays_and_values["filament_compliance_factor"]
+                n_pop = y_vec_split[arrays_and_values["n_vector_indices"][jj][0] + kk]
+                temp_holder = n_pop * arrays_and_values["k_cb_multiplier"][jj] * (dxx + cb_ext) * conditional(gt(dxx + cb_ext,0.0), arrays_and_values["k_cb_pos"], arrays_and_values["k_cb_neg"])
+                f_holder = f_holder + temp_holder
+
+            f_holder = f_holder * dolfin_functions["cb_number_density"][-1] * 1e-9
+            f_holder = f_holder * arrays_and_values["alpha_value"]
+
+        cb_force = cb_force + f_holder
+
+    Pactive = cb_force * as_tensor(functions["f0"][m]*functions["f0"][k], (m,k))+ arrays_and_values["xfiber_fraction"]*cb_force * as_tensor(functions["s0"][m]*functions["s0"][k], (m,k))+ arrays_and_values["xfiber_fraction"]*cb_force * as_tensor(functions["n0"][m]*functions["n0"][k], (m,k))
+
+    functions["cb_force"] = cb_force
+    arrays_and_values["cb_f_array"] = project(functions["cb_force"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+    arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+
+    # calculate myofiber passive stress along f0, set negatives to zero (no compressive stress born by fibers)
+    total_passive_PK2, functions["Sff"] = uflforms.stress(functions["hsl"])
+    temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+    p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+    arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+
     functions["Pactive"] = Pactive
-    functions["cbforce"] = cbforce
+    #functions["cbforce"] = cbforce
     F2 = inner(Fmat*Pactive, grad(v))*dx
 
 
@@ -146,4 +190,4 @@ def create_weak_form(mesh,fcn_spaces,functions):
     Jac = Jac1 + Jac2 + Jac3 + Jac4
     Jac_growth = Jac1 + Jac3_p + Jac4
 
-    return Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions, Pactive
+    return Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions, Pactive, arrays_and_values
