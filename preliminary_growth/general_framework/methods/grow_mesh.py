@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2022-01-11T10:42:23-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T13:49:39-05:00
+# @Last modified time: 2022-01-11T14:41:00-05:00
 
 from dolfin import *
 import diastolic_unloading
@@ -36,8 +36,6 @@ def grow_mesh(fcn_spaces, functions, uflforms, Ftotal, Jac, Ftotal_growth, Jac_g
     growth_iter_counter +=1
 
     output_object.save_grown_mesh(mesh, growth_iter_counter)
-
-    output_object.total_sol_file.save_pvd_object(functions["w"].sub(0))
 
     # Reset thetas so Fg is identity
     functions["theta_ff"].vector()[:] = 1.0

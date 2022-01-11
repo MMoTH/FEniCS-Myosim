@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2022-01-10T16:46:33-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T13:51:36-05:00
+# @Last modified time: 2022-01-11T14:43:37-05:00
 
 from dolfin import *
 import sys
@@ -241,7 +241,7 @@ while sim_state.termination_flag == False:
                     # Now that growth has occurred (with LV cavity volume unconstrained), calculate LV cavity volume
                     # and appropriately set the expression:
                     ref_vol = uflforms.LVcavityvol()
-                    #functions["LVCavityvol"].vol = ref_vol
+                    functions["LVCavityvol"].vol = ref_vol
 
                     # Reset solution to zero
                     functions["w"].vector()[:] = 0.0
