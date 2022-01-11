@@ -60,7 +60,6 @@ class Forms(object):
         #Fg = self.Fg
         #Fe = as_tensor(F[i,j]*inv(Fg)[j,k], (i,k))
         if "growth_tensor" in self.parameters:
-            print "growth tensor exists, creating Fe"
             Fg = self.parameters["growth_tensor"]
             Fe = as_tensor(F[i,j]*inv(Fg)[j,k], (i,k))
         else:
@@ -172,7 +171,7 @@ class Forms(object):
         return pressure
 
     def TempActiveStress(self,time):
-        print "inside tempactivestress"
+
         f0 = self.parameters["fiber"]
         #cbforce = Expression('A*(B+sin((B/C)*time + D))', A=30000., B=1., C=16., D=80.2, time = time, degree=0)
         cbforce = Expression(("f"), f=0, degree=1)
@@ -214,8 +213,7 @@ class Forms(object):
 
         alpha = sqrt(2.0 * Eff + 1.0)
         myofiber_stretch = hsl/hsl0
-        print "Myofiber stretch:"
-        print project(myofiber_stretch,FunctionSpace(self.parameters["mesh"],"DG",0)).vector().array()
+
         #alpha = sqrt(dot(f0, Cmat*f0))
 
 

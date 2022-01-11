@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-03-02T15:51:26-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2021-12-28T15:13:38-05:00
+# @Last modified time: 2022-01-10T19:52:20-05:00
 
 
 
@@ -12,7 +12,6 @@ from dolfin import *
 
 def initialize_dolfin_functions(dolfin_functions_dict,fcn_space):
 
-    print "initializing dolfin functions"
     # This function will recursively go through the dolfin_functions_dict and append
     # an initialized dolfin function to the list that exists as the parameter key's value
 
@@ -29,7 +28,6 @@ def initialize_dolfin_functions(dolfin_functions_dict,fcn_space):
 
 
 def append_initialized_function(temp_dict,key,fcn_space):
-    print "appending fcn"
     if isinstance(temp_dict[key][0],str):
         #do nothing
         print "string, not creating function"

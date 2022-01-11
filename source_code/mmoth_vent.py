@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-06T14:26:46-05:00
+# @Last modified time: 2022-01-11T12:20:28-05:00
 
 
 
@@ -44,7 +44,6 @@ import scipy.interpolate as interpol
 #import append_to_log as aplog
 
 
-# For now, sticking to hieracrchy that this is called by fenics_driver.py
 #def fenics(sim_params,file_inputs,output_params,passive_params,hs_params,cell_ion_params,monodomain_params,windkessel_params):
 def fenics(sim_params):
 

@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-29T13:56:50-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-10T16:42:48-05:00
+# @Last modified time: 2022-01-08T11:16:58-05:00
 from dolfin import *
 import numpy as np
 
@@ -18,11 +18,11 @@ def calculate_thetas(fcn_spaces,functions,input_parameters):
     growth_time_constant = Constant(input_parameters["growth_and_remodeling"]["f0_time_constant"][0])
 
 
-    #theta_ff_temp = project(1+(1./growth_time_constant)*((functions["deviation_ff"]/functions["set_point_ff"])),fcn_spaces["stimulusFS"])
-    #heta_ff_array = theta_ff_temp.vector().get_local()
-    #theta_ff_array[theta_ff_array >= max_theta] = max_theta
-    #theta_ff_array[theta_ff_array <= min_theta] = min_theta
-    #functions["theta_ff"].vector()[:] = theta_ff_array
+    theta_ff_temp = project(1+(1./growth_time_constant)*((functions["deviation_ff"]/functions["set_point_ff"])),fcn_spaces["stimulusFS"])
+    theta_ff_array = theta_ff_temp.vector().get_local()
+    theta_ff_array[theta_ff_array >= max_theta] = max_theta
+    theta_ff_array[theta_ff_array <= min_theta] = min_theta
+    functions["theta_ff"].vector()[:] = theta_ff_array
     # overwriting, don't want eccentric growth right now
     functions["theta_ff"].vector()[:] = 1.0
 
