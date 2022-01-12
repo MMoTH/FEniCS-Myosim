@@ -1,6 +1,6 @@
 {
   "geometry": {
-      "mesh_path": ["/home/fenics/shared/meshes/ellipsoidal_degree_2.hdf5"],
+      "mesh_path": ["/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/meshes/ellipsoidal_degree_2.hdf5"],
       "scaled": ["False"]
   },
 
@@ -9,11 +9,11 @@
       "termination_condition": ["simulation_end_time",1200.0],
       "simulation_timestep": [0.1, "ms"],
       "initial_end_diastolic_volume": [0.24],
-      "reference_loading_steps": [10]
+      "reference_loading_steps": [30]
   },
 
   "output_options": {
-    "output_path": ["/home/fenics/shared/preliminary_growth/general_framework/output/"]
+    "output_path": ["/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/preliminary_growth/general_framework/output/"]
   },
 
   "forms_parameters": {

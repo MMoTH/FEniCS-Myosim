@@ -4,6 +4,7 @@
 # @Last modified time: 2022-01-11T17:10:23-05:00
 import sys
 sys.path.append('/home/fenics/shared/dependencies/')
+sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/dependencies/')
 import recode_dictionary
 import json
 from dolfin import *

@@ -5,7 +5,8 @@
 
 from dolfin import *
 import sys
-sys.path.append('/home/fenics/shared/preliminary_growth/general_framework/methods/')
+#sys.path.append('/home/fenics/shared/preliminary_growth/general_framework/methods/')
+sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/preliminary_growth/general_framework/methods/')
 import numpy as np
 from methods import load_mesh
 from methods import OutputData
