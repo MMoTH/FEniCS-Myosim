@@ -1,3 +1,10 @@
+# @Author: charlesmann
+# @Date:   2022-01-04T17:34:24-05:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2022-01-12T10:26:01-05:00
+
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -16,8 +23,11 @@ is_npy = int(sys.argv[2]) # user inputs 0 for csv files, 1 if saved as npy
 if is_npy > 0:
     populations = np.load('populations.npy')
     active_stress = np.load('active_stress.npy')
+    active_stress = active_stress[:,gauss_point]
     overlap = np.load('overlap.npy')
+    overlap = overlap[:,gauss_point]
     hsl = np.load('hsl.npy')
+    hsl = hsl[:,gauss_point]
 else:
     populations = pd.read_csv('populations.csv',delimiter=',')
     populations = populations.to_numpy()
@@ -30,19 +40,19 @@ else:
     active_stress = pd.read_csv('active_stress.csv',delimiter=',')
     active_stress = active_stress.to_numpy()
     active_stress = active_stress[:,1:]
-    active_stress = active_stress[:,gauss_point]
+    #active_stress = active_stress[:,gauss_point]
     np.save("active_stress",active_stress)
 
     overlap = pd.read_csv('overlap.csv',delimiter=',')
     overlap = overlap.to_numpy()
     overlap = overlap[:,1:]
-    overlap = overlap[:,gauss_point]
+    #overlap = overlap[:,gauss_point]
     np.save("overlap",overlap)
 
     hsl = pd.read_csv('half_sarcomere_lengths.csv',delimiter=',')
     hsl = hsl.to_numpy()
     hsl = hsl[:,1:]
-    hsl = hsl[:,gauss_point]
+    #hsl = hsl[:,gauss_point]
     np.save("hsl",hsl)
 
 #data_range = np.shape(active_stress)[0]
