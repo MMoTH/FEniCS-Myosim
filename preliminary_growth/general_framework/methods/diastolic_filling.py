@@ -1,12 +1,12 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T16:23:13-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-12T16:21:14-05:00
+# @Last modified time: 2022-01-12T16:37:43-05:00
 
 from dolfin import *
 import numpy as np
 
-def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps, arrays_and_values):
+def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps, arrays_and_values, comm):
 
     #filling_file = File('./output/iter_'+str(iter_number)+'/load_disp.pvd')
 

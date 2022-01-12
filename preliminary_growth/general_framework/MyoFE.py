@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2022-01-10T16:46:33-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-12T15:11:33-05:00
+# @Last modified time: 2022-01-12T16:37:24-05:00
 
 from dolfin import *
 import sys
@@ -229,7 +229,7 @@ growth_iter_counter = 0 # only updated if there's growth
 # diastolic loading to a prescribed EDV (keeping it the same as the last
 # cycle from previous simulation, or the initial prescribed. Assumption is
 # the total blood volume is constant)
-functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values)
+functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values, comm)
 
 
 #      "Load" Myosim
@@ -382,7 +382,7 @@ while sim_state.termination_flag == False:
                     functions["w"].vector()[:] = 0.0
 
                     # Reload to EDV
-                    functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values)
+                    functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values, comm)
 
 
 
