@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T16:23:13-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T17:20:12-05:00
+# @Last modified time: 2022-01-12T16:21:14-05:00
 
 from dolfin import *
 import numpy as np
@@ -55,6 +55,8 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
         temp_pf = project(inner(functions["f0"],pk2_global*functions["f0"]),fcn_spaces["stimulusFS"],form_compiler_parameters={"representation":"uflacs"})
         temp_pf.rename("pf","pf")
         output_object.p_f_file.save_pvd_object(temp_pf)
+        if(MPI.rank(comm) == 0):
+            print >>output_object.fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, V_cav, 0.0, 0.0, 0.0
 
     functions["w"] = w
 
