@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2022-01-10T16:46:33-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T17:28:28-05:00
+# @Last modified time: 2022-01-12T15:11:33-05:00
 
 from dolfin import *
 import sys
@@ -195,6 +195,14 @@ w = functions["w"]
 
 arrays_and_values["y_vec_array"] = functions["y_vec"].vector().get_local()[:]
 
+#initialize y_vec_array to put all hads in SRX and all binding sites to off
+for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
+    #print "initializing heads to off state"
+    # Initializing myosin heads in the SRX state
+    arrays_and_values["y_vec_array"][init_counter] = 1
+    # Initialize all binding sites to off state
+    arrays_and_values["y_vec_array"][init_counter-2] = 1
+
 # Initialize half-sarcomere class. Methods used to calculate cross-bridges
 # at gauss points
 hs = half_sarcomere.half_sarcomere(hs_params,1)
@@ -259,12 +267,11 @@ while sim_state.termination_flag == False:
         LVcav_array[l] = circ_dict["V_cav"]
         end_systole = circ_dict["end_systole"]
         end_diastole = circ_dict["end_diastole"]
-        LVcav_array[l] = circ_dict["V_cav"]
         Pcav_array[l] = p_cav*0.0075
 
         # Now print out volumes, pressures
         if(MPI.rank(comm) == 0):
-            print >>output_object.fdataPV, t[l], circ_dict["p_cav"]*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"]
+            print >>output_object.fdataPV, t[l], circ_dict["p_cav"]*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"], arrays_and_values["calcium"][l]
 
 
         # Quick hack
