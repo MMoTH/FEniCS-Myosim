@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T17:11:57-05:00
+# @Last modified time: 2022-01-12T11:53:56-05:00
 
 
 
@@ -1291,6 +1291,7 @@ def fenics(sim_params):
         else:
             print "skipping growing ellipsoid" """
 
+
         print "Time step number " + str(l)
         if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
 
@@ -1333,6 +1334,77 @@ def fenics(sim_params):
             overlap_counter = 1
         else:
             overlap_counter = l
+
+        # before doing anything else, let's try to get myosim to steady state
+        # Don't update calcium, don't update windkessel, just active stress
+        #----------------------------------------------------------------------
+        #----------------------------------------------------------------------
+        for myosim_load_steps in np.arange(100):
+            # At each gauss point, solve for cross-bridge distributions using myosim
+            print "calling myosim"
+            for mm in np.arange(no_of_int_points):
+                temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
+                temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
+                j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
+                j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
+                if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+                  j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
+
+            if save_cell_output:
+                for  i in range(no_of_int_points):
+                    for j in range(n_array_length):
+                        # saving the interpolated populations. These match up with active
+                        # stress from previous timestep
+                        dumped_populations[i, j] = y_interp[i * n_array_length + j]
+
+            # Update the populations
+            y_vec_array = y_vec_array_new # for Myosim
+
+            # Update the population function for fenics
+            y_vec.vector()[:] = y_vec_array # for PDE
+
+            # Update the array for myosim
+            hsl_array_old = hsl_array
+
+            # Update the hsl_old function for fenics
+            hsl_old.vector()[:] = hsl_array_old[:]
+
+            print "calling Newton Solver"
+            # solve for displacement to satisfy balance of linear momentum
+    	    try:
+                solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
+            except:
+                np.save(output_path + 'f0_vs_time.npy',f0_vs_time_array)
+
+            #print "PK2"
+            #PK2 = project(PK2_passive,TensorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+
+
+            # Update functions and arrays
+            print "cb f array"
+            cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
+            if save_visual_output:
+                pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+                pk2temp.rename("pk2_active","active_stress")
+                active_stress_file << pk2temp
+                displacement_file << w.sub(0)
+
+            hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
+            pseudo_old.vector()[:] = project(pseudo_alpha, Quad).vector().get_local()[:]
+            hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
+            delta_hsl_array = project(sqrt(dot(f0, Cmat*f0))*hsl0, Quad).vector().get_local()[:] - hsl_array_old # for Myosim
+
+
+            temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+            p_f = interpolate(temp_DG, Quad)
+            p_f_array = p_f.vector().get_local()[:]
+
+            for ii in range(np.shape(hsl_array)[0]):
+                if p_f_array[ii] < 0.0:
+                    p_f_array[ii] = 0.0
+        #----------------------------------------------------------------------
+        #----------------------------------------------------------------------
+
 
         # At each gauss point, solve for cross-bridge distributions using myosim
         print "calling myosim"
