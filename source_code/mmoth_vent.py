@@ -7,10 +7,10 @@
 
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-sys.path.append("/home/fenics/shared/dependencies/")
-sys.path.append("/home/fenics/shared/source_code/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+#sys.path.append("/home/fenics/shared/dependencies/")
+#sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -1339,7 +1339,9 @@ def fenics(sim_params):
         # Don't update calcium, don't update windkessel, just active stress
         #----------------------------------------------------------------------
         #----------------------------------------------------------------------
-        for myosim_load_steps in np.arange(100):
+        dumped_populations_ds = pd.DataFrame(np.zeros((no_of_int_points,n_array_length)))
+        dumped_populations = np.zeros((no_of_int_points,n_array_length))
+        for myosim_load_steps in np.arange(1000):
             # At each gauss point, solve for cross-bridge distributions using myosim
             print "calling myosim"
             for mm in np.arange(no_of_int_points):
@@ -1350,7 +1352,8 @@ def fenics(sim_params):
                 if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
                   j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
-            if save_cell_output:
+            if save_visual_output:
+                print "saving dumped_populations array"
                 for  i in range(no_of_int_points):
                     for j in range(n_array_length):
                         # saving the interpolated populations. These match up with active
@@ -1384,9 +1387,20 @@ def fenics(sim_params):
             print "cb f array"
             cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
             if save_visual_output:
+                #for  i in range(no_of_int_points):
+                    #for j in range(n_array_length):
+                        # saving the interpolated populations. These match up with active
+                        # stress from previous timestep
+                        #dumped_populations[i, j] = y_interp[i * n_array_length + j]
+                #for i in range(no_of_int_points):
+                    #dumped_populations_ds.iloc[i,:] = dumped_populations[i,:]
+                    #dumped_populations_ds.to_csv(output_path + 'populations.csv',mode='a',header=False)
+                p_cav = uflforms.LVcavitypressure()
+                print >>fdataPV, t[l], p_cav*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"], calcium[l]
                 pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
                 pk2temp.rename("pk2_active","active_stress")
                 active_stress_file << pk2temp
+                print "saving displacement file"
                 displacement_file << w.sub(0)
 
             hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
