@@ -1,7 +1,7 @@
 # @Author: charlesmann
 # @Date:   2021-09-20T19:22:52-04:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T17:11:57-05:00
+# @Last modified time: 2022-01-13T12:41:22-05:00
 
 
 
@@ -238,6 +238,8 @@ def fenics(sim_params):
         sheet_file = File(output_path + "s0_vectors.pvd")
         sheet_normal_file = File(output_path+"n0_vectors.pvd")
         mesh_file = File(output_path + "mesh_growth.pvd")
+        total_passive_f0 = File(output_path + "total_passive_f0.pvd")
+        total_passive_s0 = File(output_path + "total_passive_s0.pvd")
         #fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
         # set up f0 vs time array
         f0_vs_time_array = np.zeros((no_of_int_points,3,no_of_time_steps))
@@ -416,7 +418,7 @@ def fenics(sim_params):
     gdim = mesh.geometry().dim()
     xq = Quad.tabulate_dof_coordinates().reshape((-1,gdim))
     np.save(output_path + 'quadrature_dof',xq)
-    #geo_options["xq"] = xq
+    geo_options["xq"] = xq
     #print "xq 0",xq[0]
     #print "quadrature coordinates", xq
     #print "shape of xq",np.shape(xq)
@@ -1550,6 +1552,13 @@ def fenics(sim_params):
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)
+            # save total passive in f0 and s0 for biaxial test
+            temp_passive_f0 = project(inner(f0,PK2_passive*f0),FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+            temp_passive_f0.rename('passive_f0','passive_f0')
+            total_passive_f0 << temp_passive_f0
+            temp_passive_s0 = project(inner(s0,PK2_passive*s0),FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+            temp_passive_s0.rename('passive_s0','passive_s0')
+            total_passive_s0 << temp_passive_s0
 
             # Save all fiber vectors
             f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
