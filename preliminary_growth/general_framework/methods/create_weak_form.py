@@ -34,7 +34,8 @@ def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
     dw = functions["dw"]
 
     # Don't really need this yet
-    hsl0 = 950
+    #hsl0 = 950
+    hsl0 = functions["hsl0"]
 
     Fg = functions["Fg"]
     M1ij = functions["M1ij"]
@@ -96,6 +97,7 @@ def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
     # an attempt to incorporate some visoelasticity)
     #d = u.ufl_domain().geometric_dimension()
     #I = Identity(d)
+<<<<<<< HEAD
 	#Fmat = I + grad(u)
 #J = det(Fmat)
 	#Cmat = Fmat.T*Fmat
@@ -161,6 +163,81 @@ cb_force = Constant(0.0)
 			functions["Pactive"] = Pactive
 			#functions["cbforce"] = cbforce
 			F2 = inner(Fmat*Pactive, grad(v))*dx
+=======
+    #Fmat = I + grad(u)
+    #J = det(Fmat)
+    #Cmat = Fmat.T*Fmat
+    #alpha_f = sqrt(dot(f0, Cmat*f0))
+    #hsl = alpha_f*hsl0
+    #functions["hsl"] = hsl
+    Fmat = uflforms.Fe()
+    Cmat = uflforms.Cmat()
+    J = uflforms.J()
+    n = J*inv(Fmat.T)*N
+    alpha_f = sqrt(dot(f0, Cmat*f0))
+    hsl = alpha_f*functions["hsl0"]
+    print "hsl initial"
+    print project(hsl,fcn_spaces["quadrature_space"]).vector().get_local()
+    #----------------------------------
+
+    # Passive stress contribution
+    Wp = uflforms.PassiveMatSEF(hsl)
+
+    # passive material contribution
+    F1 = derivative(Wp, w, wtest)*dx
+
+    # active stress contribution (Pactive is PK2, transform to PK1)
+    # temporary active stress
+    #Pactive, cbforce = uflforms.TempActiveStress(0.0)
+
+    functions["hsl_old"].vector()[:] = functions["hsl0"].vector()[:]
+    functions["hsl_diff_from_reference"] = (functions["hsl_old"] - functions["hsl0"])/functions["hsl0"]
+    functions["pseudo_alpha"] = functions["pseudo_old"]*(1.-(arrays_and_values["k_myo_damp"]*(functions["hsl_diff_from_reference"])))
+    alpha_f = sqrt(dot(f0, Cmat*f0)) # actual stretch based on deformation gradient
+    print "checking pseudo_alpha"
+    print functions["pseudo_alpha"].vector().get_local()
+    functions["hsl"] = functions["pseudo_alpha"]*alpha_f*functions["hsl0"]
+    functions["delta_hsl"] = functions["hsl"] - functions["hsl_old"]
+
+    cb_force = Constant(0.0)
+
+    y_vec_split = split(functions["y_vec"])
+    #Wp = uflforms.PassiveMatSEF(functions["hsl"])
+    #F1 = derivative(Wp, w, wtest)*dx
+    for jj in range(arrays_and_values["no_of_states"]):
+        f_holder = Constant(0.0)
+        temp_holder = 0.0
+
+        if arrays_and_values["state_attached"][jj] == 1:
+            cb_ext = arrays_and_values["cb_extensions"][jj]
+
+            for kk in range(arrays_and_values["no_of_x_bins"]):
+                dxx = arrays_and_values["xx"][kk] + functions["delta_hsl"] * arrays_and_values["filament_compliance_factor"]
+                n_pop = y_vec_split[arrays_and_values["n_vector_indices"][jj][0] + kk]
+                temp_holder = n_pop * arrays_and_values["k_cb_multiplier"][jj] * (dxx + cb_ext) * conditional(gt(dxx + cb_ext,0.0), arrays_and_values["k_cb_pos"], arrays_and_values["k_cb_neg"])
+                f_holder = f_holder + temp_holder
+
+            f_holder = f_holder * dolfin_functions["cb_number_density"][-1] * 1e-9
+            f_holder = f_holder * arrays_and_values["alpha_value"]
+
+        cb_force = cb_force + f_holder
+
+    Pactive = cb_force * as_tensor(functions["f0"][m]*functions["f0"][k], (m,k))+ arrays_and_values["xfiber_fraction"]*cb_force * as_tensor(functions["s0"][m]*functions["s0"][k], (m,k))+ arrays_and_values["xfiber_fraction"]*cb_force * as_tensor(functions["n0"][m]*functions["n0"][k], (m,k))
+
+    functions["cb_force"] = cb_force
+    arrays_and_values["cb_f_array"] = project(functions["cb_force"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+    arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+
+    # calculate myofiber passive stress along f0, set negatives to zero (no compressive stress born by fibers)
+    total_passive_PK2, functions["Sff"] = uflforms.stress(functions["hsl"])
+    temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+    p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+    arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+
+    functions["Pactive"] = Pactive
+    #functions["cbforce"] = cbforce
+    F2 = inner(Fmat*Pactive, grad(v))*dx
+>>>>>>> alt-history
 
 
     # LV volume increase

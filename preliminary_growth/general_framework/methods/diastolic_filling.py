@@ -36,6 +36,7 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
 
         arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+        print "HALF SARCOMERE LENGTHS", arrays_and_values["hsl_array"][0:20]
 
         temp_DG = project(functions["Sff"], fcn_spaces["stimulusFS"], form_compiler_parameters={"representation":"uflacs"})
         p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
