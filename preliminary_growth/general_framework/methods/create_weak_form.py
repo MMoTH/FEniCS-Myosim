@@ -34,7 +34,8 @@ def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
     dw = functions["dw"]
 
     # Don't really need this yet
-    hsl0 = 950
+    #hsl0 = 950
+    hsl0 = functions["hsl0"]
 
     Fg = functions["Fg"]
     M1ij = functions["M1ij"]
@@ -94,15 +95,22 @@ def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
     # this here
     # (there exists the capability to have hsl return to its reference length in
     # an attempt to incorporate some visoelasticity)
-    d = u.ufl_domain().geometric_dimension()
-    I = Identity(d)
-    Fmat = I + grad(u)
-    J = det(Fmat)
-    Cmat = Fmat.T*Fmat
-    alpha_f = sqrt(dot(f0, Cmat*f0))
-    hsl = alpha_f*hsl0
-    functions["hsl"] = hsl
+    #d = u.ufl_domain().geometric_dimension()
+    #I = Identity(d)
+    #Fmat = I + grad(u)
+    #J = det(Fmat)
+    #Cmat = Fmat.T*Fmat
+    #alpha_f = sqrt(dot(f0, Cmat*f0))
+    #hsl = alpha_f*hsl0
+    #functions["hsl"] = hsl
+    Fmat = uflforms.Fe()
+    Cmat = uflforms.Cmat()
+    J = uflforms.J()
     n = J*inv(Fmat.T)*N
+    alpha_f = sqrt(dot(f0, Cmat*f0))
+    hsl = alpha_f*functions["hsl0"]
+    print "hsl initial"
+    print project(hsl,fcn_spaces["quadrature_space"]).vector().get_local()
     #----------------------------------
 
     # Passive stress contribution
@@ -119,13 +127,16 @@ def create_weak_form(mesh,fcn_spaces,functions,arrays_and_values):
     functions["hsl_diff_from_reference"] = (functions["hsl_old"] - functions["hsl0"])/functions["hsl0"]
     functions["pseudo_alpha"] = functions["pseudo_old"]*(1.-(arrays_and_values["k_myo_damp"]*(functions["hsl_diff_from_reference"])))
     alpha_f = sqrt(dot(f0, Cmat*f0)) # actual stretch based on deformation gradient
+    print "checking pseudo_alpha"
+    print functions["pseudo_alpha"].vector().get_local()
     functions["hsl"] = functions["pseudo_alpha"]*alpha_f*functions["hsl0"]
     functions["delta_hsl"] = functions["hsl"] - functions["hsl_old"]
 
     cb_force = Constant(0.0)
 
     y_vec_split = split(functions["y_vec"])
-
+    #Wp = uflforms.PassiveMatSEF(functions["hsl"])
+    #F1 = derivative(Wp, w, wtest)*dx
     for jj in range(arrays_and_values["no_of_states"]):
         f_holder = Constant(0.0)
         temp_holder = 0.0

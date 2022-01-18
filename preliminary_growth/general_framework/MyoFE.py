@@ -311,6 +311,17 @@ while sim_state.termination_flag == False:
 
     #   Solve cardiac mechanics weak form
         #--------------------------------
+        # Looking for differences before solving
+        print "cb force before solve"
+        print arrays_and_values["cb_f_array"][0:20]
+        print "p_f before solve"
+        temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+        arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+        print arrays_and_values["p_f_array"][0:20]
+
+
+
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
 
     #   Update quantities (mostly for myosim)
@@ -319,6 +330,7 @@ while sim_state.termination_flag == False:
         functions["hsl_old"].vector()[:] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:] # for PDE
         functions["pseudo_old"].vector()[:] = project(functions["pseudo_alpha"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
         arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]           # for Myosim
+        print "HALF-SARCOMERE LENGTHS",arrays_and_values["hsl_array"][0:20]
         arrays_and_values["delta_hsl_array"] = project(sqrt(dot(functions["f0"], uflforms.Cmat()*functions["f0"]))*functions["hsl0"], fcn_spaces["quadrature_space"]).vector().get_local()[:] - arrays_and_values["hsl_array_old"] # for Myosim
 
         temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
