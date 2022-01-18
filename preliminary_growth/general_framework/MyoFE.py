@@ -155,7 +155,7 @@ functions["LVCavityvol"].vol = ref_vol
 # Set up time step
 num_cycles_to_steady_state = 1
 no_of_time_steps = int(sim_state.sim_duration/sim_state.timestep)
-t = np.linspace(sim_state.timestep,sim_state.sim_duration,no_of_time_steps) # does this work for growth?
+t = np.linspace(0.0,sim_state.sim_duration-sim_state.timestep,no_of_time_steps) # does this work for growth?
 
 arrays_and_values["temp_overlap"] = np.zeros((no_of_int_points))
 arrays_and_values["y_vec_array_new"] = np.zeros(((no_of_int_points)*n_array_length))
