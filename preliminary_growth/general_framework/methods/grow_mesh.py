@@ -11,6 +11,10 @@ import calculate_thetas
 
 def grow_mesh(fcn_spaces, functions, uflforms, Ftotal, Jac, Ftotal_growth, Jac_growth, bcs, ref_vol, output_object, sim_state, mesh, input_parameters, growth_iter_counter):
 
+    # Let's try to save a copy of the y_vec function
+    functions["y_vec_end_cycle"] = Function(fcn_spaces["quad_vectorized_space"])
+    functions["y_vec_end_cycle"].assign(functions["y_vec"])
+
     # unload ventricle
     functions = diastolic_unloading.diastolic_unloading(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, ref_vol, output_object, sim_state.reference_load_steps)
 

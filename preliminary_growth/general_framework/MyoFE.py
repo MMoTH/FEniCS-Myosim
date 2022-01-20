@@ -6,7 +6,8 @@
 from dolfin import *
 import sys
 #sys.path.append('/home/fenics/shared/preliminary_growth/general_framework/methods/')
-sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/preliminary_growth/general_framework/methods/')
+sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_fix/FEniCS-Myosim/preliminary_growth/general_framework/methods/')
+sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_fix/FEniCS-Myosim/preliminary_growth/general_framework/')
 import numpy as np
 from methods import load_mesh
 from methods import OutputData
@@ -346,7 +347,7 @@ while sim_state.termination_flag == False:
         if growth_flag > 0:
             # check to calculate stimulus
 
-            end_of_cycle = t[l]%sim_state.cardiac_period
+            end_of_cycle = (t[l]+sim_state.timestep)%sim_state.cardiac_period
 
             if(MPI.rank(comm) == 0):
                 print "end of cycle?", end_of_cycle == 0
@@ -393,17 +394,47 @@ while sim_state.termination_flag == False:
                     # Reset solution to zero
                     functions["w"].vector()[:] = 0.0
 
+
                     # Reload to EDV
                     functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values, comm)
 
+                    # Incrementally reload cb populations back to what they were at the end of hte last cycle
+                    for j in np.arange(sim_state.reference_load_steps):
+                        print "loading myosim populations back incrementally"
+                        functions["y_vec"].vector()[:] += functions["unloading_population_increment"].vector()[:]
+                        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+                        p_cav = uflforms.LVcavitypressure()
+                        V_cav = uflforms.LVcavityvol()
+                        print "Cavity pressure:",p_cav
+                        print "Cavity volume:",V_cav
 
+
+                        #   Update quantities (mostly for myosim)
+                         #------------------------------------
+                        arrays_and_values["cb_f_array"][:] = project(functions["cb_force"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+                        functions["hsl_old"].vector()[:] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:] # for PDE
+                        functions["pseudo_old"].vector()[:] = project(functions["pseudo_alpha"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+                        arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]           # for Myosim
+#        print "HALF-SARCOMERE LENGTHS",arrays_and_values["hsl_array"][0:20]
+                        arrays_and_values["delta_hsl_array"] = project(sqrt(dot(functions["f0"], uflforms.Cmat()*functions["f0"]))*functions["hsl0"], fcn_spaces["quadrature_space"]).vector().get_local()[:] - arrays_and_values["hsl_array_old"] # for Myosim
+
+                        temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                        p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+                        arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+
+                        for ii in range(np.shape(arrays_and_values["hsl_array"])[0]):
+                            if arrays_and_values["p_f_array"][ii] < 0.0:
+                                arrays_and_values["p_f_array"][ii] = 0.0
+
+                    # Re-associate y_vec with its appropriate function space
+                    #functions["y_vec"] = project(functions["y_vec"],fcn_spaces["quad_vectorized_space"],form_compiler_parameters={"representation":"uflacs"})
 
                 else:
                     if(MPI.rank(comm) == 0):
                         print "Average deviation within tolerance. Finished growing"
-                    # within tolerance, growth stopping
-                    sim_state.termination_flag = True
-                    break
+                        # within tolerance, growth stopping
+                        sim_state.termination_flag = True
+                        break
 
 
 

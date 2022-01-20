@@ -5,7 +5,7 @@
 from dolfin import *
 import sys
 sys.path.append('/home/fenics/shared/source_code/methods/assign_heterogeneous_params/')
-sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/source_code/methods/assign_heterogeneous_params/')
+sys.path.append('/mnt/home/f0101140/Desktop/test_myosim_fix/FEniCS-Myosim/source_code/methods/assign_heterogeneous_params/')
 import initialize_dolfin_functions
 
 def initialize_functions(mesh, fcn_spaces, f, input_parameters):

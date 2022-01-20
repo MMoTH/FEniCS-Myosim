@@ -1,19 +1,19 @@
 {
   "geometry": {
-      "mesh_path": ["/home/fenics/shared/meshes/ellipsoidal_degree_2.hdf5"],
+      "mesh_path": ["/mnt/home/f0101140/Desktop/test_myosim_fix/FEniCS-Myosim/meshes/ellipsoidal_degree_2.hdf5"],
       "scaled": ["False"]
   },
 
   "protocol": {
-      "cardiac_period": [134.0, "ms"],
+      "cardiac_period": [200.0, "ms"],
       "termination_condition": ["growth_convergence",5],
       "simulation_timestep": [0.5, "ms"],
-      "initial_end_diastolic_volume": [0.25],
-      "reference_loading_steps": [10]
+      "initial_end_diastolic_volume": [0.24],
+      "reference_loading_steps": [30]
   },
 
   "output_options": {
-    "output_path": ["/home/fenics/shared/preliminary_growth/general_framework/output/"]
+    "output_path": ["/mnt/gs18/scratch/users/f0101140/growth_framework_investigation/test_growth/"]
   },
 
   "forms_parameters": {
@@ -48,19 +48,19 @@
       "k_cb_pos": [0.001, "N*m^-1"],
       "k_cb_neg": [0.001, "N*m^-1"],
       "alpha":[1.0],
-      "k_1": [8.0, "s^-1"],
+      "k_1": [7.0, "s^-1"],
       "k_force": [2e-4, "(N^-1)(m^2)"],
       "k_2": [96.0, "s^-1"],
-      "k_3": [1000.0, "(nm^-1)(s^-1)"],
+      "k_3": [750.0, "(nm^-1)(s^-1)"],
       "k_4_0": [450.864648098121948, "s^-1"],
-      "k_4_1": [9.0, "nm^-4"],
+      "k_4_1": [0.5, "nm^-4"],
       "k_cb": [0.001, "N*m^-1"],
       "x_ps": [5.0, "nm"],
       "k_on": [5.8e7, "(M^-1)(s^-1)"],
-      "k_off": [120, "s^-1"],
+      "k_off": [110, "s^-1"],
       "k_coop": [6.0],
-      "bin_min": [-10, "nm"],
-      "bin_max": [10, "nm"],
+      "bin_min": [-10],
+      "bin_max": [10],
       "bin_width": [1.0, "nm"],
       "filament_compliance_factor": [0.5],
       "thick_filament_length": [815, "nm"],
@@ -77,7 +77,6 @@
 },
 
 "electrophys_parameters": {
-
   "cell_ion_parameters": {
     "model": ["three_state_calcium"],
     "model_inputs": {
@@ -88,20 +87,19 @@
       "path_to_calcium": ["/home/fenics/shared/working_directory_untracked/amir_test14_printedfiles/test_14/calcium.npy"]
     }
   }
-
 },
   "windkessel_parameters": {
     "model": ["three_compartment_wk"],
-    "Cao": [2.0e-5, "ml/Pa"],
-    "Cven": [0.5e-3, "ml/Pa"],
-    "Vart0": [0.65, "volume for 0 pressure in art in mL"],
+    "Cao": [8.467e-5, "ml/Pa"],
+    "Cven": [0.43e-3, "ml/Pa"],
+    "Vart0": [0.16625, "volume for 0 pressure in art in mL"],
     "Vven0": [1.25, "volume for 0 pressure in vc in mL"],
-    "Rao": [700e3, "Aortic resistance, Pa*s/mL"],
-    "Rven": [2000e3, "Venous resistance, Pa*s/mL"],
-    "Rper": [4000e3, "Peripheral resistance, Pa*s/mL"],
-    "V_ven": [3.4, "ED venous volume in mL"],
-    "V_art": [0.90, "ED arterial volume in mL"]
-  },
+    "Rao": [2.5e5, "Aortic resistance, Pa*s/mL"],
+    "Rven": [520e3, "Venous resistance, Pa*s/mL"],
+    "Rper": [1200e4, "Peripheral resistance, Pa*s/mL"],
+    "V_ven": [2.2, "ED venous volume in mL"],
+    "V_art": [1.25, "ED arterial volume in mL"]
+},
   "growth_and_remodeling": {
    "growth_law": ["concentric_10pct"],
    "tolerance": [100],
