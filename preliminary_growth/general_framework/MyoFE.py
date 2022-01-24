@@ -350,7 +350,7 @@ while sim_state.termination_flag == False:
             end_of_cycle = (t[l]+sim_state.timestep)%sim_state.cardiac_period
 
             if(MPI.rank(comm) == 0):
-                print "end of cycle?", end_of_cycle == 0
+                print "end of cycle?", np.allclose(end_of_cycle,0)
 
             if circ_dict["end_systole"]:
 
@@ -375,7 +375,7 @@ while sim_state.termination_flag == False:
            #if end-diastole:
     #               calculate eccentric growth stimulus
     #
-            if end_of_cycle == 0:
+            if np.allclose(end_of_cycle,0):
                 print "reached end of cardiac cycle"
     #               # for now, termination condition for growth is average deviation < tol
                 if np.average(functions["deviation_ss"].vector().get_local()) > tol:

@@ -6,8 +6,8 @@
 
   "protocol": {
       "cardiac_period": [200.0, "ms"],
-      "termination_condition": ["growth_convergence",5],
-      "simulation_timestep": [0.5, "ms"],
+      "termination_condition": ["growth_convergence",7],
+      "simulation_timestep": [0.1, "ms"],
       "initial_end_diastolic_volume": [0.24],
       "reference_loading_steps": [30]
   },
