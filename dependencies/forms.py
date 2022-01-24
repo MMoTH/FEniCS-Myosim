@@ -439,9 +439,10 @@ class Forms(object):
     def kroon_law(self,FunctionSpace,step_size,kappa,binary_mask):
 
         mesh = self.parameters["mesh"]
-        C = self.Cmat()
+        #C = self.Cmat()
+        U = self.Umat()
         f0 = self.parameters["fiber"]
-        f = C*f0/sqrt(inner(C*f0,C*f0))
+        f = U*f0/sqrt(inner(U*f0,U*f0))
 	f_proj = project(f,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
 	for i in range(len(binary_mask)):
             f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
