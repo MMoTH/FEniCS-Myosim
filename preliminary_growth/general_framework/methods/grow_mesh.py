@@ -15,6 +15,9 @@ def grow_mesh(fcn_spaces, functions, uflforms, Ftotal, Jac, Ftotal_growth, Jac_g
     functions["y_vec_end_cycle"] = Function(fcn_spaces["quad_vectorized_space"])
     functions["y_vec_end_cycle"].assign(functions["y_vec"])
 
+    # Save the end-diastolic volume for diastolic filling after growth
+    sim_state.edv = uflforms.LVcavityvol()
+
     # unload ventricle
     functions = diastolic_unloading.diastolic_unloading(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, ref_vol, output_object, sim_state.reference_load_steps)
 

@@ -25,6 +25,7 @@ from methods import CirculatorySystem
 from methods import calculate_stimulus_function
 from methods import calculate_deviation_function
 from methods import calculate_thetas
+from methods import check_pv_steady_state
 from methods import grow_mesh
 from methods import save_outputs
 import copy
@@ -54,6 +55,8 @@ if "growth_and_remodeling" in input_parameters.keys():
     # Growth is desired. Note, Fg and all quantities will still be initialized. It just won't be updated
     growth_flag = 1
     tol = input_parameters["growth_and_remodeling"]["tolerance"][0]
+    growth_frequency_user = input_parameters["protocol"]["growth_frequency"][0] # either number of cycles or "steady_state"
+    growth_frequency = "steady_state"
 
 else:
 
@@ -347,7 +350,12 @@ while sim_state.termination_flag == False:
         if growth_flag > 0:
             # check to calculate stimulus
 
-            end_of_cycle = (t[l]+sim_state.timestep)%sim_state.cardiac_period
+            if growth_frequency == "steady_state":
+                cycle_check_time = sim_state.cardiac_period #check for steady state each cycle
+            else:
+                cycle_check_time = growth_frequency_user*sim_state.cardiac_period #check after user specified number of cycles
+
+            end_of_cycle = (t[l]+sim_state.timestep)%cycle_check_time
 
             if(MPI.rank(comm) == 0):
                 print "end of cycle?", np.allclose(end_of_cycle,0)
@@ -376,62 +384,83 @@ while sim_state.termination_flag == False:
     #               calculate eccentric growth stimulus
     #
             if np.allclose(end_of_cycle,0):
-                print "reached end of cardiac cycle"
-    #               # for now, termination condition for growth is average deviation < tol
-                if np.average(functions["deviation_ss"].vector().get_local()) > tol:
-                    # grow
-
-                    functions, mesh, growth_iter_counter = grow_mesh.grow_mesh(fcn_spaces, functions, uflforms, Ftotal, Jac, Ftotal_growth, Jac_growth, bcs, ref_vol, output_object, sim_state, mesh, input_parameters, growth_iter_counter)
-
-                    # Try creating the weak form again. Something isn't updating correctly
-                    Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions, Pactive, arrays_and_values = create_weak_form.create_weak_form(mesh, fcn_spaces, functions, arrays_and_values)
-
-                    # Now that growth has occurred (with LV cavity volume unconstrained), calculate LV cavity volume
-                    # and appropriately set the expression:
-                    ref_vol = uflforms.LVcavityvol()
-                    functions["LVCavityvol"].vol = ref_vol
-
-                    # Reset solution to zero
-                    functions["w"].vector()[:] = 0.0
-
-
-                    # Reload to EDV
-                    functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values, comm)
-
-                    # Incrementally reload cb populations back to what they were at the end of hte last cycle
-                    for j in np.arange(sim_state.reference_load_steps):
-                        print "loading myosim populations back incrementally"
-                        functions["y_vec"].vector()[:] += functions["unloading_population_increment"].vector()[:]
-                        solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
-                        p_cav = uflforms.LVcavitypressure()
-                        V_cav = uflforms.LVcavityvol()
-                        print "Cavity pressure:",p_cav
-                        print "Cavity volume:",V_cav
-
-
-                        #   Update quantities (mostly for myosim)
-                         #------------------------------------
-                        arrays_and_values["cb_f_array"][:] = project(functions["cb_force"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
-                        functions["hsl_old"].vector()[:] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:] # for PDE
-                        functions["pseudo_old"].vector()[:] = project(functions["pseudo_alpha"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
-                        arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]           # for Myosim
-#        print "HALF-SARCOMERE LENGTHS",arrays_and_values["hsl_array"][0:20]
-                        arrays_and_values["delta_hsl_array"] = project(sqrt(dot(functions["f0"], uflforms.Cmat()*functions["f0"]))*functions["hsl0"], fcn_spaces["quadrature_space"]).vector().get_local()[:] - arrays_and_values["hsl_array_old"] # for Myosim
-
-                        temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
-                        p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
-                        arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
-
-                        for ii in range(np.shape(arrays_and_values["hsl_array"])[0]):
-                            if arrays_and_values["p_f_array"][ii] < 0.0:
-                                arrays_and_values["p_f_array"][ii] = 0.0
-
-                    # Re-associate y_vec with its appropriate function space
-                    #functions["y_vec"] = project(functions["y_vec"],fcn_spaces["quad_vectorized_space"],form_compiler_parameters={"representation":"uflacs"})
-
+                
+                # Either check for steady state and grow, or we've reached the user set number of cycles, and need to grow
+                if growth_frequency == "steady_state":
+                    current_beat = t[l]//sim_state.cardiac_period
+                    time_steps_per_beat = int(sim_state.cardiac_period/sim_state.timestep)
+                    if current_beat == 0.0:
+                        # nothing to check yet
+                        print "First cycle, no steady state to check"
+                        growth_occurs = False
+                    else:
+                        v1 = LVcav_array[int((current_beat-1)*time_steps_per_beat):int(current_beat*time_steps_per_beat)] 
+                        v2 = LVcav_array[int(current_beat*time_steps_per_beat):int((current_beat+1)*time_steps_per_beat)]
+                        p1 = Pcav_array[int((current_beat-1)*time_steps_per_beat):int(current_beat*time_steps_per_beat)]
+                        p2 = Pcav_array[int((current_beat*time_steps_per_beat)):int((current_beat+1)*time_steps_per_beat)]
+                        growth_occurs = check_pv_steady_state.check_pv_steady_state(v1,p1,v2,p2)
+                    if growth_occurs:
+                        growth_frequency = growth_frequency_user # Always running to steady state first, then either keep it this way, or switch to user specified frequency
                 else:
-                    if(MPI.rank(comm) == 0):
-                        print "Average deviation within tolerance. Finished growing"
+                    growth_occurs = True
+                
+                if growth_occurs:
+
+                    # for now, termination condition for growth is average deviation < tol
+                    if np.average(functions["deviation_ss"].vector().get_local()) > tol:
+                        # grow
+                        print "Growing mesh, average deviation =",np.average(functions["deviation_ss"].vector().get_local())
+                        functions, mesh, growth_iter_counter = grow_mesh.grow_mesh(fcn_spaces, functions, uflforms, Ftotal, Jac, Ftotal_growth, Jac_growth, bcs, ref_vol, output_object, sim_state, mesh, input_parameters, growth_iter_counter)
+
+                        # Try creating the weak form again. Something isn't updating correctly
+                        Ftotal, Jac, Ftotal_growth, Jac_growth, uflforms, functions, Pactive, arrays_and_values = create_weak_form.create_weak_form(mesh, fcn_spaces, functions, arrays_and_values)
+
+                        # Now that growth has occurred (with LV cavity volume unconstrained), calculate LV cavity volume
+                        # and appropriately set the expression:
+                        ref_vol = uflforms.LVcavityvol()
+                        functions["LVCavityvol"].vol = ref_vol
+
+                        # Reset solution to zero
+                        functions["w"].vector()[:] = 0.0
+
+
+                        # Reload to EDV
+                        functions, arrays_and_values = diastolic_filling.diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, sim_state.edv, output_object, sim_state.reference_load_steps, arrays_and_values, comm)
+
+                        # Incrementally reload cb populations back to what they were at the end of hte last cycle
+                        for j in np.arange(sim_state.reference_load_steps):
+                            print "loading myosim populations back incrementally"
+                            functions["y_vec"].vector()[:] += functions["unloading_population_increment"].vector()[:]
+                            solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
+                            p_cav = uflforms.LVcavitypressure()
+                            V_cav = uflforms.LVcavityvol()
+                            print "Cavity pressure:",p_cav
+                            print "Cavity volume:",V_cav
+
+
+                            #   Update quantities (mostly for myosim)
+                            #------------------------------------
+                            arrays_and_values["cb_f_array"][:] = project(functions["cb_force"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+                            functions["hsl_old"].vector()[:] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:] # for PDE
+                            functions["pseudo_old"].vector()[:] = project(functions["pseudo_alpha"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+                            arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]           # for Myosim
+#        print "HALF-SARCOMERE LENGTHS",arrays_and_values["hsl_array"][0:20]
+                            arrays_and_values["delta_hsl_array"] = project(sqrt(dot(functions["f0"], uflforms.Cmat()*functions["f0"]))*functions["hsl0"], fcn_spaces["quadrature_space"]).vector().get_local()[:] - arrays_and_values["hsl_array_old"] # for Myosim
+
+                            temp_DG = project(functions["Sff"], FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+                            p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
+                            arrays_and_values["p_f_array"] = p_f.vector().get_local()[:]
+
+                            for ii in range(np.shape(arrays_and_values["hsl_array"])[0]):
+                                if arrays_and_values["p_f_array"][ii] < 0.0:
+                                    arrays_and_values["p_f_array"][ii] = 0.0
+
+                        # Re-associate y_vec with its appropriate function space
+                        #functions["y_vec"] = project(functions["y_vec"],fcn_spaces["quad_vectorized_space"],form_compiler_parameters={"representation":"uflacs"})
+
+                    else:
+                        if(MPI.rank(comm) == 0):
+                            print "Average deviation within tolerance. Finished growing"
                         # within tolerance, growth stopping
                         sim_state.termination_flag = True
                         break

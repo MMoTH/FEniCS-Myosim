@@ -7,13 +7,14 @@
   "protocol": {
       "cardiac_period": [200.0, "ms"],
       "termination_condition": ["growth_convergence",7],
+      "growth_frequency": [1, "either string steady_state, or integer specifying how many cardiac cycles between growth"],
       "simulation_timestep": [0.1, "ms"],
       "initial_end_diastolic_volume": [0.24],
       "reference_loading_steps": [30]
   },
 
   "output_options": {
-    "output_path": ["/mnt/gs18/scratch/users/f0101140/growth_framework_investigation/test_growth/"]
+    "output_path": ["/mnt/gs18/scratch/users/f0101140/growth_framework_investigation/test_growth_frequency/"]
   },
 
   "forms_parameters": {
