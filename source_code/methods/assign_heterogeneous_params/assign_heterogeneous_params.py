@@ -592,11 +592,21 @@ def df_rat_ellipsoid_infarct(dolfin_functions,base_value,k,scaling_factor,no_of_
     print "K",k
     print dolfin_functions["passive_params"][k][-1].vector()
     for jj in np.arange(no_of_int_points):
-        
-        if xq[jj][0] > 0 and (np.sqrt(xq[jj][1]**2 + (xq[jj][2]-(-.44089))**2) < .2044):
+    
+        r = np.sqrt(xq[jj][1]**2 + (xq[jj][2]+.44089)**2)
+
+        if xq[jj][0] > 0 and (r < .2044):
             dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
             dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
             dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
             dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
             dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
+
+        if xq[jj][0] > 0 and (r >= .2044):
+            if r < (0.25):
+                #dolfin_functions["passive_params"][k][-1].vector()[jj] = base_value*scaling_factor
+                #dolfin_functions["passive_params"]["bt"][-1].vector()[jj] = 10
+                #dolfin_functions["passive_params"]["bf"][-1].vector()[jj] = 10
+                #dolfin_functions["passive_params"]["bfs"][-1].vector()[jj] = 10
+                dolfin_functions["cb_number_density"][-1].vector()[jj] = 1.513157e18*(r-.2044)    
     return dolfin_functions

@@ -7,10 +7,10 @@
 
 from __future__ import division
 import sys
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
-#sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
-sys.path.append("/home/fenics/shared/dependencies/")
-sys.path.append("/home/fenics/shared/source_code/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
+sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
+#sys.path.append("/home/fenics/shared/dependencies/")
+#sys.path.append("/home/fenics/shared/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -224,6 +224,7 @@ def fenics(sim_params):
 
     ## Create files for saving information if needed.
     # cell level info is saved through a pandas command later
+    displacement_file = File(output_path + "u_disp.pvd")
     if save_visual_output:
         # Can visualize pretty much anything. For now, just looking at deformation
         # and the active stress magnitude
@@ -416,7 +417,7 @@ def fenics(sim_params):
     gdim = mesh.geometry().dim()
     xq = Quad.tabulate_dof_coordinates().reshape((-1,gdim))
     np.save(output_path + 'quadrature_dof',xq)
-    #geo_options["xq"] = xq
+    geo_options["xq"] = xq
     #print "xq 0",xq[0]
     #print "quadrature coordinates", xq
     #print "shape of xq",np.shape(xq)
@@ -1547,6 +1548,9 @@ def fenics(sim_params):
 
         if save_fx_only:
             np.save(output_path + 'fx',rxn_force)
+            displacement_file << w.sub(0)
+            np.save(output_path+"j7",j7_fluxes)
+        
         # Save visualization info
         if save_visual_output:
             displacement_file << w.sub(0)

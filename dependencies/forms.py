@@ -439,17 +439,18 @@ class Forms(object):
     def kroon_law(self,FunctionSpace,step_size,kappa,binary_mask):
 
         mesh = self.parameters["mesh"]
-        C = self.Cmat()
+        #C = self.Cmat()
+        U = self.Umat()
         f0 = self.parameters["fiber"]
-        f = C*f0/sqrt(inner(C*f0,C*f0))
+        f = U*f0/sqrt(inner(U*f0,U*f0))
 	f_proj = project(f,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-	for i in range(len(binary_mask)):
+	"""for i in range(len(binary_mask)):
             f_array = f_proj.vector().get_local()[i*3:(i+1)*3]
             if binary_mask[i] == 1:
 
                 f_proj.vector()[i*3] = f0.vector().get_local()[i*3]
                 f_proj.vector()[i*3+1] = f0.vector().get_local()[i*3+1]
-                f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]
+                f_proj.vector()[i*3+2] = f0.vector().get_local()[i*3+2]"""
         f_adjusted = 1./kappa * (f_proj - f0) * step_size
         f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
         f_adjusted = interpolate(f_adjusted,FunctionSpace)
@@ -664,8 +665,9 @@ class Forms(object):
                 f.vector()[index*3+2] = f0.vector().get_local()[index*3+2]"""
 
         f_adjusted = 1./kappa * (f_proj - f0) * step_size
+        #f_adjusted = 1./kappa * (f-f0) * step_size
         f_adjusted = project(f_adjusted,VectorFunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
-        f_adjusted = interpolate(f_adjusted,FunctionSpace)
+        f_adjusted = project(f_adjusted,FunctionSpace)
 
         return f_adjusted
 

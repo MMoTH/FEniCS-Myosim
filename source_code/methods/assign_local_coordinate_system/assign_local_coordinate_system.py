@@ -38,11 +38,21 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         casename = lv_options["casename"]
         f        = lv_options["f"]
         # assign local coordinate system at each gauss point
-        f.read(facetboundaries, casename+"/"+"facetboundaries")
-        f.read(edgeboundaries, casename+"/"+"edgeboundaries")
-        f.read(f0, casename + "/" + "eF")
-        f.read(s0, casename + "/" + "eS")
-        f.read(n0, casename + "/" + "eN")
+        if sim_params["fiber_orientation"]["load_fibers"][0] > 0.0:
+            # loading in fibers from a previous simulation
+            fnew = HDF5File(mpi_comm_world(),sim_params["fiber_orientation"]["load_fibers"][1],'r')
+            fnew.read(f0,"f0")
+            fnew.read(s0,"s0")
+            fnew.read(n0,"n0")
+            fnew.close()
+            f.read(facetboundaries, casename+"/"+"facetboundaries")
+            f.read(edgeboundaries, casename+"/"+"edgeboundaries")
+        else:
+            f.read(facetboundaries, casename+"/"+"facetboundaries")
+            f.read(edgeboundaries, casename+"/"+"edgeboundaries")
+            f.read(f0, casename + "/" + "eF")
+            f.read(s0, casename + "/" + "eS")
+            f.read(n0, casename + "/" + "eN")
         f.close()
 
     if (sim_geometry == "cylinder") or sim_geometry == "gmesh_cylinder":
