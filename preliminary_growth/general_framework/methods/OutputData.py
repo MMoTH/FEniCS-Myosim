@@ -52,6 +52,9 @@ class OutputData():
     def save_grown_mesh(self, object_to_save, growth_iteration):
 
         # set up new directory
-        os.mkdir(self.output_path + "iter_" + str(growth_iteration))
+        try:
+            os.mkdir(self.output_path + "iter_" + str(growth_iteration))
+        except:
+            print "directory already exists"
         grown_mesh_file = File(self.output_path + "iter_" + str(growth_iteration) + "/" + "grown_mesh.pvd")
         grown_mesh_file << object_to_save

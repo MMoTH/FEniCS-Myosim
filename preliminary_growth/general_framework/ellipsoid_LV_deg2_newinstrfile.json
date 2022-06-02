@@ -13,7 +13,7 @@
   },
 
   "output_options": {
-    "output_path": ["/mnt/home/f0101140/Desktop/test_myosim_growth/FEniCS-Myosim/preliminary_growth/general_framework/output/"]
+    "output_path": ["/mnt/gs18/scratch/users/f0101140/growth_framework_investigation/test_myosim_fix/"]
   },
 
   "forms_parameters": {

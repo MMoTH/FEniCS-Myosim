@@ -1197,6 +1197,7 @@ def fenics(sim_params):
                 #print project(Fmat,TF).vector().get_local()[0:9]
 
                 hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
+                print "HALF SARCOMERE LENGTHS",hsl_array[0:20]
 
 
                 temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
@@ -1371,6 +1372,18 @@ def fenics(sim_params):
 
         print "calling Newton Solver"
         # solve for displacement to satisfy balance of linear momentum
+
+        print "checking things before solve"
+        print "cb force"
+        print cb_f_array[0:20]
+        print "p_f_array"
+        temp_DG = project(Sff, FunctionSpace(mesh, "DG", 1), form_compiler_parameters={"representation":"uflacs"})
+        p_f = interpolate(temp_DG, Quad)
+        p_f_array = p_f.vector().get_local()[:]
+        print p_f_array[0:20]
+
+
+
 	try:
             solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"},solver_parameters={"newton_solver":{"relative_tolerance":1e-8},"newton_solver":{"maximum_iterations":50},"newton_solver":{"absolute_tolerance":1e-8}})
         except:
@@ -1429,6 +1442,7 @@ def fenics(sim_params):
         hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
         pseudo_old.vector()[:] = project(pseudo_alpha, Quad).vector().get_local()[:]
         hsl_array = project(hsl, Quad).vector().get_local()[:]           # for Myosim
+        print "HALF-SARCOMERE LENGTHS",hsl_array[0:20]
         delta_hsl_array = project(sqrt(dot(f0, Cmat*f0))*hsl0, Quad).vector().get_local()[:] - hsl_array_old # for Myosim
 
 

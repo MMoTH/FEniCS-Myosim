@@ -1,12 +1,12 @@
 # @Author: charlesmann
 # @Date:   2021-12-28T16:23:13-05:00
 # @Last modified by:   charlesmann
-# @Last modified time: 2022-01-11T17:20:12-05:00
+# @Last modified time: 2022-01-12T16:37:43-05:00
 
 from dolfin import *
 import numpy as np
 
-def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps, arrays_and_values):
+def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, output_object, n_load_steps, arrays_and_values, comm):
 
     #filling_file = File('./output/iter_'+str(iter_number)+'/load_disp.pvd')
 
@@ -36,6 +36,7 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
         solve(Ftotal == 0, w, bcs, J = Jac, form_compiler_parameters={"representation":"uflacs"})
 
         arrays_and_values["hsl_array"] = project(functions["hsl"], fcn_spaces["quadrature_space"]).vector().get_local()[:]
+        print "HALF SARCOMERE LENGTHS", arrays_and_values["hsl_array"][0:20]
 
         temp_DG = project(functions["Sff"], fcn_spaces["stimulusFS"], form_compiler_parameters={"representation":"uflacs"})
         p_f = interpolate(temp_DG, fcn_spaces["quadrature_space"])
@@ -55,6 +56,8 @@ def diastolic_filling(fcn_spaces, functions, uflforms, Ftotal, Jac, bcs, edv, ou
         temp_pf = project(inner(functions["f0"],pk2_global*functions["f0"]),fcn_spaces["stimulusFS"],form_compiler_parameters={"representation":"uflacs"})
         temp_pf.rename("pf","pf")
         output_object.p_f_file.save_pvd_object(temp_pf)
+        if(MPI.rank(comm) == 0):
+            print >>output_object.fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, V_cav, 0.0, 0.0, 0.0
 
     functions["w"] = w
 
