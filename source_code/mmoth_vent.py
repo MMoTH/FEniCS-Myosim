@@ -56,6 +56,7 @@ def fenics(sim_params):
     sim_geometry = sim_params["simulation_geometry"][0] #unit_cube, cylinder, ventricle
     if sim_geometry == "unit_cube":
         geo_options = {}
+        geo_options["end_x"] = [1.0]
         print "creating empy geo_options dictionary"
     else:
         geo_options = sim_params["geometry_options"]
@@ -225,6 +226,8 @@ def fenics(sim_params):
     ## Create files for saving information if needed.
     # cell level info is saved through a pandas command later
     displacement_file = File(output_path + "u_disp.pvd")
+    output_file = XDMFFile(output_path + "output.xdmf")
+    output_file.parameters.update({"functions_share_mesh": True,"rewrite_function_mesh": False})
     if save_visual_output:
         # Can visualize pretty much anything. For now, just looking at deformation
         # and the active stress magnitude
@@ -688,6 +691,7 @@ def fenics(sim_params):
         hsl_temp = project(hsl0,FunctionSpace(mesh,'DG',0))
         hsl_temp.rename("hsl_temp","half-sarcomere length")
         hsl_file << hsl_temp
+        output_file.write(hsl_temp,0)
 
     # Test select visualization for fibers
     temp_f0 = f0.copy(deepcopy=True)
@@ -1230,14 +1234,18 @@ def fenics(sim_params):
                     print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, V_cav, 0.0, 0.0, 0.0
 
                     if save_visual_output:
-                        displacement_file << w.sub(0)
+                        print "SAVING VISUAL OUTPUT"
+                        #displacement_file << w.sub(0)
+                        output_file.write(w.sub(0),0)
                         pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
-                        pk2temp.rename("pk2_active","active_stress")
+                        #pk2temp.rename("pk2_active","active_stress")
+                        output_file.write(pk2temp,0)
 
-                        active_stress_file << pk2temp
+                        #active_stress_file << pk2temp
                         hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                         hsl_temp.rename("hsl_temp","half-sarcomere length")
-                        hsl_file << hsl_temp
+                        #hsl_file << hsl_temp
+                        output_file.write(hsl_temp,0)
                         #pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation": "uflacs"})
                         #rxn_force_file << 0.0
                         #pk2_save.rename("pk2_passive","pk2_passive")
@@ -1434,9 +1442,11 @@ def fenics(sim_params):
         print "cb f array"
         cb_f_array[:] = project(cb_force, Quad).vector().get_local()[:]
         if save_visual_output:
+            print "SAVING PK2 ACTIVE"
             pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
             pk2temp.rename("pk2_active","active_stress")
-            active_stress_file << pk2temp
+            #active_stress_file << pk2temp
+            output_file.write(pk2temp,t[l])
         #print "hsl_old after solve"
         #print project(hsl_old,Quad).vector().get_local()[:]
         hsl_old.vector()[:] = project(hsl, Quad).vector().get_local()[:] # for PDE
@@ -1562,13 +1572,14 @@ def fenics(sim_params):
 
         if save_fx_only:
             np.save(output_path + 'fx',rxn_force)
-            displacement_file << w.sub(0)
+            #displacement_file << w.sub(0)
             np.save(output_path+"j7",j7_fluxes)
         
         # Save visualization info
         if save_visual_output:
-            displacement_file << w.sub(0)
-
+            print("SAVING VISUAL OUTPUT disp",l)
+            #displacement_file << w.sub(0)
+            output_file.write(w.sub(0),t[l])
             # Save all fiber vectors
             f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
             f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
@@ -1580,7 +1591,8 @@ def fenics(sim_params):
 		        #active_stress_file << pk2temp
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
-                hsl_file << hsl_temp
+                #hsl_file << hsl_temp
+                output_file.write(hsl_temp,t[l])
                 #Pactive_temp = project(Pactive,TensorFunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
                 #Pactive_temp.rename("Pactive","Pactive")
                 #tensor_file << Pactive_temp
@@ -1600,9 +1612,10 @@ def fenics(sim_params):
             print "saving f0"
             f0_temp = project(f0, VectorFunctionSpace(mesh, "DG", 0))
             f0_temp.rename('f0','f0')
-            fiber_file << f0_temp
+            #output_file.write(f0_temp,l)
+            #fiber_file << f0_temp
             # Save fiber vectors associated with fibrotic regions separately
-            temp_fibrotic_f0 = f0.copy(deepcopy=True)
+            #temp_fibrotic_f0 = f0.copy(deepcopy=True)
             """for index in np.arange(len(binary_mask)):
                 if binary_mask[index] == 0:
                     temp_fibrotic_f0.vector()[index*3] = 0.0
@@ -1652,15 +1665,18 @@ def fenics(sim_params):
             if "reorient_t_start" in locals():
                 shearfn_temp = project(inner(n0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
                 shearfn_temp.rename("shear fn","shear fn")
-                shearfn_file << shearfn_temp
+                #shearfn_file << shearfn_temp
+                #output_file.write(shearfn_temp,l)
 
                 shearfs_temp = project(inner(s0,driver_type*f0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
                 shearfs_temp.rename("shear fs","shear fs")
-                shearfs_file << shearfs_temp
+                #shearfs_file << shearfs_temp
+                #output_file.write(shearfs,l)
 
 	        shearsn_temp = project(inner(s0,driver_type*n0),FunctionSpace(mesh,'CG',1),form_compiler_parameters={"representation":"uflacs"})
 	        shearsn_temp.rename("shear_sn","shear_sn")
-	        shearsn_file << shearsn_temp
+                #output_file.write(shearsn,l)
+	        #shearsn_file << shearsn_temp
             """stress_eigen_ds.iloc[:] = stress_eigen.vector().get_local().reshape(no_of_int_points,3)[:]
             stress_eigen_ds.to_csv(output_path + 'stress_eigen.csv',mode='a',header=False)
 
@@ -1793,6 +1809,7 @@ def fenics(sim_params):
     #f0_dot_x_vec_array = project(f0_dot_x_vec,Quad).vector().get_local()[:]
     #angles_array = np.arccos(f0_dot_x_vec_array)
     #np.save(output_path+"final_angles_array.npy",angles_array)
+    output_file.close()
 
     if save_solution_flag > 0:
         print "Trying to save full solution to load into another simulation"

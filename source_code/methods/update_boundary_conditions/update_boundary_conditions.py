@@ -14,7 +14,7 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             bcs[boundary_condition_i+1].apply(b)
 
 
-        if not geo_options:
+        if sim_geometry == "unit_cube":
             area = 1.0
         elif sim_geometry == "cylinder":
             area = 3.14*geo_options["end_radius"][0]**2 #assuming enough segments are used to approximate a circle
@@ -308,6 +308,8 @@ def traction_hold(time,sim_protocol,geo_options,cur_disp):
 def ramp_and_hold(time,sim_protocol,geo_options,cur_disp):
 
     geo_check = not geo_options
+    print("CHECKING GEO OPTIONS")
+    print(geo_options)
     if geo_check:
         # unit cube
         length_scale = 1.0
