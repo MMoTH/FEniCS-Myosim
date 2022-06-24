@@ -2,7 +2,7 @@ from dolfin import *
 import numpy as np
 
 def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,traction_switch_flag,x_dofs,test_marker_fcn,w,mesh,bcright,x_dir,l,W,facetboundaries,custom_disp):
-
+    print "x_dofs",x_dofs
     output_dict = {}
     print "updating bcs"
     # only really need to update if not ventricle simulation
@@ -24,9 +24,18 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             area = 1.0
 
         f_int_total = b.copy()
+        print "f int local size", f_int_total.local_size()
+        #f_int_global = Vector()
+        #f_int_total.vec().gather(f_int_global, np.array(range(VectorFunctionSpace(mesh,"CG",2).dim())), "intc")
+        print "f int total",f_int_total
         rxn_force=0.0
+        V2 = VectorFunctionSpace(mesh,"CG",2)
+        dm = V2.dofmap()
+        local_range = dm.ownership_range()
+        x_dofs = V2.sub(0).dofmap().dofs()-local_range[0]
         for kk in x_dofs:
             rxn_force += f_int_total[kk]
+            #rxn_force += f_int_global[kk]
         output_dict["rxn_force"] = rxn_force
 
         #expr["P"].P = temp_traction # trying to remove traction, calculate rxn force, then re-apply traction

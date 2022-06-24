@@ -23,6 +23,7 @@ from cell_ion_module import cell_ion_driver
 from edgetypebc import *
 import pandas as pd
 import copy
+from mpi4py import MPI
 from methods import mesh_import
 from methods.mesh_import import mesh_import as mesh_import
 from methods.assign_initial_hsl import assign_initial_hsl as assign_hsl
@@ -167,7 +168,8 @@ def fenics(sim_params):
     File(output_path + '/test_mesh_import.pvd') << mesh
 
     # define communicator, for running with multiple cores in parallel
-    comm = mesh.mpi_comm()
+    #comm = mesh.mpi_comm()
+    comm = MPI.COMM_WORLD
 
 
     no_of_cells = len(subdomains.array())
@@ -176,7 +178,8 @@ def fenics(sim_params):
 
     # from the mesh, define some things
     if sim_geometry == "cylinder" or sim_geometry == "unit_cube" or sim_geometry == "box_mesh" or sim_geometry == "gmesh_cylinder":
-        no_of_int_points = 4 * np.shape(mesh.cells())[0]
+        local_no_of_int_points = 4 * np.shape(mesh.cells())[0]
+        print("local_no_of_int_points",local_no_of_int_points)
         deg = 2
         ds = dolfin.ds(subdomain_data = facetboundaries)
         fx_rxn = np.zeros((no_of_time_steps))
@@ -188,11 +191,15 @@ def fenics(sim_params):
         #no_of_int_points = 14 * np.shape(mesh.cells())[0]
 
         deg = 2
-        no_of_int_points = 4 * np.shape(mesh.cells())[0]
+        local_no_of_int_points = 4 * np.shape(mesh.cells())[0]
         #set surface id numbers
         topid = 4
         LVendoid = 2
         epiid = 1
+
+    # sum local number of int points, broadcast to all processes
+    no_of_int_points = comm.bcast(comm.reduce(local_no_of_int_points))
+    print("no of int points",no_of_int_points)
 
     parameters["form_compiler"]["quadrature_degree"]=deg
     parameters["form_compiler"]["representation"] = "quadrature"
@@ -226,8 +233,11 @@ def fenics(sim_params):
     ## Create files for saving information if needed.
     # cell level info is saved through a pandas command later
     displacement_file = File(output_path + "u_disp.pvd")
-    output_file = XDMFFile(output_path + "output.xdmf")
-    output_file.parameters.update({"functions_share_mesh": True,"rewrite_function_mesh": False})
+    #output_file = XDMFFile(output_path + "output.xdmf")
+    output_file = XDMFFile(mpi_comm_world(),output_path + "output.xdmf")
+    output_file.parameters.update({"functions_share_mesh": True,
+                                            "rewrite_function_mesh": False})
+    #output_file.parameters.update({"functions_share_mesh": True,"rewrite_function_mesh": False})
     if save_visual_output:
         # Can visualize pretty much anything. For now, just looking at deformation
         # and the active stress magnitude
@@ -247,16 +257,16 @@ def fenics(sim_params):
         f0_vs_time_array = np.zeros((no_of_int_points,3,no_of_time_steps))
         print "shape of f0 vs time",np.shape(f0_vs_time_array)
         #stress visualization
-        pk2_passive_file = File(output_path + "pk2_passive.pvd")
-        f0_deformed_file = File(output_path + "f0_deformed.pvd")
+        #pk2_passive_file = File(output_path + "pk2_passive.pvd")
+        #f0_deformed_file = File(output_path + "f0_deformed.pvd")
         #alpha_file = File(output_path + "alpha_mesh.pvd")
         #eigen_file = File(output_path + "stress_eigen.pvd")
-        shearfs_file = File(output_path + "shear_fs.pvd")
-        shearfn_file = File(output_path + "shear_fn.pvd")
-	shearsn_file = File(output_path + "shear_sn.pvd")
+        #shearfs_file = File(output_path + "shear_fs.pvd")
+        #shearfn_file = File(output_path + "shear_fn.pvd")
+	#shearsn_file = File(output_path + "shear_sn.pvd")
 
-        stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
-        f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
+        #stress_eigen_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
+        #f_adjusted_ds = pd.DataFrame(np.zeros((no_of_int_points,3)),index=None)
 
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -316,11 +326,11 @@ def fenics(sim_params):
 
     # Initialize some data holders that are necessary
     temp_overlap = np.zeros((no_of_int_points))
-    y_vec_array_new = np.zeros(((no_of_int_points)*n_array_length))
+    #y_vec_array_new = np.zeros(((no_of_int_points)*n_array_length))
     j3_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     j4_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
     j7_fluxes = np.zeros((no_of_int_points,no_of_time_steps))
-    y_interp = np.zeros((no_of_int_points)*n_array_length)
+    #y_interp = np.zeros((no_of_int_points)*n_array_length)
     calcium = np.zeros(no_of_time_steps)
     rxn_force = np.zeros(no_of_time_steps+21)
     avg_fdiff_x_array = np.zeros(no_of_time_steps)
@@ -377,7 +387,6 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 #           Initialize finite elements and function spaces
 #-------------------------------------------------------------------------------
-
     # Vector element at gauss points (for fibers)
     VQuadelem = VectorElement("Quadrature", mesh.ufl_cell(), degree=deg, quad_scheme="default")
     VQuadelem._quad_scheme = 'default'
@@ -452,11 +461,18 @@ def fenics(sim_params):
             else:
                 #W = FunctionSpace(mesh, MixedElement([Velem,Qelem,Relem]))
                 W = FunctionSpace(mesh, MixedElement([Velem,Qelem]))
-            x_dofs = W.sub(0).sub(0).dofmap().dofs() # will use this for x rxn forces later
+            #x_dofs = W.sub(0).sub(0).dofmap().dofs() # will use this for x rxn forces later
             #print "assigned W"
         else:
             W = FunctionSpace(mesh, MixedElement([Velem,Qelem,Relem,VRelem]))
 
+    # Need dof for CG2 vector space
+    V2 = VectorFunctionSpace(mesh,"CG",2)
+    dm_u = V2.dofmap()
+    local_range_u = dm_u.ownership_range()
+    local_dim_u = local_range_u[1]-local_range_u[0]
+    x_dofs = W.sub(0).sub(0).dofmap().dofs()
+    print "local range u", local_range_u
     #print str(W)
     # Function space to differentiate fibrous tissue from contractile for fiber simulations
     # Can use thise to mark gauss points according to a user defined law in "assign_heterogeneous_params"
@@ -465,7 +481,6 @@ def fenics(sim_params):
 #-------------------------------------------------------------------------------
 #           Initialize functions on the above spaces
 #-------------------------------------------------------------------------------
-
     # fiber, sheet, and sheet-normal functions
     if load_solution > 0:
         f0 = functions_loaded["f0"]
@@ -476,23 +491,53 @@ def fenics(sim_params):
         s0 = Function(fiberFS)
         n0 = Function(fiberFS)
 
+    # let's figure out messing with functions with mpi
     x_dir = Function(VectorFunctionSpace(mesh,"CG",1))
     x_vec = Function(fiberFS)
+    print("shape of x dir fcn",np.shape(x_dir.vector().get_local()))
     #x_shape = np.shape(x_dir.vector())
     #print x_shape
     #print "x shape"
-    x2_shape = np.shape(x_dir.vector().get_local())
+    #x2_shape = np.shape(x_dir.vector().get_local())
+    #x_test_shape = np.shape(x_vec.vector().get_local())
+    #print "x test shape", x_test_shape
     #print x2_shape
-    #x_dir.vector()[:] = Constant((1.,0.,0.))
-    for jj in np.arange(int(x2_shape[0]/3)):
-        x_dir.vector()[jj*3] = 1.
-        x_dir.vector()[jj*3+1] = 0.
-        x_dir.vector()[jj*3+2] = 0.
-    for jj in np.arange(no_of_int_points):
-        x_vec.vector()[jj*3] = 1.
-        x_vec.vector()[jj*3+1] = 0.
-        x_vec.vector()[jj*3+1] = 0.
-
+    #print "trying to initialize x direction"
+    # Trying to loop through and set x_dir function, make it work in parallel
+    V1 = VectorFunctionSpace(mesh,"CG",1) # what x_dir belongs to
+    dm  = V1.dofmap()
+    local_range = dm.ownership_range()
+    local_dim = local_range[1]-local_range[0]
+    dm_yv = Quad_vectorized_Fspace.dofmap()
+    local_range_yv = dm_yv.ownership_range()
+    local_dim_yv = local_range_yv[1]-local_range_yv[0]
+    
+    # local_dim is divisible by 3 because it's a 3 dim vector space
+    # Kurtis, you'll have to create an array of the appropriate size and then set_local
+    array_to_set = np.zeros(local_dim)
+    for jj in np.arange(int(local_dim/3)):
+        array_to_set[jj*3] = 1.0
+        array_to_set[jj*3+1] = 0.0
+        array_to_set[jj*3+2] = 0.0
+    x_dir.vector().set_local(array_to_set)
+    # do same for x_vec
+    #for jj in np.arange(int(local_dim/3)):
+    #    x_dir.vector()[jj*3] = 1.
+    #    x_dir.vector()[jj*3+1] = 0.
+    #    x_dir.vector()[jj*3+2] = 0.
+    #print "starting x_vec, local num int points",local_no_of_int_points
+    #for jj in np.arange(local_no_of_int_points):
+    dm_fs = fiberFS.dofmap()
+    local_range_fs = dm_fs.ownership_range()
+    local_dim_fs = local_range_fs[1] - local_range_fs[0]
+    array_to_set_x_vec = np.zeros(local_dim_fs)
+    for jj in np.arange(int(local_dim_fs/3)):
+        array_to_set_x_vec[jj*3] = 1.
+        array_to_set_x_vec[jj*3+1] = 0.
+        array_to_set_x_vec[jj*3+2] = 0.
+    x_vec.vector().set_local(array_to_set_x_vec)
+    #print "finished with x_vec"
+    #print "x_vec",x_vec.vector().get_local()[:]
     #print x_dir.vector().get_local()
     #f0_dot_xvec = inner(f0,x_vec)
     #f0_dot_xvec_array = project(f0_dot_xvec, Quad).vector().get_local()[:]
@@ -530,7 +575,6 @@ def fenics(sim_params):
     # possible calcium models, etc)
     hs_params_list = [{}]*no_of_int_points
     #passive_params_list = [{}]*no_of_int_points
-
     # Must make a deep copy so each item in the list is independent, and not linked
     # to the original paramter dictionary
     for jj in np.arange(np.shape(hs_params_list)[0]):
@@ -624,10 +668,12 @@ def fenics(sim_params):
         hsl0 = assign_hsl.assign_initial_hsl(lv_options,hs_params,sim_geometry,hsl0)
         f0,s0,n0,geo_options = lcs.assign_local_coordinate_system(lv_options,coord_params,sim_params)
     hsl_old = Function(Quad)
+    y_vec_array_new = y_vec.vector().get_local()[:]
+    y_interp = np.zeros(np.shape(y_vec_array_new))
     # save array of f0
     f0_array = project(f0,fiberFS).vector().get_local()[:]
-    f0_array.reshape((no_of_int_points,3))
-    f0_array1 = np.reshape(f0_array,(no_of_int_points,3))
+    f0_array.reshape((int(local_dim_fs/3),3))
+    f0_array1 = np.reshape(f0_array,(int(local_dim_fs/3),3))
     np.save(output_path+'f0_array.npy',f0_array)
 
     # Defining functions to calculate how far hsl is from reference, to be used
@@ -677,8 +723,14 @@ def fenics(sim_params):
     #print 'first for c_param and binary mask: ', str(dolfin_functions["passive_params"]["c"][-1].vector().get_local()[0]) + '/' + str(binary_mask[:4])
 
     temp_fcn_visualization = Function(Quad)
-    for mm in np.arange(no_of_int_points):
-        temp_fcn_visualization.vector()[mm] = hs_params_list[mm]["myofilament_parameters"]["k_force"][0]
+    dm_quad = Quad.dofmap()
+    local_range_quad = dm_quad.ownership_range()
+    local_dim_quad = local_range_quad[1] - local_range_quad[0]
+    temp_assign_array = np.zeros(local_dim_quad)
+    for mm in np.arange(local_dim_quad):
+        temp_assign_array[mm] = hs_params_list[mm]["myofilament_parameters"]["k_force"][0]
+
+    temp_fcn_visualization.vector().set_local(temp_assign_array)
     File(output_path + "k_force.pvd") << project(temp_fcn_visualization,FunctionSpace(mesh,"DG",0))
     File(output_path + "c_param.pvd") << project(dolfin_functions["passive_params"]["c"][-1],FunctionSpace(mesh,"DG",0))
     File(output_path + "cb_density.pvd") << project(dolfin_functions["cb_number_density"][-1],FunctionSpace(mesh,"DG",0))
@@ -694,19 +746,19 @@ def fenics(sim_params):
         output_file.write(hsl_temp,0)
 
     # Test select visualization for fibers
-    temp_f0 = f0.copy(deepcopy=True)
+    """temp_f0 = f0.copy(deepcopy=True)
     #print 'len(temp_f0): ', len(temp_f0.vector().get_local())
     #print 'len(binary_mask): ', len(binary_mask)
     for index in np.arange(len(binary_mask)):
         if binary_mask[index] == 1:
             temp_f0.vector()[index*3] = 0.0
             temp_f0.vector()[index*3+1] = 0.0
-            temp_f0.vector()[index*3+2] = 0.0
+            temp_f0.vector()[index*3+2] = 0.0"""
     #print 'no_of_int_points: ', no_of_int_points
 
-    File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
-    File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
-    File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
+    #File(output_path + "fiber.pvd") << project(temp_f0, VectorFunctionSpace(mesh, "DG", 0))
+    #File(output_path + "sheet.pvd") << project(s0, VectorFunctionSpace(mesh, "DG", 0))
+    #File(output_path + "sheet-normal.pvd") << project(n0, VectorFunctionSpace(mesh, "DG", 0))
 
 #-------------------------------------------------------------------------------
 #           Initialize the solver and forms parameters, continuum tensors
@@ -851,12 +903,10 @@ def fenics(sim_params):
     #print "hsl:"
     #print project(hsl,Quad).vector().get_local()[:]
     delta_hsl = hsl - hsl_old
-
     cb_force = Constant(0.0)
 
     y_vec_split = split(y_vec)
     Wp = uflforms.PassiveMatSEF(hsl)
-
     for jj in range(no_of_states):
         f_holder = Constant(0.0)
         temp_holder = 0.0
@@ -880,23 +930,20 @@ def fenics(sim_params):
             f_holder = f_holder * alpha_value
 
         cb_force = cb_force + f_holder
-
     Pactive = cb_force * as_tensor(f0[m]*f0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(s0[m]*s0[k], (m,k))+ xfiber_fraction*cb_force * as_tensor(n0[m]*n0[k], (m,k))
 
-
     cb_f_array = project(cb_force, Quad).vector().get_local()[:]
-
+    print "after cb_f_array"
 
 #-------------------------------------------------------------------------------
 #           Now hsl function is initiated, make sure all arrays are initialized
 #-------------------------------------------------------------------------------
-
     #create hsl_array from projection
     hsl_array = project(hsl, Quad).vector().get_local()[:]
-
     #initialize y_vec_array to put all hads in SRX and all binding sites to off
     if load_solution < 1:
-        for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
+        #for init_counter in range(0,n_array_length * no_of_int_points,n_array_length):
+        for init_counter in range(0, n_array_length * local_dim_quad,n_array_length):
             #print "initializing heads to off state"
             # Initializing myosin heads in the SRX state
             y_vec_array[init_counter] = 1
@@ -1273,7 +1320,7 @@ def fenics(sim_params):
         print "initializing growth class"
         #growth_class = grow_mesh.growth(growth_params,FunctionSpace(mesh,'DG',1),sim_timestep)
     else:
-        print "no growth parameters given"
+         print "no growth parameters given"
 
     # Load in circulatory module
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
@@ -1346,7 +1393,8 @@ def fenics(sim_params):
 
         # At each gauss point, solve for cross-bridge distributions using myosim
         print "calling myosim"
-        for mm in np.arange(no_of_int_points):
+        #for mm in np.arange(no_of_int_points):
+        for mm in np.arange(local_dim_quad):
             temp_overlap[mm], y_interp[mm*n_array_length:(mm+1)*n_array_length], y_vec_array_new[mm*n_array_length:(mm+1)*n_array_length] = implement.update_simulation(hs, sim_timestep, delta_hsl_array[mm], hsl_array[mm], y_vec_array[mm*n_array_length:(mm+1)*n_array_length], p_f_array[mm], cb_f_array[mm], calcium[l], n_array_length, t,hs_params_list[mm])
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
@@ -1365,7 +1413,8 @@ def fenics(sim_params):
         y_vec_array = y_vec_array_new # for Myosim
 
         # Update the population function for fenics
-        y_vec.vector()[:] = y_vec_array # for PDE
+        #y_vec.vector()[:] = y_vec_array # for PDE
+        y_vec.vector().set_local(y_vec_array)
 
         # Update the array for myosim
         hsl_array_old = hsl_array
@@ -1582,9 +1631,9 @@ def fenics(sim_params):
             output_file.write(w.sub(0),t[l])
             # Save all fiber vectors
             f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
-            f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
-            print "shape of temp f0_vs-time",np.shape(f0_vs_time_temp2)
-            f0_vs_time_array[:,:,l] = f0_vs_time_temp2
+            #f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3)) not needed for fiber. Would need to gather all to a global array
+            #print "shape of temp f0_vs-time",np.shape(f0_vs_time_temp2)
+            #f0_vs_time_array[:,:,l] = f0_vs_time_temp2
             if cb_number_density != 0:
 		        #pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',1),form_compiler_parameters={"representation":"uflacs"})
 		        #pk2temp.rename("pk2_active","active_stress")
@@ -2089,8 +2138,6 @@ recode_dictionary.recode(input_parameters)
 sim_params = input_parameters["simulation_parameters"]
 passive_params = input_parameters["forms_parameters"]["passive_law_parameters"]
 hs_params = input_parameters["myosim_parameters"]
-print "hs_params"
-print hs_params
 cell_ion_params = input_parameters["electrophys_parameters"]["cell_ion_parameters"]
 all_params = [sim_params,passive_params,hs_params,cell_ion_params]
 #monodomain_params = input_parameters["electrophys_parameters"]["monodomain_parameters"]

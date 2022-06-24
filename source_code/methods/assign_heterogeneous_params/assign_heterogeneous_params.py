@@ -403,16 +403,28 @@ def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_
 def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_cells,no_of_int_points,geo_options):
 
     end_marker_array = geo_options["end_marker_array"]
-
-    for jj in np.arange(no_of_int_points):
+    fiberFS = geo_options["fiberFS"] # used quad, not fiberFS. Quad is scalar, so just divide this by 3
+    dm = fiberFS.dofmap()
+    local_range = dm.ownership_range()
+    local_dim = local_range[1] - local_range[0]
+    local_dim /= 3
+    # make array to hold values
+    assign_array = np.zeros(int(local_dim))
+    for jj in np.arange(int(local_dim)):
     #for jj in np.arange(no_of_cells):
 
         if (end_marker_array[jj] > 9.0) or (end_marker_array[jj] < geo_options["compliance_first_bdry_end"][0]):
             if k == "cb_number_density":
                 #print "ASSIGNING CROSSBRIDGE DENSITY"
-                dolfin_functions[k][-1].vector()[jj] = fiber_value
+                #dolfin_functions[k][-1].vector()[jj] = fiber_value
+                assign_array[jj] = fiber_value
             else:
-                dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+                #dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
+                assign_array[jj] = fiber_value
+    if k == "cb_number_density":
+        dolfin_functions[k][-1].vector().set_local(assign_array)
+    else:
+        dolfin_functions["passive_params"][k][-1].vector().set_local(assign_array)
 
     return dolfin_functions
 

@@ -15,6 +15,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
     fiberFS      = coord_params["fiberFS"]
     sim_geometry = coord_params["sim_geometry"]
     geo_options  = coord_params["geo_options"]
+    geo_options["fiberFS"] = fiberFS
     no_of_int_points = coord_params["no_of_int_points"]
     #geo_options = coord_params["geo_options"]
 
@@ -100,9 +101,12 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
         # Updating geometry options to save end_marker_array to assign heterogeneous parameters later
         geo_options["end_marker_array"] = end_marker_array
+        dm = fiberFS.dofmap()
+        local_range = dm.ownership_range()
+        local_dim = local_range[1]-local_range[0]
+        assign_array_f0 = np.zeros(np.shape(f0.vector().get_local()))
 
-
-        for jj in np.arange(no_of_int_points):
+        for jj in np.arange(int(local_dim/3)):
 
             if sim_geometry == "box_mesh":
                 start_end_compliance = 2./3.
@@ -113,11 +117,15 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
 
             #if (temp_tester_array[jj] < dig_array[jj]) or (temp_tester_array[jj] > -dig_array[jj] + 10.0):
             if (end_marker_array[jj] > start_end_compliance) or (end_marker_array[jj] < end_beginning_compliance):
-                print "assigning end fibers"
+                #print "assigning end fibers"
+                
                 # inside left end
-                f0.vector()[jj*3] = 1.0
-                f0.vector()[jj*3+1] = 0.0
-                f0.vector()[jj*3+2] = 0.0
+                #f0.vector()[jj*3] = 1.0
+                #f0.vector()[jj*3+1] = 0.0
+                #f0.vector()[jj*3+2] = 0.0
+                assign_array_f0[jj*3] = 1.0
+                assign_array_f0[jj*3+1] = 0.0
+                assign_array_f0[jj*3+2] = 0.0
 
             else:
                 if sim_geometry == "gmesh_cylinder" or sim_geometry == "cylinder":
@@ -128,9 +136,12 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
                         temp_width = 0.0
                     else:
                         temp_width = np.abs(width*(1.0-(temp_radius*temp_radius/(radius*radius))))
-                    f0.vector()[jj*3] = r.normal(m_x,temp_width,1)[0]
-                    f0.vector()[jj*3+1] = r.normal(m_y,temp_width,1)[0]
-                    f0.vector()[jj*3+2] = r.normal(m_z,temp_width,1)[0]
+                    #f0.vector()[jj*3] = r.normal(m_x,temp_width,1)[0]
+                    #f0.vector()[jj*3+1] = r.normal(m_y,temp_width,1)[0]
+                    #f0.vector()[jj*3+2] = r.normal(m_z,temp_width,1)[0]
+                    assign_array_f0[jj*3] = r.normal(m_x, temp_width, 1)[0]
+                    assign_array_f0[jj*3+1] = r.normal(m_y, temp_width, 1)[0]
+                    assign_array_f0[jj*3+2] = r.normal(m_z, temp_width, 1)[0]
                 else:
                     # coding in a test case for box mesh
                     if y_marker_array[jj] >= 0.5:
@@ -145,27 +156,33 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
             #f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
             #f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
             #f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
+            f0.vector().set_local(assign_array_f0)
+        # normalize f0
+        f0 /= sqrt(inner(f0,f0))
+       
+        # Need a z-axis function
+        s0 = cross(Constant((0.0,0.0,1.0)),f0)
+        n0 = cross(f0, s0)
+        """f0_holder = f0.vector().array()[jj*3:jj*3+3]
+        f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
+        for kk in range(3):
+            f0.vector()[jj*3+kk] = f0_holder[kk]
 
-            f0_holder = f0.vector().array()[jj*3:jj*3+3]
-            f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
-            for kk in range(3):
-                f0.vector()[jj*3+kk] = f0_holder[kk]
+        z_axis.vector()[jj*3] = 0.0
+        z_axis.vector()[jj*3+1] = 0.0
+        z_axis.vector()[jj*3+2] = 1.0
 
-            z_axis.vector()[jj*3] = 0.0
-            z_axis.vector()[jj*3+1] = 0.0
-            z_axis.vector()[jj*3+2] = 1.0
+        s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
 
-            s0_holder = np.cross(z_axis.vector().array()[jj*3:jj*3+3],f0_holder)
+        s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
+        for kk in range(3):
+            s0.vector()[jj*3+kk] = s0_holder[kk]
 
-            s0_holder /= sqrt(np.inner(s0_holder,s0_holder))
-            for kk in range(3):
-                s0.vector()[jj*3+kk] = s0_holder[kk]
+        n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
 
-            n0_holder = np.cross(f0.vector().array()[jj*3:jj*3+3],s0.vector().array()[jj*3:jj*3+3])
-
-            n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
-            for kk in range(3):
-                n0.vector()[jj*3+kk] = n0_holder[kk]
+        n0_holder /= sqrt(np.inner(n0_holder,n0_holder))
+        for kk in range(3):
+            n0.vector()[jj*3+kk] = n0_holder[kk]"""
 
     if sim_geometry == "box_mesh":
 
@@ -255,7 +272,10 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
         test_marker_fcn = Function(marker_space)
         z_axis       = Function(fiberFS)
 
-        for jj in np.arange(no_of_int_points):
+        dm = fiberFS.dofmap()
+        local_range = dm.ownership_range()
+        local_dim = local_range[1] - local_range[0]
+        for jj in np.arange(int(local_dim/3)):
 
             f0.vector()[jj*3] = r.normal(m_x,width,1)[0]
             f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
@@ -298,8 +318,11 @@ def update_local_coordinate_system(fiber_direction,coord_params):
     no_of_int_points = coord_params["no_of_int_points"]
     fiberFS = coord_params["fiberFS"]
     z_axis = Function(fiberFS)
+    dm = fiberFS.dofmap()
+    local_range = dm.ownership_range()
+    local_dim = local_range[1] - local_range[0]
 
-    for jj in np.arange(no_of_int_points):
+    for jj in np.arange(int(local_dim/3)):
 
         f0_holder = f0.vector().array()[jj*3:jj*3+3]
         f0_holder /= sqrt(np.inner(f0_holder,f0_holder))
