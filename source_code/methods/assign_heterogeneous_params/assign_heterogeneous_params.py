@@ -88,11 +88,9 @@ def iterate_hs_keys(hs_template,het_hs_dict):
             for j in v:
                 if isinstance(j,dict):
                     if k == "cb_number_density":
-                        print "pass up cb density here"
+                        print "something"
                     else:
                         check = j["heterogeneous"]
-                        print "key is ", k
-                        print "check is ", check
                         if (check=="true") or (check =="True"):
                             # this parameters should be homogeneous
                             temp_law = j["law"]
@@ -147,7 +145,6 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
     #print "dolfin function"
     #print dolfin_functions
     for k, v in dolfin_functions.items():
-        print "key in dolfin keys is",k
 
         if isinstance(v,dict):
             iterate_dolfin_keys(v,het_dolfin_dict)
@@ -274,8 +271,6 @@ def iterate_dolfin_keys(dolfin_functions,het_dolfin_dict):
                                 scaling_factor = j["scaling_factor"]
                                 het_dolfin_dict[k].append(scaling_factor)
 
-    print "het_dolfin_dict is now "
-    print het_dolfin_dict
     return het_dolfin_dict
 
 def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no_of_cells,geo_options):
@@ -301,7 +296,6 @@ def assign_dolfin_functions(dolfin_functions,het_dolfin_dict,no_of_int_points,no
             dolfin_functions = df_fiber_w_compliance_law_boxmesh(dolfin_functions,base_value,k,het_dolfin_dict[k][-1],no_of_int_points,geo_options)"""
 
 	if hetero_law == "fibrosis_w_compliance":
-            print "het dict",het_dolfin_dict[k]
             dolfin_functions = df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,het_dolfin_dict[k][-4],het_dolfin_dict[k][-3],het_dolfin_dict[k][-2],het_dolfin_dict[k][-1],no_of_cells,geo_options)
 
         if hetero_law == "inclusion":
@@ -391,8 +385,6 @@ def df_fibrosis_law(dolfin_functions,base_value,k,percent,scaling_factor,mat_pro
 def scalar_fiber_w_compliance_law(hs_params_list,base_value,k,fiber_value,no_of_int_points,geo_options):
 
     end_marker_array = geo_options["end_marker_array"]
-    print "calling scalar fiber law"
-    print k
     for jj in np.arange(no_of_int_points):
 
         if end_marker_array[jj] > 9.0 or end_marker_array[jj] < 1.0:
@@ -409,13 +401,14 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_ce
     local_dim = local_range[1] - local_range[0]
     local_dim /= 3
     # make array to hold values
-    assign_array = np.zeros(int(local_dim))
+    assign_array = base_value*np.ones(int(local_dim))
+    #print "base value", base_value
     for jj in np.arange(int(local_dim)):
     #for jj in np.arange(no_of_cells):
 
         if (end_marker_array[jj] > 9.0) or (end_marker_array[jj] < geo_options["compliance_first_bdry_end"][0]):
             if k == "cb_number_density":
-                #print "ASSIGNING CROSSBRIDGE DENSITY"
+                #print "ASSIGNING CROSSBRIDGE DENSITY", fiber_value
                 #dolfin_functions[k][-1].vector()[jj] = fiber_value
                 assign_array[jj] = fiber_value
             else:
@@ -431,8 +424,6 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_ce
 def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,percent,scaling_factor,mat_prop,no_of_cells,geo_options):
 
     end_marker_array = geo_options["x_marker_array"]
-    print "SHAPE OF END MARKER ARRAY", np.shape(end_marker_array)
-    print "NO OF CELLS", no_of_cells
     compliant_cell_array = []
     remaining_cell_array = []
     total_cell_array = np.arange(no_of_cells)
@@ -448,12 +439,10 @@ def df_fibrosis_w_compliance_law(dolfin_functions,base_value,k,fiber_value,perce
             dolfin_functions["passive_params"][k][-1].vector()[jj] = fiber_value
 	    dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
 
-    print "compliant_cell_array: ", compliant_cell_array
     for index in total_cell_array:
         if index not in compliant_cell_array:
             remaining_cell_array.append(index)
     remaining_no_of_cells = len(remaining_cell_array)
-    print "remaining_no_of_cells: ", remaining_no_of_cells
     #print "remaining_cell_array: ", remaining_cell_array
     sample_indices = r.choice(remaining_cell_array,int(percent*remaining_no_of_cells), replace=False)
     #print "sample indices: ", sample_indices
@@ -560,7 +549,6 @@ def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_facto
 
     end_marker_array = geo_options["x_marker_array"]
     
-    print "NO OF CELLS", no_of_cells
     compliant_cell_array = []
     remaining_cell_array = []
     total_cell_array = np.arange(no_of_cells)
@@ -573,12 +561,10 @@ def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_facto
             dolfin_functions["passive_params"]["c"][-1].vector()[jj] = 26.6 
 	    dolfin_functions["cb_number_density"][-1].vector()[jj] = 0
 
-    print "compliant_cell_array: ", compliant_cell_array
     for index in total_cell_array:
         if index not in compliant_cell_array:
             remaining_cell_array.append(index)
     remaining_no_of_cells = len(remaining_cell_array)
-    print "remaining_no_of_cells: ", remaining_no_of_cells
     #print "remaining_cell_array: ", remaining_cell_array
     sample_indices = r.choice(remaining_cell_array,int(percent*remaining_no_of_cells), replace=False)
 
@@ -597,12 +583,7 @@ def df_contractile_law(dolfin_functions,base_value,k,percent,width,scaling_facto
     return dolfin_functions
 
 def df_rat_ellipsoid_infarct(dolfin_functions,base_value,k,scaling_factor,no_of_int_points,geo_options):
-    print "base_value",base_value
-    print "scaling factor?",scaling_factor
     xq = geo_options["xq"] # coordinate of quadrature points
-    print "num int points",no_of_int_points
-    print "K",k
-    print dolfin_functions["passive_params"][k][-1].vector()
     for jj in np.arange(no_of_int_points):
     
         r = np.sqrt(xq[jj][1]**2 + (xq[jj][2]+.44089)**2)
