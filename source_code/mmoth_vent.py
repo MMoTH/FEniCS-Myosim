@@ -2011,4 +2011,5 @@ if "growth_and_remodeling" in input_parameters.keys():
 
 fenics(sim_params)
 sim_duration = timeit.default_timer() - start
+print "sim duration =",sim_duration
 #aplog.append_to_log(all_params,start_time,sim_duration,input_file)
