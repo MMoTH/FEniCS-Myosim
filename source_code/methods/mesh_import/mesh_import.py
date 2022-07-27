@@ -89,11 +89,14 @@ def import_mesh(sim_geometry, options):
         mesh = UnitCubeMesh(1,1,1)
 
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
-
-        if sim_geometry == "ellipsoid":
-            casename = "ellipsoid_scaled"
+        if "casename" in options:
+            casename = options["casename"][0]
+            print "assigned casename from input file"
         else:
-            casename = "New_mesh" #New_mesh is the default casename in scripts sent from Dr. Lee
+            if sim_geometry == "ellipsoid":
+                casename = "ellipsoid_scaled"
+            else:
+                casename = "New_mesh" #New_mesh is the default casename in scripts sent from Dr. Lee
 
         mesh_path = options["mesh_path"][0]
 

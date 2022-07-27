@@ -11,6 +11,8 @@ sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/dependencies/")
 sys.path.append("/mnt/home/f0101140/Desktop/FEniCS-Myosim/source_code/")
 #sys.path.append("/home/fenics/shared/dependencies/")
 #sys.path.append("/home/fenics/shared/source_code/")
+sys.path.append("/home/ckma224/FEniCS-Myosim/dependencies/")
+sys.path.append("/home/ckma224/FEniCS-Myosim/source_code/")
 import os as os
 from dolfin import *
 import numpy as np
@@ -143,7 +145,7 @@ def fenics(sim_params):
     # need to generalize this
     if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "3state_with_SRX":
         n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1]]
-    if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+    if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX" or hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "new4state_with_SRX":
         n_vector_indices = [[0,0], [1,1], [2,2+no_of_x_bins-1], [(2+no_of_x_bins), (2+no_of_x_bins)+no_of_x_bins-1]]
 
     # Load in previous solution?
@@ -227,7 +229,8 @@ def fenics(sim_params):
     #output_file = XDMFFile(output_path + "output.xdmf")
     output_file = XDMFFile(mpi_comm_world(),output_path + "output.xdmf")
     output_file.parameters.update({"functions_share_mesh": True,
-                                            "rewrite_function_mesh": False})
+                                            "rewrite_function_mesh": False,
+                                            "flush_output": True})
     #output_file.parameters.update({"functions_share_mesh": True,"rewrite_function_mesh": False})
     if save_visual_output:
         # Can visualize pretty much anything. For now, just looking at deformation
@@ -262,7 +265,8 @@ def fenics(sim_params):
 
     if (sim_geometry == "ventricle") or (sim_geometry == "ellipsoid"):
         # initialize a file for pressures and volumes in windkessel
-        if (MPI.rank(comm) == 0):
+        #if (MPI.rank(comm) == 0):
+        if comm.Get_rank() == 0:
             fdataPV = open(output_path + "PV_.txt", "w", 0)
 
     if save_cell_output:
@@ -1267,27 +1271,28 @@ def fenics(sim_params):
                     #pgs_array = pgs.vector().get_local()[:]
 
 
-                if(MPI.rank(comm) == 0):
+                #if(MPI.rank(comm) == 0):
+                if comm.Get_rank() == 0:
 
                     print >>fdataPV, 0.0, p_cav*0.0075 , 0.0, 0.0, V_cav, 0.0, 0.0, 0.0
 
-                    if save_visual_output:
-                        print "SAVING VISUAL OUTPUT"
-                        #displacement_file << w.sub(0)
-                        output_file.write(w.sub(0),0)
-                        pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
-                        #pk2temp.rename("pk2_active","active_stress")
-                        output_file.write(pk2temp,0)
+                if save_visual_output:
+                    print "SAVING VISUAL OUTPUT"
+                    #displacement_file << w.sub(0)
+                    output_file.write(w.sub(0),0)
+                    pk2temp = project(inner(f0,Pactive*f0),FunctionSpace(mesh,'DG',0),form_compiler_parameters={"representation":"uflacs"})
+                    #pk2temp.rename("pk2_active","active_stress")
+                    output_file.write(pk2temp,0)
 
-                        #active_stress_file << pk2temp
-                        hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
-                        hsl_temp.rename("hsl_temp","half-sarcomere length")
-                        #hsl_file << hsl_temp
-                        output_file.write(hsl_temp,0)
-                        #pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation": "uflacs"})
-                        #rxn_force_file << 0.0
-                        #pk2_save.rename("pk2_passive","pk2_passive")
-                        #pk2_passive_file << pk2_save
+                    #active_stress_file << pk2temp
+                    hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
+                    hsl_temp.rename("hsl_temp","half-sarcomere length")
+                    #hsl_file << hsl_temp
+                    output_file.write(hsl_temp,0)
+                    #pk2_save = project(PK2_passive,TensorFunctionSpace(mesh,"DG",0),form_compiler_parameters={"representation": "uflacs"})
+                    #rxn_force_file << 0.0
+                    #pk2_save.rename("pk2_passive","pk2_passive")
+                    #pk2_passive_file << pk2_save
 
 
                 print("cavity-vol = ", LVCavityvol.vol)
@@ -1359,7 +1364,8 @@ def fenics(sim_params):
             Pcav_array[l] = p_cav*0.0075
 
             # Now print out volumes, pressures, calcium
-            if(MPI.rank(comm) == 0):
+            #if(MPI.rank(comm) == 0):
+            if comm.Get_rank() == 0:
                 print >>fdataPV, t[l], circ_dict["p_cav"]*0.0075 , circ_dict["Part"]*.0075, circ_dict["Pven"]*.0075, circ_dict["V_cav"], circ_dict["V_ven"], circ_dict["V_art"], calcium[l]
 
         # update calcium
@@ -1390,7 +1396,7 @@ def fenics(sim_params):
             temp_flux_dict, temp_rate_dict = implement.return_rates_fenics(hs)
             j3_fluxes[mm,l] = sum(temp_flux_dict["J3"])
             j4_fluxes[mm,l] = sum(temp_flux_dict["J4"])
-            if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+            if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX" or hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "new4state_with_SRX":
               j7_fluxes[mm,l] = sum(temp_flux_dict["J7"])
 
         if save_cell_output:
@@ -1623,7 +1629,10 @@ def fenics(sim_params):
             print "saving visual output"
             print "writing output file"
             output_file.write(w.sub(0),t[l])
-            f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
+            if 'kroon_time_constant' in locals():
+                f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
+                f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
+                f0_vs_time_array[:,:,l] = f0_vs_time_temp2
             if cb_number_density != 0:
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
@@ -1664,8 +1673,10 @@ def fenics(sim_params):
             delta_hsl_array_ds.to_csv(output_path + 'delta_hsl.csv',mode='a',header=False)
 
         if l == (no_of_time_steps-1): # at last time step
+            print "LAST TIME STEP, SAVE F0_VS_TIME"
             # save full f0_vs_time
             if 'kroon_time_constant' in locals():
+                print "SAVING F0 VS TIME ARRAY"
                 np.save(output_path+"f0_vs_time.npy",f0_vs_time_array)
             # interpolate cross-bridges one last time to account for final solve
             for mm in np.arange(local_dim_quad):
@@ -1686,7 +1697,7 @@ def fenics(sim_params):
 
                     y_vec_array[mm*n_array_length:(mm+1)*n_array_length] = temp_y
 
-                if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX":
+                if hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "4state_with_SRX" or hs_params["myofilament_parameters"]["kinetic_scheme"][0] == "new4state_with_SRX":
                     temp_y = y_vec_array[mm*n_array_length:(mm+1)*n_array_length]
                     interp_positions = xx - delta_x
 
@@ -1723,7 +1734,8 @@ def fenics(sim_params):
         toc = timeit.default_timer() - tic
     if sim_geometry == "ventricle" or sim_geometry == "ellipsoid":
         print "time loop performance time = " + str(toc)
-        if(MPI.rank(comm) == 0):
+        #if(MPI.rank(comm) == 0):
+        if comm.Get_rank() == 0:
             fdataPV.close()
     output_file.close()
 

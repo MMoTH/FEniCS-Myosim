@@ -57,7 +57,7 @@ class myofilaments():
             self.y[0] = 1.0
             self.y[-2] = 1.0
 
-        if (self.kinetic_scheme == '4state_with_SRX'):
+        if (self.kinetic_scheme == '4state_with_SRX') or (self.kinetic_scheme == 'new4state_with_SRX'):
 
             self.k_1 = float(myofil_params["k_1"][0])
             self.k_force = float(myofil_params["k_force"][0])

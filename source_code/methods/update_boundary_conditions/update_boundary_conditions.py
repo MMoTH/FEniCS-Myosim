@@ -110,7 +110,8 @@ def update_bcs(bcs,sim_geometry,Ftotal,geo_options,sim_protocol,expr,time,tracti
             #print "u x proj shape: ",np.shape(u_x_projection.vector())
             disp_value = u_x_projection.vector()[test_marker_fcn.vector()==1]
             #print "disp_value: ",disp_value
-            sim_protocol["end_disp_array"][l] = max(disp_value)
+            if len(disp_value) > 0:
+                sim_protocol["end_disp_array"][l] = max(disp_value)
             #if max(disp_value) >= 0.99 and time > 194.0: # value of 1 is hard coded for now
             if ((sim_protocol["end_disp_array"][l] - sim_protocol["end_disp_array"][l-1])>=0.0) and (l > sim_protocol["traction_switch_index"] + 2):
                 #expr["u_D"].u_D = (sim_protocol["end_disp_array"][l]+min(disp_value))/2.

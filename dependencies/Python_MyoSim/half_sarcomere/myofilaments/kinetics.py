@@ -1,3 +1,10 @@
+# @Author: charlesmann
+# @Date:   2022-07-26T08:20:25-04:00
+# @Last modified by:   charlesmann
+# @Last modified time: 2022-07-26T08:31:57-04:00
+
+
+
 # Functions for myofilament kinetics
 import numpy as np
 import scipy.constants as scipy_constants
@@ -9,7 +16,7 @@ def evolve_kinetics(self, time_step, Ca_conc, cell_time):
     if (self.kinetic_scheme[0] == '3state_with_SRX'):
         update_3state_with_SRX(self, time_step, Ca_conc,cell_time)
 
-    if (self.kinetic_scheme[0] == '4state_with_SRX'):
+    if (self.kinetic_scheme[0] == '4state_with_SRX') or (self.kinetic_scheme[0] == 'new4state_with_SRX'):
         update_4state_with_SRX(self, time_step, Ca_conc,cell_time)
 
 def return_fluxes(self, y, Ca_conc):
@@ -130,6 +137,110 @@ def return_fluxes(self, y, Ca_conc):
 
         r5 = self.k_5_0 / \
                 (1.0 + np.exp(self.k_5_1 * (self.x + (self.x_ps / 2.0))))
+        r5[r5 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+        r6 = self.k_6 * np.ones(len(self.x))
+        r6[r6 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+        r7 = self.k_7_0 + (self.k_7_1 * np.power(self.x, 4))
+        r7[r7 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+        r8 = self.k_8 * np.ones(len(self.x))
+        r8[r8 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+
+#        print("rates")
+#        print(r1)
+#        print(r2)
+#        print(r3)
+#        print(r4)
+#        print(r5)
+#        print(r6)
+#        print(r7)
+#        print(r8)
+#        exit()
+
+
+        # Unpack
+        M3_indices = 2 + np.arange(0, self.no_of_x_bins)
+        M4_indices = (2 + self.no_of_x_bins) + \
+                    np.arange(0, self.no_of_x_bins)
+
+        M_OFF = y[0]
+        M_ON = y[1]
+        M_3 = y[M3_indices]
+        M_4 = y[M4_indices]
+        M_bound = M_3 + M_4
+        n_off = y[-2]
+        n_on = y[-1]
+        n_bound = np.sum(M_bound)
+
+        # Calculate fluxes
+        J1 = r1 * M_OFF
+        J2 = r2 * M_ON
+        J3 = r3 * self.bin_width * M_ON * (n_on - n_bound)
+        J4 = r4 * M_3
+        J5 = r5 * M_3
+        J6 = r6 * M_4
+        J7 = r7 * M_4
+        J8 = r8 * self.bin_width * M_ON * (n_on - n_bound)
+
+        if (self.n_overlap > 0.0):
+            Jon = (self.k_on * Ca_conc * (self.n_overlap - n_on) *
+                (1.0 + self.k_coop * (n_on / self.n_overlap)))
+        else:
+            Jon = 0.0
+
+        if (self.n_overlap > 0.0):
+            Joff = self.k_off * (n_on - n_bound) * \
+                (1.0 + self.k_coop * ((self.n_overlap - n_on) /
+                                      self.n_overlap))
+        else:
+            Joff = 0.0
+
+        fluxes = dict()
+        fluxes['J1'] = J1
+        fluxes['J2'] = J2
+        fluxes['J3'] = J3
+        fluxes['J4'] = J4
+        fluxes['J5'] = J5
+        fluxes['J6'] = J6
+        fluxes['J7'] = J7
+        fluxes['J8'] = J8
+        fluxes['Jon'] = Jon
+        fluxes['Joff'] = Joff
+
+        rates = dict()
+        rates['R1'] = r1
+        rates['R2'] = r2
+        rates['R3'] = r3
+        rates['R4'] = r4
+        rates['R5'] = r5
+        rates['R6'] = r6
+        rates['R7'] = r7
+        rates['R8'] = r8
+
+        return fluxes, rates
+
+    # Returns fluxes
+    if (self.kinetic_scheme[0] == 'new4state_with_SRX'):
+
+        # Pre-calculate rates
+
+        r1 = np.minimum(self.parent_hs.max_rate,
+                        self.k_1 *(1.0 + self.k_force * self.parent_hs.hs_force))
+
+        r2 = np.minimum(self.parent_hs.max_rate, self.k_2)
+
+        r3 = self.k_3 * \
+                np.exp(-self.k_cb * (self.x**2) /
+                    (2.0 * 1e18 * scipy_constants.Boltzmann * self.parent_hs.temperature))
+        r3[r3 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+        r4 = self.k_4_0 + (self.k_4_1 * np.power(self.x, 4))
+        r4[r4 > self.parent_hs.max_rate] = self.parent_hs.max_rate
+
+        r5 = self.k_5_0 * np.ones(len(self.x))
         r5[r5 > self.parent_hs.max_rate] = self.parent_hs.max_rate
 
         r6 = self.k_6 * np.ones(len(self.x))

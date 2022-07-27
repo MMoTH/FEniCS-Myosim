@@ -29,7 +29,7 @@ def return_cb_force(self, delta_hsl):
 
         return cb_force
 
-    if (self.kinetic_scheme == '4state_with_SRX'):
+    if (self.kinetic_scheme == '4state_with_SRX') or (self.kinetic_scheme == 'new4state_with_SRX'):
         M3_indices = 2 + np.arange(0, self.no_of_x_bins)
         M4_indices = (2 + self.no_of_x_bins) + \
                     np.arange(0, self.no_of_x_bins)
