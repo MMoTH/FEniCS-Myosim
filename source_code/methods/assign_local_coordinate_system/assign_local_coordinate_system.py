@@ -157,6 +157,7 @@ def assign_local_coordinate_system(lv_options,coord_params,sim_params):
             #f0.vector()[jj*3+1] = r.normal(m_y,width,1)[0]
             #f0.vector()[jj*3+2] = r.normal(m_z,width,1)[0]
             f0.vector().set_local(assign_array_f0)
+            as_backend_type(f0.vector()).update_ghost_values()
         # normalize f0
         f0 /= sqrt(inner(f0,f0))
        

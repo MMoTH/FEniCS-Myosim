@@ -515,6 +515,7 @@ def fenics(sim_params):
         array_to_set[jj*3+1] = 0.0
         array_to_set[jj*3+2] = 0.0
     x_dir.vector().set_local(array_to_set)
+    as_backend_type(x_dir.vector()).update_ghost_values()
     # do same for x_vec
     #for jj in np.arange(int(local_dim/3)):
     #    x_dir.vector()[jj*3] = 1.
@@ -531,6 +532,7 @@ def fenics(sim_params):
         array_to_set_x_vec[jj*3+1] = 0.
         array_to_set_x_vec[jj*3+2] = 0.
     x_vec.vector().set_local(array_to_set_x_vec)
+    as_backend_type(x_vec.vector()).update_ghost_values()
     #print "finished with x_vec"
     #print "x_vec",x_vec.vector().get_local()[:]
     #print x_dir.vector().get_local()
@@ -669,7 +671,13 @@ def fenics(sim_params):
     f0_array = project(f0,fiberFS).vector().get_local()[:]
     f0_array.reshape((int(local_dim_fs/3),3))
     f0_array1 = np.reshape(f0_array,(int(local_dim_fs/3),3))
-    np.save(output_path+'f0_array.npy',f0_array)
+    f0_array_global = comm.gather(f0_array)
+    if comm.Get_rank() == 0:
+        f0_array_global = np.concatenate(f0_array_global).ravel()
+        np.save(output_path+'f0_array_global.npy',f0_array_global)
+        print "F0 GLOBAL",f0_array_global
+         
+    #np.save(output_path+'f0_array.npy',f0_array)
 
     # Defining functions to calculate how far hsl is from reference, to be used
     # to get back to reference length over time
@@ -726,6 +734,7 @@ def fenics(sim_params):
         temp_assign_array[mm] = hs_params_list[mm]["myofilament_parameters"]["k_force"][0]
 
     temp_fcn_visualization.vector().set_local(temp_assign_array)
+    as_backend_type(temp_fcn_visualization.vector()).update_ghost_values()
     File(output_path + "k_force.pvd") << project(temp_fcn_visualization,FunctionSpace(mesh,"DG",0))
     File(output_path + "c_param.pvd") << project(dolfin_functions["passive_params"]["c"][-1],FunctionSpace(mesh,"DG",0))
     File(output_path + "cb_density.pvd") << project(dolfin_functions["cb_number_density"][-1],FunctionSpace(mesh,"DG",0))
@@ -1412,6 +1421,7 @@ def fenics(sim_params):
         # Update the population function for fenics
         #y_vec.vector()[:] = y_vec_array # for PDE
         y_vec.vector().set_local(y_vec_array)
+        as_backend_type(y_vec.vector()).update_ghost_values()
 
         # Update the array for myosim
         hsl_array_old = hsl_array
@@ -1631,8 +1641,11 @@ def fenics(sim_params):
             output_file.write(w.sub(0),t[l])
             if 'kroon_time_constant' in locals():
                 f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
-                f0_vs_time_temp2 = f0_vs_time_temp.reshape((no_of_int_points,3))
-                f0_vs_time_array[:,:,l] = f0_vs_time_temp2
+                f0_vs_time_temp2_global = comm.gather(f0_vs_time_temp)
+                if comm.Get_rank() == 0:
+                    f0_vs_time_temp2_global = np.concatenate(f0_vs_time_temp2_global).ravel()
+                    f0_vs_time_temp2_global = np.reshape(f0_vs_time_temp2_global,(no_of_int_points,3))
+                    f0_vs_time_array[:,:,l] = f0_vs_time_temp2_global
             if cb_number_density != 0:
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")

@@ -1,6 +1,6 @@
+from dolfin import *
 import numpy as np
 import numpy.random as r
-
 
 
 ## define heterogeneous parameters based on some rule
@@ -416,8 +416,10 @@ def df_fiber_w_compliance_law(dolfin_functions,base_value,k,fiber_value,no_of_ce
                 assign_array[jj] = fiber_value
     if k == "cb_number_density":
         dolfin_functions[k][-1].vector().set_local(assign_array)
+        as_backend_type(dolfin_functions[k][-1].vector()).update_ghost_values()
     else:
         dolfin_functions["passive_params"][k][-1].vector().set_local(assign_array)
+        as_backend_type(dolfin_functions["passive_params"][k][-1].vector()).update_ghost_values()
 
     return dolfin_functions
 
