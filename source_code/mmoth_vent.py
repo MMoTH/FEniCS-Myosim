@@ -27,6 +27,7 @@ import pandas as pd
 import copy
 from mpi4py import MPI
 from methods import mesh_import
+from methods import local_project
 from methods.mesh_import import mesh_import as mesh_import
 from methods.assign_initial_hsl import assign_initial_hsl as assign_hsl
 from methods.assign_local_coordinate_system import assign_local_coordinate_system as lcs
@@ -249,6 +250,8 @@ def fenics(sim_params):
         #fibrotc_fiber_file = File(output_path + "fibrotic_f0.pvd")
         # set up f0 vs time array
         f0_vs_time_array = np.zeros((no_of_int_points,3,no_of_time_steps))
+        shearfs_vs_time_array = np.zeros((no_of_int_points,no_of_time_steps))
+        shearfn_vs_time_array = np.zeros((no_of_int_points,no_of_time_steps)) 
         #print "shape of f0 vs time",np.shape(f0_vs_time_array)
         #stress visualization
         #pk2_passive_file = File(output_path + "pk2_passive.pvd")
@@ -1642,10 +1645,21 @@ def fenics(sim_params):
             if 'kroon_time_constant' in locals():
                 f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
                 f0_vs_time_temp2_global = comm.gather(f0_vs_time_temp)
+                #shearfs = project(inner(s0,(PK2_passive + Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfs = local_project.local_project(inner(s0,(PK2_passive+Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfs_global = comm.gather(shearfs)
+                #shearfn = project(inner(n0,(PK2_passive + Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfn = local_project.local_project(inner(n0,(PK2_passive+Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfn_global = comm.gather(shearfn)
+                
                 if comm.Get_rank() == 0:
                     f0_vs_time_temp2_global = np.concatenate(f0_vs_time_temp2_global).ravel()
                     f0_vs_time_temp2_global = np.reshape(f0_vs_time_temp2_global,(no_of_int_points,3))
                     f0_vs_time_array[:,:,l] = f0_vs_time_temp2_global
+                    #shearfs_vs_time_array[:,l] = shearfs_global
+                    #shearfn_vs_time_array[:,l] = shearfn_global
+
+                    
             if cb_number_density != 0:
                 hsl_temp = project(hsl,FunctionSpace(mesh,'DG',0))
                 hsl_temp.rename("hsl_temp","half-sarcomere length")
@@ -1691,6 +1705,8 @@ def fenics(sim_params):
             if 'kroon_time_constant' in locals():
                 print "SAVING F0 VS TIME ARRAY"
                 np.save(output_path+"f0_vs_time.npy",f0_vs_time_array)
+                #np.save(output_path+"shearfs.npy",shearfs_vs_time_array)
+                #np.save(output_path+"shearfn.npy",shearfn_vs_time_array)
             # interpolate cross-bridges one last time to account for final solve
             for mm in np.arange(local_dim_quad):
                 delta_x = delta_hsl_array[mm]*filament_compliance_factor
