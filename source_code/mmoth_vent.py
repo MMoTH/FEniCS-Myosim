@@ -1645,10 +1645,22 @@ def fenics(sim_params):
             if 'kroon_time_constant' in locals():
                 f0_vs_time_temp = project(f0,fiberFS).vector().get_local()[:]
                 f0_vs_time_temp2_global = comm.gather(f0_vs_time_temp)
-                #shearfs = project(inner(s0,(PK2_passive + Pactive)*f0),Quad).vector().get_local()[:]
+                shearfs_temp = project(inner(s0,(PK2_passive +Pactive)*f0),FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+                shearfs_quad = interpolate(shearfs_temp,Quad)
+                #shearfs_temp.rename("shearfs_temp","shear fs")
+                #output_file.write(shearfs_temp,t[l])
+                shearfn_temp = project(inner(n0,(PK2_passive+Pactive)*f0),FunctionSpace(mesh,"DG",1),form_compiler_parameters={"representation":"uflacs"})
+                #shearfn_temp.rename("shearfn_temp","shear fn")
+                shearfn_quad = interpolate(shearfn_temp,Quad)
+                #output_file.write(shearfn_temp,t[l])
+
+                #shearfs_active = project(dot(s0,(Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfs_passive = project(dot(s0,PK2_passive*f0),Quad).vector().get_local()[:]
+                #shearfs_local = shearfs_active + shearfs_passive
                 #shearfs = local_project.local_project(inner(s0,(PK2_passive+Pactive)*f0),Quad).vector().get_local()[:]
-                #shearfs_global = comm.gather(shearfs)
-                #shearfn = project(inner(n0,(PK2_passive + Pactive)*f0),Quad).vector().get_local()[:]
+                #shearfs_global = comm.gather(shearfs_quad)
+                
+                #shearfn = project(dot(n0,(PK2_passive + Pactive)*f0),Quad).vector().get_local()[:]
                 #shearfn = local_project.local_project(inner(n0,(PK2_passive+Pactive)*f0),Quad).vector().get_local()[:]
                 #shearfn_global = comm.gather(shearfn)
                 
@@ -1656,8 +1668,8 @@ def fenics(sim_params):
                     f0_vs_time_temp2_global = np.concatenate(f0_vs_time_temp2_global).ravel()
                     f0_vs_time_temp2_global = np.reshape(f0_vs_time_temp2_global,(no_of_int_points,3))
                     f0_vs_time_array[:,:,l] = f0_vs_time_temp2_global
-                    #shearfs_vs_time_array[:,l] = shearfs_global
-                    #shearfn_vs_time_array[:,l] = shearfn_global
+                    shearfs_vs_time_array[:,l] = shearfs_quad.vector().get_local()[:]
+                    shearfn_vs_time_array[:,l] = shearfn_quad.vector().get_local()[:]
 
                     
             if cb_number_density != 0:
@@ -1705,8 +1717,9 @@ def fenics(sim_params):
             if 'kroon_time_constant' in locals():
                 print "SAVING F0 VS TIME ARRAY"
                 np.save(output_path+"f0_vs_time.npy",f0_vs_time_array)
-                #np.save(output_path+"shearfs.npy",shearfs_vs_time_array)
-                #np.save(output_path+"shearfn.npy",shearfn_vs_time_array)
+                
+                np.save(output_path+"shearfs.npy",shearfs_vs_time_array)
+                np.save(output_path+"shearfn.npy",shearfn_vs_time_array)
             # interpolate cross-bridges one last time to account for final solve
             for mm in np.arange(local_dim_quad):
                 delta_x = delta_hsl_array[mm]*filament_compliance_factor
