@@ -7,6 +7,12 @@ class circ_module():
 
         # Initialize what is needed for chosen circulatory model
         # params is the dictionary imported from the instruction file
+        if params["model"][0] == "import_volume":
+            self.model = "import_volume"
+            self.volume_path = params["vol_path"][0]
+            self.imported_volume = np.load(self.volume_path)
+            self.output_dict = {}
+            self.counter = 0
 
         if params["model"][0] == "three_compartment_wk":
 
@@ -48,6 +54,18 @@ class circ_module():
             self.output_dict = {}
 
     def update_compartments(self,p_cav,V_cav,step_size):
+        
+        if self.model == "import_volume":
+            self.output_dict["V_cav"] = self.imported_volume[self.counter]
+            self.counter +=1
+
+            self.output_dict["p_cav"] = 0.0
+            self.output_dict["V_art"] = 0.0
+            self.output_dict["V_ven"] = 0.0
+            self.output_dict["Pven"] = 0.0
+            self.output_dict["Part"] = 0.0
+            self.output_dict["end_systole"] = 0.0
+            self.output_dict["end_diastole"] = 0.0
 
         if self.model == "three_compartment_wk":
 
